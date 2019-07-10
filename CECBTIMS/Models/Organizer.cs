@@ -20,8 +20,6 @@ namespace CECBTIMS.Models
         [Timestamp]
         public byte[] RowVersion { get; set; } // For optimistic concurrency;
 
-        public virtual ICollection<Program> Programs { get; set; } // organizer can have multiple programs;
-        public virtual ICollection<ProgramArrangement> ProgramArrangement { get; set; }
-
+        public virtual ICollection<ProgramArrangement> ProgramArrangement { get; set; }// organizer can have multiple programs;
     }
 }

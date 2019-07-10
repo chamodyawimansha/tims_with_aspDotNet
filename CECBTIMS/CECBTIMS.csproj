@@ -170,9 +170,21 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201907100846121_InitialCreate.cs" />
-    <Compile Include="Migrations\201907100846121_InitialCreate.Designer.cs">
-      <DependentUpon>201907100846121_InitialCreate.cs</DependentUpon>
+    <Compile Include="Migrations\201907101403094_initialMigration.cs" />
+    <Compile Include="Migrations\201907101403094_initialMigration.Designer.cs">
+      <DependentUpon>201907101403094_initialMigration.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201907101417348_programModelWithoutRelationships.cs" />
+    <Compile Include="Migrations\201907101417348_programModelWithoutRelationships.Designer.cs">
+      <DependentUpon>201907101417348_programModelWithoutRelationships.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201907101419193_programWithResourcePersonRelationship.cs" />
+    <Compile Include="Migrations\201907101419193_programWithResourcePersonRelationship.Designer.cs">
+      <DependentUpon>201907101419193_programWithResourcePersonRelationship.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201907101420585_programWithCosts.cs" />
+    <Compile Include="Migrations\201907101420585_programWithCosts.Designer.cs">
+      <DependentUpon>201907101420585_programWithCosts.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -274,8 +286,17 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201907100846121_InitialCreate.resx">
-      <DependentUpon>201907100846121_InitialCreate.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201907101403094_initialMigration.resx">
+      <DependentUpon>201907101403094_initialMigration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201907101417348_programModelWithoutRelationships.resx">
+      <DependentUpon>201907101417348_programModelWithoutRelationships.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201907101419193_programWithResourcePersonRelationship.resx">
+      <DependentUpon>201907101419193_programWithResourcePersonRelationship.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201907101420585_programWithCosts.resx">
+      <DependentUpon>201907101420585_programWithCosts.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

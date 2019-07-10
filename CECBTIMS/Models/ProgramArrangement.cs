@@ -6,7 +6,7 @@ namespace CECBTIMS.Models
 {
     public class ProgramArrangement
     {
-        public int Id { get; set; }
+        public int ArrangementId { get; set; }
         public int OrganizerId { get; set; }
         public int ProgramId { get; set; }
         [
