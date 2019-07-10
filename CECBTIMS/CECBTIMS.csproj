@@ -190,6 +190,10 @@
     <Compile Include="Migrations\201907101435290_ProgramResourcePersons.Designer.cs">
       <DependentUpon>201907101435290_ProgramResourcePersons.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201907101450096_programOrganizer.cs" />
+    <Compile Include="Migrations\201907101450096_programOrganizer.Designer.cs">
+      <DependentUpon>201907101450096_programOrganizer.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ViewModels\AccountViewModels.cs" />
     <Compile Include="DAL\ApplicationDbContext.cs" />
@@ -304,6 +308,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201907101435290_ProgramResourcePersons.resx">
       <DependentUpon>201907101435290_ProgramResourcePersons.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201907101450096_programOrganizer.resx">
+      <DependentUpon>201907101450096_programOrganizer.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

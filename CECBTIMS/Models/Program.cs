@@ -81,8 +81,7 @@ namespace CECBTIMS.Models
         public byte[] RowVersion { get; set; } // For optimistic concurrency;
 
         public virtual ICollection<ProgramResourcePersons> ResourcePersons { get; set; } // A program can have multiple resource persons
-//        public virtual ProgramArrangement Organizer { get; set; } // Program have only one Organizer;
-
+        public virtual ICollection<ProgramArrangement> Organizer { get; set; } // Program have only one Organizer;
         public virtual ICollection<Cost> Costs { get; set; }
     }
 }
