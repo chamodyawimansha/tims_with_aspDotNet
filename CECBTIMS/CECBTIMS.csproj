@@ -176,6 +176,7 @@
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="DAL\ApplicationDbContext.cs" />
     <Compile Include="Models\Cost.cs" />
     <Compile Include="Models\Currency.cs" />
     <Compile Include="Models\EmployeeCategory.cs" />

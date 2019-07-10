@@ -1,3 +1,5 @@
+using CECBTIMS.DAL;
+
 namespace CECBTIMS.Migrations
 {
     using System;
@@ -5,7 +7,7 @@ namespace CECBTIMS.Migrations
     using System.Data.Entity.Migrations;
     using System.Linq;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<CECBTIMS.Models.ApplicationDbContext>
+    internal sealed class Configuration : DbMigrationsConfiguration<ApplicationDbContext>
     {
         public Configuration()
         {
@@ -13,7 +15,7 @@ namespace CECBTIMS.Migrations
             ContextKey = "CECBTIMS.Models.ApplicationDbContext";
         }
 
-        protected override void Seed(CECBTIMS.Models.ApplicationDbContext context)
+        protected override void Seed(ApplicationDbContext context)
         {
             //  This method will be called after migrating to the latest version.
 
