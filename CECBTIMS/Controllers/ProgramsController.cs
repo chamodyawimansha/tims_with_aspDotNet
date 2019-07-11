@@ -9,6 +9,7 @@ using System.Web;
 using System.Web.Mvc;
 using CECBTIMS.DAL;
 using CECBTIMS.Models;
+using CECBTIMS.ViewModels;
 using PagedList;
 
 namespace CECBTIMS.Controllers
@@ -27,7 +28,17 @@ namespace CECBTIMS.Controllers
             // Search field
             //Load count 5, 10, 50, 100
 
-            return View(await db.Programs.ToListAsync());
+            var programs = db.Programs.Select(p => new ProgramsIndexViewModel
+                {
+                        Id = p.Id,
+                        Title = p.Title,
+                        ProgramType = p.ProgramType,
+                        StartDate = p.StartDate,
+                        ApplicationClosingDateTime = p.ApplicationClosingDateTime,
+                        CreatedOn = p.CreatedAt
+                });
+
+            return View(await programs.ToArrayAsync());
         }
 
         // GET: Programs/Details/5

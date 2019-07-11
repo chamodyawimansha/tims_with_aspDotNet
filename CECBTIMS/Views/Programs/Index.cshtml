@@ -1,4 +1,4 @@
-﻿@model IEnumerable<CECBTIMS.Models.Program>
+﻿@model IEnumerable<CECBTIMS.ViewModels.ProgramsIndexViewModel>
 
 @{
     ViewBag.Title = "Index";
@@ -10,16 +10,17 @@
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
-<table class="table">
+<table class="table table-bordered">
+    
     <tr>
         <th>
             @Html.DisplayNameFor(model => model.Title)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.ProgramType)
+            @Html.DisplayNameFor(model => model.Title)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.TargetGroup)
+            @Html.DisplayNameFor(model => model.ProgramType)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.StartDate)
@@ -28,181 +29,110 @@
             @Html.DisplayNameFor(model => model.ApplicationClosingDateTime)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Brochure)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.EmploymentNature)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.EmployeeCategory)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Venue)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.EndDate)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.NotifiedBy)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.NotifiedOn)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Requirements)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ProgramHours)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.DurationInDays)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.DurationInMonths)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Department)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.CreatedBy)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.UpdatedBy)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.UpdatedAt)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.CreatedAt)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Currency)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ProgramFee)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.RegistrationFee)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.PerPersonFee)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.NoShowFee)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.MemberFee)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.NonMemberFee)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.StudentFee)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.RowVersion)
+            @Html.DisplayNameFor(model => model.CreatedOn)
         </th>
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Title)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ProgramType)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.TargetGroup)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.StartDate)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ApplicationClosingDateTime)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Brochure)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.EmploymentNature)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.EmployeeCategory)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Venue)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.EndDate)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.NotifiedBy)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.NotifiedOn)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Requirements)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ProgramHours)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.DurationInDays)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.DurationInMonths)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Department)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.CreatedBy)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.UpdatedBy)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.UpdatedAt)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.CreatedAt)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Currency)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ProgramFee)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.RegistrationFee)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.PerPersonFee)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.NoShowFee)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.MemberFee)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.NonMemberFee)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.StudentFee)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.RowVersion)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            @* <td> *@
+            @*     @Html.DisplayFor(modelItem => item.ProgramType) *@
+            @* </td> *@
+            @* <td> *@
+            @*     @Html.DisplayFor(modelItem => item.TargetGroup) *@
+            @* </td> *@
+            @* <td> *@
+            @*     @Html.DisplayFor(modelItem => item.StartDate) *@
+            @* </td> *@
+            @* <td> *@
+            @*     @Html.DisplayFor(modelItem => item.ApplicationClosingDateTime) *@
+            @* </td> *@
+            @* <td> *@
+            @*     @Html.DisplayFor(modelItem => item.Brochure) *@
+            @* </td> *@
+            @* <td> *@
+            @*     @Html.DisplayFor(modelItem => item.EmploymentNature) *@
+            @* </td> *@
+            @* <td> *@
+            @*     @Html.DisplayFor(modelItem => item.EmployeeCategory) *@
+            @* </td> *@
+            @* <td> *@
+            @*     @Html.DisplayFor(modelItem => item.Venue) *@
+            @* </td> *@
+            @* <td> *@
+            @*     @Html.DisplayFor(modelItem => item.EndDate) *@
+            @* </td> *@
+            @* <td> *@
+            @*     @Html.DisplayFor(modelItem => item.NotifiedBy) *@
+            @* </td> *@
+            @* <td> *@
+            @*     @Html.DisplayFor(modelItem => item.NotifiedOn) *@
+            @* </td> *@
+            @* <td> *@
+            @*     @Html.DisplayFor(modelItem => item.Requirements) *@
+            @* </td> *@
+            @* <td> *@
+            @*     @Html.DisplayFor(modelItem => item.ProgramHours) *@
+            @* </td> *@
+            @* <td> *@
+            @*     @Html.DisplayFor(modelItem => item.DurationInDays) *@
+            @* </td> *@
+            @* <td> *@
+            @*     @Html.DisplayFor(modelItem => item.DurationInMonths) *@
+            @* </td> *@
+            @* <td> *@
+            @*     @Html.DisplayFor(modelItem => item.Department) *@
+            @* </td> *@
+            @* <td> *@
+            @*     @Html.DisplayFor(modelItem => item.CreatedBy) *@
+            @* </td> *@
+            @* <td> *@
+            @*     @Html.DisplayFor(modelItem => item.UpdatedBy) *@
+            @* </td> *@
+            @* <td> *@
+            @*     @Html.DisplayFor(modelItem => item.UpdatedAt) *@
+            @* </td> *@
+            @* <td> *@
+            @*     @Html.DisplayFor(modelItem => item.CreatedAt) *@
+            @* </td> *@
+            @* <td> *@
+            @*     @Html.DisplayFor(modelItem => item.Currency) *@
+            @* </td> *@
+            @* <td> *@
+            @*     @Html.DisplayFor(modelItem => item.ProgramFee) *@
+            @* </td> *@
+            @* <td> *@
+            @*     @Html.DisplayFor(modelItem => item.RegistrationFee) *@
+            @* </td> *@
+            @* <td> *@
+            @*     @Html.DisplayFor(modelItem => item.PerPersonFee) *@
+            @* </td> *@
+            @* <td> *@
+            @*     @Html.DisplayFor(modelItem => item.NoShowFee) *@
+            @* </td> *@
+            @* <td> *@
+            @*     @Html.DisplayFor(modelItem => item.MemberFee) *@
+            @* </td> *@
+            @* <td> *@
+            @*     @Html.DisplayFor(modelItem => item.NonMemberFee) *@
+            @* </td> *@
+            @* <td> *@
+            @*     @Html.DisplayFor(modelItem => item.StudentFee) *@
+            @* </td> *@
+            @* <td> *@
+            @*     @Html.DisplayFor(modelItem => item.RowVersion) *@
+            @* </td> *@
+            <td>
+                @Html.ActionLink("Edit", "Edit", new {id = item.Id}) |
+                @Html.ActionLink("Details", "Details", new {id = item.Id}) |
+                @Html.ActionLink("Delete", "Delete", new {id = item.Id})
+            </td>
+        </tr>
+    }
 
 </table>
