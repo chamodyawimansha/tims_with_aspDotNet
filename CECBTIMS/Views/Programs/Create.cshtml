@@ -5,7 +5,28 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Create</h2>
+<div class="panel panel-default">
+    <div class="panel-heading clearfix">
+        <h4 class="pull-left" style="">New Program</h4>
+
+        @Html.ActionLink("Back to List", "Index", "",new{@class= "btn btn-default pull-right" })
+    </div>
+    <div class="panel-body">
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.ProgramType, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EnumDropDownListFor(model => model.ProgramType, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.ProgramType, "", new { @class = "text-danger" })
+            </div>
+        </div>
+    }
+    </div>
+</div>
+
 
 
 @using (Html.BeginForm()) 

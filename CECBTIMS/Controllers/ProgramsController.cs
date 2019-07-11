@@ -9,6 +9,7 @@ using System.Web;
 using System.Web.Mvc;
 using CECBTIMS.DAL;
 using CECBTIMS.Models;
+using PagedList;
 
 namespace CECBTIMS.Controllers
 {
@@ -17,8 +18,15 @@ namespace CECBTIMS.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Programs
-        public async Task<ActionResult> Index()
+        public async Task<ActionResult> Index(string search,int? rowCount, string sortOrder, string currentFilter, int? page)
         {
+            // dont get all the columns
+            //Pages
+            //Sorting
+            // Program index, Program Type, Title, Start Date, Application Closing date, Program Organiser, Action links
+            // Search field
+            //Load count 5, 10, 50, 100
+
             return View(await db.Programs.ToListAsync());
         }
 
