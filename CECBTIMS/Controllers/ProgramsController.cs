@@ -15,6 +15,7 @@ using PagedList;
 
 namespace CECBTIMS.Controllers
 {
+    [Authorize]
     public class ProgramsController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
@@ -38,8 +39,9 @@ namespace CECBTIMS.Controllers
                         ApplicationClosingDateTime = p.ApplicationClosingDateTime,
                         CreatedOn = p.CreatedAt
                 });
-
+            
             return View(await programs.ToArrayAsync());
+
         }
 
         // GET: Programs/Details/5
@@ -83,7 +85,7 @@ namespace CECBTIMS.Controllers
             {
                 //Log the error (uncomment dex variable name and add a line here to write a log.
                 ModelState.AddModelError("",
-                    "Unable to save changes. Try again, and if the problem persists see your system administrator.");
+                    "Unable to save the Program. Try again, and if the problem persists see your system administrator.");
             }
 
             return View(program);
