@@ -39,8 +39,12 @@ namespace CECBTIMS.Controllers
                         ApplicationClosingDateTime = p.ApplicationClosingDateTime,
                         CreatedOn = p.CreatedAt
                 });
-            
-            return View(await programs.ToArrayAsync());
+
+            int pageSize = 5;
+            int pageNumber = (page ?? 1);
+            return View(programs.ToPagedList(pageNumber, pageSize));
+
+//            return View(await programs.ToArrayAsync());
 
         }
 

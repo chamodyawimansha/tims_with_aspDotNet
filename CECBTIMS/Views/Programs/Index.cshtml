@@ -1,4 +1,7 @@
-﻿@model IEnumerable<CECBTIMS.ViewModels.ProgramsIndexViewModel>
+﻿@using PagedList.Mvc;
+@model PagedList.IPagedList<CECBTIMS.ViewModels.ProgramsIndexViewModel>
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+
 
 @{
     ViewBag.Title = "Programs";
@@ -17,46 +20,34 @@
             CECB - Training Programs
         </h4>
         <div class="float-right">
-            @Html.ActionLink("Create New", "Create", "",new{ @class="btn btn-primary"})
+            @Html.ActionLink("Create New", "Create", "", new { @class = "btn btn-primary" })
         </div>
     </div>
 
     <div class="card-body">
 
         @* HTML Form For search Program *@
-        @using (Html.BeginForm("Index", "Programs", FormMethod.Get, new {@class = "form-inline mb-3" }))
+        @using (Html.BeginForm("Index", "Programs", FormMethod.Get, new { @class = "form-inline mb-3" }))
         {
             <div class="form-group col-md-5">
                 <label class="col-form-label col-form-label-lg" for="SearchString">Find by Title :</label>
 
-                @Html.TextBox("SearchString", ViewBag.CurrentFilter as string, new {@class = "form-control mr-sm-2 ml-2 w-100" })
+                @Html.TextBox("SearchString", ViewBag.CurrentFilter as string, new { @class = "form-control mr-sm-2 ml-2 w-100" })
             </div>
 
-            <input type="submit" class="btn btn-secondary" value="Search"/>
+            <input type="submit" class="btn btn-secondary" value="Search" />
 
         }
 
         <table class="table table-bordered">
 
             <tr>
-                <th>
-                    #
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Title)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.ProgramType)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.StartDate)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.ApplicationClosingDateTime)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.CreatedOn)
-                </th>
+                <th>#</th>
+                <th>Title</th>
+                <th>Program Type</th>
+                <th>Start Date</th>
+                <th>Application Closing Date Time</th>
+                <th>Created On</th>
                 <th></th>
             </tr>
 
@@ -82,14 +73,20 @@
                         @Html.DisplayFor(modelItem => item.CreatedOn)
                     </td>
                     <td>
-                        @Html.ActionLink("Details", "Details", new {id = item.Id}, new {@class = "btn btn-primary btn-sm"})
-                        @Html.ActionLink("Edit", "Edit", new {id = item.Id}, new {@class = "btn btn-warning btn-sm"})
-                        @Html.ActionLink("Delete", "Delete", new {id = item.Id}, new {@class = "btn btn-danger btn-sm"})
+                        @Html.ActionLink("Details", "Details", new { id = item.Id }, new { @class = "btn btn-primary btn-sm" })
+                        @Html.ActionLink("Edit", "Edit", new { id = item.Id }, new { @class = "btn btn-warning btn-sm" })
+                        @Html.ActionLink("Delete", "Delete", new { id = item.Id }, new { @class = "btn btn-danger btn-sm" })
                     </td>
                 </tr>
             }
 
         </table>
+
+        Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+        @Html.PagedListPager(Model, page => Url.Action("Index",
+            new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
+
     </div>
 
 </div>
