@@ -62,10 +62,21 @@ namespace CECBTIMS.Models
         [
             Required,
             DataType(DataType.Date),
-            DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true),
-            DatabaseGenerated(DatabaseGeneratedOption.Computed),
+            DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)
         ]
-        public DateTime? CreatedAt { get; set; }
+        public DateTime CreatedAt
+        {
+            get
+            {
+                return this.createdAt.HasValue
+                    ? this.createdAt.Value
+                    : DateTime.Now;
+            }
+
+            set { this.createdAt = value; }
+        }
+
+        private DateTime? createdAt = null;
 
         public Currency Currency { get; set; }
         public  double? ProgramFee { get; set; }

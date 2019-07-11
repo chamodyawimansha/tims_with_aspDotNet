@@ -7,13 +7,13 @@ namespace CECBTIMS.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.2.0-61023")]
-    public sealed partial class removeProgramCreatedAtNullable : IMigrationMetadata
+    public sealed partial class ProgramAndOrganizerCreatedAtUpdated : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(removeProgramCreatedAtNullable));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(ProgramAndOrganizerCreatedAtUpdated));
         
         string IMigrationMetadata.Id
         {
-            get { return "201907110342160_removeProgramCreatedAtNullable"; }
+            get { return "201907110645249_ProgramAndOrganizerCreatedAtUpdated"; }
         }
         
         string IMigrationMetadata.Source

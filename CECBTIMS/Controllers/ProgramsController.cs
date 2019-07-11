@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Net;
@@ -67,13 +68,22 @@ namespace CECBTIMS.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "Id,Title,ProgramType,TargetGroup,StartDate,ApplicationClosingDateTime,Brochure,EmploymentNature,EmployeeCategory,Venue,EndDate,NotifiedBy,NotifiedOn,Requirements,ProgramHours,DurationInDays,DurationInMonths,Department,CreatedBy,UpdatedBy,UpdatedAt,CreatedAt,Currency,ProgramFee,RegistrationFee,PerPersonFee,NoShowFee,MemberFee,NonMemberFee,StudentFee,RowVersion")] Program program)
+        public async Task<ActionResult> Create([Bind(Include = "Id,Title,ProgramType,TargetGroup,StartDate,ApplicationClosingDateTime,Brochure,EmploymentNature,EmployeeCategory,Venue,EndDate,NotifiedBy,NotifiedOn,Requirements,ProgramHours,DurationInDays,DurationInMonths,Department,CreatedBy,UpdatedBy,UpdatedAt,CreatedAt,Currency,ProgramFee,RegistrationFee,PerPersonFee,NoShowFee,MemberFee,NonMemberFee,StudentFee")] Program program)
         {
-            if (ModelState.IsValid)
+            try
             {
-                db.Programs.Add(program);
-                await db.SaveChangesAsync();
-                return RedirectToAction("Index");
+                if (ModelState.IsValid)
+                {
+                    db.Programs.Add(program);
+                    await db.SaveChangesAsync();
+                    return RedirectToAction("Index");
+                }
+            }
+            catch (RetryLimitExceededException /* dex */)
+            {
+                //Log the error (uncomment dex variable name and add a line here to write a log.
+                ModelState.AddModelError("",
+                    "Unable to save changes. Try again, and if the problem persists see your system administrator.");
             }
 
             return View(program);

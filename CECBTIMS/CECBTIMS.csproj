@@ -175,6 +175,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\OrganizersController.cs" />
     <Compile Include="Controllers\ProgramsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -203,9 +204,9 @@
     <Compile Include="Migrations\201907101450096_programOrganizer.Designer.cs">
       <DependentUpon>201907101450096_programOrganizer.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201907110342160_removeProgramCreatedAtNullable.cs" />
-    <Compile Include="Migrations\201907110342160_removeProgramCreatedAtNullable.Designer.cs">
-      <DependentUpon>201907110342160_removeProgramCreatedAtNullable.cs</DependentUpon>
+    <Compile Include="Migrations\201907110645249_ProgramAndOrganizerCreatedAtUpdated.cs" />
+    <Compile Include="Migrations\201907110645249_ProgramAndOrganizerCreatedAtUpdated.Designer.cs">
+      <DependentUpon>201907110645249_ProgramAndOrganizerCreatedAtUpdated.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ViewModels\AccountViewModels.cs" />
@@ -337,6 +338,11 @@
     <Content Include="Scripts\popper.js.map" />
     <Content Include="Scripts\popper-utils.min.js.map" />
     <Content Include="Scripts\popper-utils.js.map" />
+    <Content Include="Views\Organizers\Create.cshtml" />
+    <Content Include="Views\Organizers\Delete.cshtml" />
+    <Content Include="Views\Organizers\Details.cshtml" />
+    <Content Include="Views\Organizers\Edit.cshtml" />
+    <Content Include="Views\Organizers\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -363,8 +369,8 @@
     <EmbeddedResource Include="Migrations\201907101450096_programOrganizer.resx">
       <DependentUpon>201907101450096_programOrganizer.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201907110342160_removeProgramCreatedAtNullable.resx">
-      <DependentUpon>201907110342160_removeProgramCreatedAtNullable.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201907110645249_ProgramAndOrganizerCreatedAtUpdated.resx">
+      <DependentUpon>201907110645249_ProgramAndOrganizerCreatedAtUpdated.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

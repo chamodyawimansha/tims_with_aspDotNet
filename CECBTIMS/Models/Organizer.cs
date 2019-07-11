@@ -12,10 +12,23 @@ namespace CECBTIMS.Models
         public string Name { get; set; }
         public int CreatedBy { get; set; }
         [
-            Required, 
-            DatabaseGenerated(DatabaseGeneratedOption.Computed)
+            Required,
+            DataType(DataType.Date),
+            DisplayFormat(DataFormatString = "{0:yyyy-MM-dd | HH:mm}", ApplyFormatInEditMode = true)
         ]
-        public DateTime CreatedAt { get; set; }
+        public DateTime CreatedAt
+        {
+            get
+            {
+                return this.createdAt.HasValue
+                    ? this.createdAt.Value
+                    : DateTime.Now;
+            }
+
+            set { this.createdAt = value; }
+        }
+
+        private DateTime? createdAt = null;
 
         [Timestamp]
         public byte[] RowVersion { get; set; } // For optimistic concurrency;
