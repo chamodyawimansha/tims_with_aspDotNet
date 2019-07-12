@@ -3,8 +3,8 @@
     public enum EmploymentNature
     {
         Permanent = 1, 
-        Fixed = 2,
-        Contract = 3,
+        FixedContract = 2,
+        JobContract = 3,
         PermanentAndConfirm = 4,
 
     }

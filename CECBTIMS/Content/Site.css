@@ -22,3 +22,7 @@
 /* textarea { */
 /*     /* max-width: 280px; !1! */
 /* } */
+
+.checkbox-container {
+    display: inline-block;
+}
