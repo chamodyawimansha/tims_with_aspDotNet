@@ -222,6 +222,7 @@
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\BaseCols.cs" />
+    <Compile Include="Models\Requirement.cs" />
     <Compile Include="Models\TargetGroup.cs" />
     <Compile Include="ViewModels\AccountViewModels.cs" />
     <Compile Include="DAL\ApplicationDbContext.cs" />

@@ -12,9 +12,9 @@ namespace CECBTIMS.Models
     public class Program : BaseCols
     {
         public int Id { get; set; }
+
         public string Title { get; set; }
         public  ProgramType ProgramType { get; set; }
-        public string TargetGroup { get; set; } // Multiple target groups.. serialized array
         [
             Required,
             DataType(DataType.Date),
@@ -34,10 +34,6 @@ namespace CECBTIMS.Models
         public byte ApplicationClosingTime { get; set; }
         public string Brochure { get; set; } // File upload: File Name
 
-
-        /**
-         * Not Required
-         */
         public EmploymentNature? EmploymentNature { get; set; }
         public EmployeeCategory? EmployeeCategory { get; set; }
         public string Venue { get; set; } // Not For PostGrad
@@ -53,15 +49,13 @@ namespace CECBTIMS.Models
         ]
         public DateTime? NotifiedOn { get; set; } //  For Foreign
 
-        public string Requirements { get; set; } // serialized Array, For PostGrad
-
         public int? ProgramHours { get; set; } // For Local Program
         public int? DurationInDays { get; set; }
         public int? DurationInMonths { get; set; }
         public string Department { get; set; }
 
         public Currency Currency { get; set; }
-        public  double? ProgramFee { get; set; }
+        public double? ProgramFee { get; set; }
         public double? RegistrationFee { get; set; }
         public double? PerPersonFee { get; set; }
         public double? NoShowFee { get; set; }
@@ -70,10 +64,11 @@ namespace CECBTIMS.Models
         public double? StudentFee { get; set; }
 
 
-
-        public virtual ICollection<ProgramResourcePersons> ResourcePersons { get; set; } // A program can have multiple resource persons
-        public virtual ICollection<ProgramArrangement> Organizer { get; set; } // Program have only one Organizer;
+        public virtual ICollection<TargetGroup> TargetGroups { get; set; }
+        public virtual ICollection<ProgramResourcePersons> ResourcePersons { get; set; } 
+        public virtual ICollection<ProgramArrangement> Organizer { get; set; } 
         public virtual ICollection<Cost> Costs { get; set; }
+        public virtual ICollection<Requirement> Requirements { get; set; }
     }
 }
 

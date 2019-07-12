@@ -7,17 +7,13 @@ namespace CECBTIMS.Models
     {
         public DateTime CreatedAt
         {
-            get
-            {
-                return this.createdAt.HasValue
-                    ? this.createdAt.Value
-                    : DateTime.Now;
-            }
+            get =>
+                _createdAt ?? DateTime.Now;
 
-            set { this.createdAt = value; }
+            set => this._createdAt = value;
         }
 
-        private DateTime? createdAt = null;
+        private DateTime? _createdAt = null;
 
         public DateTime? UpdatedAt { get; set; }
         public string CreatedBy { get; set; }
