@@ -221,6 +221,8 @@
       <DependentUpon>201907120827278_applicationClosingTimeAdded.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\BaseCols.cs" />
+    <Compile Include="Models\TargetGroup.cs" />
     <Compile Include="ViewModels\AccountViewModels.cs" />
     <Compile Include="DAL\ApplicationDbContext.cs" />
     <Compile Include="Models\Cost.cs" />
@@ -336,11 +338,11 @@
     <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
-    <Content Include="Views\Programs\Create.cshtml" />
-    <Content Include="Views\Programs\Delete.cshtml" />
-    <Content Include="Views\Programs\Details.cshtml" />
-    <Content Include="Views\Programs\Edit.cshtml" />
-    <Content Include="Views\Programs\Index.cshtml" />
+    <Content Include="Views\ProgramsOld\Create.cshtml" />
+    <Content Include="Views\ProgramsOld\Delete.cshtml" />
+    <Content Include="Views\ProgramsOld\Details.cshtml" />
+    <Content Include="Views\ProgramsOld\Edit.cshtml" />
+    <Content Include="Views\ProgramsOld\Index.cshtml" />
     <Content Include="Scripts\umd\popper.min.js.map" />
     <Content Include="Scripts\umd\popper.js.map" />
     <Content Include="Scripts\umd\popper-utils.min.js.map" />

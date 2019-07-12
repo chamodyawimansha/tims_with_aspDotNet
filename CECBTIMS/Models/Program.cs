@@ -9,7 +9,7 @@ using System.Web;
  */
 namespace CECBTIMS.Models
 {
-    public class Program
+    public class Program : BaseCols
     {
         public int Id { get; set; }
         public string Title { get; set; }
@@ -60,29 +60,6 @@ namespace CECBTIMS.Models
         public int? DurationInMonths { get; set; }
         public string Department { get; set; }
 
-
-        public string CreatedBy { get; set; }
-        public string UpdatedBy { get; set; }
-        public DateTime? UpdatedAt { get; set; }
-        [
-            Required,
-            DataType(DataType.Date),
-            DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)
-        ]
-        public DateTime CreatedAt
-        {
-            get
-            {
-                return this.createdAt.HasValue
-                    ? this.createdAt.Value
-                    : DateTime.Now;
-            }
-
-            set { this.createdAt = value; }
-        }
-
-        private DateTime? createdAt = null;
-
         public Currency Currency { get; set; }
         public  double? ProgramFee { get; set; }
         public double? RegistrationFee { get; set; }
@@ -93,8 +70,6 @@ namespace CECBTIMS.Models
         public double? StudentFee { get; set; }
 
 
-        [Timestamp]
-        public byte[] RowVersion { get; set; } // For optimistic concurrency;
 
         public virtual ICollection<ProgramResourcePersons> ResourcePersons { get; set; } // A program can have multiple resource persons
         public virtual ICollection<ProgramArrangement> Organizer { get; set; } // Program have only one Organizer;
