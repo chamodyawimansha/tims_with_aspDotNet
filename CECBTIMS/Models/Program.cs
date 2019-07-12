@@ -26,7 +26,12 @@ namespace CECBTIMS.Models
             DataType(DataType.Date),
             DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)
         ]
-        public DateTime ApplicationClosingDateTime { get; set; }
+        public DateTime ApplicationClosingDate { get; set; }
+        [
+            Required,
+            DataType(DataType.Time)
+        ]
+        public byte ApplicationClosingTime { get; set; }
         public string Brochure { get; set; } // File upload: File Name
 
 

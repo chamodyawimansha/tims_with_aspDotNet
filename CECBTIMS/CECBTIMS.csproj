@@ -208,6 +208,18 @@
     <Compile Include="Migrations\201907110645249_ProgramAndOrganizerCreatedAtUpdated.Designer.cs">
       <DependentUpon>201907110645249_ProgramAndOrganizerCreatedAtUpdated.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201907120816557_ProgramClosingDateTimeSpanRemoved.cs" />
+    <Compile Include="Migrations\201907120816557_ProgramClosingDateTimeSpanRemoved.Designer.cs">
+      <DependentUpon>201907120816557_ProgramClosingDateTimeSpanRemoved.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201907120825096_changedTheApplicationClosingDateType.cs" />
+    <Compile Include="Migrations\201907120825096_changedTheApplicationClosingDateType.Designer.cs">
+      <DependentUpon>201907120825096_changedTheApplicationClosingDateType.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201907120827278_applicationClosingTimeAdded.cs" />
+    <Compile Include="Migrations\201907120827278_applicationClosingTimeAdded.Designer.cs">
+      <DependentUpon>201907120827278_applicationClosingTimeAdded.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ViewModels\AccountViewModels.cs" />
     <Compile Include="DAL\ApplicationDbContext.cs" />
@@ -371,6 +383,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201907110645249_ProgramAndOrganizerCreatedAtUpdated.resx">
       <DependentUpon>201907110645249_ProgramAndOrganizerCreatedAtUpdated.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201907120816557_ProgramClosingDateTimeSpanRemoved.resx">
+      <DependentUpon>201907120816557_ProgramClosingDateTimeSpanRemoved.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201907120825096_changedTheApplicationClosingDateType.resx">
+      <DependentUpon>201907120825096_changedTheApplicationClosingDateType.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201907120827278_applicationClosingTimeAdded.resx">
+      <DependentUpon>201907120827278_applicationClosingTimeAdded.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
