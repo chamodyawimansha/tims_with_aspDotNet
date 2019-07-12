@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Net;
@@ -9,17 +10,42 @@ using System.Web;
 using System.Web.Mvc;
 using CECBTIMS.DAL;
 using CECBTIMS.Models;
+using CECBTIMS.ViewModels;
+using PagedList;
 
 namespace CECBTIMS.Controllers
 {
-    public class ProgramsController : Controller
+    public class ProgramsController1 : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Programs
-        public async Task<ActionResult> Index()
+        public async Task<ActionResult> Index(string search,int? rowCount, string sortOrder, string currentFilter, int? page)
         {
-            return View(await db.Programs.ToListAsync());
+            // dont get all the columns
+            //Pages
+            //Sorting
+            // Program index, Program Type, Title, Start Date, Application Closing date, Program Organiser, Action links
+            // Search field
+            //Load count 5, 10, 50, 100
+
+            ViewBag.CurrentSort = sortOrder;
+            ViewBag.serachParam = search != "" ? search : null;
+            ViewBag.TitleSortParm = "new";
+            ViewBag.TypeSortParm = "";
+            ViewBag.StartDateSortParm = "";
+            ViewBag.ClosingDateSortParm = "";
+            ViewBag.CreatedDateSortParm = "";
+            
+
+            var programs = from p in db.Programs
+                select p;
+            if (!String.IsNullOrEmpty(search))
+            {
+                programs = programs.Where(p => p.Title.Contains(search));
+            }
+
+            return View(await programs.ToArrayAsync());
         }
 
         // GET: Programs/Details/5
@@ -48,13 +74,22 @@ namespace CECBTIMS.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "Id,Title,ProgramType,StartDate,ApplicationClosingDate,ApplicationClosingTime,Brochure,EmploymentNature,EmployeeCategory,Venue,EndDate,NotifiedBy,NotifiedOn,ProgramHours,DurationInDays,DurationInMonths,Department,Currency,ProgramFee,RegistrationFee,PerPersonFee,NoShowFee,MemberFee,NonMemberFee,StudentFee,CreatedAt,UpdatedAt,CreatedBy,UpdatedBy,RowVersion")] Program program)
+        public async Task<ActionResult> Create([Bind(Include = "Id,Title,ProgramType,TargetGroup,StartDate,ApplicationClosingDateTime,Brochure,EmploymentNature,EmployeeCategory,Venue,EndDate,NotifiedBy,NotifiedOn,Requirements,ProgramHours,DurationInDays,DurationInMonths,Department,CreatedBy,UpdatedBy,UpdatedAt,CreatedAt,Currency,ProgramFee,RegistrationFee,PerPersonFee,NoShowFee,MemberFee,NonMemberFee,StudentFee")] Program program)
         {
-            if (ModelState.IsValid)
+            try
             {
-                db.Programs.Add(program);
-                await db.SaveChangesAsync();
-                return RedirectToAction("Index");
+                if (ModelState.IsValid)
+                {
+                    db.Programs.Add(program);
+                    await db.SaveChangesAsync();
+                    return RedirectToAction("Index");
+                }
+            }
+            catch (RetryLimitExceededException /* dex */)
+            {
+                //Log the error (uncomment dex variable name and add a line here to write a log.
+                ModelState.AddModelError("",
+                    "Unable to save changes. Try again, and if the problem persists see your system administrator.");
             }
 
             return View(program);
@@ -80,7 +115,7 @@ namespace CECBTIMS.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "Id,Title,ProgramType,StartDate,ApplicationClosingDate,ApplicationClosingTime,Brochure,EmploymentNature,EmployeeCategory,Venue,EndDate,NotifiedBy,NotifiedOn,ProgramHours,DurationInDays,DurationInMonths,Department,Currency,ProgramFee,RegistrationFee,PerPersonFee,NoShowFee,MemberFee,NonMemberFee,StudentFee,CreatedAt,UpdatedAt,CreatedBy,UpdatedBy,RowVersion")] Program program)
+        public async Task<ActionResult> Edit([Bind(Include = "Id,Title,ProgramType,TargetGroup,StartDate,ApplicationClosingDateTime,Brochure,EmploymentNature,EmployeeCategory,Venue,EndDate,NotifiedBy,NotifiedOn,Requirements,ProgramHours,DurationInDays,DurationInMonths,Department,CreatedBy,UpdatedBy,UpdatedAt,CreatedAt,Currency,ProgramFee,RegistrationFee,PerPersonFee,NoShowFee,MemberFee,NonMemberFee,StudentFee,RowVersion")] Program program)
         {
             if (ModelState.IsValid)
             {

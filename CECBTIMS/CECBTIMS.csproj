@@ -177,6 +177,7 @@
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\OrganizersController.cs" />
     <Compile Include="Controllers\ProgramsController.cs" />
+    <Compile Include="Controllers\ProgramsController1.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -184,41 +185,9 @@
     <Compile Include="Migrations\201907101403094_initialMigration.Designer.cs">
       <DependentUpon>201907101403094_initialMigration.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201907101417348_programModelWithoutRelationships.cs" />
-    <Compile Include="Migrations\201907101417348_programModelWithoutRelationships.Designer.cs">
-      <DependentUpon>201907101417348_programModelWithoutRelationships.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201907101419193_programWithResourcePersonRelationship.cs" />
-    <Compile Include="Migrations\201907101419193_programWithResourcePersonRelationship.Designer.cs">
-      <DependentUpon>201907101419193_programWithResourcePersonRelationship.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201907101420585_programWithCosts.cs" />
-    <Compile Include="Migrations\201907101420585_programWithCosts.Designer.cs">
-      <DependentUpon>201907101420585_programWithCosts.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201907101435290_ProgramResourcePersons.cs" />
-    <Compile Include="Migrations\201907101435290_ProgramResourcePersons.Designer.cs">
-      <DependentUpon>201907101435290_ProgramResourcePersons.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201907101450096_programOrganizer.cs" />
-    <Compile Include="Migrations\201907101450096_programOrganizer.Designer.cs">
-      <DependentUpon>201907101450096_programOrganizer.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201907110645249_ProgramAndOrganizerCreatedAtUpdated.cs" />
-    <Compile Include="Migrations\201907110645249_ProgramAndOrganizerCreatedAtUpdated.Designer.cs">
-      <DependentUpon>201907110645249_ProgramAndOrganizerCreatedAtUpdated.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201907120816557_ProgramClosingDateTimeSpanRemoved.cs" />
-    <Compile Include="Migrations\201907120816557_ProgramClosingDateTimeSpanRemoved.Designer.cs">
-      <DependentUpon>201907120816557_ProgramClosingDateTimeSpanRemoved.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201907120825096_changedTheApplicationClosingDateType.cs" />
-    <Compile Include="Migrations\201907120825096_changedTheApplicationClosingDateType.Designer.cs">
-      <DependentUpon>201907120825096_changedTheApplicationClosingDateType.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201907120827278_applicationClosingTimeAdded.cs" />
-    <Compile Include="Migrations\201907120827278_applicationClosingTimeAdded.Designer.cs">
-      <DependentUpon>201907120827278_applicationClosingTimeAdded.cs</DependentUpon>
+    <Compile Include="Migrations\201907121027324_programModelMigration.cs" />
+    <Compile Include="Migrations\201907121027324_programModelMigration.Designer.cs">
+      <DependentUpon>201907121027324_programModelMigration.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\BaseCols.cs" />
@@ -358,6 +327,11 @@
     <Content Include="Views\Organizers\Details.cshtml" />
     <Content Include="Views\Organizers\Edit.cshtml" />
     <Content Include="Views\Organizers\Index.cshtml" />
+    <Content Include="Views\Programs\Create.cshtml" />
+    <Content Include="Views\Programs\Delete.cshtml" />
+    <Content Include="Views\Programs\Details.cshtml" />
+    <Content Include="Views\Programs\Edit.cshtml" />
+    <Content Include="Views\Programs\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -369,32 +343,8 @@
     <EmbeddedResource Include="Migrations\201907101403094_initialMigration.resx">
       <DependentUpon>201907101403094_initialMigration.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201907101417348_programModelWithoutRelationships.resx">
-      <DependentUpon>201907101417348_programModelWithoutRelationships.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201907101419193_programWithResourcePersonRelationship.resx">
-      <DependentUpon>201907101419193_programWithResourcePersonRelationship.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201907101420585_programWithCosts.resx">
-      <DependentUpon>201907101420585_programWithCosts.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201907101435290_ProgramResourcePersons.resx">
-      <DependentUpon>201907101435290_ProgramResourcePersons.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201907101450096_programOrganizer.resx">
-      <DependentUpon>201907101450096_programOrganizer.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201907110645249_ProgramAndOrganizerCreatedAtUpdated.resx">
-      <DependentUpon>201907110645249_ProgramAndOrganizerCreatedAtUpdated.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201907120816557_ProgramClosingDateTimeSpanRemoved.resx">
-      <DependentUpon>201907120816557_ProgramClosingDateTimeSpanRemoved.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201907120825096_changedTheApplicationClosingDateType.resx">
-      <DependentUpon>201907120825096_changedTheApplicationClosingDateType.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201907120827278_applicationClosingTimeAdded.resx">
-      <DependentUpon>201907120827278_applicationClosingTimeAdded.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201907121027324_programModelMigration.resx">
+      <DependentUpon>201907121027324_programModelMigration.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

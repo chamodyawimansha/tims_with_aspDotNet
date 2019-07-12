@@ -1,0 +1,257 @@
+﻿@model CECBTIMS.Models.Program
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>Program</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Title)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Title)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ProgramType)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ProgramType)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.StartDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.StartDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ApplicationClosingDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ApplicationClosingDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ApplicationClosingTime)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ApplicationClosingTime)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Brochure)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Brochure)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.EmploymentNature)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EmploymentNature)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.EmployeeCategory)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EmployeeCategory)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Venue)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Venue)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.EndDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EndDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NotifiedBy)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NotifiedBy)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NotifiedOn)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NotifiedOn)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ProgramHours)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ProgramHours)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DurationInDays)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DurationInDays)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DurationInMonths)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DurationInMonths)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Department)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Department)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Currency)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Currency)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ProgramFee)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ProgramFee)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.RegistrationFee)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.RegistrationFee)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PerPersonFee)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PerPersonFee)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NoShowFee)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NoShowFee)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.MemberFee)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MemberFee)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NonMemberFee)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NonMemberFee)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.StudentFee)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.StudentFee)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CreatedAt)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CreatedAt)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.UpdatedAt)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UpdatedAt)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CreatedBy)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CreatedBy)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.UpdatedBy)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UpdatedBy)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.RowVersion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.RowVersion)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>
