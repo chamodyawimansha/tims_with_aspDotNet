@@ -29,6 +29,15 @@ namespace CECBTIMS.Controllers
             // Search field
             //Load count 5, 10, 50, 100
 
+            ViewBag.CurrentSort = sortOrder;
+            ViewBag.serachParam = search != "" ? search : null;
+            ViewBag.TitleSortParm = "new";
+            ViewBag.TypeSortParm = "";
+            ViewBag.StartDateSortParm = "";
+            ViewBag.ClosingDateSortParm = "";
+            ViewBag.CreatedDateSortParm = "";
+            
+
             var programs = from p in db.Programs
                 select p;
             if (!String.IsNullOrEmpty(search))

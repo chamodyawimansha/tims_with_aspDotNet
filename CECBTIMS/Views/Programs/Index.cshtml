@@ -31,22 +31,39 @@
             <div class="form-group col-md-5">
                 <label class="col-form-label col-form-label-lg" for="SearchString">Find by Title :</label>
 
-                @Html.TextBox("search", ViewBag.CurrentFilter as string, new { @class = "form-control mr-sm-2 ml-2 w-100" })
+                @Html.TextBox("search", ViewBag.currentFilter as string, new { @class = "form-control mr-sm-2 ml-2 w-100" })
             </div>
 
-            <input type="submit" class="btn btn-secondary" value="Search" />
+            <input type="submit" class="btn btn-secondary mr-sm-2" value="Search" />
 
+            if (ViewBag.serachParam != null)
+             {
+                 @Html.ActionLink("Clear", "Index", ViewBag.currentFilter as string, new { @class = "btn btn-primary" })
+             }
         }
+        
+
+
 
         <table class="table table-bordered">
 
             <tr>
                 <th>#</th>
-                <th>Title</th>
-                <th>Program Type</th>
-                <th>Start Date</th>
-                <th>Application Closing Date Time</th>
-                <th>Created On</th>
+                <th>
+                    @Html.ActionLink("Title", "Index", new { sortOrder = ViewBag.TitleSortParm, currentFilter=ViewBag.CurrentFilter })
+                </th>
+                <th>
+                    @Html.ActionLink("Program Type", "Index", new { sortOrder = ViewBag.TypeSortParm, currentFilter=ViewBag.CurrentFilter })
+                </th>
+                <th>
+                    @Html.ActionLink("Start Date", "Index", new { sortOrder = ViewBag.StartDateSortParm, currentFilter=ViewBag.CurrentFilter })
+                </th>
+                <th>
+                    @Html.ActionLink("Application Closing Date Time", "Index", new { sortOrder = ViewBag.ClosingDateSortParm, currentFilter=ViewBag.CurrentFilter })
+                </th>
+                <th>
+                    @Html.ActionLink("Created Date", "Index", new { sortOrder = ViewBag.CreatedDateSortParm, currentFilter=ViewBag.CurrentFilter })
+                </th>
                 <th></th>
             </tr>
 
