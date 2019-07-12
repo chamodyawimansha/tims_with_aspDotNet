@@ -17,9 +17,32 @@ namespace CECBTIMS.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Programs
-        public async Task<ActionResult> Index()
+        public async Task<ActionResult> Index(string search, int? rowCount, string sortOrder, string currentFilter, int? page)
         {
-            return View(await db.Programs.ToListAsync());
+            // dont get all the columns
+            //Pages
+            //Sorting
+            // Program index, Program Type, Title, Start Date, Application Closing date, Program Organiser, Action links
+            // Search field
+            //Load count 5, 10, 50, 100
+
+            ViewBag.CurrentSort = sortOrder;
+            ViewBag.serachParam = search != "" ? search : null;
+            ViewBag.TitleSortParm = "new";
+            ViewBag.TypeSortParm = "";
+            ViewBag.StartDateSortParm = "";
+            ViewBag.ClosingDateSortParm = "";
+            ViewBag.CreatedDateSortParm = "";
+
+
+            var programs = from p in db.Programs
+                select p;
+            if (!String.IsNullOrEmpty(search))
+            {
+                programs = programs.Where(p => p.Title.Contains(search));
+            }
+
+            return View(await programs.ToArrayAsync());
         }
 
         // GET: Programs/Details/5
