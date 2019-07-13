@@ -21,7 +21,13 @@ namespace CECBTIMS.Controllers
         // GET: Programs
         public async Task<ActionResult> Index(string search, int? rowCount, string sortOrder, string currentFilter, int? page, int? countPerPage)
         {
-
+            /**
+             *
+             *
+             * NEED SORTING
+             *
+             *
+             */
             ViewBag.CurrentSort = sortOrder;
             ViewBag.serachParam = search != "" ? search : null;
 

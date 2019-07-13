@@ -38,3 +38,17 @@
 .tableEntryCount select {
     width: 60px;
 }
+
+.programsNavigation li {
+    border-radius: 5px;
+}
+
+.programsNavigation li:hover {
+    background: #eee;
+}
+
+.programsNavigation li:hover > a{
+    color: #000000;
+}
+
+
