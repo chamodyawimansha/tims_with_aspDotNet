@@ -1,84 +1,89 @@
-﻿//Hide the inputs at the page start
-HideAll();
+﻿$(window).ready(function() {
 
-$(window).ready(function() {
+    hideAll();
+    // Reset Select
+    resetSelectElement();
 
+    // listen to Text change
     $("select#ProgramType").change(function() {
-
-        var selectedValue = $(this).children("option:selected").text();
-
-        switch (selectedValue) {
-        case "Local":
-                ShowOne("localInput");
-                HideOthers(["foreignInput", "postGradInput","InHouseInput"]);
-            break;
-        case "Foreign":
-            alert("Foreign selected");
-            break;
-        case "InHouse":
-            alert("InHouse selected");
-            break;
-        case "PostGraduation":
-            alert("Post selected");
-            break;
-
-        default:
-            HideAll();
-        }
-
+        selectedValue = $(this).children("option:selected").text();
+        changeFormStatus(selectedValue);
     });
 
 });
 
+function changeFormStatus(value) {
+    if (value === "Local") {
+        showLocal();
+    } else if (value === "Foreign") {
+        showForeign();
+    } else if (value === "InHouse") {
+        showInHouse();
+    } else if (value === "PostGraduation") {
+        showPostGrad();
+    } else {
+        $("select#ProgramType").prop('selectedIndex', 1);
+        showLocal();
+    }
+}
 
-function ShowOne(classname)
-{
-    //get all the divs with current class
-    var elements = document.getElementsByClassName(classname);
-    //loop through them and show them
-    for (var i = 0; i < elements.length; ++i) {
-        var element = elements[i].style;
-        element.display = element.display === "none" ? "block": "";
+function resetSelectElement() {
+    $("select#ProgramType").prop('selectedIndex', 1);
+    showLocal();
+}
+
+function showLocal() {
+    $(".localInput input").prop('disabled', false);
+    hideThem("localInput", ["foreignInput", "inHouseInput", "postGradInput"]);
+}
+
+function showForeign() {
+    $(".foreignInput input").prop('disabled', false);
+    hideThem("foreignInput", ["localInput", "inHouseInput", "postGradInput"]);
+}
+
+function showPostGrad() {
+    $(".postGradInput input").prop('disabled', false);
+    hideThem("postGradInput", ["localInput", "inHouseInput", "foreignInput"]);
+}
+
+function showInHouse() {
+    $(".inHouseInput input").prop('disabled', false);
+    hideThem("inHouseInput", ["localInput", "postGradInput", "foreignInput"]);
+}
+
+function hideThem(dontHide, thingsToHide) {
+
+    var elements;
+    // get the elements to hide
+    for (var i = 0; i < thingsToHide.length; i++) {
+
+//        elements = $("." + thingsToHide[i]).not("." + dontHide);
+
+        $("." + thingsToHide[i]).each(function (i, obj) {
+            if (!$(this).hasClass(dontHide)) {
+//                console.log(obj.className);
+
+                $(this).find("input").prop('disabled', true);
+            }
+        });
+
     }
 
 }
 
-function HideOthers(classes) {
 
+function hideAll() {
+
+    $(".foreignInput input").prop('disabled', true);
+
+    $(".localInput input").prop('disabled', true);
+
+    $(".inHouseInput input").prop('disabled', true);
+
+    $(".postGradInput input").prop('disabled', true);
+    
+    $(".foreignInput #Currency").prop('disabled', true);
 }
 
-//
-//show curent input class
-//    hide others exepct contining current class
-
-
-
-function HideAll() {
-    $(".localInput").hide();
-    $(".foreignInput").hide();
-    $(".postGradInput").hide();
-    $(".InHouseInput").hide();
-}
-//
-//function ToggleLocal() {
-//
-//    var els = document.getElementsByClassName("localInput");
-//
-//    for (var i = 0; i < els.length; ++i) {
-//        var s = els[i].style;
-//        s.display = s.display === 'none' ? 'block' : 'none';
-//    }
-//
-//}
-//
-//function HidePostGrad() {
-//    $(".foreignInput").hide();
-//}
-//
-//function HideForeign() {
-//    $(".postGradInput").hide();
-//}
-//
-//function HideInHouse() {
-//    $(".InHouseInput").hide();
-//}
+//foreignInput localInput inHouseInput postGradInput

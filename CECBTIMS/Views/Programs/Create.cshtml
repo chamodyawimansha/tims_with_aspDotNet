@@ -43,7 +43,7 @@
 
     <div class="row">
         <div class="col-md-12">
-            <div class="form-group">
+            <div class="form-group foreignInput localInput inHouseInput postGradInput">
                 @Html.LabelFor(model => model.Title, htmlAttributes: new {@class = "control-label"})
                 @Html.EditorFor(model => model.Title, new {htmlAttributes = new {@class = "form-control"}})
                 @Html.ValidationMessageFor(model => model.Title, "", new {@class = "text-danger"})
@@ -52,7 +52,7 @@
     </div>
     <div class="row">
         <div class="col-md-4">
-            <div class="form-group">
+            <div class="form-group foreignInput localInput inHouseInput postGradInput">
                 @Html.LabelFor(model => model.StartDate, "Program Start On", htmlAttributes: new {@class = "control-label"})
                 @Html.EditorFor(model => model.StartDate, new {htmlAttributes = new {@class = "form-control"}})
                 @Html.ValidationMessageFor(model => model.StartDate, "", new {@class = "text-danger"})
@@ -60,7 +60,7 @@
         </div>
 
         <div class="col-md-4">
-            <div class="form-group">
+            <div class="form-group foreignInput localInput inHouseInput postGradInput">
                 @Html.LabelFor(model => model.ApplicationClosingDate, "Application Closing On", htmlAttributes: new {@class = "control-label"})
                 @Html.EditorFor(model => model.ApplicationClosingDate, new {htmlAttributes = new {@class = "form-control"}})
                 @Html.ValidationMessageFor(model => model.ApplicationClosingDate, "", new {@class = "text-danger"})
@@ -68,7 +68,7 @@
         </div>
 
         <div class="col-md-4">
-            <div class="form-group">
+            <div class="form-group foreignInput localInput inHouseInput postGradInput">
                 @Html.LabelFor(model => model.ApplicationClosingTime, "Application Closing At", htmlAttributes: new {@class = "control-label"})
                 @Html.EditorFor(model => model.ApplicationClosingTime, new {htmlAttributes = new {@class = "form-control"}})
                 @Html.ValidationMessageFor(model => model.ApplicationClosingTime, "", new {@class = "text-danger"})
@@ -167,14 +167,14 @@
 @*     </div> *@
     <div class="row" id="NotifiedContainer">
         <div class="col-md-9">
-            <div class="form-group">
+            <div class="form-group foreignInput">
                 @Html.LabelFor(model => model.NotifiedBy, "Notified By", htmlAttributes: new {@class = "control-label"})
                 @Html.EditorFor(model => model.NotifiedBy, new {htmlAttributes = new {@class = "form-control"}})
                 @Html.ValidationMessageFor(model => model.NotifiedBy, "", new {@class = "text-danger"})
             </div>
         </div>
         <div class="col-md-3">
-            <div class="form-group">
+            <div class="form-group foreignInput">
                 @Html.LabelFor(model => model.NotifiedOn, "Notified On", htmlAttributes: new {@class = "control-label"})
                 @Html.EditorFor(model => model.NotifiedOn, new {htmlAttributes = new {@class = "form-control"}})
                 @Html.ValidationMessageFor(model => model.NotifiedOn, "", new {@class = "text-danger"})
@@ -184,7 +184,7 @@
 
     <div class="row">
         <div class="col-md-12">
-            <div class="form-group">
+            <div class="form-group foreignInput localInput inHouseInput">
                 @Html.LabelFor(model => model.Venue, htmlAttributes: new {@class = "control-label"})
                 @Html.EditorFor(model => model.Venue, new {htmlAttributes = new {@class = "form-control"}})
                 @Html.ValidationMessageFor(model => model.Venue, "", new {@class = "text-danger"})
@@ -194,7 +194,7 @@
 
     <div class="row">
         <div class="col-md-12">
-            <div class="form-group">
+            <div class="form-group postGradInput">
                 @Html.LabelFor(model => model.Department, htmlAttributes: new {@class = "control-label"})
                 @Html.EditorFor(model => model.Department, new {htmlAttributes = new {@class = "form-control"}})
                 @Html.ValidationMessageFor(model => model.Department, "", new {@class = "text-danger"})
@@ -204,28 +204,28 @@
 
     <div class="row">
         <div class="col-md-4">
-            <div class="form-group">
+            <div class="form-group foreignInput">
                 @Html.LabelFor(model => model.EndDate, "Program End Date", htmlAttributes: new {@class = "control-label"})
                 @Html.EditorFor(model => model.EndDate, new {htmlAttributes = new {@class = "form-control"}})
                 @Html.ValidationMessageFor(model => model.EndDate, "", new {@class = "text-danger"})
             </div>
         </div>
         <div class="col-md-2">
-            <div class="form-group">
+            <div class="form-group inHouseInput localInput">
                 @Html.LabelFor(model => model.ProgramHours, "Program Hours", htmlAttributes: new {@class = "control-label"})
                 @Html.EditorFor(model => model.ProgramHours, new {htmlAttributes = new {@class = "form-control"}})
                 @Html.ValidationMessageFor(model => model.ProgramHours, "", new {@class = "text-danger"})
             </div>
         </div>
         <div class="col-md-3">
-            <div class="form-group">
+            <div class="form-group foreignInput">
                 @Html.LabelFor(model => model.DurationInDays, "Duration in Days", htmlAttributes: new {@class = "control-label"})
                 @Html.EditorFor(model => model.DurationInDays, new {htmlAttributes = new {@class = "form-control"}})
                 @Html.ValidationMessageFor(model => model.DurationInDays, "", new {@class = "text-danger"})
             </div>
         </div>
         <div class="col-md-3">
-            <div class="form-group">
+            <div class="form-group postGradInput">
                 @Html.LabelFor(model => model.DurationInMonths, "Duration in Months", htmlAttributes: new {@class = "control-label"})
                 @Html.EditorFor(model => model.DurationInMonths, new {htmlAttributes = new {@class = "form-control"}})
                 @Html.ValidationMessageFor(model => model.DurationInMonths, "", new {@class = "text-danger"})
@@ -234,28 +234,28 @@
     </div>
     <div class="row">
         <div class="col-md-3">
-            <div class="form-group">
+            <div class="form-group foreignInput">
                 @Html.LabelFor(model => model.Currency, htmlAttributes: new {@class = "control-label"})
                 @Html.EnumDropDownListFor(model => model.Currency, htmlAttributes: new {@class = "custom-select"})
                 @Html.ValidationMessageFor(model => model.Currency, "", new {@class = "text-danger"})
             </div>
         </div>
         <div class="col-md-3">
-            <div class="form-group">
+            <div class="form-group foreignInput localInput inHouseInput postGradInput">
                 @Html.LabelFor(model => model.ProgramFee, "Program Fee", htmlAttributes: new {@class = "control-label "})
                 @Html.EditorFor(model => model.ProgramFee, new {htmlAttributes = new {@class = "form-control"}})
                 @Html.ValidationMessageFor(model => model.ProgramFee, "", new {@class = "text-danger"})
             </div>
         </div>
         <div class="col-md-3">
-            <div class="form-group">
+            <div class="form-group postGradInput">
                 @Html.LabelFor(model => model.RegistrationFee, "Registration Fee", htmlAttributes: new {@class = "control-label"})
                 @Html.EditorFor(model => model.RegistrationFee, new {htmlAttributes = new {@class = "form-control"}})
                 @Html.ValidationMessageFor(model => model.RegistrationFee, "", new {@class = "text-danger"})
             </div>
         </div>
         <div class="col-md-3">
-            <div class="form-group">
+            <div class="form-group inHouseInput">
                 @Html.LabelFor(model => model.PerPersonFee, "Per Person Fee", htmlAttributes: new {@class = "control-label "})
                 @Html.EditorFor(model => model.PerPersonFee, new {htmlAttributes = new {@class = "form-control"}})
                 @Html.ValidationMessageFor(model => model.PerPersonFee, "", new {@class = "text-danger"})
@@ -265,28 +265,28 @@
 
     <div class="row">
         <div class="col-md-3">
-            <div class="form-group">
+            <div class="form-group inHouseInput">
                 @Html.LabelFor(model => model.NoShowFee, "No Show Fee", htmlAttributes: new {@class = "control-label "})
                 @Html.EditorFor(model => model.NoShowFee, new {htmlAttributes = new {@class = "form-control"}})
                 @Html.ValidationMessageFor(model => model.NoShowFee, "", new {@class = "text-danger"})
             </div>
         </div>
         <div class="col-md-3">
-            <div class="form-group">
+            <div class="form-group inHouseInput">
                 @Html.LabelFor(model => model.MemberFee, "Member Fee", htmlAttributes: new {@class = "control-label"})
                 @Html.EditorFor(model => model.MemberFee, new {htmlAttributes = new {@class = "form-control"}})
                 @Html.ValidationMessageFor(model => model.MemberFee, "", new {@class = "text-danger"})
             </div>
         </div>
         <div class="col-md-3">
-            <div class="form-group">
+            <div class="form-group inHouseInput">
                 @Html.LabelFor(model => model.NonMemberFee, "Non-Member Fee", htmlAttributes: new {@class = "control-label"})
                 @Html.EditorFor(model => model.NonMemberFee, new {htmlAttributes = new {@class = "form-control"}})
                 @Html.ValidationMessageFor(model => model.NonMemberFee, "", new {@class = "text-danger"})
             </div>
         </div>
         <div class="col-md-3">
-            <div class="form-group">
+            <div class="form-group inHouseInput">
                 @Html.LabelFor(model => model.StudentFee, "Student Fee", htmlAttributes: new {@class = "control-label"})
                 @Html.EditorFor(model => model.StudentFee, new {htmlAttributes = new {@class = "form-control"}})
                 @Html.ValidationMessageFor(model => model.StudentFee, "", new {@class = "text-danger"})
@@ -294,7 +294,7 @@
         </div>
     </div>
     <div class="row">
-        <div class="form-group">
+        <div class="form-group foreignInput localInput inHouseInput postGradInput">
             @Html.LabelFor(model => model.Brochure, htmlAttributes: new {@class = "control-label"})
             @Html.EditorFor(model => model.Brochure, new {htmlAttributes = new {@class = "form-control"}})
             @Html.ValidationMessageFor(model => model.Brochure, "", new {@class = "text-danger"})
@@ -315,41 +315,7 @@
 </div>
 
 
-@* <div class="form-group"> *@
-@*     @Html.LabelFor(model => model.CreatedAt, htmlAttributes: new {@class = "control-label col-md-2"}) *@
-@*     <div class="col-md-10"> *@
-@*         @Html.EditorFor(model => model.CreatedAt, new {htmlAttributes = new {@class = "form-control"}}) *@
-@*         @Html.ValidationMessageFor(model => model.CreatedAt, "", new {@class = "text-danger"}) *@
-@*     </div> *@
-@* </div> *@
-@* *@
-@* <div class="form-group"> *@
-@*     @Html.LabelFor(model => model.UpdatedAt, htmlAttributes: new {@class = "control-label col-md-2"}) *@
-@*     <div class="col-md-10"> *@
-@*         @Html.EditorFor(model => model.UpdatedAt, new {htmlAttributes = new {@class = "form-control"}}) *@
-@*         @Html.ValidationMessageFor(model => model.UpdatedAt, "", new {@class = "text-danger"}) *@
-@*     </div> *@
-@* </div> *@
-@* *@
-@* <div class="form-group"> *@
-@*     @Html.LabelFor(model => model.CreatedBy, htmlAttributes: new {@class = "control-label col-md-2"}) *@
-@*     <div class="col-md-10"> *@
-@*         @Html.EditorFor(model => model.CreatedBy, new {htmlAttributes = new {@class = "form-control"}}) *@
-@*         @Html.ValidationMessageFor(model => model.CreatedBy, "", new {@class = "text-danger"}) *@
-@*     </div> *@
-@* </div> *@
-@* *@
-@* <div class="form-group"> *@
-@*     @Html.LabelFor(model => model.UpdatedBy, htmlAttributes: new {@class = "control-label col-md-2"}) *@
-@*     <div class="col-md-10"> *@
-@*         @Html.EditorFor(model => model.UpdatedBy, new {htmlAttributes = new {@class = "form-control"}}) *@
-@*         @Html.ValidationMessageFor(model => model.UpdatedBy, "", new {@class = "text-danger"}) *@
-@*     </div> *@
-@* </div> *@
-
-
-
-
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/scripts/program-inputs.js")
 }
