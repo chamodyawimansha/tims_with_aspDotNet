@@ -31,11 +31,8 @@ namespace CECBTIMS.Models
             Required,
             DataType(DataType.Time)
         ]
-        public byte ApplicationClosingTime { get; set; }
+        public DateTime ApplicationClosingTime { get; set; }
         public string Brochure { get; set; } // File upload: File Name
-
-        public EmploymentNature? EmploymentNature { get; set; }
-        public EmployeeCategory? EmployeeCategory { get; set; }
         public string Venue { get; set; } // Not For PostGrad
         [
             DataType(DataType.Date),
@@ -49,19 +46,19 @@ namespace CECBTIMS.Models
         ]
         public DateTime? NotifiedOn { get; set; } //  For Foreign
 
-        public int? ProgramHours { get; set; } // For Local Program
-        public int? DurationInDays { get; set; }
-        public int? DurationInMonths { get; set; }
+        public byte? ProgramHours { get; set; } // For Local Program
+        public byte? DurationInDays { get; set; }
+        public byte? DurationInMonths { get; set; }
         public string Department { get; set; }
 
         public Currency Currency { get; set; }
         public double? ProgramFee { get; set; }
-        public double? RegistrationFee { get; set; }
-        public double? PerPersonFee { get; set; }
-        public double? NoShowFee { get; set; }
-        public double? MemberFee { get; set; }
-        public double? NonMemberFee { get; set; }
-        public double? StudentFee { get; set; }
+        public float? RegistrationFee { get; set; }
+        public float? PerPersonFee { get; set; }
+        public float? NoShowFee { get; set; }
+        public float? MemberFee { get; set; }
+        public float? NonMemberFee { get; set; }
+        public float? StudentFee { get; set; }
 
 
         public virtual ICollection<TargetGroup> TargetGroups { get; set; }
@@ -69,6 +66,8 @@ namespace CECBTIMS.Models
         public virtual ICollection<ProgramArrangement> Organizer { get; set; } 
         public virtual ICollection<Cost> Costs { get; set; }
         public virtual ICollection<Requirement> Requirements { get; set; }
+        public virtual ICollection<ProgramEmploymentCategory> ProgramEmploymentCategories { get; set; }
+        public virtual ICollection<ProgramEmploymentNature> ProgramEmploymentNatures { get; set; }
     }
 }
 

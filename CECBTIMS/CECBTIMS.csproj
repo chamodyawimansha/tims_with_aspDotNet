@@ -189,8 +189,18 @@
     <Compile Include="Migrations\201907121027324_programModelMigration.Designer.cs">
       <DependentUpon>201907121027324_programModelMigration.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201907130353434_applicationClosingTimeChangedToDateTime.cs" />
+    <Compile Include="Migrations\201907130353434_applicationClosingTimeChangedToDateTime.Designer.cs">
+      <DependentUpon>201907130353434_applicationClosingTimeChangedToDateTime.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201907130416431_newTwoModelsForEmployementStatus.cs" />
+    <Compile Include="Migrations\201907130416431_newTwoModelsForEmployementStatus.Designer.cs">
+      <DependentUpon>201907130416431_newTwoModelsForEmployementStatus.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\BaseCols.cs" />
+    <Compile Include="Models\ProgramEmploymentCategory.cs" />
+    <Compile Include="Models\ProgramEmploymentNature.cs" />
     <Compile Include="Models\Requirement.cs" />
     <Compile Include="Models\TargetGroup.cs" />
     <Compile Include="ViewModels\AccountViewModels.cs" />
@@ -346,6 +356,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201907121027324_programModelMigration.resx">
       <DependentUpon>201907121027324_programModelMigration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201907130353434_applicationClosingTimeChangedToDateTime.resx">
+      <DependentUpon>201907130353434_applicationClosingTimeChangedToDateTime.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201907130416431_newTwoModelsForEmployementStatus.resx">
+      <DependentUpon>201907130416431_newTwoModelsForEmployementStatus.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

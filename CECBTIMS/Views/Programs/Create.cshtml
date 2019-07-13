@@ -75,96 +75,96 @@
             </div>
         </div>
     </div>
-    <div class="row" id="EmploymentNatureContainer">
-        <div class="container">
-            <div class="col-md-12">
-                <div class="row">
-                    <label class="d-block">Employment Nature</label>
-                </div>
-                <div class="row">
-                    <div class="PermanentCheckBox checkbox-container mr-3">
-                        <div class="form-group">
-                            <div class="custom-control custom-checkbox">
-                                <input type="checkbox" class="custom-control-input" id="EmploymentNaturePermanent" name="EmploymentNature[]" value="1">
-                                <label class="custom-control-label" for="EmploymentNaturePermanent">Permanent</label>
-                            </div>
-                        </div>
-                    </div>
+@*     <div class="row" id="EmploymentNatureContainer"> *@
+@*         <div class="container"> *@
+@*             <div class="col-md-12"> *@
+@*                 <div class="row"> *@
+@*                     <label class="d-block">Employment Nature</label> *@
+@*                 </div> *@
+@*                 <div class="row"> *@
+@*                     <div class="PermanentCheckBox checkbox-container mr-3"> *@
+@*                         <div class="form-group"> *@
+@*                             <div class="custom-control custom-checkbox"> *@
+@*                                 <input type="checkbox" class="custom-control-input" id="EmploymentNaturePermanent" name="EmploymentNature[]" value="1"> *@
+@*                                 <label class="custom-control-label" for="EmploymentNaturePermanent">Permanent</label> *@
+@*                             </div> *@
+@*                         </div> *@
+@*                     </div> *@
+@* *@
+@*                     <div class="FixedContractCheckBox checkbox-container mr-3"> *@
+@*                         <div class="form-group"> *@
+@*                             <div class="custom-control custom-checkbox"> *@
+@*                                 <input type="checkbox" class="custom-control-input" id="EmploymentNatureFixedContract" name="EmploymentNature[]" value="2"> *@
+@*                                 <label class="custom-control-label" for="EmploymentNatureFixedContract">Fixed Contract</label> *@
+@*                             </div> *@
+@*                         </div> *@
+@*                     </div> *@
+@* *@
+@*                     <div class="JobContractCheckBox checkbox-container mr-3"> *@
+@*                         <div class="form-group"> *@
+@*                             <div class="custom-control custom-checkbox"> *@
+@*                                 <input type="checkbox" class="custom-control-input" id="EmploymentNatureJobContract" name="EmploymentNature[]" value="3"> *@
+@*                                 <label class="custom-control-label" for="EmploymentNatureJobContract">Job Contract</label> *@
+@*                             </div> *@
+@*                         </div> *@
+@*                     </div> *@
+@* *@
+@*                     <div class="PermanentAndConfirmCheckBox checkbox-container mr-3"> *@
+@*                         <div class="form-group"> *@
+@*                             <div class="custom-control custom-checkbox"> *@
+@*                                 <input type="checkbox" class="custom-control-input" id="EmploymentNaturePermanentAndConfirm" name="EmploymentNature[]" value="4"> *@
+@*                                 <label class="custom-control-label" for="EmploymentNaturePermanentAndConfirm">Permanent And Confirmed</label> *@
+@*                             </div> *@
+@*                         </div> *@
+@*                     </div> *@
+@*                 </div> *@
+@*                 <div class="row"> *@
+@*                     @Html.ValidationMessageFor(model => model.EmploymentNature, "", new {@class = "text-danger"}) *@
+@*                 </div> *@
+@*             </div> *@
+@*         </div> *@
+@*     </div> *@
 
-                    <div class="FixedContractCheckBox checkbox-container mr-3">
-                        <div class="form-group">
-                            <div class="custom-control custom-checkbox">
-                                <input type="checkbox" class="custom-control-input" id="EmploymentNatureFixedContract" name="EmploymentNature[]" value="2">
-                                <label class="custom-control-label" for="EmploymentNatureFixedContract">Fixed Contract</label>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="JobContractCheckBox checkbox-container mr-3">
-                        <div class="form-group">
-                            <div class="custom-control custom-checkbox">
-                                <input type="checkbox" class="custom-control-input" id="EmploymentNatureJobContract" name="EmploymentNature[]" value="3">
-                                <label class="custom-control-label" for="EmploymentNatureJobContract">Job Contract</label>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="PermanentAndConfirmCheckBox checkbox-container mr-3">
-                        <div class="form-group">
-                            <div class="custom-control custom-checkbox">
-                                <input type="checkbox" class="custom-control-input" id="EmploymentNaturePermanentAndConfirm" name="EmploymentNature[]" value="4">
-                                <label class="custom-control-label" for="EmploymentNaturePermanentAndConfirm">Permanent And Confirmed</label>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    @Html.ValidationMessageFor(model => model.EmploymentNature, "", new {@class = "text-danger"})
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-md-12" id="EmployeeCategoryContainer">
-            <div class="container">
-                <div class="row">
-                    <label class="d-block">Employee Category</label>
-                </div>
-                <div class="row">
-                    <div class="PermanentCheckBox checkbox-container mr-3">
-                        <div class="form-group">
-                            <div class="custom-control custom-checkbox">
-                                <input type="checkbox" class="custom-control-input" id="EmploymentNaturePermanent" name="EmployeeCategory[]" value="1">
-                                <label class="custom-control-label" for="EmploymentNaturePermanent">Permanent</label>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="FixedContractCheckBox checkbox-container mr-3">
-                        <div class="form-group">
-                            <div class="custom-control custom-checkbox">
-                                <input type="checkbox" class="custom-control-input" id="EmploymentNatureFixedContract" name="EmployeeCategory[]" value="2">
-                                <label class="custom-control-label" for="EmploymentNatureFixedContract">Fixed Contract</label>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="JobContractCheckBox checkbox-container mr-3">
-                        <div class="form-group">
-                            <div class="custom-control custom-checkbox">
-                                <input type="checkbox" class="custom-control-input" id="EmploymentNatureJobContract" name="EmployeeCategory[]" value="3">
-                                <label class="custom-control-label" for="EmploymentNatureJobContract">Job Contract</label>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    @Html.ValidationMessageFor(model => model.EmployeeCategory, "", new {@class = "text-danger"})
-                </div>
-            </div>
-        </div>
-    </div>
+@*     <div class="row"> *@
+@*         <div class="col-md-12" id="EmployeeCategoryContainer"> *@
+@*             <div class="container"> *@
+@*                 <div class="row"> *@
+@*                     <label class="d-block">Employee Category</label> *@
+@*                 </div> *@
+@*                 <div class="row"> *@
+@*                     <div class="PermanentCheckBox checkbox-container mr-3"> *@
+@*                         <div class="form-group"> *@
+@*                             <div class="custom-control custom-checkbox"> *@
+@*                                 <input type="checkbox" class="custom-control-input" id="EmploymentNaturePermanent" name="EmployeeCategory[]" value="1"> *@
+@*                                 <label class="custom-control-label" for="EmploymentNaturePermanent">Permanent</label> *@
+@*                             </div> *@
+@*                         </div> *@
+@*                     </div> *@
+@* *@
+@*                     <div class="FixedContractCheckBox checkbox-container mr-3"> *@
+@*                         <div class="form-group"> *@
+@*                             <div class="custom-control custom-checkbox"> *@
+@*                                 <input type="checkbox" class="custom-control-input" id="EmploymentNatureFixedContract" name="EmployeeCategory[]" value="2"> *@
+@*                                 <label class="custom-control-label" for="EmploymentNatureFixedContract">Fixed Contract</label> *@
+@*                             </div> *@
+@*                         </div> *@
+@*                     </div> *@
+@* *@
+@*                     <div class="JobContractCheckBox checkbox-container mr-3"> *@
+@*                         <div class="form-group"> *@
+@*                             <div class="custom-control custom-checkbox"> *@
+@*                                 <input type="checkbox" class="custom-control-input" id="EmploymentNatureJobContract" name="EmployeeCategory[]" value="3"> *@
+@*                                 <label class="custom-control-label" for="EmploymentNatureJobContract">Job Contract</label> *@
+@*                             </div> *@
+@*                         </div> *@
+@*                     </div> *@
+@*                 </div> *@
+@*                 <div class="row"> *@
+@*                     @Html.ValidationMessageFor(model => model.EmployeeCategory, "", new {@class = "text-danger"}) *@
+@*                 </div> *@
+@*             </div> *@
+@*         </div> *@
+@*     </div> *@
     <div class="row" id="NotifiedContainer">
         <div class="col-md-9">
             <div class="form-group">

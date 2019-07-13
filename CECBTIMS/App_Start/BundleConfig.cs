@@ -23,8 +23,8 @@ namespace CECBTIMS
                       "~/Scripts/bootstrap.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
-             //                      "~/Content/bootswatch-cosmo.css",
-             "~/Content/bootswatch-dark.css",
+             "~/Content/bootswatch-cosmo.css",
+//             "~/Content/bootswatch-dark.css",
                       "~/Content/site.css",
                       "~/Content/font-awesome.min.css"));
         }
