@@ -19,19 +19,12 @@ namespace CECBTIMS.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Programs
-        public async Task<ActionResult> Index(string search, int? rowCount, string sortOrder, string currentFilter, int? page)
+        public async Task<ActionResult> Index(string search, int? rowCount, string sortOrder, string currentFilter, int? page, int? countPerPage)
         {
-            // dont get all the columns
-            //Pages
-            //Sorting
-            // Program index, Program Type, Title, Start Date, Application Closing date, Program Organiser, Action links
-            // Search field
-            //Load count 5, 10, 50, 100
 
             ViewBag.CurrentSort = sortOrder;
             ViewBag.serachParam = search != "" ? search : null;
-//            ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
-//            ViewBag.DateSortParm = sortOrder == "Date" ? "date_desc" : "Date";
+
 
             if (search != null)
             {
@@ -43,6 +36,8 @@ namespace CECBTIMS.Controllers
             }
 
             ViewBag.CurrentFilter = search;
+            // entry count for entry count selector
+            ViewBag.entryCount = countPerPage ?? 5;
 
 
             var programs = from p in db.Programs
@@ -51,20 +46,11 @@ namespace CECBTIMS.Controllers
             {
                 programs = programs.Where(p => p.Title.Contains(search));
             }
-            //
-            //            switch (sortOrder)
-            //            {
-            //                case "name_desc":
-            //                    programs = programs.OrderByDescending(s => s.Title);
-            //                    break;
-            //                default:  // Name ascending 
-            //                    programs = programs.OrderBy(s => s.Title);
-            //                    break;
-            //            }
 
             programs = programs.OrderBy(s => s.Title);
-            var pageSize = 5;
-            var pageNumber = (page ?? 1);
+
+            var pageSize = countPerPage ?? 5;
+            var pageNumber = page ?? 1;
 
 
             return View(await programs.ToPagedListAsync(pageNumber, pageSize));

@@ -26,3 +26,15 @@
 .checkbox-container {
     display: inline-block;
 }
+
+.tableEntryCount input,select {
+    display: inline-block;
+}
+
+.tableEntryCount input {
+    width: 50px;
+}
+
+.tableEntryCount select {
+    width: 60px;
+}
