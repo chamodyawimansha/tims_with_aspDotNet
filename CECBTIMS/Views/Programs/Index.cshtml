@@ -1,4 +1,8 @@
-﻿@model IEnumerable<CECBTIMS.Models.Program>
+﻿@* @model IEnumerable<CECBTIMS.Models.Program> *@
+
+@model PagedList.IPagedList<CECBTIMS.Models.Program>
+@using  PagedList.EntityFramework;
+@using PagedList.Mvc
 
 
 
@@ -7,13 +11,13 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-@* @Html.Partial("_SystemMessages", Model) *@
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
 
 <p>
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 </p>
 
-<div class="card border-primary mb-3">
+<div class="card mb-3">
     <div class="card-header">
         <h4 class="float-left">
             CECB - Training Programs
@@ -28,21 +32,21 @@
         @* HTML Form For search Program *@
         @using (Html.BeginForm("Index", "Programs", FormMethod.Get, new { @class = "form-inline mb-3" }))
         {
-  
+
             <div class="form-group mb-2">
                 <input type="text" readonly class="form-control-plaintext" value="Find by Title :" style="width:90px">
             </div>
             <div class="form-group mx-sm-3 mb-2">
                 <label for="inputPassword2" class="sr-only">Password</label>
-                @Html.TextBox("search", ViewBag.currentFilter as string, new { @class = "form-control", placeholder="Search"})
+                @Html.TextBox("search", ViewBag.currentFilter as string, new { @class = "form-control", placeholder = "Search" })
             </div>
             <input type="submit" class="btn btn-secondary mr-sm-2 mb-2" value="Search" />
-            
+
             if (ViewBag.serachParam != null)
             {
                 @Html.ActionLink("Clear", "Index", ViewBag.currentFilter as string, new { @class = "btn btn-primary mb-2" })
             }
- 
+
         }
 
         <table class="table table-bordered">
@@ -97,6 +101,12 @@
             }
 
         </table>
+        
+        Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+        @Html.PagedListPager(Model, page => Url.Action("Index", 
+            new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
+
     </div>
 
 </div>

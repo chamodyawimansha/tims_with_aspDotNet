@@ -10,6 +10,7 @@
 
 });
 
+//Add required to right inputs
 
 function changeFormStatus(value) {
     if (value === "Local") {
@@ -67,18 +68,4 @@ function hideThem(dontHide, thingsToHide) {
 
     }
 
-}
-
-
-function hideAll() {
-
-    $(".foreignInput input").prop('disabled', true);
-
-    $(".localInput input").prop('disabled', true);
-
-    $(".inHouseInput input").prop('disabled', true);
-
-    $(".postGradInput input").prop('disabled', true);
-    
-    $(".foreignInput #Currency").prop('disabled', true);
 }

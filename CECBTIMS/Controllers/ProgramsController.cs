@@ -10,6 +10,7 @@ using System.Web;
 using System.Web.Mvc;
 using CECBTIMS.DAL;
 using CECBTIMS.Models;
+using PagedList.EntityFramework;
 
 namespace CECBTIMS.Controllers
 {
@@ -29,11 +30,19 @@ namespace CECBTIMS.Controllers
 
             ViewBag.CurrentSort = sortOrder;
             ViewBag.serachParam = search != "" ? search : null;
-            ViewBag.TitleSortParm = "new";
-            ViewBag.TypeSortParm = "";
-            ViewBag.StartDateSortParm = "";
-            ViewBag.ClosingDateSortParm = "";
-            ViewBag.CreatedDateSortParm = "";
+//            ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+//            ViewBag.DateSortParm = sortOrder == "Date" ? "date_desc" : "Date";
+
+            if (search != null)
+            {
+                page = 1;
+            }
+            else
+            {
+                search = currentFilter;
+            }
+
+            ViewBag.CurrentFilter = search;
 
 
             var programs = from p in db.Programs
@@ -42,8 +51,23 @@ namespace CECBTIMS.Controllers
             {
                 programs = programs.Where(p => p.Title.Contains(search));
             }
+            //
+            //            switch (sortOrder)
+            //            {
+            //                case "name_desc":
+            //                    programs = programs.OrderByDescending(s => s.Title);
+            //                    break;
+            //                default:  // Name ascending 
+            //                    programs = programs.OrderBy(s => s.Title);
+            //                    break;
+            //            }
 
-            return View(await programs.ToArrayAsync());
+            programs = programs.OrderBy(s => s.Title);
+            var pageSize = 5;
+            var pageNumber = (page ?? 1);
+
+
+            return View(await programs.ToPagedListAsync(pageNumber, pageSize));
         }
 
         // GET: Programs/Details/5
