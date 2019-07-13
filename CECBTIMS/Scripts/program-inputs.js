@@ -1,16 +1,15 @@
-﻿$(window).ready(function() {
-
-    hideAll();
-    // Reset Select
-    resetSelectElement();
+﻿$(window).ready(function () {
 
     // listen to Text change
-    $("select#ProgramType").change(function() {
+    $("select#ProgramType").change(function ()
+    {
         selectedValue = $(this).children("option:selected").text();
         changeFormStatus(selectedValue);
-    });
+    }).trigger("change") ;
+
 
 });
+
 
 function changeFormStatus(value) {
     if (value === "Local") {
@@ -58,11 +57,9 @@ function hideThem(dontHide, thingsToHide) {
     // get the elements to hide
     for (var i = 0; i < thingsToHide.length; i++) {
 
-//        elements = $("." + thingsToHide[i]).not("." + dontHide);
 
         $("." + thingsToHide[i]).each(function (i, obj) {
             if (!$(this).hasClass(dontHide)) {
-//                console.log(obj.className);
 
                 $(this).find("input").prop('disabled', true);
             }
@@ -85,5 +82,3 @@ function hideAll() {
     
     $(".foreignInput #Currency").prop('disabled', true);
 }
-
-//foreignInput localInput inHouseInput postGradInput
