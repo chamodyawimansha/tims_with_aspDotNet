@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
+
 /**
  * Base Program model. other 4 program types inherit this model
  */
@@ -14,36 +15,30 @@ namespace CECBTIMS.Models
         public int Id { get; set; }
 
         public string Title { get; set; }
-        public  ProgramType ProgramType { get; set; }
-        [
-            Required,
-            DataType(DataType.Date),
-            DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)
-        ]
+        public ProgramType ProgramType { get; set; }
+
+        [Required]
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime StartDate { get; set; }
-        [
-            Required,
-            DataType(DataType.Date),
-            DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)
-        ]
+
+        [Required]
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime ApplicationClosingDate { get; set; }
-        [
-            Required,
-            DataType(DataType.Time)
-        ]
-        public DateTime ApplicationClosingTime { get; set; }
+
+        [Required] [DataType(DataType.Time)] public DateTime ApplicationClosingTime { get; set; }
         public string Brochure { get; set; } // File upload: File Name
         public string Venue { get; set; } // Not For PostGrad
-        [
-            DataType(DataType.Date),
-            DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)
-        ]
+
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime? EndDate { get; set; }
+
         public string NotifiedBy { get; set; } //  For Foreign
-        [
-            DataType(DataType.Date),
-            DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)
-        ]
+
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime? NotifiedOn { get; set; } //  For Foreign
 
         public byte? ProgramHours { get; set; } // For Local Program
@@ -63,8 +58,8 @@ namespace CECBTIMS.Models
 
         public virtual ICollection<Agenda> Agendas { get; set; }
         public virtual ICollection<TargetGroup> TargetGroups { get; set; }
-        public virtual ICollection<ProgramResourcePersons> ResourcePersons { get; set; } 
-        public virtual ICollection<ProgramArrangement> Organizers { get; set; } 
+        public virtual ICollection<ProgramResourcePersons> ResourcePersons { get; set; }
+        public virtual ICollection<ProgramArrangement> Organizers { get; set; }
         public virtual ICollection<Cost> Costs { get; set; }
         public virtual ICollection<Requirement> Requirements { get; set; }
         public virtual ICollection<ProgramEmploymentCategory> ProgramEmploymentCategories { get; set; }
@@ -93,7 +88,6 @@ namespace CECBTIMS.Models
 //$table->string ('updated_by')->nullable();
 //$table->timestamps();
 //Program Hours
-
 
 
 //Foregin
