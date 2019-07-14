@@ -43,6 +43,15 @@ namespace CECBTIMS.Controllers
         {
 //            ViewBag.ProgramId = new SelectList(db.Programs, "Id", "Title");
             ViewBag.ProgramId = id;
+
+//
+//            Program for Program title
+//
+//                current target groups in as DataTable
+//
+//                    delete edit links in the programdetails view maybe
+
+
             return View();
         }
          
@@ -51,8 +60,9 @@ namespace CECBTIMS.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "Id,Name,ProgramId,CreatedAt,UpdatedAt,CreatedBy,UpdatedBy,RowVersion")] TargetGroup targetGroup)
+        public async Task<ActionResult> Create([Bind(Include = "Name,ProgramId")] TargetGroup targetGroup)
         {
+//            return Content("Save");
             if (ModelState.IsValid)
             {
                 db.TargetGroups.Add(targetGroup);
@@ -62,6 +72,7 @@ namespace CECBTIMS.Controllers
 
             ViewBag.ProgramId = new SelectList(db.Programs, "Id", "Title", targetGroup.ProgramId);
             return View(targetGroup);
+//            return Content("Saved");
         }
 
         // GET: TargetGroups/Edit/5

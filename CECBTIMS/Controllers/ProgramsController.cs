@@ -69,11 +69,12 @@ namespace CECBTIMS.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Program program = await db.Programs.FindAsync(id);
+            var program = await db.Programs.FindAsync(id);
             if (program == null)
             {
                 return HttpNotFound();
             }
+
             return View(program);
         }
 

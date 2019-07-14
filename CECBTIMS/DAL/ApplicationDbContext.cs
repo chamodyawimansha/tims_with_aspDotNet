@@ -1,4 +1,5 @@
 ﻿using System.Data.Entity;
+using System.Data.Entity.Core.Metadata.Edm;
 using System.Data.Entity.ModelConfiguration.Conventions;
 using CECBTIMS.Models;
 using Microsoft.AspNet.Identity.EntityFramework;
@@ -9,7 +10,8 @@ namespace CECBTIMS.DAL
     {
         public ApplicationDbContext() : base("DefaultConnection", throwIfV1Schema: false)
         {
-            this.Configuration.LazyLoadingEnabled = false;
+//            RelationshipSet dont work
+//            this.Configuration.LazyLoadingEnabled = false;
         }
 
         public DbSet<Program> Programs { get; set; }
@@ -29,15 +31,16 @@ namespace CECBTIMS.DAL
 
         public System.Data.Entity.DbSet<CECBTIMS.Models.TargetGroup> TargetGroups { get; set; }
 
-        //        protected override void OnModelCreating(DbModelBuilder modelBuilder)
-        //        {
-        //                Not Working with user models
-        //            modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
-        //
-        //            modelBuilder.Entity<Program>().HasMany(c => c.Instructors).WithMany(i => i.Courses)
-        //                .Map(t => t.MapLeftKey("CourseID")
-        //                    .MapRightKey("InstructorID")
-        //                    .ToTable("CourseInstructor"));
-        //        }
+        protected new void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+
+            modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
+            
+            modelBuilder.Entity<TargetGroup>()
+                .HasRequired<Program>(s => s.Program)
+                .WithMany(g => g.TargetGroups)
+                .HasForeignKey<int>(s => s.ProgramId);
+
+        }
     }
 }

@@ -1,5 +1,4 @@
-﻿@using CECBTIMS.Models
-@model CECBTIMS.Models.Program
+﻿@model CECBTIMS.Models.Program
 
 @{
     ViewBag.Title = "Details";
@@ -92,17 +91,18 @@
 <tr>
     <th>Target Group</th>
     <td colspan="3">
-        @if (Model.Organizers != null)
+
+        @if (Model.TargetGroups != null)
         {
             <ul>
                 @foreach (var item in Model.TargetGroups)
                 {
-                    <li>@Html.DisplayFor(model => item.Name)</li>
+                    <li>@Html.DisplayFor(modelItem => item.Name)</li>
                 }
             </ul>
         }
-        
-        @Html.ActionLink("Add a Target Group", "Create", "TargetGroups", new { ProgramId = Model.Id, targetGroup = "add" }, null)
+
+        @Html.ActionLink("Add a Target Group", "Create", "TargetGroups", new {id = Model.Id}, null)
     </td>
 </tr>
 
