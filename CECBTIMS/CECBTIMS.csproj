@@ -180,6 +180,7 @@
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\OrganizersController.cs" />
     <Compile Include="Controllers\ProgramsController.cs" />
+    <Compile Include="Controllers\TargetGroupsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -350,6 +351,11 @@
     <Content Include="Views\Programs\Details.cshtml" />
     <Content Include="Views\Programs\Edit.cshtml" />
     <Content Include="Views\Programs\Index.cshtml" />
+    <Content Include="Views\TargetGroups\Create.cshtml" />
+    <Content Include="Views\TargetGroups\Delete.cshtml" />
+    <Content Include="Views\TargetGroups\Details.cshtml" />
+    <Content Include="Views\TargetGroups\Edit.cshtml" />
+    <Content Include="Views\TargetGroups\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

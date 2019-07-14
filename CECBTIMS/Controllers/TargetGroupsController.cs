@@ -12,107 +12,113 @@ using CECBTIMS.Models;
 
 namespace CECBTIMS.Controllers
 {
-    public class OrganizersController : Controller
+    public class TargetGroupsController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
-        // GET: Organizers
+        // GET: TargetGroups
         public async Task<ActionResult> Index()
         {
-            return View(await db.Organizers.ToListAsync());
+            var targetGroups = db.TargetGroups.Include(t => t.Program);
+            return View(await targetGroups.ToListAsync());
         }
 
-        // GET: Organizers/Details/5
+        // GET: TargetGroups/Details/5
         public async Task<ActionResult> Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Organizer organizer = await db.Organizers.FindAsync(id);
-            if (organizer == null)
+            TargetGroup targetGroup = await db.TargetGroups.FindAsync(id);
+            if (targetGroup == null)
             {
                 return HttpNotFound();
             }
-            return View(organizer);
+            return View(targetGroup);
         }
 
-        // GET: Organizers/Create
-        public ActionResult Create(int programId)
+        // GET: TargetGroups/Create
+        public ActionResult Create(int? id)
         {
-            return Content(programId.ToString());
+//            ViewBag.ProgramId = new SelectList(db.Programs, "Id", "Title");
+            ViewBag.ProgramId = id;
+            return View();
         }
-
-        // POST: Organizers/Create
+         
+        // POST: TargetGroups/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "Id,Name,CreatedBy,CreatedAt")] Organizer organizer)
+        public async Task<ActionResult> Create([Bind(Include = "Id,Name,ProgramId,CreatedAt,UpdatedAt,CreatedBy,UpdatedBy,RowVersion")] TargetGroup targetGroup)
         {
             if (ModelState.IsValid)
             {
-                db.Organizers.Add(organizer);
+                db.TargetGroups.Add(targetGroup);
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
 
-            return View(organizer);
+            ViewBag.ProgramId = new SelectList(db.Programs, "Id", "Title", targetGroup.ProgramId);
+            return View(targetGroup);
         }
 
-        // GET: Organizers/Edit/5
+        // GET: TargetGroups/Edit/5
         public async Task<ActionResult> Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Organizer organizer = await db.Organizers.FindAsync(id);
-            if (organizer == null)
+            TargetGroup targetGroup = await db.TargetGroups.FindAsync(id);
+            if (targetGroup == null)
             {
                 return HttpNotFound();
             }
-            return View(organizer);
+            ViewBag.ProgramId = new SelectList(db.Programs, "Id", "Title", targetGroup.ProgramId);
+            return View(targetGroup);
         }
 
-        // POST: Organizers/Edit/5
+        // POST: TargetGroups/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "Id,Name,CreatedBy,CreatedAt,RowVersion")] Organizer organizer)
+        public async Task<ActionResult> Edit([Bind(Include = "Id,Name,ProgramId,CreatedAt,UpdatedAt,CreatedBy,UpdatedBy,RowVersion")] TargetGroup targetGroup)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(organizer).State = EntityState.Modified;
+                db.Entry(targetGroup).State = EntityState.Modified;
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
-            return View(organizer);
+            ViewBag.ProgramId = new SelectList(db.Programs, "Id", "Title", targetGroup.ProgramId);
+            return View(targetGroup);
         }
 
-        // GET: Organizers/Delete/5
+        // GET: TargetGroups/Delete/5
         public async Task<ActionResult> Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Organizer organizer = await db.Organizers.FindAsync(id);
-            if (organizer == null)
+            TargetGroup targetGroup = await db.TargetGroups.FindAsync(id);
+            if (targetGroup == null)
             {
                 return HttpNotFound();
             }
-            return View(organizer);
+            return View(targetGroup);
         }
 
-        // POST: Organizers/Delete/5
+        // POST: TargetGroups/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteConfirmed(int id)
         {
-            Organizer organizer = await db.Organizers.FindAsync(id);
-            db.Organizers.Remove(organizer);
+            TargetGroup targetGroup = await db.TargetGroups.FindAsync(id);
+            db.TargetGroups.Remove(targetGroup);
             await db.SaveChangesAsync();
             return RedirectToAction("Index");
         }

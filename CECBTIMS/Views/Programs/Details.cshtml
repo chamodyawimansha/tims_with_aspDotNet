@@ -83,7 +83,10 @@
                 }
             </ul>
         }
-        <a href="">Add an Organiser</a>
+
+
+
+        @Html.ActionLink("Add an Organiser", "Create", "Organizers", new { id = Model.Id, organizer = "add"}, null)
     </td>
 </tr>
 <tr>
@@ -98,7 +101,8 @@
                 }
             </ul>
         }
-        <a href="">Add a Target Group</a>
+        
+        @Html.ActionLink("Add a Target Group", "Create", "TargetGroups", new { ProgramId = Model.Id, targetGroup = "add" }, null)
     </td>
 </tr>
 

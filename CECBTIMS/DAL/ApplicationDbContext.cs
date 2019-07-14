@@ -27,6 +27,8 @@ namespace CECBTIMS.DAL
 
         public System.Data.Entity.DbSet<CECBTIMS.Models.Organizer> Organizers { get; set; }
 
+        public System.Data.Entity.DbSet<CECBTIMS.Models.TargetGroup> TargetGroups { get; set; }
+
         //        protected override void OnModelCreating(DbModelBuilder modelBuilder)
         //        {
         //                Not Working with user models
