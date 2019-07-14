@@ -199,7 +199,16 @@
     <Compile Include="Migrations\201907130416431_newTwoModelsForEmployementStatus.Designer.cs">
       <DependentUpon>201907130416431_newTwoModelsForEmployementStatus.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201907140547220_organizerToOrganizersInProgram.cs" />
+    <Compile Include="Migrations\201907140547220_organizerToOrganizersInProgram.Designer.cs">
+      <DependentUpon>201907140547220_organizerToOrganizersInProgram.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201907140728434_agendaModelCreated.cs" />
+    <Compile Include="Migrations\201907140728434_agendaModelCreated.Designer.cs">
+      <DependentUpon>201907140728434_agendaModelCreated.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\Agenda.cs" />
     <Compile Include="Models\BaseCols.cs" />
     <Compile Include="Models\ProgramEmploymentCategory.cs" />
     <Compile Include="Models\ProgramEmploymentNature.cs" />
@@ -360,6 +369,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201907130416431_newTwoModelsForEmployementStatus.resx">
       <DependentUpon>201907130416431_newTwoModelsForEmployementStatus.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201907140547220_organizerToOrganizersInProgram.resx">
+      <DependentUpon>201907140547220_organizerToOrganizersInProgram.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201907140728434_agendaModelCreated.resx">
+      <DependentUpon>201907140728434_agendaModelCreated.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
