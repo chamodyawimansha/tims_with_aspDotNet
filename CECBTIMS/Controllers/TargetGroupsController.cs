@@ -16,41 +16,17 @@ namespace CECBTIMS.Controllers
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
-        // GET: TargetGroups
-        public async Task<ActionResult> Index()
+        // GET: TargetGroups/Create
+        public ActionResult Create(int? programId, string title)
         {
-            var targetGroups = db.TargetGroups.Include(t => t.Program);
-            return View(await targetGroups.ToListAsync());
-        }
 
-        // GET: TargetGroups/Details/5
-        public async Task<ActionResult> Details(int? id)
-        {
-            if (id == null)
+            if (programId == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            TargetGroup targetGroup = await db.TargetGroups.FindAsync(id);
-            if (targetGroup == null)
-            {
-                return HttpNotFound();
-            }
-            return View(targetGroup);
-        }
 
-        // GET: TargetGroups/Create
-        public ActionResult Create(int? id)
-        {
-//            ViewBag.ProgramId = new SelectList(db.Programs, "Id", "Title");
-            ViewBag.ProgramId = id;
-
-//
-//            Program for Program title
-//
-//                current target groups in as DataTable
-//
-//                    delete edit links in the programdetails view maybe
-
+            ViewBag.ProgramId = programId;
+            ViewBag.programTitle = title;
 
             return View();
         }
@@ -62,21 +38,17 @@ namespace CECBTIMS.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create([Bind(Include = "Name,ProgramId")] TargetGroup targetGroup)
         {
-//            return Content("Save");
             if (ModelState.IsValid)
             {
                 db.TargetGroups.Add(targetGroup);
                 await db.SaveChangesAsync();
-                return RedirectToAction("Index");
             }
 
-            ViewBag.ProgramId = new SelectList(db.Programs, "Id", "Title", targetGroup.ProgramId);
-            return View(targetGroup);
-//            return Content("Saved");
+            return RedirectToAction("Details", "Programs",new{id = targetGroup.ProgramId});
         }
 
         // GET: TargetGroups/Edit/5
-        public async Task<ActionResult> Edit(int? id)
+        public async Task<ActionResult> Edit(int? id, string title)
         {
             if (id == null)
             {
@@ -87,7 +59,9 @@ namespace CECBTIMS.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.ProgramId = new SelectList(db.Programs, "Id", "Title", targetGroup.ProgramId);
+
+            ViewBag.programTitle = title;
+
             return View(targetGroup);
         }
 
@@ -96,16 +70,14 @@ namespace CECBTIMS.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "Id,Name,ProgramId,CreatedAt,UpdatedAt,CreatedBy,UpdatedBy,RowVersion")] TargetGroup targetGroup)
+        public async Task<ActionResult> Edit([Bind(Include = "Id,Name,ProgramId,RowVersion")] TargetGroup targetGroup)
         {
             if (ModelState.IsValid)
             {
                 db.Entry(targetGroup).State = EntityState.Modified;
                 await db.SaveChangesAsync();
-                return RedirectToAction("Index");
             }
-            ViewBag.ProgramId = new SelectList(db.Programs, "Id", "Title", targetGroup.ProgramId);
-            return View(targetGroup);
+            return RedirectToAction("Details", "Programs", new { id = targetGroup.ProgramId });
         }
 
         // GET: TargetGroups/Delete/5
@@ -126,12 +98,12 @@ namespace CECBTIMS.Controllers
         // POST: TargetGroups/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> DeleteConfirmed(int id)
+        public async Task<ActionResult> DeleteConfirmed(int id,int ProgramId)
         {
             TargetGroup targetGroup = await db.TargetGroups.FindAsync(id);
             db.TargetGroups.Remove(targetGroup);
             await db.SaveChangesAsync();
-            return RedirectToAction("Index");
+            return RedirectToAction("Details", "Programs", new { id = ProgramId });
         }
 
         protected override void Dispose(bool disposing)
