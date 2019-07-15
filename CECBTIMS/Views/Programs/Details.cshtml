@@ -24,7 +24,7 @@
 <div class="card-body">
 
 
-<table class="table table-striped">
+<table class="table">
 <tr>
     <th style="width: 25%; padding: 0"></th>
     <th style="width: 25%; padding: 0"></th>
@@ -48,7 +48,7 @@
                     </li>
                 }
             </ul>
-            <a href="">Add an Agenda</a>
+            @Html.ActionLink("Add an agenda", $"Create", $"Agenda", new {programId = Model.Id, programTitle = Model.Title}, new {@class = "btn btn-link"})
         </td>
     </tr>
 }
