@@ -70,42 +70,67 @@
 <tr>
     <th>Organised By</th>
     <td colspan="3">
-        @if (Model.Organizers != null)
-        {
-            <ul>
-                @foreach (var item in Model.Organizers)
+        <table class="table table-bordered">
+            <tr>
+                <th>Organisation Name</th>
+                <th style="width: 10%"></th>
+            </tr>
+            @if (Model.Organizers != null)
+            {
+                foreach (var item in Model.Organizers)
                 {
-                    <li>@Html.DisplayFor(model => item.Organizer.Name)</li>
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(model => item.Organizer.Name)
+                        </td>
+                        <td>
+                            @using (Html.BeginForm($"Delete", $"TargetGroups", "",
+                                FormMethod.Post, new {@class = "d-inline-block"}))
+                            {
+                                @Html.AntiForgeryToken()
+                                <input type="hidden" name="id" value="@item.Id"/>
+                                <input type="hidden" name="ProgramId" value="@Model.Id"/>
+                                <input type="submit" value="Remove" class="btn btn-danger btn-sm d-inline-block"/>
+                            }
+                        </td>
+                    </tr>
                 }
-            </ul>
-        }
-
-
-        @Html.ActionLink("Add an Organiser", $"Create", $"Organizers", new { programId = Model.Id, programTitle=Model.Title}, null)
+            }
+        </table>
+        Remove Not Working
+        @Html.ActionLink("Add an Organiser", $"Create", $"Organizers", new {programId = Model.Id, programTitle = Model.Title}, new {@class = "btn btn-outline-secondary"})
     </td>
 </tr>
 <tr>
     <th>Target Group(s)</th>
     <td colspan="3">
-        <ul>
+        <table class="table table-bordered">
+            <tr>
+                <th>Name</th>
+                <th style="width: 22%"></th>
+            </tr>
             @foreach (var item in Model.TargetGroups)
             {
-                <li>
-                    @Html.DisplayFor(modelItem => item.Name)
-                    @using (Html.BeginForm($"Delete", $"TargetGroups"))
-                    {
-                        @Html.AntiForgeryToken()
-                        <input type="hidden" name="id" value="@item.Id"/>
-                        <input type="hidden" name="ProgramId" value="@Model.Id"/>
-                        <input type="submit" value="Remove" class="float-right btn btn-link"/>
-                    }
-
-                    @Html.ActionLink("Edit", "Edit", "TargetGroups", new {id = item.Id}, new {@class = "float-right btn btn-link"})
-                </li>
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", "TargetGroups", new {id = item.Id}, new {@class = "btn btn-warning btn-sm d-inline-block"})
+                        @using (Html.BeginForm($"Delete", $"TargetGroups", "",
+                            FormMethod.Post, new {@class = "d-inline-block"}))
+                        {
+                            @Html.AntiForgeryToken()
+                            <input type="hidden" name="id" value="@item.Id"/>
+                            <input type="hidden" name="ProgramId" value="@Model.Id"/>
+                            <input type="submit" value="Remove" class="btn btn-danger btn-sm d-inline-block"/>
+                        }
+                    </td>
+                </tr>
             }
-        </ul>
+        </table>
 
-        @Html.ActionLink("Add a Target Group", "Create", "TargetGroups", new {programId = Model.Id, title = Model.Title}, null)
+        @Html.ActionLink("Add a Target Group", "Create", "TargetGroups", new {programId = Model.Id, title = Model.Title}, new {@class = "btn btn-outline-secondary"})
     </td>
 </tr>
 
@@ -270,7 +295,7 @@
     }
     @if (Model.ProgramType.ToString() == "Local")
     {
-        <th>@Html.DisplayNameFor(model => model.MemberFee)</th>
+        <th style="">@Html.DisplayNameFor(model => model.MemberFee)</th>
         <td>@Html.DisplayFor(model => model.MemberFee)</td>
     }
 </tr>
@@ -286,19 +311,34 @@
 <tr>
     <th>Other Costs and Fees</th>
     <td colspan="3">
-        @if (Model.Costs != null)
-        {
-            <ul>
-                @foreach (var item in Model.Costs)
-                {
-                    <li>
-                        @Html.DisplayFor(model => item.Name) = @Html.DisplayFor(model => item.Value)
-                    </li>
-                }
-            </ul>
-        }
+        <table class="table table-bordered">
+            <tr>
+                <th>Cost/Fee Name</th>
+                <th>Value</th>
+                <th style="width: 25%"></th>
+            </tr>
 
-        @Html.ActionLink("Add a Cost or a Fee", $"Create",$"Costs",new{programId = Model.Id, programTitle = Model.Title}, null)
+            @if (Model.Costs != null)
+            {
+                foreach (var item in Model.Costs)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(model => item.Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => item.Value)
+                        </td>
+                        <td>
+                            @Html.ActionLink("Edit",
+                                $"Edit", $"Costs", new {id = item.Id}, new {@class = "btn btn-warning btn-sm"})
+                            @Html.ActionLink("Remove", $"Delete", $"Costs", new {id = item.Id}, new {@class = "btn btn-danger btn-sm"})
+                        </td>
+                    </tr>
+                }
+            }
+        </table>
+        @Html.ActionLink("Add a Cost or a Fee", $"Create", $"Costs", new {programId = Model.Id, programTitle = Model.Title}, new {@class = "btn btn-outline-secondary"})
     </td>
 </tr>
 <tr>
