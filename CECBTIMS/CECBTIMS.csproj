@@ -184,6 +184,7 @@
     <Compile Include="Controllers\ProgramArrangementsController.cs" />
     <Compile Include="Controllers\ProgramsController.cs" />
     <Compile Include="Controllers\RequirementsController.cs" />
+    <Compile Include="Controllers\ResourcePersonsController.cs" />
     <Compile Include="Controllers\TargetGroupsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -370,8 +371,6 @@
     <Content Include="Views\ProgramArrangements\Edit.cshtml" />
     <Content Include="Views\ProgramArrangements\Index.cshtml" />
     <Content Include="Views\Costs\Create.cshtml" />
-    <Content Include="Views\Costs\Delete.cshtml" />
-    <Content Include="Views\Costs\Details.cshtml" />
     <Content Include="Views\Costs\Edit.cshtml" />
     <Content Include="Views\Costs\Index.cshtml" />
     <Content Include="Views\Requirements\Create.cshtml" />
@@ -380,10 +379,13 @@
     <Content Include="Views\Requirements\Edit.cshtml" />
     <Content Include="Views\Requirements\Index.cshtml" />
     <Content Include="Views\Agenda\Create.cshtml" />
-    <Content Include="Views\Agenda\Delete.cshtml" />
-    <Content Include="Views\Agenda\Details.cshtml" />
     <Content Include="Views\Agenda\Edit.cshtml" />
     <Content Include="Views\Agenda\Index.cshtml" />
+    <Content Include="Views\ResourcePersons\Create.cshtml" />
+    <Content Include="Views\ResourcePersons\Delete.cshtml" />
+    <Content Include="Views\ResourcePersons\Details.cshtml" />
+    <Content Include="Views\ResourcePersons\Edit.cshtml" />
+    <Content Include="Views\ResourcePersons\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
