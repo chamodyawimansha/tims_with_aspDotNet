@@ -38,9 +38,23 @@ namespace CECBTIMS.Controllers
             return View(programArrangement);
         }
 
-        // GET: ProgramArrangements/Create
+        // GET: ProgramArrangements/CreateGet
         public async Task<ActionResult> CreateGet([Bind(Include = "ProgramId,OrganizerId")] ProgramArrangement programArrangement)
         {
+            //check the ids available
+            if (programArrangement.ProgramId == 0 || programArrangement.OrganizerId == 0)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            // check the program and org are exists in the database
+            var currentProgram = await db.Programs.FindAsync(programArrangement.ProgramId);
+            var currentOrg = await db.Organizers.FindAsync(programArrangement.OrganizerId);
+
+            if (currentProgram == null || currentOrg == null)
+            {
+                return HttpNotFound();
+            }
+
             if (ModelState.IsValid)
             {
                 db.ProgramArrangements.Add(programArrangement);
