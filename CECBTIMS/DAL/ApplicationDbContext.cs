@@ -42,5 +42,7 @@ namespace CECBTIMS.DAL
                 .HasForeignKey<int>(s => s.ProgramId);
 
         }
+
+        public System.Data.Entity.DbSet<CECBTIMS.Models.ProgramArrangement> ProgramArrangements { get; set; }
     }
 }

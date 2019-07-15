@@ -178,6 +178,8 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\OrganizersController.cs" />
+    <Compile Include="Controllers\ProgramArrangementsController.cs" />
     <Compile Include="Controllers\ProgramsController.cs" />
     <Compile Include="Controllers\TargetGroupsController.cs" />
     <Compile Include="Global.asax.cs">
@@ -350,6 +352,16 @@
     <Content Include="Views\TargetGroups\Details.cshtml" />
     <Content Include="Views\TargetGroups\Edit.cshtml" />
     <Content Include="Views\TargetGroups\Index.cshtml" />
+    <Content Include="Views\Organizers\Create.cshtml" />
+    <Content Include="Views\Organizers\Delete.cshtml" />
+    <Content Include="Views\Organizers\Details.cshtml" />
+    <Content Include="Views\Organizers\Edit.cshtml" />
+    <Content Include="Views\Organizers\Index.cshtml" />
+    <Content Include="Views\ProgramArrangements\Create.cshtml" />
+    <Content Include="Views\ProgramArrangements\Delete.cshtml" />
+    <Content Include="Views\ProgramArrangements\Details.cshtml" />
+    <Content Include="Views\ProgramArrangements\Edit.cshtml" />
+    <Content Include="Views\ProgramArrangements\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -81,8 +81,7 @@
         }
 
 
-
-        @Html.ActionLink("Add an Organiser", "Create", "Organizers", new {id = Model.Id, organizer = "add"}, null)
+        @Html.ActionLink("Add an Organiser", $"Create", $"Organizers", new { programId = Model.Id, programTitle=Model.Title}, null)
     </td>
 </tr>
 <tr>

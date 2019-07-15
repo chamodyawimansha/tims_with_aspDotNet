@@ -1,0 +1,80 @@
+﻿@model CECBTIMS.Models.Organizer
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="col-8 mx-auto">
+    <div class="card border-primary mb-3">
+        <div class="card-header">Add new Organisation for <b>@ViewBag.programTitle</b></div>
+        <div class="card-body">
+            <div class="container">
+                @using (Html.BeginForm(new{ programId = ViewBag.ProgramId }))
+                {
+                    @Html.AntiForgeryToken()
+
+                    @Html.ValidationSummary(true, "", new {@class = "text-danger"})
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Name, htmlAttributes: new {@class = "control-label"})
+                        @Html.EditorFor(model => model.Name, new {htmlAttributes = new {@class = "form-control"}})
+                        @Html.ValidationMessageFor(model => model.Name, "", new {@class = "text-danger"})
+                    </div>
+                    
+                    <div class="form-group">
+                        <div class="">
+                            <input type="submit" value="Create & Add" class="btn btn-primary"/>
+                            @Html.ActionLink("Back", $"Details", $"Programs", new {id = ViewBag.ProgramId}, new {@class = "btn btn-outline-primary"})
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+
+    <div class="card border-primary mb-3">
+        <div class="card-header">Select the Organisation From the current list</div>
+
+        <div class="card-body">
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th style="max-width: 15%; min-width: 5%">#</th>
+                    <th style="max-width: 50%">Name</th>
+                    <th style="width: 25%">Created At</th>
+                    <th style="width: 10%"></th>
+                </tr>
+                </thead>
+                <tbody>
+                @foreach (var item in ViewBag.OrgsList)
+                {
+                    <tr>
+                        <td>10</td>
+                        <td>
+                            <a href="/Organizers/Details?id=@(item.Id)">@item.Name</a>
+                        </td>
+                        <td>@item.CreatedAt</td>
+                        <td>
+                            @* @Html.ActionLink("Edit", "Edit", new {id = item.Id}, new {@class = "btn btn-warning btn-sm"}) *@
+                            @* @Html.ActionLink("Delete", "Delete", new {id = item.Id}, new {@class = "btn btn-danger btn-sm"}) *@
+
+                            @using (Html.BeginForm("Create", $"ProgramArrangements"))
+                            {
+                                @Html.AntiForgeryToken()
+                                <input type="hidden" name="OrganizerId" value="@(item.Id)"/>
+                                <input type="hidden" name="ProgramId" value="@(ViewBag.ProgramId)"/>
+
+                                <input type="submit" value="Select" class="btn btn-primary"/>
+                            }
+                        </td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
