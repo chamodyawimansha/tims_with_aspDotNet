@@ -1,0 +1,46 @@
+﻿@model CECBTIMS.Models.Cost
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="col-8 mx-auto mb-lg-5">
+    <div class="card border-primary">
+        <div class="card-header">Add a Cost or Fee</div>
+        <div class="card-body">
+            <div class="container">
+                <h4>@ViewBag.ProgramTitle</h4>
+                @using (Html.BeginForm())
+                {
+                    @Html.AntiForgeryToken()
+
+                    @Html.ValidationSummary(true, "", new {@class = "text-danger"})
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Name, htmlAttributes: new {@class = "control-label col-md-2"})
+                        @Html.EditorFor(model => model.Name, new {htmlAttributes = new {@class = "form-control"}})
+                        @Html.ValidationMessageFor(model => model.Name, "", new {@class = "text-danger"})
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Value, htmlAttributes: new {@class = "control-label col-md-2"})
+                        @Html.EditorFor(model => model.Value, new {htmlAttributes = new {@class = "form-control"}})
+                        @Html.ValidationMessageFor(model => model.Value, "", new {@class = "text-danger"})
+                    </div>
+                    <input type="hidden" name="ProgramId" value="@(ViewBag.ProgramId)"/>
+
+                    <div class="form-group">
+                        <div class="">
+                            <input type="submit" value="Create" class="btn btn-primary"/>
+                            @Html.ActionLink("Back",$"Details",$"Programs",new {id=ViewBag.ProgramId}, new{@class="btn btn-outline-primary"})
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

@@ -297,7 +297,8 @@
                 }
             </ul>
         }
-        <a href="">Add a Cost or a Fee</a>
+
+        @Html.ActionLink("Add a Cost or a Fee", $"Create",$"Costs",new{programId = Model.Id, programTitle = Model.Title}, null)
     </td>
 </tr>
 <tr>
