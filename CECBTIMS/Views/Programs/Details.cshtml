@@ -54,30 +54,36 @@
 }
 
 
-<tr>
-    <th>@Html.DisplayNameFor(model => model.StartDate)</th>
-    <td>@Html.DisplayFor(model => model.StartDate)</td>
-    @if (Model.ProgramType.ToString() == "Foreign")
-    {
-        <th>
-            @Html.DisplayNameFor(model => model.EndDate)
-        </th>
-        <td>
-            @Html.DisplayFor(model => model.EndDate)
-        </td>
-    }
-</tr>
+    <tr>
+        <th>@Html.DisplayNameFor(model => model.StartDate)</th>
+        <td>@Html.DisplayFor(model => model.StartDate)</td>
+        @if (Model.ProgramType.ToString() == "Foreign")
+        {
+            <th>
+                @Html.DisplayNameFor(model => model.EndDate)
+            </th>
+            <td>
+                @Html.DisplayFor(model => model.EndDate)
+            </td>
+        }
+        else
+        {
+            <td></td>
+            <td></td>
+        }
+    </tr>
 <tr>
     <th>Organised By</th>
     <td colspan="3">
-        <table class="table table-bordered">
-            <tr>
-                <th>Organisation Name</th>
-                <th style="width: 10%"></th>
-            </tr>
-            @if (Model.Organizers != null)
-            {
-                foreach (var item in Model.Organizers)
+
+        @if (Model.Organizers.Count > 0)
+        {
+            <table class="table table-bordered">
+                <tr>
+                    <th>Organisation Name</th>
+                    <th style="width: 10%"></th>
+                </tr>
+                @foreach (var item in Model.Organizers)
                 {
                     <tr>
                         <td>
@@ -95,44 +101,51 @@
                         </td>
                     </tr>
                 }
-            }
-        </table>
-        Remove Not Working
-        @Html.ActionLink("Add an Organiser", $"Create", $"Organizers", new {programId = Model.Id, programTitle = Model.Title}, new {@class = "btn btn-outline-secondary"})
-    </td>
-</tr>
-<tr>
-    <th>Target Group(s)</th>
-    <td colspan="3">
-        <table class="table table-bordered">
-            <tr>
-                <th>Name</th>
-                <th style="width: 22%"></th>
-            </tr>
-            @foreach (var item in Model.TargetGroups)
-            {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Name)
-                    </td>
-                    <td>
-                        @Html.ActionLink("Edit", "Edit", "TargetGroups", new {id = item.Id}, new {@class = "btn btn-warning btn-sm d-inline-block"})
-                        @using (Html.BeginForm($"Delete", $"TargetGroups", "",
-                            FormMethod.Post, new {@class = "d-inline-block"}))
-                        {
-                            @Html.AntiForgeryToken()
-                            <input type="hidden" name="id" value="@item.Id"/>
-                            <input type="hidden" name="ProgramId" value="@Model.Id"/>
-                            <input type="submit" value="Remove" class="btn btn-danger btn-sm d-inline-block"/>
-                        }
-                    </td>
-                </tr>
-            }
-        </table>
+            </table>
+        }
 
-        @Html.ActionLink("Add a Target Group", "Create", "TargetGroups", new {programId = Model.Id, title = Model.Title}, new {@class = "btn btn-outline-secondary"})
+        Remove Not Working
+        @Html.ActionLink("Add an Organiser", $"Create", $"Organizers", new {programId = Model.Id, programTitle = Model.Title}, new {@class = "btn btn-link"})
     </td>
 </tr>
+@if (Model.ProgramType.ToString() != "PostGraduation")
+{
+    <tr>
+        <th>Target Group(s)</th>
+        <td colspan="3">
+            @if (Model.TargetGroups.Count > 0)
+            {
+                <table class="table table-bordered">
+                    <tr>
+                        <th>Name</th>
+                        <th style="width: 22%"></th>
+                    </tr>
+                    @foreach (var item in Model.TargetGroups)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Name)
+                            </td>
+                            <td>
+                                @Html.ActionLink("Edit", "Edit", "TargetGroups", new {id = item.Id}, new {@class = "btn btn-warning btn-sm d-inline-block"})
+                                @using (Html.BeginForm($"Delete", $"TargetGroups", "",
+                                    FormMethod.Post, new {@class = "d-inline-block"}))
+                                {
+                                    @Html.AntiForgeryToken()
+                                    <input type="hidden" name="id" value="@item.Id"/>
+                                    <input type="hidden" name="ProgramId" value="@Model.Id"/>
+                                    <input type="submit" value="Remove" class="btn btn-danger btn-sm d-inline-block"/>
+                                }
+                            </td>
+                        </tr>
+                    }
+                </table>
+            }
+
+            @Html.ActionLink("Add a Target Group", "Create", "TargetGroups", new {programId = Model.Id, title = Model.Title}, new {@class = "btn btn-link"})
+        </td>
+    </tr>
+}
 
 @if (Model.ProgramType.ToString() != "PostGraduation")
 {
@@ -172,7 +185,7 @@
     <tr>
         <th>Resource Persons</th>
         <td colspan="3">
-            @if (Model.Organizers != null)
+            @if (Model.ResourcePersons.Count > 0)
             {
                 <ul>
                     @foreach (var item in Model.ResourcePersons)
@@ -204,7 +217,7 @@
     <tr>
         <th>Requirements</th>
         <td colspan="3">
-            @if (Model.Requirements != null)
+            @if (Model.Requirements.Count > 0)
             {
                 <ul>
                     @foreach (var item in Model.Requirements)
@@ -213,7 +226,8 @@
                     }
                 </ul>
             }
-            <a href="">Add a Requirement</a>
+
+            @Html.ActionLink("Add a Requirement", $"Create", $"Requirements", new { programId = Model.Id, programTitle = Model.Title }, new { @class = "btn btn-link" })
         </td>
     </tr>
 }
@@ -244,18 +258,23 @@
     </tr>
 }
 
-<tr>
-    @if (Model.ProgramType.ToString() == "Foreign" || Model.ProgramType.ToString() == "Local")
-    {
-        <th>@Html.DisplayNameFor(model => model.DurationInDays)</th>
-        <td>@Html.DisplayFor(model => model.DurationInDays)</td>
-    }
-    @if (Model.ProgramType.ToString() == "Foreign" || Model.ProgramType.ToString() == "PostGraduation" || Model.ProgramType.ToString() == "Local")
-    {
-        <th>@Html.DisplayNameFor(model => model.DurationInMonths)</th>
-        <td>@Html.DisplayFor(model => model.DurationInMonths)</td>
-    }
-</tr>
+    <tr>
+        @if (Model.ProgramType.ToString() == "Foreign" || Model.ProgramType.ToString() == "Local")
+        {
+            <th>@Html.DisplayNameFor(model => model.DurationInDays)</th>
+            <td>@Html.DisplayFor(model => model.DurationInDays)</td>
+        }
+        @if (Model.ProgramType.ToString() == "Foreign" || Model.ProgramType.ToString() == "PostGraduation" || Model.ProgramType.ToString() == "Local")
+        {
+            <th>@Html.DisplayNameFor(model => model.DurationInMonths)</th>
+            <td>@Html.DisplayFor(model => model.DurationInMonths)</td>
+        }
+        else
+        {
+            <td></td>
+            <td></td>
+        }
+    </tr>
 @if (Model.ProgramType.ToString() == "Local" || Model.ProgramType.ToString() == "InHouse")
 {
     <tr>
@@ -263,42 +282,57 @@
         <td colspan="3">@Html.DisplayFor(model => model.ProgramHours)</td>
     </tr>
 }
-<tr>
-    @if (Model.ProgramType.ToString() == "Foreign")
-    {
-        <th>@Html.DisplayNameFor(model => model.Currency)</th>
-        <td>@Html.DisplayFor(model => model.Currency)</td>
-    }
-    @if (Model.ProgramType.ToString() == "Foreign" || Model.ProgramType.ToString() == "PostGraduation" || Model.ProgramType.ToString() == "Local")
-    {
-        <th>@Html.DisplayNameFor(model => model.ProgramFee)</th>
-        <td>@Html.DisplayFor(model => model.ProgramFee)</td>
-    }
-</tr>
-<tr>
-    @if (Model.ProgramType.ToString() == "PostGraduation")
-    {
-        <th>@Html.DisplayNameFor(model => model.RegistrationFee)</th>
-        <td>@Html.DisplayFor(model => model.RegistrationFee)</td>
-    }
-    @if (Model.ProgramType.ToString() == "InHouse")
-    {
-        <th>@Html.DisplayNameFor(model => model.PerPersonFee)</th>
-        <td>@Html.DisplayFor(model => model.PerPersonFee)</td>
-    }
-</tr>
-<tr>
-    @if (Model.ProgramType.ToString() == "InHouse")
-    {
-        <th>@Html.DisplayNameFor(model => model.NoShowFee)</th>
-        <td>@Html.DisplayFor(model => model.NoShowFee)</td>
-    }
-    @if (Model.ProgramType.ToString() == "Local")
-    {
-        <th style="">@Html.DisplayNameFor(model => model.MemberFee)</th>
-        <td>@Html.DisplayFor(model => model.MemberFee)</td>
-    }
-</tr>
+    <tr>
+        @if (Model.ProgramType.ToString() == "Foreign")
+        {
+            <th>@Html.DisplayNameFor(model => model.Currency)</th>
+            <td>@Html.DisplayFor(model => model.Currency)</td>
+        }
+        @if (Model.ProgramType.ToString() == "Foreign" || Model.ProgramType.ToString() == "PostGraduation" || Model.ProgramType.ToString() == "Local")
+        {
+            <th>@Html.DisplayNameFor(model => model.ProgramFee)</th>
+            <td>@Html.DisplayFor(model => model.ProgramFee)</td>
+        }
+        else
+        {
+            <td></td>
+            <td></td>
+        }
+    </tr>
+    <tr>
+        @if (Model.ProgramType.ToString() == "PostGraduation")
+        {
+            <th>@Html.DisplayNameFor(model => model.RegistrationFee)</th>
+            <td>@Html.DisplayFor(model => model.RegistrationFee)</td>
+        }
+        @if (Model.ProgramType.ToString() == "InHouse")
+        {
+            <th>@Html.DisplayNameFor(model => model.PerPersonFee)</th>
+            <td>@Html.DisplayFor(model => model.PerPersonFee)</td>
+        }
+        else
+        {
+            <td></td>
+            <td></td>
+        }
+    </tr>
+    <tr>
+        @if (Model.ProgramType.ToString() == "InHouse")
+        {
+            <th>@Html.DisplayNameFor(model => model.NoShowFee)</th>
+            <td>@Html.DisplayFor(model => model.NoShowFee)</td>
+        }
+        @if (Model.ProgramType.ToString() == "Local")
+        {
+            <th style="">@Html.DisplayNameFor(model => model.MemberFee)</th>
+            <td>@Html.DisplayFor(model => model.MemberFee)</td>
+        }
+        else
+        {
+            <td></td>
+            <td></td>
+        }
+    </tr>
 @if (Model.ProgramType.ToString() == "Local")
 {
     <tr>
@@ -311,16 +345,16 @@
 <tr>
     <th>Other Costs and Fees</th>
     <td colspan="3">
-        <table class="table table-bordered">
-            <tr>
-                <th>Cost/Fee Name</th>
-                <th>Value</th>
-                <th style="width: 25%"></th>
-            </tr>
 
-            @if (Model.Costs != null)
-            {
-                foreach (var item in Model.Costs)
+        @if (Model.Costs.Count > 0)
+        {
+            <table class="table table-bordered">
+                <tr>
+                    <th>Cost/Fee Name</th>
+                    <th>Value</th>
+                    <th style="width: 25%"></th>
+                </tr>
+                @foreach (var item in Model.Costs)
                 {
                     <tr>
                         <td>
@@ -336,9 +370,10 @@
                         </td>
                     </tr>
                 }
-            }
-        </table>
-        @Html.ActionLink("Add a Cost or a Fee", $"Create", $"Costs", new {programId = Model.Id, programTitle = Model.Title}, new {@class = "btn btn-outline-secondary"})
+            </table>
+        }
+
+        @Html.ActionLink("Add a Cost or a Fee", $"Create", $"Costs", new {programId = Model.Id, programTitle = Model.Title}, new {@class = "btn btn-link"})
     </td>
 </tr>
 <tr>

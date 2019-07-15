@@ -182,6 +182,7 @@
     <Compile Include="Controllers\OrganizersController.cs" />
     <Compile Include="Controllers\ProgramArrangementsController.cs" />
     <Compile Include="Controllers\ProgramsController.cs" />
+    <Compile Include="Controllers\RequirementsController.cs" />
     <Compile Include="Controllers\TargetGroupsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -209,6 +210,10 @@
     <Compile Include="Migrations\201907140728434_agendaModelCreated.cs" />
     <Compile Include="Migrations\201907140728434_agendaModelCreated.Designer.cs">
       <DependentUpon>201907140728434_agendaModelCreated.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201907151156170_requirementIntNameToString.cs" />
+    <Compile Include="Migrations\201907151156170_requirementIntNameToString.Designer.cs">
+      <DependentUpon>201907151156170_requirementIntNameToString.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Agenda.cs" />
@@ -368,6 +373,11 @@
     <Content Include="Views\Costs\Details.cshtml" />
     <Content Include="Views\Costs\Edit.cshtml" />
     <Content Include="Views\Costs\Index.cshtml" />
+    <Content Include="Views\Requirements\Create.cshtml" />
+    <Content Include="Views\Requirements\Delete.cshtml" />
+    <Content Include="Views\Requirements\Details.cshtml" />
+    <Content Include="Views\Requirements\Edit.cshtml" />
+    <Content Include="Views\Requirements\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -393,6 +403,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201907140728434_agendaModelCreated.resx">
       <DependentUpon>201907140728434_agendaModelCreated.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201907151156170_requirementIntNameToString.resx">
+      <DependentUpon>201907151156170_requirementIntNameToString.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
