@@ -18,9 +18,11 @@ namespace CECBTIMS.Controllers
 
 
         // GET: Agenda/Create
-        public ActionResult Create()
+        public ActionResult Create(int? programId, string programTitle)
         {
-            ViewBag.ProgramId = new SelectList(db.Programs, "Id", "Title");
+            ViewBag.ProgramTitle = programTitle;
+            ViewBag.ProgramId = programId;
+
             return View();
         }
 
@@ -29,32 +31,28 @@ namespace CECBTIMS.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "Id,Name,From,To,ProgramId,CreatedAt,UpdatedAt,CreatedBy,UpdatedBy,RowVersion")] Agenda agenda)
+        public async Task<ActionResult> Create([Bind(Include = "Id,Name,From,To,ProgramId")]
+            Agenda agenda)
         {
             if (ModelState.IsValid)
             {
                 db.Agenda.Add(agenda);
                 await db.SaveChangesAsync();
-                return RedirectToAction("Index");
             }
 
-            ViewBag.ProgramId = new SelectList(db.Programs, "Id", "Title", agenda.ProgramId);
-            return View(agenda);
+            return RedirectToAction($"Details", $"Programs", new {id = agenda.ProgramId});
         }
 
         // GET: Agenda/Edit/5
-        public async Task<ActionResult> Edit(int? id)
+        public async Task<ActionResult> Edit(int? id, int? programId, string programTitle)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Agenda agenda = await db.Agenda.FindAsync(id);
-            if (agenda == null)
-            {
-                return HttpNotFound();
-            }
-            ViewBag.ProgramId = new SelectList(db.Programs, "Id", "Title", agenda.ProgramId);
+            if (id == null || programId == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            var agenda = await db.Agenda.FindAsync(id);
+            if (agenda == null) return HttpNotFound();
+
+            ViewBag.ProgramId = programId;
+            ViewBag.ProgramTitle = programTitle;
+
             return View(agenda);
         }
 
@@ -63,34 +61,33 @@ namespace CECBTIMS.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "Id,Name,From,To,ProgramId,CreatedAt,UpdatedAt,CreatedBy,UpdatedBy,RowVersion")] Agenda agenda)
+        public async Task<ActionResult> Edit([Bind(Include = "Id,Name,From,To,ProgramId,RowVersion")]
+            Agenda agenda)
         {
             if (ModelState.IsValid)
             {
                 db.Entry(agenda).State = EntityState.Modified;
                 await db.SaveChangesAsync();
-                return RedirectToAction("Index");
             }
-            ViewBag.ProgramId = new SelectList(db.Programs, "Id", "Title", agenda.ProgramId);
-            return View(agenda);
+
+
+            return RedirectToAction($"Details", $"Programs", new {id = agenda.ProgramId});
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Delete(int id)
+        public async Task<ActionResult> Delete(int id, int programId)
         {
-            Agenda agenda = await db.Agenda.FindAsync(id);
+            var agenda = await db.Agenda.FindAsync(id);
             db.Agenda.Remove(agenda);
             await db.SaveChangesAsync();
-            return RedirectToAction("Index");
+
+            return RedirectToAction($"Details", $"Programs", new {id = programId});
         }
 
         protected override void Dispose(bool disposing)
         {
-            if (disposing)
-            {
-                db.Dispose();
-            }
+            if (disposing) db.Dispose();
             base.Dispose(disposing);
         }
     }
