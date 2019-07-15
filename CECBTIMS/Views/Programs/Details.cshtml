@@ -111,12 +111,12 @@
                             @Html.DisplayFor(model => item.Organizer.Name)
                         </td>
                         <td>
-                            @using (Html.BeginForm($"Delete", $"TargetGroups", "",
+                            @using (Html.BeginForm($"Delete", $"ProgramArrangements", "",
                                 FormMethod.Post, new {@class = "d-inline-block"}))
                             {
                                 @Html.AntiForgeryToken()
                                 <input type="hidden" name="id" value="@item.Id"/>
-                                <input type="hidden" name="ProgramId" value="@Model.Id"/>
+                                <input type="hidden" name="programId" value="@Model.Id"/>
                                 <input type="submit" value="Remove" class="btn btn-danger btn-sm d-inline-block"/>
                             }
                         </td>
@@ -125,7 +125,6 @@
             </table>
         }
 
-        Remove Not Working
         @Html.ActionLink("Add an Organiser", $"Create", $"Organizers", new {programId = Model.Id, programTitle = Model.Title}, new {@class = "btn btn-link"})
     </td>
 </tr>
