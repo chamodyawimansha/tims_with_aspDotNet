@@ -370,7 +370,7 @@
                 <tr>
                     <th>Cost/Fee Name</th>
                     <th>Value</th>
-                    <th style="width: 25%"></th>
+                    <th style="width: 22%"></th>
                 </tr>
                 @foreach (var item in Model.Costs)
                 {
@@ -383,8 +383,17 @@
                         </td>
                         <td>
                             @Html.ActionLink("Edit",
-                                $"Edit", $"Costs", new {id = item.Id}, new {@class = "btn btn-warning btn-sm"})
-                            @Html.ActionLink("Remove", $"Delete", $"Costs", new {id = item.Id}, new {@class = "btn btn-danger btn-sm"})
+                                $"Edit", $"Costs", new {id = item.Id, programId = Model.Id}, new {@class = "btn btn-warning btn-sm"})
+
+                            
+                            @using (Html.BeginForm($"Delete", $"Costs", "",
+                                FormMethod.Post, new {@class = "d-inline-block"}))
+                            {
+                                @Html.AntiForgeryToken()
+                                <input type="hidden" name="id" value="@item.Id"/>
+                                <input type="hidden" name="ProgramId" value="@Model.Id"/>
+                                <input type="submit" value="Remove" class="btn btn-danger btn-sm d-inline-block"/>
+                            }
                         </td>
                     </tr>
                 }

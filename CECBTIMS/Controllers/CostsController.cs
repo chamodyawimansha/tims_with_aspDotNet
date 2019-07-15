@@ -16,28 +16,6 @@ namespace CECBTIMS.Controllers
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
-        // GET: Costs
-        public async Task<ActionResult> Index()
-        {
-            var costs = db.Costs.Include(c => c.Program);
-            return View(await costs.ToListAsync());
-        }
-
-        // GET: Costs/Details/5
-        public async Task<ActionResult> Details(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Cost cost = await db.Costs.FindAsync(id);
-            if (cost == null)
-            {
-                return HttpNotFound();
-            }
-            return View(cost);
-        }
-
         // GET: Costs/Create
         public async Task<ActionResult> Create(int? programId, string programTitle)
         {
@@ -75,7 +53,7 @@ namespace CECBTIMS.Controllers
         }
 
         // GET: Costs/Edit/5
-        public async Task<ActionResult> Edit(int? id)
+        public async Task<ActionResult> Edit(int? id, int? programId)
         {
             if (id == null)
             {
@@ -86,7 +64,7 @@ namespace CECBTIMS.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.ProgramId = new SelectList(db.Programs, "Id", "Title", cost.ProgramId);
+            ViewBag.ProgramId = programId;
             return View(cost);
         }
 
@@ -95,42 +73,27 @@ namespace CECBTIMS.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "Id,Name,Value,ProgramId,CreatedAt,UpdatedAt,CreatedBy,UpdatedBy,RowVersion")] Cost cost)
+        public async Task<ActionResult> Edit([Bind(Include = "Id,Name,Value,ProgramId, rowVersion")] Cost cost)
         {
             if (ModelState.IsValid)
             {
                 db.Entry(cost).State = EntityState.Modified;
                 await db.SaveChangesAsync();
-                return RedirectToAction("Index");
             }
-            ViewBag.ProgramId = new SelectList(db.Programs, "Id", "Title", cost.ProgramId);
-            return View(cost);
-        }
 
-        // GET: Costs/Delete/5
-        public async Task<ActionResult> Delete(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Cost cost = await db.Costs.FindAsync(id);
-            if (cost == null)
-            {
-                return HttpNotFound();
-            }
-            return View(cost);
+
+            return RedirectToAction($"Details", $"Programs", new { id = cost.ProgramId });
         }
 
         // POST: Costs/Delete/5
-        [HttpPost, ActionName("Delete")]
+        [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> DeleteConfirmed(int id)
+        public async Task<ActionResult> Delete(int id)
         {
             Cost cost = await db.Costs.FindAsync(id);
             db.Costs.Remove(cost);
             await db.SaveChangesAsync();
-            return RedirectToAction("Index");
+            return RedirectToAction($"Details", $"Programs", new { id = cost.ProgramId });
         }
 
         protected override void Dispose(bool disposing)
