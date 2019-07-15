@@ -54,24 +54,24 @@
 }
 
 
-    <tr>
-        <th>@Html.DisplayNameFor(model => model.StartDate)</th>
-        <td>@Html.DisplayFor(model => model.StartDate)</td>
-        @if (Model.ProgramType.ToString() == "Foreign")
-        {
-            <th>
-                @Html.DisplayNameFor(model => model.EndDate)
-            </th>
-            <td>
-                @Html.DisplayFor(model => model.EndDate)
-            </td>
-        }
-        else
-        {
-            <td></td>
-            <td></td>
-        }
-    </tr>
+<tr>
+    <th>@Html.DisplayNameFor(model => model.StartDate)</th>
+    <td>@Html.DisplayFor(model => model.StartDate)</td>
+    @if (Model.ProgramType.ToString() == "Foreign")
+    {
+        <th>
+            @Html.DisplayNameFor(model => model.EndDate)
+        </th>
+        <td>
+            @Html.DisplayFor(model => model.EndDate)
+        </td>
+    }
+    else
+    {
+        <td></td>
+        <td></td>
+    }
+</tr>
 <tr>
     <th>Organised By</th>
     <td colspan="3">
@@ -217,17 +217,35 @@
     <tr>
         <th>Requirements</th>
         <td colspan="3">
+
             @if (Model.Requirements.Count > 0)
             {
-                <ul>
+                <table class="table table-bordered">
+                    <tr>
+                        <th>Name</th>
+                        <th style="width: 10%"></th>
+                    </tr>
                     @foreach (var item in Model.Requirements)
                     {
-                        <li>@Html.DisplayFor(model => item.Name)</li>
+                        <tr>
+                            <td>@Html.DisplayFor(model => item.Name)</td>
+                            <td>
+                                @using (Html.BeginForm($"Delete", $"Requirements", "",
+                                    FormMethod.Post, new {@class = "d-inline-block"}))
+                                {
+                                    @Html.AntiForgeryToken()
+                                    <input type="hidden" name="id" value="@item.Id"/>
+                                    <input type="hidden" name="ProgramId" value="@Model.Id"/>
+                                    <input type="submit" value="Remove" class="btn btn-danger btn-sm d-inline-block"/>
+                                }
+                            </td>
+                        </tr>
                     }
-                </ul>
+
+                </table>
             }
 
-            @Html.ActionLink("Add a Requirement", $"Create", $"Requirements", new { programId = Model.Id, programTitle = Model.Title }, new { @class = "btn btn-link" })
+            @Html.ActionLink("Add a Requirement", $"Create", $"Requirements", new {programId = Model.Id, programTitle = Model.Title}, new {@class = "btn btn-link"})
         </td>
     </tr>
 }
@@ -258,23 +276,23 @@
     </tr>
 }
 
-    <tr>
-        @if (Model.ProgramType.ToString() == "Foreign" || Model.ProgramType.ToString() == "Local")
-        {
-            <th>@Html.DisplayNameFor(model => model.DurationInDays)</th>
-            <td>@Html.DisplayFor(model => model.DurationInDays)</td>
-        }
-        @if (Model.ProgramType.ToString() == "Foreign" || Model.ProgramType.ToString() == "PostGraduation" || Model.ProgramType.ToString() == "Local")
-        {
-            <th>@Html.DisplayNameFor(model => model.DurationInMonths)</th>
-            <td>@Html.DisplayFor(model => model.DurationInMonths)</td>
-        }
-        else
-        {
-            <td></td>
-            <td></td>
-        }
-    </tr>
+<tr>
+    @if (Model.ProgramType.ToString() == "Foreign" || Model.ProgramType.ToString() == "Local")
+    {
+        <th>@Html.DisplayNameFor(model => model.DurationInDays)</th>
+        <td>@Html.DisplayFor(model => model.DurationInDays)</td>
+    }
+    @if (Model.ProgramType.ToString() == "Foreign" || Model.ProgramType.ToString() == "PostGraduation" || Model.ProgramType.ToString() == "Local")
+    {
+        <th>@Html.DisplayNameFor(model => model.DurationInMonths)</th>
+        <td>@Html.DisplayFor(model => model.DurationInMonths)</td>
+    }
+    else
+    {
+        <td></td>
+        <td></td>
+    }
+</tr>
 @if (Model.ProgramType.ToString() == "Local" || Model.ProgramType.ToString() == "InHouse")
 {
     <tr>
@@ -282,57 +300,57 @@
         <td colspan="3">@Html.DisplayFor(model => model.ProgramHours)</td>
     </tr>
 }
-    <tr>
-        @if (Model.ProgramType.ToString() == "Foreign")
-        {
-            <th>@Html.DisplayNameFor(model => model.Currency)</th>
-            <td>@Html.DisplayFor(model => model.Currency)</td>
-        }
-        @if (Model.ProgramType.ToString() == "Foreign" || Model.ProgramType.ToString() == "PostGraduation" || Model.ProgramType.ToString() == "Local")
-        {
-            <th>@Html.DisplayNameFor(model => model.ProgramFee)</th>
-            <td>@Html.DisplayFor(model => model.ProgramFee)</td>
-        }
-        else
-        {
-            <td></td>
-            <td></td>
-        }
-    </tr>
-    <tr>
-        @if (Model.ProgramType.ToString() == "PostGraduation")
-        {
-            <th>@Html.DisplayNameFor(model => model.RegistrationFee)</th>
-            <td>@Html.DisplayFor(model => model.RegistrationFee)</td>
-        }
-        @if (Model.ProgramType.ToString() == "InHouse")
-        {
-            <th>@Html.DisplayNameFor(model => model.PerPersonFee)</th>
-            <td>@Html.DisplayFor(model => model.PerPersonFee)</td>
-        }
-        else
-        {
-            <td></td>
-            <td></td>
-        }
-    </tr>
-    <tr>
-        @if (Model.ProgramType.ToString() == "InHouse")
-        {
-            <th>@Html.DisplayNameFor(model => model.NoShowFee)</th>
-            <td>@Html.DisplayFor(model => model.NoShowFee)</td>
-        }
-        @if (Model.ProgramType.ToString() == "Local")
-        {
-            <th style="">@Html.DisplayNameFor(model => model.MemberFee)</th>
-            <td>@Html.DisplayFor(model => model.MemberFee)</td>
-        }
-        else
-        {
-            <td></td>
-            <td></td>
-        }
-    </tr>
+<tr>
+    @if (Model.ProgramType.ToString() == "Foreign")
+    {
+        <th>@Html.DisplayNameFor(model => model.Currency)</th>
+        <td>@Html.DisplayFor(model => model.Currency)</td>
+    }
+    @if (Model.ProgramType.ToString() == "Foreign" || Model.ProgramType.ToString() == "PostGraduation" || Model.ProgramType.ToString() == "Local")
+    {
+        <th>@Html.DisplayNameFor(model => model.ProgramFee)</th>
+        <td>@Html.DisplayFor(model => model.ProgramFee)</td>
+    }
+    else
+    {
+        <td></td>
+        <td></td>
+    }
+</tr>
+<tr>
+    @if (Model.ProgramType.ToString() == "PostGraduation")
+    {
+        <th>@Html.DisplayNameFor(model => model.RegistrationFee)</th>
+        <td>@Html.DisplayFor(model => model.RegistrationFee)</td>
+    }
+    @if (Model.ProgramType.ToString() == "InHouse")
+    {
+        <th>@Html.DisplayNameFor(model => model.PerPersonFee)</th>
+        <td>@Html.DisplayFor(model => model.PerPersonFee)</td>
+    }
+    else
+    {
+        <td></td>
+        <td></td>
+    }
+</tr>
+<tr>
+    @if (Model.ProgramType.ToString() == "InHouse")
+    {
+        <th>@Html.DisplayNameFor(model => model.NoShowFee)</th>
+        <td>@Html.DisplayFor(model => model.NoShowFee)</td>
+    }
+    @if (Model.ProgramType.ToString() == "Local")
+    {
+        <th style="">@Html.DisplayNameFor(model => model.MemberFee)</th>
+        <td>@Html.DisplayFor(model => model.MemberFee)</td>
+    }
+    else
+    {
+        <td></td>
+        <td></td>
+    }
+</tr>
 @if (Model.ProgramType.ToString() == "Local")
 {
     <tr>
