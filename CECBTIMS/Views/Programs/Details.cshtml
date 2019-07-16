@@ -205,21 +205,22 @@
     <tr>
         <th>Resource Persons</th>
         <td colspan="3">
-            @if (Model.ResourcePersons.Count > 0)
-            {
-                <ul>
-                    @foreach (var item in Model.ResourcePersons)
-                    {
-                        <li>
-                            @Html.DisplayFor(model => item.ResourcePerson.Name)<br/>
-                            @Html.DisplayFor(model => item.ResourcePerson.Designation)<br/>
-                            @Html.DisplayFor(model => item.ResourcePerson.Cost)<br/>
+@*             @if (Model.ResourcePersons.Count > 0) *@
+@*             { *@
+@*                 <ul> *@
+@*                     @foreach (var item in Model.ResourcePersons) *@
+@*                     { *@
+@*                         <li> *@
+@*                             @Html.DisplayFor(model => item.ResourcePerson.Name)<br /> *@
+@*                             @Html.DisplayFor(model => item.ResourcePerson.Designation)<br /> *@
+@*                             @Html.DisplayFor(model => item.ResourcePerson.Cost)<br /> *@
+@* *@
+@*                         </li> *@
+@*                     } *@
+@*                 </ul> *@
+@*             } *@
 
-                        </li>
-                    }
-                </ul>
-            }
-            <a href="">Add a Resource Person</a>
+            @Html.ActionLink("Add a resource Person", $"Create", $"ResourcePersons", new { programId = Model.Id, programTitle = Model.Title }, new { @class = "btn btn-link" })
         </td>
     </tr>
 }

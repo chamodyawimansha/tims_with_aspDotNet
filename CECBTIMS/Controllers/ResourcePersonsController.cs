@@ -1,4 +1,4 @@
-﻿ using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
@@ -19,11 +19,12 @@ namespace CECBTIMS.Controllers
         // GET: ResourcePersons
         public async Task<ActionResult> Index()
         {
-            return View(await db.ResourcePersons.ToListAsync());
+            var resourcePersons = db.ResourcePersons.Include(r => r.Program);
+            return View(await resourcePersons.ToListAsync());
         }
 
         // GET: ResourcePersons/Details/5
-        public async Task<ActionResult> Details(string id)
+        public async Task<ActionResult> Details(int? id)
         {
             if (id == null)
             {
@@ -40,6 +41,7 @@ namespace CECBTIMS.Controllers
         // GET: ResourcePersons/Create
         public ActionResult Create()
         {
+            ViewBag.ProgramId = new SelectList(db.Programs, "Id", "Title");
             return View();
         }
 
@@ -48,7 +50,7 @@ namespace CECBTIMS.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "Id,Name,Designation,Cost,CreatedAt,UpdatedAt,CreatedBy,UpdatedBy,RowVersion")] ResourcePerson resourcePerson)
+        public async Task<ActionResult> Create([Bind(Include = "Id,Name,Designation,Cost,ProgramId,CreatedAt,UpdatedAt,CreatedBy,UpdatedBy,RowVersion")] ResourcePerson resourcePerson)
         {
             if (ModelState.IsValid)
             {
@@ -57,11 +59,12 @@ namespace CECBTIMS.Controllers
                 return RedirectToAction("Index");
             }
 
+            ViewBag.ProgramId = new SelectList(db.Programs, "Id", "Title", resourcePerson.ProgramId);
             return View(resourcePerson);
         }
 
         // GET: ResourcePersons/Edit/5
-        public async Task<ActionResult> Edit(string id)
+        public async Task<ActionResult> Edit(int? id)
         {
             if (id == null)
             {
@@ -72,6 +75,7 @@ namespace CECBTIMS.Controllers
             {
                 return HttpNotFound();
             }
+            ViewBag.ProgramId = new SelectList(db.Programs, "Id", "Title", resourcePerson.ProgramId);
             return View(resourcePerson);
         }
 
@@ -80,7 +84,7 @@ namespace CECBTIMS.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "Id,Name,Designation,Cost,CreatedAt,UpdatedAt,CreatedBy,UpdatedBy,RowVersion")] ResourcePerson resourcePerson)
+        public async Task<ActionResult> Edit([Bind(Include = "Id,Name,Designation,Cost,ProgramId,CreatedAt,UpdatedAt,CreatedBy,UpdatedBy,RowVersion")] ResourcePerson resourcePerson)
         {
             if (ModelState.IsValid)
             {
@@ -88,11 +92,12 @@ namespace CECBTIMS.Controllers
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
+            ViewBag.ProgramId = new SelectList(db.Programs, "Id", "Title", resourcePerson.ProgramId);
             return View(resourcePerson);
         }
 
         // GET: ResourcePersons/Delete/5
-        public async Task<ActionResult> Delete(string id)
+        public async Task<ActionResult> Delete(int? id)
         {
             if (id == null)
             {
@@ -109,7 +114,7 @@ namespace CECBTIMS.Controllers
         // POST: ResourcePersons/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> DeleteConfirmed(string id)
+        public async Task<ActionResult> DeleteConfirmed(int id)
         {
             ResourcePerson resourcePerson = await db.ResourcePersons.FindAsync(id);
             db.ResourcePersons.Remove(resourcePerson);

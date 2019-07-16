@@ -7,11 +7,12 @@ namespace CECBTIMS.Models
 {
     public class ResourcePerson : BaseCols
     {
-        public string Id { get; set; }
-        public string Name { get; set; }
-        public string Designation { get; set; }
-        public string Cost { get; set; }
+        [Key] public int Id { get; set; }
+        [Required] public string Name { get; set; }
+        [Required] public string Designation { get; set; }
+        [Required] public double Cost { get; set; }
+        public int ProgramId { get; set; }
 
-        public virtual ICollection<ProgramResourcePersons> Programs { get; set; } // resource person can multiple programs
+        public virtual Program Program { get; set; }
     }
 }

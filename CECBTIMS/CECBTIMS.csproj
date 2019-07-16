@@ -217,6 +217,26 @@
     <Compile Include="Migrations\201907151156170_requirementIntNameToString.Designer.cs">
       <DependentUpon>201907151156170_requirementIntNameToString.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201907151604183_resourcePersonIdAndCostChanged.cs" />
+    <Compile Include="Migrations\201907151604183_resourcePersonIdAndCostChanged.Designer.cs">
+      <DependentUpon>201907151604183_resourcePersonIdAndCostChanged.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201907151623441_resourcepersonsReuiredFields.cs" />
+    <Compile Include="Migrations\201907151623441_resourcepersonsReuiredFields.Designer.cs">
+      <DependentUpon>201907151623441_resourcepersonsReuiredFields.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201907151625125_resourcePersonIdNullable.cs" />
+    <Compile Include="Migrations\201907151625125_resourcePersonIdNullable.Designer.cs">
+      <DependentUpon>201907151625125_resourcePersonIdNullable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201907160119344_resourcePersonAndProgramRelationshipChanged.cs" />
+    <Compile Include="Migrations\201907160119344_resourcePersonAndProgramRelationshipChanged.Designer.cs">
+      <DependentUpon>201907160119344_resourcePersonAndProgramRelationshipChanged.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201907160134384_keyAddedToResourcePerson.cs" />
+    <Compile Include="Migrations\201907160134384_keyAddedToResourcePerson.Designer.cs">
+      <DependentUpon>201907160134384_keyAddedToResourcePerson.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Agenda.cs" />
     <Compile Include="Models\BaseCols.cs" />
@@ -235,7 +255,6 @@
     <Compile Include="Models\Organizer.cs" />
     <Compile Include="Models\Program.cs" />
     <Compile Include="Models\ProgramArrangement.cs" />
-    <Compile Include="Models\ProgramResourcePersons.cs" />
     <Compile Include="Models\ProgramType.cs" />
     <Compile Include="Models\ResourcePerson.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -381,6 +400,11 @@
     <Content Include="Views\Agenda\Create.cshtml" />
     <Content Include="Views\Agenda\Edit.cshtml" />
     <Content Include="Views\Agenda\Index.cshtml" />
+    <Content Include="Views\ResourcePersons2\Create.cshtml" />
+    <Content Include="Views\ResourcePersons2\Delete.cshtml" />
+    <Content Include="Views\ResourcePersons2\Details.cshtml" />
+    <Content Include="Views\ResourcePersons2\Edit.cshtml" />
+    <Content Include="Views\ResourcePersons2\Index.cshtml" />
     <Content Include="Views\ResourcePersons\Create.cshtml" />
     <Content Include="Views\ResourcePersons\Delete.cshtml" />
     <Content Include="Views\ResourcePersons\Details.cshtml" />
@@ -414,6 +438,21 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201907151156170_requirementIntNameToString.resx">
       <DependentUpon>201907151156170_requirementIntNameToString.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201907151604183_resourcePersonIdAndCostChanged.resx">
+      <DependentUpon>201907151604183_resourcePersonIdAndCostChanged.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201907151623441_resourcepersonsReuiredFields.resx">
+      <DependentUpon>201907151623441_resourcepersonsReuiredFields.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201907151625125_resourcePersonIdNullable.resx">
+      <DependentUpon>201907151625125_resourcePersonIdNullable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201907160119344_resourcePersonAndProgramRelationshipChanged.resx">
+      <DependentUpon>201907160119344_resourcePersonAndProgramRelationshipChanged.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201907160134384_keyAddedToResourcePerson.resx">
+      <DependentUpon>201907160134384_keyAddedToResourcePerson.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

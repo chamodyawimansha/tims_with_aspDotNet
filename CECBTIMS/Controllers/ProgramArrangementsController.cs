@@ -134,7 +134,7 @@ namespace CECBTIMS.Controllers
         // POST: ProgramArrangements/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> DeleteConfirmed(int id, int programId)
+        public async Task<ActionResult> DeleteConfirmed(int? id, int programId)
         {
             if (id == null)
             {

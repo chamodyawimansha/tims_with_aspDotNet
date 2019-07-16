@@ -52,5 +52,6 @@ namespace CECBTIMS.DAL
         public System.Data.Entity.DbSet<CECBTIMS.Models.Agenda> Agenda { get; set; }
 
         public System.Data.Entity.DbSet<CECBTIMS.Models.ResourcePerson> ResourcePersons { get; set; }
+
     }
 }
