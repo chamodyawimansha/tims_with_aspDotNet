@@ -361,10 +361,7 @@
     <Content Include="Views\Agenda\Edit.cshtml" />
     <Content Include="Views\Agenda\Index.cshtml" />
     <Content Include="Views\ResourcePersons\Create.cshtml" />
-    <Content Include="Views\ResourcePersons\Delete.cshtml" />
-    <Content Include="Views\ResourcePersons\Details.cshtml" />
     <Content Include="Views\ResourcePersons\Edit.cshtml" />
-    <Content Include="Views\ResourcePersons\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
