@@ -38,38 +38,40 @@
     <tr>
         <th>Program Agendas</th>
         <td colspan="3">
-            <table class="table table-bordered">
-                <tr>
-                    <th>Title</th>
-                    <th>From</th>
-                    <th>To</th>
-                    <th style="width: 22%"></th>
-                </tr>
-                @foreach (var item in Model.Agendas)
-                {
-                    <tr>
-                        <td>@Html.DisplayFor(model => item.Name)</td>
-                        <td>@Html.DisplayFor(model => item.From)</td>
-                        <td>@Html.DisplayFor(model => item.To)</td>
-                        <td>
-                            @Html.ActionLink("Edit", $"Edit", $"Agenda", new {id = item.Id, programTitle = Model.Title, programId = Model.Id}, new {@class = "btn btn-warning btn-sm d-inline-block"})
 
-                            @using (Html.BeginForm($"Delete", $"Agenda", "",
-                                FormMethod.Post, new {@class = "d-inline-block"}))
-                            {
-                                @Html.AntiForgeryToken()
-                                <input type="hidden" name="id" value="@item.Id"/>
-                                 <input type="hidden" name="programId" value="@Model.Id"/>
-                                <input type="submit" value="Remove" class="btn btn-danger btn-sm d-inline-block"/>
-                            }
-                        </td>
+            @if (Model.Agendas.Count > 0)
+            {
+                <table class="table table-bordered">
+                    <tr>
+                        <th>Title</th>
+                        <th>From</th>
+                        <th>To</th>
+                        <th style="width: 22%"></th>
                     </tr>
-                }
-            </table>
-            <ul>
-                
-            </ul>
-            @Html.ActionLink("Add an agenda", $"Create", $"Agenda", new {programId = Model.Id, programTitle = Model.Title}, new {@class = "btn btn-link"})
+                    @foreach (var item in Model.Agendas)
+                    {
+                        <tr>
+                            <td>@Html.DisplayFor(model => item.Name)</td>
+                            <td>@Html.DisplayFor(model => item.From)</td>
+                            <td>@Html.DisplayFor(model => item.To)</td>
+                            <td>
+                                @Html.ActionLink("Edit", $"Edit", $"Agenda", new {id = item.Id, programTitle = Model.Title, programId = Model.Id}, new {@class = "btn btn-warning btn-sm d-inline-block"})
+
+                                @using (Html.BeginForm($"Delete", $"Agenda", "",
+                                    FormMethod.Post, new {@class = "d-inline-block"}))
+                                {
+                                    @Html.AntiForgeryToken()
+                                    <input type="hidden" name="id" value="@item.Id"/>
+                                    <input type="hidden" name="programId" value="@Model.Id"/>
+                                    <input type="submit" value="Remove" class="btn btn-danger btn-sm d-inline-block"/>
+                                }
+                            </td>
+                        </tr>
+                    }
+                </table>
+            }
+
+            @Html.ActionLink("Add an agenda", $"Create", $"Agenda", new {programId = Model.Id, programTitle = Model.Title}, new {@class = "btn btn-sm btn-outline-secondary"})
         </td>
     </tr>
 }
@@ -125,7 +127,7 @@
             </table>
         }
 
-        @Html.ActionLink("Add an Organiser", $"Create", $"Organizers", new {programId = Model.Id, programTitle = Model.Title}, new {@class = "btn btn-link"})
+        @Html.ActionLink("Add an Organiser", $"Create", $"Organizers", new {programId = Model.Id, programTitle = Model.Title}, new {@class = "btn btn-sm btn-outline-secondary"})
     </td>
 </tr>
 @if (Model.ProgramType.ToString() != "PostGraduation")
@@ -162,7 +164,7 @@
                 </table>
             }
 
-            @Html.ActionLink("Add a Target Group", "Create", "TargetGroups", new {programId = Model.Id, title = Model.Title}, new {@class = "btn btn-link"})
+            @Html.ActionLink("Add a Target Group", "Create", "TargetGroups", new {programId = Model.Id, title = Model.Title}, new {@class = "btn btn-sm btn-outline-secondary"})
         </td>
     </tr>
 }
@@ -205,22 +207,41 @@
     <tr>
         <th>Resource Persons</th>
         <td colspan="3">
-@*             @if (Model.ResourcePersons.Count > 0) *@
-@*             { *@
-@*                 <ul> *@
-@*                     @foreach (var item in Model.ResourcePersons) *@
-@*                     { *@
-@*                         <li> *@
-@*                             @Html.DisplayFor(model => item.ResourcePerson.Name)<br /> *@
-@*                             @Html.DisplayFor(model => item.ResourcePerson.Designation)<br /> *@
-@*                             @Html.DisplayFor(model => item.ResourcePerson.Cost)<br /> *@
-@* *@
-@*                         </li> *@
-@*                     } *@
-@*                 </ul> *@
-@*             } *@
+            @if (Model.ResourcePersons.Count > 0)
+            {
+                <table class="table table-bordered">
+                    <tr>
+                        <th>Name</th>
+                        <th>Designation</th>
+                        <th>Cost</th>
+                        <th></th>
+                    </tr>
+                    @foreach (var item in Model.ResourcePersons)
+                    {
+                        <tr>
+                            <td>@Html.DisplayFor(model => item.Name)</td>
+                            <td>@Html.DisplayFor(model => item.Designation)</td>
+                            <td>@Html.DisplayFor(model => item.Cost)</td>
+                            <th>
+                                @Html.ActionLink("Edit",
+                                    $"Edit", $"ResourcePersons", new {id = item.Id, programId = Model.Id, programTitle = Model.Title}, new {@class = "btn btn-warning btn-sm"})
 
-            @Html.ActionLink("Add a resource Person", $"Create", $"ResourcePersons", new { programId = Model.Id, programTitle = Model.Title }, new { @class = "btn btn-link" })
+                                @using (Html.BeginForm($"Delete", $"ResourcePersons", "",
+                                    FormMethod.Post, new {@class = "d-inline-block"}))
+                                {
+                                    @Html.AntiForgeryToken()
+                                    <input type="hidden" name="id" value="@item.Id"/>
+                                    <input type="hidden" name="ProgramId" value="@Model.Id"/>
+                                    <input type="submit" value="Remove" class="btn btn-danger btn-sm d-inline-block"/>
+                                }
+                            </th>
+
+                        </tr>
+                    }
+                </table>
+            }
+
+            @Html.ActionLink("Add a resource Person", $"Create", $"ResourcePersons", new {programId = Model.Id, programTitle = Model.Title}, new {@class = "btn btn-sm btn-outline-secondary"})
         </td>
     </tr>
 }
@@ -266,7 +287,7 @@
                 </table>
             }
 
-            @Html.ActionLink("Add a Requirement", $"Create", $"Requirements", new {programId = Model.Id, programTitle = Model.Title}, new {@class = "btn btn-link"})
+            @Html.ActionLink("Add a Requirement", $"Create", $"Requirements", new {programId = Model.Id, programTitle = Model.Title}, new {@class = "btn btn-sm btn-outline-secondary"})
         </td>
     </tr>
 }
@@ -406,7 +427,7 @@
                             @Html.ActionLink("Edit",
                                 $"Edit", $"Costs", new {id = item.Id, programId = Model.Id}, new {@class = "btn btn-warning btn-sm"})
 
-                            
+
                             @using (Html.BeginForm($"Delete", $"Costs", "",
                                 FormMethod.Post, new {@class = "d-inline-block"}))
                             {
@@ -421,7 +442,7 @@
             </table>
         }
 
-        @Html.ActionLink("Add a Cost or a Fee", $"Create", $"Costs", new {programId = Model.Id, programTitle = Model.Title}, new {@class = "btn btn-link"})
+        @Html.ActionLink("Add a Cost or a Fee", $"Create", $"Costs", new {programId = Model.Id, programTitle = Model.Title}, new {@class = "btn btn-sm btn-outline-secondary"})
     </td>
 </tr>
 <tr>

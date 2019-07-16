@@ -39,9 +39,10 @@ namespace CECBTIMS.Controllers
         }
 
         // GET: ResourcePersons/Create
-        public ActionResult Create()
+        public ActionResult Create(int programId, string programTitle)
         {
-            ViewBag.ProgramId = new SelectList(db.Programs, "Id", "Title");
+            ViewBag.ProgramId = programId;
+            ViewBag.ProgramTitle = programTitle;
             return View();
         }
 
@@ -56,26 +57,26 @@ namespace CECBTIMS.Controllers
             {
                 db.ResourcePersons.Add(resourcePerson);
                 await db.SaveChangesAsync();
-                return RedirectToAction("Index");
             }
 
-            ViewBag.ProgramId = new SelectList(db.Programs, "Id", "Title", resourcePerson.ProgramId);
-            return View(resourcePerson);
+            return RedirectToAction($"Details", $"Programs", new { id = resourcePerson.ProgramId });
         }
 
         // GET: ResourcePersons/Edit/5
-        public async Task<ActionResult> Edit(int? id)
+        public async Task<ActionResult> Edit(int? id, int? programId, string programTitle)
         {
-            if (id == null)
+            if (id == null || programId == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            ResourcePerson resourcePerson = await db.ResourcePersons.FindAsync(id);
-            if (resourcePerson == null)
+            ResourcePerson resourcePerson = await db.ResourcePersons.FindAsync(programId);
+            Program program = await db.Programs.FindAsync(id);
+            if (resourcePerson == null || program == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.ProgramId = new SelectList(db.Programs, "Id", "Title", resourcePerson.ProgramId);
+            ViewBag.ProgramId = programId;
+            ViewBag.ProgramTitle = programTitle;
             return View(resourcePerson);
         }
 
@@ -84,42 +85,28 @@ namespace CECBTIMS.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "Id,Name,Designation,Cost,ProgramId,CreatedAt,UpdatedAt,CreatedBy,UpdatedBy,RowVersion")] ResourcePerson resourcePerson)
+        public async Task<ActionResult> Edit([Bind(Include = "Id,Name,Designation,Cost,ProgramId,RowVersion")] ResourcePerson resourcePerson)
         {
             if (ModelState.IsValid)
             {
                 db.Entry(resourcePerson).State = EntityState.Modified;
                 await db.SaveChangesAsync();
-                return RedirectToAction("Index");
-            }
-            ViewBag.ProgramId = new SelectList(db.Programs, "Id", "Title", resourcePerson.ProgramId);
-            return View(resourcePerson);
-        }
 
-        // GET: ResourcePersons/Delete/5
-        public async Task<ActionResult> Delete(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            ResourcePerson resourcePerson = await db.ResourcePersons.FindAsync(id);
-            if (resourcePerson == null)
-            {
-                return HttpNotFound();
-            }
-            return View(resourcePerson);
+
+            return RedirectToAction($"Details", $"Programs", new { id = resourcePerson.ProgramId });
         }
 
         // POST: ResourcePersons/Delete/5
-        [HttpPost, ActionName("Delete")]
+        [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> DeleteConfirmed(int id)
+        public async Task<ActionResult> Delete(int id, int programId)
         {
             ResourcePerson resourcePerson = await db.ResourcePersons.FindAsync(id);
             db.ResourcePersons.Remove(resourcePerson);
             await db.SaveChangesAsync();
-            return RedirectToAction("Index");
+
+            return RedirectToAction($"Details", $"Programs", new { id = programId });
         }
 
         protected override void Dispose(bool disposing)
