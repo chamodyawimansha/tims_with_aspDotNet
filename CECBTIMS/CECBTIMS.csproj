@@ -193,49 +193,9 @@
     <Compile Include="Migrations\201907101403094_initialMigration.Designer.cs">
       <DependentUpon>201907101403094_initialMigration.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201907121027324_programModelMigration.cs" />
-    <Compile Include="Migrations\201907121027324_programModelMigration.Designer.cs">
-      <DependentUpon>201907121027324_programModelMigration.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201907130353434_applicationClosingTimeChangedToDateTime.cs" />
-    <Compile Include="Migrations\201907130353434_applicationClosingTimeChangedToDateTime.Designer.cs">
-      <DependentUpon>201907130353434_applicationClosingTimeChangedToDateTime.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201907130416431_newTwoModelsForEmployementStatus.cs" />
-    <Compile Include="Migrations\201907130416431_newTwoModelsForEmployementStatus.Designer.cs">
-      <DependentUpon>201907130416431_newTwoModelsForEmployementStatus.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201907140547220_organizerToOrganizersInProgram.cs" />
-    <Compile Include="Migrations\201907140547220_organizerToOrganizersInProgram.Designer.cs">
-      <DependentUpon>201907140547220_organizerToOrganizersInProgram.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201907140728434_agendaModelCreated.cs" />
-    <Compile Include="Migrations\201907140728434_agendaModelCreated.Designer.cs">
-      <DependentUpon>201907140728434_agendaModelCreated.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201907151156170_requirementIntNameToString.cs" />
-    <Compile Include="Migrations\201907151156170_requirementIntNameToString.Designer.cs">
-      <DependentUpon>201907151156170_requirementIntNameToString.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201907151604183_resourcePersonIdAndCostChanged.cs" />
-    <Compile Include="Migrations\201907151604183_resourcePersonIdAndCostChanged.Designer.cs">
-      <DependentUpon>201907151604183_resourcePersonIdAndCostChanged.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201907151623441_resourcepersonsReuiredFields.cs" />
-    <Compile Include="Migrations\201907151623441_resourcepersonsReuiredFields.Designer.cs">
-      <DependentUpon>201907151623441_resourcepersonsReuiredFields.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201907151625125_resourcePersonIdNullable.cs" />
-    <Compile Include="Migrations\201907151625125_resourcePersonIdNullable.Designer.cs">
-      <DependentUpon>201907151625125_resourcePersonIdNullable.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201907160119344_resourcePersonAndProgramRelationshipChanged.cs" />
-    <Compile Include="Migrations\201907160119344_resourcePersonAndProgramRelationshipChanged.Designer.cs">
-      <DependentUpon>201907160119344_resourcePersonAndProgramRelationshipChanged.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201907160134384_keyAddedToResourcePerson.cs" />
-    <Compile Include="Migrations\201907160134384_keyAddedToResourcePerson.Designer.cs">
-      <DependentUpon>201907160134384_keyAddedToResourcePerson.cs</DependentUpon>
+    <Compile Include="Migrations\201907160253307_initialTimsMigration.cs" />
+    <Compile Include="Migrations\201907160253307_initialTimsMigration.Designer.cs">
+      <DependentUpon>201907160253307_initialTimsMigration.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Agenda.cs" />
@@ -400,11 +360,6 @@
     <Content Include="Views\Agenda\Create.cshtml" />
     <Content Include="Views\Agenda\Edit.cshtml" />
     <Content Include="Views\Agenda\Index.cshtml" />
-    <Content Include="Views\ResourcePersons2\Create.cshtml" />
-    <Content Include="Views\ResourcePersons2\Delete.cshtml" />
-    <Content Include="Views\ResourcePersons2\Details.cshtml" />
-    <Content Include="Views\ResourcePersons2\Edit.cshtml" />
-    <Content Include="Views\ResourcePersons2\Index.cshtml" />
     <Content Include="Views\ResourcePersons\Create.cshtml" />
     <Content Include="Views\ResourcePersons\Delete.cshtml" />
     <Content Include="Views\ResourcePersons\Details.cshtml" />
@@ -421,38 +376,8 @@
     <EmbeddedResource Include="Migrations\201907101403094_initialMigration.resx">
       <DependentUpon>201907101403094_initialMigration.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201907121027324_programModelMigration.resx">
-      <DependentUpon>201907121027324_programModelMigration.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201907130353434_applicationClosingTimeChangedToDateTime.resx">
-      <DependentUpon>201907130353434_applicationClosingTimeChangedToDateTime.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201907130416431_newTwoModelsForEmployementStatus.resx">
-      <DependentUpon>201907130416431_newTwoModelsForEmployementStatus.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201907140547220_organizerToOrganizersInProgram.resx">
-      <DependentUpon>201907140547220_organizerToOrganizersInProgram.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201907140728434_agendaModelCreated.resx">
-      <DependentUpon>201907140728434_agendaModelCreated.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201907151156170_requirementIntNameToString.resx">
-      <DependentUpon>201907151156170_requirementIntNameToString.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201907151604183_resourcePersonIdAndCostChanged.resx">
-      <DependentUpon>201907151604183_resourcePersonIdAndCostChanged.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201907151623441_resourcepersonsReuiredFields.resx">
-      <DependentUpon>201907151623441_resourcepersonsReuiredFields.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201907151625125_resourcePersonIdNullable.resx">
-      <DependentUpon>201907151625125_resourcePersonIdNullable.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201907160119344_resourcePersonAndProgramRelationshipChanged.resx">
-      <DependentUpon>201907160119344_resourcePersonAndProgramRelationshipChanged.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201907160134384_keyAddedToResourcePerson.resx">
-      <DependentUpon>201907160134384_keyAddedToResourcePerson.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201907160253307_initialTimsMigration.resx">
+      <DependentUpon>201907160253307_initialTimsMigration.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

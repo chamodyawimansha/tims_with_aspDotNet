@@ -50,7 +50,7 @@ namespace CECBTIMS.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "Id,Name,Designation,Cost,ProgramId,CreatedAt,UpdatedAt,CreatedBy,UpdatedBy,RowVersion")] ResourcePerson resourcePerson)
+        public async Task<ActionResult> Create([Bind(Include = "Id,Name,Designation,Cost,ProgramId")] ResourcePerson resourcePerson)
         {
             if (ModelState.IsValid)
             {
