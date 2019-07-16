@@ -19,9 +19,14 @@ namespace CECBTIMS.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Organizers
-        public async Task<ActionResult> Index(int programId, string search, int? rowCount, string sortOrder, string currentFilter, int? page, int? countPerPage)
+        public async Task<ActionResult> Index(int? programId, string search, int? rowCount, string sortOrder, string currentFilter, int? page, int? countPerPage)
         {
-            ViewBag.ProgramId = programId;
+            if (programId == null || programId == 0)
+            {
+                ViewBag.ProgramId = null;
+            }
+
+            //check the availability oif the program before adding the relationship
 
             ViewBag.CurrentSort = sortOrder;
             ViewBag.serachParam = search != "" ? search : null;
@@ -124,7 +129,7 @@ namespace CECBTIMS.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "Id,Name,CreatedAt,UpdatedAt,CreatedBy,UpdatedBy,RowVersion")] Organizer organizer)
+        public async Task<ActionResult> Edit([Bind(Include = "Id,Name,RowVersion")] Organizer organizer)
         {
             if (ModelState.IsValid)
             {
@@ -132,28 +137,14 @@ namespace CECBTIMS.Controllers
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
-            return View(organizer);
-        }
 
-        // GET: Organizers/Delete/5
-        public async Task<ActionResult> Delete(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Organizer organizer = await db.Organizers.FindAsync(id);
-            if (organizer == null)
-            {
-                return HttpNotFound();
-            }
             return View(organizer);
         }
 
         // POST: Organizers/Delete/5
-        [HttpPost, ActionName("Delete")]
+        [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> DeleteConfirmed(int id)
+        public async Task<ActionResult> Delete(int id)
         {
             Organizer organizer = await db.Organizers.FindAsync(id);
             db.Organizers.Remove(organizer);
