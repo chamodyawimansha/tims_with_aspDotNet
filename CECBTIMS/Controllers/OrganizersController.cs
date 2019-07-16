@@ -10,6 +10,7 @@ using System.Web.Mvc;
 using CECBTIMS.DAL;
 using CECBTIMS.Models;
 using Microsoft.Ajax.Utilities;
+using PagedList.EntityFramework;
 
 namespace CECBTIMS.Controllers
 {
@@ -18,9 +19,42 @@ namespace CECBTIMS.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Organizers
-        public async Task<ActionResult> Index()
+        public async Task<ActionResult> Index(int programId, string search, int? rowCount, string sortOrder, string currentFilter, int? page, int? countPerPage)
         {
-            return View(await db.Organizers.ToListAsync());
+            ViewBag.ProgramId = programId;
+
+            ViewBag.CurrentSort = sortOrder;
+            ViewBag.serachParam = search != "" ? search : null;
+
+
+            if (search != null)
+            {
+                page = 1;
+            }
+            else
+            {
+                search = currentFilter;
+            }
+
+            ViewBag.CurrentFilter = search;
+            // entry count for entry count selector
+            ViewBag.entryCount = countPerPage ?? 5;
+
+
+            var orgs = from o in db.Organizers
+                select o;
+            if (!String.IsNullOrEmpty(search))
+            {
+                orgs = orgs.Where(p => p.Name.Contains(search));
+            }
+
+            orgs = orgs.OrderBy(s => s.Name);
+
+            var pageSize = countPerPage ?? 5;
+            var pageNumber = page ?? 1;
+
+
+            return View(await orgs.ToPagedListAsync(pageNumber, pageSize));
         }
 
         // GET: Organizers/Details/5

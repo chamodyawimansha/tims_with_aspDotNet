@@ -22,55 +22,12 @@
                     </div>
                     
                     <div class="form-group">
-                        <div class="">
-                            <input type="submit" value="Create & Add" class="btn btn-primary"/>
-                            @Html.ActionLink("Back", $"Details", $"Programs", new {id = ViewBag.ProgramId}, new {@class = "btn btn-outline-primary"})
-                        </div>
+                        <input type="submit" value="Create & Add" class="btn btn-primary"/>
+                        @Html.ActionLink("Back", $"Details", $"Programs", new {id = ViewBag.ProgramId}, new {@class = "btn btn-outline-primary"})
+                        @Html.ActionLink("Select From List", $"Index", $"Organizers", new {programId = ViewBag.ProgramId}, new {@class = "btn btn-outline-secondary"})
                     </div>
                 }
             </div>
-        </div>
-    </div>
-
-    <div class="card border-primary mb-3">
-        <div class="card-header">Select the Organisation From the current list</div>
-
-        <div class="card-body">
-            <table class="table table-bordered">
-                <thead>
-                <tr>
-                    <th style="max-width: 15%; min-width: 5%">#</th>
-                    <th style="max-width: 50%">Name</th>
-                    <th style="width: 25%">Created At</th>
-                    <th style="width: 10%"></th>
-                </tr>
-                </thead>
-                <tbody>
-                @foreach (var item in ViewBag.OrgsList)
-                {
-                    <tr>
-                        <td>10</td>
-                        <td>
-                            <a href="/Organizers/Details?id=@(item.Id)">@item.Name</a>
-                        </td>
-                        <td>@item.CreatedAt</td>
-                        <td>
-                            @* @Html.ActionLink("Edit", "Edit", new {id = item.Id}, new {@class = "btn btn-warning btn-sm"}) *@
-                            @* @Html.ActionLink("Delete", "Delete", new {id = item.Id}, new {@class = "btn btn-danger btn-sm"}) *@
-
-                            @using (Html.BeginForm("Create", $"ProgramArrangements"))
-                            {
-                                @Html.AntiForgeryToken()
-                                <input type="hidden" name="OrganizerId" value="@(item.Id)"/>
-                                <input type="hidden" name="ProgramId" value="@(ViewBag.ProgramId)"/>
-
-                                <input type="submit" value="Select" class="btn btn-primary"/>
-                            }
-                        </td>
-                    </tr>
-                }
-                </tbody>
-            </table>
         </div>
     </div>
 </div>
