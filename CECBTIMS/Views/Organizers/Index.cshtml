@@ -64,23 +64,21 @@
                 {
                     <tr>
                         <td>10</td>
-                        <td>
-                            <a href="/Organizers/Details?id=@(item.Id)">@item.Name</a>
-                        </td>
+                        <td>@item.Name</td>
                         <td>@item.CreatedAt</td>
                         <td>
 
                             @if (ViewBag.ProgramId == null)
                             {
-                                @Html.ActionLink("Edit", $"Edit", new {id = item.Id}, new {@class = "btn btn-warning btn-sm mr-sm-2"})
+                                @Html.ActionLink("Edit", $"Edit", new { id = item.Id }, new { @class = "btn btn-warning btn-sm mr-sm-2" })
 
                                 using (Html.BeginForm($"Delete", $"Organizers", "",
-                                     FormMethod.Post, new {@class = "d-inline-block"}))
-                                 {
-                                     @Html.AntiForgeryToken()
-                                     <input type="hidden" name="id" value="@item.Id"/>
-                                     <input type="submit" value="Remove" class="btn btn-danger btn-sm d-inline-block"/>
-                                 }
+                                    FormMethod.Post, new { @class = "d-inline-block" }))
+                                {
+                                    @Html.AntiForgeryToken()
+                                    <input type="hidden" name="id" value="@item.Id" />
+                                    <input type="submit" value="Remove" class="btn btn-danger btn-sm d-inline-block" />
+                                }
 
                             }
                             else
@@ -88,9 +86,9 @@
                                 using (Html.BeginForm("Create", $"ProgramArrangements"))
                                 {
                                     @Html.AntiForgeryToken()
-                                    <input type="hidden" name="OrganizerId" value="@(item.Id)"/>
-                                    <input type="hidden" name="ProgramId" value="@(ViewBag.ProgramId)"/>
-                                    <input type="submit" value="Select" class="btn btn-primary"/>
+                                    <input type="hidden" name="OrganizerId" value="@(item.Id)" />
+                                    <input type="hidden" name="ProgramId" value="@(ViewBag.ProgramId)" />
+                                    <input type="submit" value="Select" class="btn btn-primary" />
                                 }
                             }
                         </td>
