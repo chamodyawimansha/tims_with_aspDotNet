@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="73a43308711d49f9a4f774788b27bc84" Name="Diagram1" ZoomLevel="90">
+        <EntityTypeShape EntityType="CECB_ERPModel.cmn_Employee" Width="1.5" PointX="0.75" PointY="1.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="CECB_ERPModel.cmn_EmployeeVersion" Width="1.5" PointX="0.75" PointY="21.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="CECB_ERPModel.cmn_WorkSpace" Width="1.5" PointX="0.75" PointY="9.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="CECB_ERPModel.cmn_WorkSpaceType" Width="1.5" PointX="5.75" PointY="5.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="CECB_ERPModel.hrm_Designation" Width="1.5" PointX="8" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="CECB_ERPModel.hrm_DesignationCategory" Width="1.5" PointX="5.75" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="CECB_ERPModel.hrm_EducationClass" Width="1.5" PointX="0.75" PointY="17.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="CECB_ERPModel.hrm_EducationLevel" Width="1.5" PointX="0.75" PointY="35.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="CECB_ERPModel.hrm_EducationQualification" Width="1.5" PointX="3.75" PointY="18.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="CECB_ERPModel.hrm_EducationSpecialization" Width="1.5" PointX="0.75" PointY="39.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="CECB_ERPModel.hrm_EmployeeChangeNAp" Width="1.5" PointX="3" PointY="12.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="CECB_ERPModel.hrm_EmployeeEducationalQualifications" Width="1.5" PointX="3" PointY="28.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="CECB_ERPModel.hrm_EmployeeExtension" Width="1.5" PointX="3" PointY="23.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="CECB_ERPModel.hrm_EmployeePosts" Width="1.5" PointX="5.25" PointY="29.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="CECB_ERPModel.hrm_EmployeeProfessionalQualifications" Width="1.5" PointX="6" PointY="23.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="CECB_ERPModel.hrm_EmployeePromotion" Width="1.5" PointX="3" PointY="39.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="CECB_ERPModel.hrm_EmployeeReinstatement" Width="1.5" PointX="3" PointY="44.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="CECB_ERPModel.hrm_EmployeeRenewal" Width="1.5" PointX="7.75" PointY="5.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="CECB_ERPModel.hrm_EmployeeReportingAfterLeave" Width="1.5" PointX="3" PointY="48.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="CECB_ERPModel.hrm_EmployeeTransfer" Width="1.5" PointX="3" PointY="53" IsExpanded="true" />
+        <EntityTypeShape EntityType="CECB_ERPModel.hrm_EmployeeWorkAllocation" Width="1.5" PointX="3" PointY="1.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="CECB_ERPModel.hrm_EmployeeWorkingExperience" Width="1.5" PointX="3" PointY="57.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="CECB_ERPModel.hrm_Grade" Width="1.5" PointX="9.75" PointY="5.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="CECB_ERPModel.hrm_Institute" Width="1.5" PointX="3.75" PointY="7.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="CECB_ERPModel.hrm_Post" Width="1.5" PointX="3" PointY="35" IsExpanded="true" />
+        <EntityTypeShape EntityType="CECB_ERPModel.hrm_ProjectRole" Width="1.5" PointX="0.75" PointY="42.75" IsExpanded="true" />
+        <AssociationConnector Association="CECB_ERPModel.FK_dbo_hrm_EmployeeWorkAllocation_dbo_cmn_Employee_EmployeeId" ManuallyRouted="false" />
+        <AssociationConnector Association="CECB_ERPModel.FK_dbo_hrm_EmployeeChangeNAp_dbo_cmn_EmployeeVersion_EmployeeVersionId" ManuallyRouted="false" />
+        <AssociationConnector Association="CECB_ERPModel.FK_dbo_hrm_EmployeeEducationalQualifications_dbo_cmn_EmployeeVersion_EmployeeVersionId" ManuallyRouted="false" />
+        <AssociationConnector Association="CECB_ERPModel.FK_dbo_hrm_EmployeeExtension_dbo_cmn_EmployeeVersion_EmployeeVersionId" ManuallyRouted="false" />
+        <AssociationConnector Association="CECB_ERPModel.FK_dbo_hrm_EmployeePosts_dbo_cmn_EmployeeVersion_EmployeeVersionId" ManuallyRouted="false" />
+        <AssociationConnector Association="CECB_ERPModel.FK_dbo_hrm_EmployeeProfessionalQualifications_dbo_cmn_EmployeeVersion_EmployeeVersionId" ManuallyRouted="false" />
+        <AssociationConnector Association="CECB_ERPModel.FK_dbo_hrm_EmployeePromotion_dbo_cmn_EmployeeVersion_EmployeeVersionId" ManuallyRouted="false" />
+        <AssociationConnector Association="CECB_ERPModel.FK_dbo_hrm_EmployeeReinstatement_dbo_cmn_EmployeeVersion_EmployeeVersionId" ManuallyRouted="false" />
+        <AssociationConnector Association="CECB_ERPModel.FK_dbo_hrm_EmployeeReportingAfterLeave_dbo_cmn_EmployeeVersion_EmployeeVersionId" ManuallyRouted="false" />
+        <AssociationConnector Association="CECB_ERPModel.FK_dbo_hrm_EmployeeTransfer_dbo_cmn_EmployeeVersion_EmployeeVersionId" ManuallyRouted="false" />
+        <AssociationConnector Association="CECB_ERPModel.FK_dbo_hrm_EmployeeWorkingExperience_dbo_cmn_EmployeeVersion_EmployeeVersionId" ManuallyRouted="false" />
+        <AssociationConnector Association="CECB_ERPModel.FK_dbo_cmn_WorkSpace_dbo_cmn_WorkSpace_ParentWorkSpaceId" ManuallyRouted="false" />
+        <AssociationConnector Association="CECB_ERPModel.FK_dbo_hrm_EmployeeWorkAllocation_dbo_cmn_WorkSpace_WorkSpaceId" ManuallyRouted="false" />
+        <AssociationConnector Association="CECB_ERPModel.FK_dbo_hrm_Designation_dbo_hrm_DesignationCategory_DesignationCategoryId" ManuallyRouted="false" />
+        <AssociationConnector Association="CECB_ERPModel.FK_dbo_hrm_EmployeeEducationalQualifications_dbo_hrm_EducationClass_ClassId" ManuallyRouted="false" />
+        <AssociationConnector Association="CECB_ERPModel.FK_dbo_hrm_EmployeeEducationalQualifications_dbo_hrm_EducationLevel_LevelId" ManuallyRouted="false" />
+        <AssociationConnector Association="CECB_ERPModel.FK_dbo_hrm_EmployeeEducationalQualifications_dbo_hrm_EducationQualification_QualificationsTypeId" ManuallyRouted="false" />
+        <AssociationConnector Association="CECB_ERPModel.FK_dbo_hrm_EmployeeProfessionalQualifications_dbo_hrm_EducationQualification_QualificationsTypeId" ManuallyRouted="false" />
+        <AssociationConnector Association="CECB_ERPModel.FK_dbo_hrm_EmployeeEducationalQualifications_dbo_hrm_EducationSpecialization_SpecializationId" ManuallyRouted="false" />
+        <AssociationConnector Association="CECB_ERPModel.FK_dbo_hrm_EmployeeEducationalQualifications_dbo_hrm_Institute_InstituteId" ManuallyRouted="false" />
+        <AssociationConnector Association="CECB_ERPModel.FK_dbo_hrm_EmployeePosts_dbo_hrm_EmployeePromotion_EmployeePromotion_PromotionId" ManuallyRouted="false" />
+        <AssociationConnector Association="CECB_ERPModel.FK_dbo_hrm_EmployeePosts_dbo_hrm_Post_PostId" ManuallyRouted="false" />
+        <AssociationConnector Association="CECB_ERPModel.FK_dbo_hrm_EmployeeProfessionalQualifications_dbo_hrm_Institute_InstituteId" ManuallyRouted="false" />
+        <AssociationConnector Association="CECB_ERPModel.FK_dbo_hrm_EmployeeWorkAllocation_dbo_hrm_ProjectRole_ProjectRoleId" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
