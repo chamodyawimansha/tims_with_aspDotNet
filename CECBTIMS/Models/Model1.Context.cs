@@ -15,14 +15,16 @@ namespace CECBTIMS.Models
     
     public partial class CECB_ERPEntities : DbContext
     {
-        public CECB_ERPEntities()
-            : base("name=CECB_ERPEntities")
+        public CECB_ERPEntities() : base("name=CECB_ERPEntities")
         {
+            // Disable Writing to the ERP Database
+            Database.SetInitializer<CECB_ERPEntities>(null);
         }
     
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             throw new UnintentionalCodeFirstException();
+
         }
     
         public virtual DbSet<cmn_Employee> cmn_Employee { get; set; }

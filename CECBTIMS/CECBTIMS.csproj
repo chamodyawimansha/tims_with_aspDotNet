@@ -179,6 +179,8 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AgendaController.cs" />
+    <Compile Include="Controllers\CECBEmployeeVersionController.cs" />
+    <Compile Include="Controllers\CECBWorkSpaceController.cs" />
     <Compile Include="Controllers\CostsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -202,6 +204,8 @@
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Agenda.cs" />
     <Compile Include="Models\BaseCols.cs" />
+    <Compile Include="Models\Employee.cs" />
+    <Compile Include="Models\EcebEnums.cs" />
     <Compile Include="Models\cmn_Employee.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -474,6 +478,9 @@
     <Content Include="Views\Agenda\Index.cshtml" />
     <Content Include="Views\ResourcePersons\Create.cshtml" />
     <Content Include="Views\ResourcePersons\Edit.cshtml" />
+    <Content Include="Views\CECBEmployeeVersion\Details.cshtml" />
+    <Content Include="Views\CECBWorkSpace\Details.cshtml" />
+    <Content Include="Views\CECBWorkSpace\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
