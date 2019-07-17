@@ -28,7 +28,7 @@ namespace CECBTIMS.Controllers
         {
             if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return new System.Web.Mvc.HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             ResourcePerson resourcePerson = await db.ResourcePersons.FindAsync(id);
             if (resourcePerson == null)
@@ -67,7 +67,7 @@ namespace CECBTIMS.Controllers
         {
             if (id == null || programId == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return new System.Web.Mvc.HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             ResourcePerson resourcePerson = await db.ResourcePersons.FindAsync(programId);
             Program program = await db.Programs.FindAsync(id);

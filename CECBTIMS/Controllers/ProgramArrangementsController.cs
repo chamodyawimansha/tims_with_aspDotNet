@@ -28,7 +28,7 @@ namespace CECBTIMS.Controllers
         {
             if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return new System.Web.Mvc.HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             ProgramArrangement programArrangement = await db.ProgramArrangements.FindAsync(id);
             if (programArrangement == null)
@@ -44,7 +44,7 @@ namespace CECBTIMS.Controllers
             //check the ids available
             if (programArrangement.ProgramId == 0 || programArrangement.OrganizerId == 0)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return new System.Web.Mvc.HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             // check the program and org are exists in the database
             var currentProgram = await db.Programs.FindAsync(programArrangement.ProgramId);
@@ -86,7 +86,7 @@ namespace CECBTIMS.Controllers
         {
             if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return new System.Web.Mvc.HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             ProgramArrangement programArrangement = await db.ProgramArrangements.FindAsync(id);
             if (programArrangement == null)
@@ -121,7 +121,7 @@ namespace CECBTIMS.Controllers
         {
             if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return new System.Web.Mvc.HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             ProgramArrangement programArrangement = await db.ProgramArrangements.FindAsync(id);
             if (programArrangement == null)
@@ -138,13 +138,13 @@ namespace CECBTIMS.Controllers
         {
             if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return new System.Web.Mvc.HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             ProgramArrangement programArrangement = await db.ProgramArrangements.FindAsync(id);
 
             if (programArrangement == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return new System.Web.Mvc.HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
             db.ProgramArrangements.Remove(programArrangement);
