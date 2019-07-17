@@ -27,7 +27,7 @@ namespace CECBTIMS.Controllers
         {
             if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return new System.Web.Mvc.HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             cmn_WorkSpace cmn_WorkSpace = await db.cmn_WorkSpace.FindAsync(id);
             if (cmn_WorkSpace == null)

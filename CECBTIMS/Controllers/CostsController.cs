@@ -21,7 +21,7 @@ namespace CECBTIMS.Controllers
         {
             if (programId == null || programId == 0 || programTitle == "")
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return new System.Web.Mvc.HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             // check the program is exists in the database
             var currentProgram = await db.Programs.FindAsync(programId);
@@ -57,7 +57,7 @@ namespace CECBTIMS.Controllers
         {
             if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return new System.Web.Mvc.HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             Cost cost = await db.Costs.FindAsync(id);
             if (cost == null)

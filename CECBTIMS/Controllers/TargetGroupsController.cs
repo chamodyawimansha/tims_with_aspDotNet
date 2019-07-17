@@ -22,7 +22,7 @@ namespace CECBTIMS.Controllers
 
             if (programId == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return new System.Web.Mvc.HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
             ViewBag.ProgramId = programId;
@@ -52,7 +52,7 @@ namespace CECBTIMS.Controllers
         {
             if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return new System.Web.Mvc.HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             TargetGroup targetGroup = await db.TargetGroups.FindAsync(id);
             if (targetGroup == null)
@@ -85,7 +85,7 @@ namespace CECBTIMS.Controllers
         {
             if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return new System.Web.Mvc.HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             TargetGroup targetGroup = await db.TargetGroups.FindAsync(id);
             if (targetGroup == null)

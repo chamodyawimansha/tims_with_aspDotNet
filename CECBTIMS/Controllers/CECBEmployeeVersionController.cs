@@ -7,18 +7,16 @@ using System.Web.Mvc;
 using CECBTIMS.Models;
 
 namespace CECBTIMS.Controllers
-{
+{   
     public class CECBEmployeeVersionController : Controller
     {
         private CECB_ERPEntities db = new CECB_ERPEntities();
 
-        // GET: Employee/Details
-        public async Task<ActionResult> Details(string method, string q)
+        // GET: CECBEmployeeVersion/Details
+        public ActionResult Details()
         {
-            if (string.IsNullOrEmpty(method) || string.IsNullOrEmpty(q))
-            {
-                return View($"Details");
-            }
+            return View();
+        }
 
             var employees = from em in db.cmn_EmployeeVersion
                 select em;
@@ -45,61 +43,55 @@ namespace CECBTIMS.Controllers
          * Find Employees in the CECB ERP Database
          * 
          */
-//        public async Task<ActionResult> Find(string method,string q)
-//        {
-//
-//
-//            if (string.IsNullOrWhiteSpace(method) || string.IsNullOrWhiteSpace(q))
-//            {
-//                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-//            }
-//
-//            
-//            
-//        }
-
-        /**
-         * Get More Details from the db
-         */
-        public async Task<ActionResult> MoreDetails(Guid? id)
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> Find([Bind(Include = "EmployeeId")] Employee empl)
         {
-            var query = from emp in db.cmn_EmployeeVersion
-                join wks in db.cmn_WorkSpace on emp.WorkSpaceId equals wks.WorkSpaceId
-                join wkst in db.cmn_WorkSpaceType on wks.WorkSpaceTypeId equals wkst.WorkSpaceTypeId
-                join dsg in db.hrm_Designation on emp.DesignationId equals dsg.DesignationId
-                join dsgc in db.hrm_DesignationCategory on dsg.DesignationCategoryId equals dsgc.DesignationCategoryId
-                where emp.EmployeeId == id && emp.IsActive
-                select new
+
+            if (ModelState.IsValid)
+            {
+                var query =
+                    from emp in db.cmn_EmployeeVersion
+                    join wks in db.cmn_WorkSpace on emp.WorkSpaceId equals wks.WorkSpaceId
+                    join wkst in db.cmn_WorkSpaceType on wks.WorkSpaceTypeId equals wkst.WorkSpaceTypeId
+                    join dsg in db.hrm_Designation on emp.DesignationId equals dsg.DesignationId
+                    join dsgc in db.hrm_DesignationCategory on dsg.DesignationCategoryId equals dsgc.DesignationCategoryId
+                    where emp.EmployeeVersionId == empl.EmployeeId && emp.IsActive
+                    select new
+                    {
+                        employee = emp,
+                        workSpace = wks,
+                        workSpaceType = wkst,
+                        designation = dsg,
+                        designationCategory = dsgc
+                    };
+
+                var data = await query.FirstAsync();
+
+                var employee = new Employee()
                 {
-                    employee = emp,
-                    workSpace = wks,
-                    workSpaceType = wkst,
-                    designation = dsg,
-                    designationCategory = dsgc
+                    EmployeeId = data.employee.EmployeeId,
+                    EPFNo = data.employee.EPFNo,
+                    Title = (Title)int.Parse(data.employee.Title),
+                    NameWithInitial = data.employee.NameWithInitial,
+                    FullName = data.employee.FullName,
+                    NIC = data.employee.NIC,
+                    WorkSpaceName = data.workSpace.WorkSpaceName,
+                    DesignationName = data.designation.DesignationName,
+                    EmployeeRecruitmentType = (RecruitmentType)int.Parse(data.employee.EmployeeRecruitmentType),
+                    EmpStatus = (EmployeeStatus)data.employee.EmpStatus,
+                    DateOfAppointment = data.employee.DateOfAppointment,
+                    TypeOfContract = data.employee.TypeOfContract,
+                    OfficeEmail = data.employee.OfficeEmail,
+                    MobileNumber = data.employee.MobileNumber,
+                    PrivateEmail = data.employee.PrivateEmail
                 };
 
-            var data = await query.FirstAsync();
+                return View($"Details",employee);
+            }
 
-            var employee = new Employee()
-            {
-                EmployeeId = data.employee.EmployeeId,
-                EPFNo = data.employee.EPFNo,
-                Title = (Title) int.Parse(data.employee.Title),
-                NameWithInitial = data.employee.NameWithInitial,
-                FullName = data.employee.FullName,
-                NIC = data.employee.NIC,
-                WorkSpaceName = data.workSpace.WorkSpaceName,
-                DesignationName = data.designation.DesignationName,
-                EmployeeRecruitmentType = (RecruitmentType) int.Parse(data.employee.EmployeeRecruitmentType),
-                EmpStatus = (EmployeeStatus) data.employee.EmpStatus,
-                DateOfAppointment = data.employee.DateOfAppointment,
-                TypeOfContract = data.employee.TypeOfContract,
-                OfficeEmail = data.employee.OfficeEmail,
-                MobileNumber = data.employee.MobileNumber,
-                PrivateEmail = data.employee.PrivateEmail
-            };
+            return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 
-            return View($"Details", employee);
         }
 
         //            https://www.guru99.com/c-sharp-serialization.html

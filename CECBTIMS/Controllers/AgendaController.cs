@@ -46,7 +46,7 @@ namespace CECBTIMS.Controllers
         // GET: Agenda/Edit/5
         public async Task<ActionResult> Edit(int? id, int? programId, string programTitle)
         {
-            if (id == null || programId == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            if (id == null || programId == null) return new System.Web.Mvc.HttpStatusCodeResult(HttpStatusCode.BadRequest);
             var agenda = await db.Agenda.FindAsync(id);
             if (agenda == null) return HttpNotFound();
 

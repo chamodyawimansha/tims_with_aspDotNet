@@ -67,7 +67,7 @@ namespace CECBTIMS.Controllers
         {
             if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return new System.Web.Mvc.HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             Organizer organizer = await db.Organizers.FindAsync(id);
             if (organizer == null)
@@ -82,7 +82,7 @@ namespace CECBTIMS.Controllers
         {
             if (programId == null || programTitle == "")
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return new System.Web.Mvc.HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
             ViewBag.ProgramTitle = programTitle;
@@ -114,7 +114,7 @@ namespace CECBTIMS.Controllers
         {
             if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return new System.Web.Mvc.HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             Organizer organizer = await db.Organizers.FindAsync(id);
             if (organizer == null)

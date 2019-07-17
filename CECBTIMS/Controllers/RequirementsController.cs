@@ -16,7 +16,7 @@ namespace CECBTIMS.Controllers
         {
             if (programId == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return new System.Web.Mvc.HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
             ViewBag.programId = programId;
