@@ -6,38 +6,47 @@
 }
 
 
-<div class="container">
-<div class="row">
-<div id="programOptions" class="col-md-2">
-    <div class="list-group">
-
-        @Html.ActionLink("Back to List", "Index", "", new {@class = "list-group-item list-group-item-action"})
-        @Html.ActionLink("Edit", "Edit", new {id = Model.Id}, new {@class = "list-group-item list-group-item-action"})
-    </div>
-</div>
-
-<div id="programContent" class="col-md-10">
+<div class="col-10 mx-auto mb-5">
+<div id="programContent">
 <div class="card">
 <div class="card-header">
-    <h4 class="d-inline-block mr-sm-2">@Html.DisplayFor(model => model.Title)</h4><span class="badge badge-primary">@Html.DisplayFor(model => model.ProgramType)</span>
+    <h4 class="float-left">Program details</h4>
+
+    <div class="float-right" id="btn-group">
+        @Html.ActionLink("Back to List", $"Index", "", new {@class = "btn btn-outline-secondary"})
+        @Html.ActionLink("Edit", $"Edit", new {id = Model.Id}, new {@class = "btn btn-warning"})
+        @Html.ActionLink("New", $"Edit", new {id = Model.Id}, new {@class = "btn btn-warning"})
+        @Html.ActionLink("Employees", $"Edit", new {id = Model.Id}, new {@class = "btn btn-warning"})
+        @Html.ActionLink("Circulate", $"Edit", new {id = Model.Id}, new {@class = "btn btn-warning"})
+        @Html.ActionLink("Delete", $"Edit", new {id = Model.Id}, new {@class = "btn btn-warning"})
+        @Html.ActionLink("Documents", $"Edit", new {id = Model.Id}, new {@class = "btn btn-warning"})
+        @Html.ActionLink("Reports", $"Edit", new {id = Model.Id}, new {@class = "btn btn-warning"})
+    </div>
+
 </div>
 <div class="card-body">
+<h4 class="d-inline-block mr-sm-2">@Html.DisplayFor(model => model.Title)</h4><span class="badge badge-primary">@Html.DisplayFor(model => model.ProgramType)</span>
 
-
-<table class="table">
+<div class="table-responsive-lg">
+<table class="table table-bordered">
 <tr>
-    <th style="width: 25%; padding: 0"></th>
-    <th style="width: 25%; padding: 0"></th>
-    <th style="width: 25%; padding: 0"></th>
-    <th style="width: 25%; padding: 0"></th>
+    <th style="width: 10%"></th>
+    <th style="width: 10%"></th>
+    <th style="width: 10%"></th>
+    <th style="width: 10%"></th>
+    <th style="width: 10%"></th>
+    <th style="width: 10%"></th>
+    <th style="width: 10%"></th>
+    <th style="width: 10%"></th>
+    <th style="width: 10%"></th>
+    <th style="width: 10%"></th>
+
 </tr>
-
-
 @if (Model.ProgramType.ToString() == "InHouse")
 {
     <tr>
-        <th>Program Agendas</th>
-        <td colspan="3">
+        <th colspan="2">Program Agendas</th>
+        <td colspan="8">
 
             @if (Model.Agendas.Count > 0)
             {
@@ -76,28 +85,30 @@
     </tr>
 }
 
-
 <tr>
-    <th>@Html.DisplayNameFor(model => model.StartDate)</th>
-    <td>@Html.DisplayFor(model => model.StartDate)</td>
-    @if (Model.ProgramType.ToString() == "Foreign")
-    {
-        <th>
+    <th colspan="2">
+        Start Date
+    </th>
+    <td colspan="8">
+        @Html.DisplayFor(model => model.StartDate)
+    </td>
+</tr>
+
+@if (Model.ProgramType.ToString() == "Foreign")
+{
+    <tr>
+        <th colspan="2">
             @Html.DisplayNameFor(model => model.EndDate)
         </th>
-        <td>
+        <td colspan="8">
             @Html.DisplayFor(model => model.EndDate)
         </td>
-    }
-    else
-    {
-        <td></td>
-        <td></td>
-    }
-</tr>
+    </tr>
+}
+
 <tr>
-    <th>Organised By</th>
-    <td colspan="3">
+    <th colspan="2">Organised By</th>
+    <td colspan="8">
 
         @if (Model.Organizers.Count > 0)
         {
@@ -130,11 +141,12 @@
         @Html.ActionLink("Add an Organiser", $"Create", $"Organizers", new {programId = Model.Id, programTitle = Model.Title}, new {@class = "btn btn-sm btn-outline-secondary"})
     </td>
 </tr>
+
 @if (Model.ProgramType.ToString() != "PostGraduation")
 {
     <tr>
-        <th>Target Group(s)</th>
-        <td colspan="3">
+        <th colspan="2">Target Group(s)</th>
+        <td colspan="8">
             @if (Model.TargetGroups.Count > 0)
             {
                 <table class="table table-bordered">
@@ -172,7 +184,7 @@
 @if (Model.ProgramType.ToString() != "PostGraduation")
 {
     <tr>
-        <th>Employment Category</th>
+        <th colspan="2">Employment Category</th>
         <td colspan="3">
             @if (Model.ProgramEmploymentCategories != null)
             {
@@ -185,9 +197,7 @@
             }
             <a href="">Add an Employment Category</a>
         </td>
-    </tr>
-    <tr>
-        <th>Employment Nature</th>
+        <th colspan="2">Employment Nature</th>
         <td colspan="3">
             @if (Model.ProgramEmploymentNatures != null)
             {
@@ -202,11 +212,12 @@
         </td>
     </tr>
 }
+
 @if (Model.ProgramType.ToString() == "InHouse")
 {
     <tr>
-        <th>Resource Persons</th>
-        <td colspan="3">
+        <th colspan="2">Resource Persons</th>
+        <td colspan="8">
             @if (Model.ResourcePersons.Count > 0)
             {
                 <table class="table table-bordered">
@@ -246,19 +257,20 @@
     </tr>
 }
 
+
 @if (Model.ProgramType.ToString() == "PostGraduation")
 {
     <tr>
-        <th>@Html.DisplayNameFor(model => model.Department)</th>
-        <td colspan="3">@Html.DisplayFor(model => model.Department)</td>
+        <th colspan="2">@Html.DisplayNameFor(model => model.Department)</th>
+        <td colspan="8">@Html.DisplayFor(model => model.Department)</td>
     </tr>
 }
 
 @if (Model.ProgramType.ToString() == "PostGraduation")
 {
     <tr>
-        <th>Requirements</th>
-        <td colspan="3">
+        <th colspan="2">Requirements</th>
+        <td colspan="8">
 
             @if (Model.Requirements.Count > 0)
             {
@@ -293,113 +305,105 @@
 }
 
 <tr>
-    <th>@Html.DisplayNameFor(model => model.ApplicationClosingDate)</th>
-    <td>@Html.DisplayFor(model => model.ApplicationClosingDate)</td>
-    <th>@Html.DisplayNameFor(model => model.ApplicationClosingTime)</th>
-    <td>@Html.DisplayFor(model => model.ApplicationClosingTime)</td>
+    <th colspan="2">@Html.DisplayNameFor(model => model.ApplicationClosingDate)</th>
+    <td colspan="3">@Html.DisplayFor(model => model.ApplicationClosingDate)</td>
+    <th colspan="2">@Html.DisplayNameFor(model => model.ApplicationClosingTime)</th>
+    <td colspan="3">@Html.DisplayFor(model => model.ApplicationClosingTime)</td>
 </tr>
 
 @if (Model.ProgramType.ToString() != "PostGraduation")
 {
     <tr>
-        <th>@Html.DisplayNameFor(model => model.Venue)</th>
-        <td colspan="3">@Html.DisplayFor(model => model.Venue)</td>
+        <th colspan="2">@Html.DisplayNameFor(model => model.Venue)</th>
+        <td colspan="8">@Html.DisplayFor(model => model.Venue)</td>
     </tr>
 }
 @if (Model.ProgramType.ToString() == "Foreign")
 {
     <tr>
-        <th>@Html.DisplayNameFor(model => model.NotifiedBy)</th>
-        <td colspan="3">@Html.DisplayFor(model => model.NotifiedBy)</td>
-    </tr>
-    <tr>
-        <th>@Html.DisplayNameFor(model => model.NotifiedOn)</th>
-        <td colspan="3">@Html.DisplayFor(model => model.NotifiedOn)</td>
+        <th colspan="2">@Html.DisplayNameFor(model => model.NotifiedBy)</th>
+        <td colspan="4">@Html.DisplayFor(model => model.NotifiedBy)</td>
+        <th colspan="2">@Html.DisplayNameFor(model => model.NotifiedOn)</th>
+        <td colspan="2">@Html.DisplayFor(model => model.NotifiedOn)</td>
     </tr>
 }
 
-<tr>
-    @if (Model.ProgramType.ToString() == "Foreign" || Model.ProgramType.ToString() == "Local")
-    {
-        <th>@Html.DisplayNameFor(model => model.DurationInDays)</th>
-        <td>@Html.DisplayFor(model => model.DurationInDays)</td>
-    }
-    @if (Model.ProgramType.ToString() == "Foreign" || Model.ProgramType.ToString() == "PostGraduation" || Model.ProgramType.ToString() == "Local")
-    {
-        <th>@Html.DisplayNameFor(model => model.DurationInMonths)</th>
-        <td>@Html.DisplayFor(model => model.DurationInMonths)</td>
-    }
-    else
-    {
-        <td></td>
-        <td></td>
-    }
-</tr>
+
+@if (Model.ProgramType.ToString() == "Foreign" || Model.ProgramType.ToString() == "Local")
+{
+    <tr>
+        <th colspan="2">@Html.DisplayNameFor(model => model.DurationInDays)</th>
+        <td colspan="8">@Html.DisplayFor(model => model.DurationInDays)</td>
+    </tr>
+}
+
+
+@if (Model.ProgramType.ToString() == "Foreign" || Model.ProgramType.ToString() == "PostGraduation" || Model.ProgramType.ToString() == "Local")
+{
+    <tr>
+        <th colspan="2">@Html.DisplayNameFor(model => model.DurationInMonths)</th>
+        <td colspan="8">@Html.DisplayFor(model => model.DurationInMonths)</td>
+    </tr>
+}
 @if (Model.ProgramType.ToString() == "Local" || Model.ProgramType.ToString() == "InHouse")
 {
     <tr>
-        <th>@Html.DisplayNameFor(model => model.ProgramHours)</th>
-        <td colspan="3">@Html.DisplayFor(model => model.ProgramHours)</td>
+        <th colspan="2">@Html.DisplayNameFor(model => model.ProgramHours)</th>
+        <td colspan="8">@Html.DisplayFor(model => model.ProgramHours)</td>
     </tr>
 }
-<tr>
-    @if (Model.ProgramType.ToString() == "Foreign")
-    {
-        <th>@Html.DisplayNameFor(model => model.Currency)</th>
-        <td>@Html.DisplayFor(model => model.Currency)</td>
-    }
-    @if (Model.ProgramType.ToString() == "Foreign" || Model.ProgramType.ToString() == "PostGraduation" || Model.ProgramType.ToString() == "Local")
-    {
-        <th>@Html.DisplayNameFor(model => model.ProgramFee)</th>
-        <td>@Html.DisplayFor(model => model.ProgramFee)</td>
-    }
-    else
-    {
-        <td></td>
-        <td></td>
-    }
-</tr>
-<tr>
-    @if (Model.ProgramType.ToString() == "PostGraduation")
-    {
-        <th>@Html.DisplayNameFor(model => model.RegistrationFee)</th>
-        <td>@Html.DisplayFor(model => model.RegistrationFee)</td>
-    }
-    @if (Model.ProgramType.ToString() == "InHouse")
-    {
-        <th>@Html.DisplayNameFor(model => model.PerPersonFee)</th>
-        <td>@Html.DisplayFor(model => model.PerPersonFee)</td>
-    }
-    else
-    {
-        <td></td>
-        <td></td>
-    }
-</tr>
-<tr>
-    @if (Model.ProgramType.ToString() == "InHouse")
-    {
-        <th>@Html.DisplayNameFor(model => model.NoShowFee)</th>
-        <td>@Html.DisplayFor(model => model.NoShowFee)</td>
-    }
-    @if (Model.ProgramType.ToString() == "Local")
-    {
-        <th style="">@Html.DisplayNameFor(model => model.MemberFee)</th>
-        <td>@Html.DisplayFor(model => model.MemberFee)</td>
-    }
-    else
-    {
-        <td></td>
-        <td></td>
-    }
-</tr>
+
+
+
+@if (Model.ProgramType.ToString() == "Foreign")
+{
+    <tr>
+        <th colspan="2">@Html.DisplayNameFor(model => model.Currency)</th>
+        <td colspan="8">@Html.DisplayFor(model => model.Currency)</td>
+    </tr>
+}
+
+
+@if (Model.ProgramType.ToString() == "Foreign" || Model.ProgramType.ToString() == "PostGraduation" || Model.ProgramType.ToString() == "Local")
+{
+    <tr>
+        <th colspan="2">@Html.DisplayNameFor(model => model.ProgramFee)</th>
+        <td colspan="8">@Html.DisplayFor(model => model.ProgramFee)</td>
+    </tr>
+}
+
+@if (Model.ProgramType.ToString() == "PostGraduation")
+{
+    <tr>
+        <th colspan="2">@Html.DisplayNameFor(model => model.RegistrationFee)</th>
+        <td colspan="8">@Html.DisplayFor(model => model.RegistrationFee)</td>
+    </tr>
+}
+@if (Model.ProgramType.ToString() == "InHouse")
+{
+    <tr>
+        <th colspan="2">@Html.DisplayNameFor(model => model.PerPersonFee)</th>
+        <td colspan="8">@Html.DisplayFor(model => model.PerPersonFee)</td>
+    </tr>
+}
+
+@if (Model.ProgramType.ToString() == "InHouse")
+{
+    <tr>
+        <th colspan="2">@Html.DisplayNameFor(model => model.NoShowFee)</th>
+        <td colspan="8">@Html.DisplayFor(model => model.NoShowFee)</td>
+    </tr>
+}
+
 @if (Model.ProgramType.ToString() == "Local")
 {
     <tr>
-        <th>@Html.DisplayNameFor(model => model.NonMemberFee)</th>
-        <td>@Html.DisplayFor(model => model.NonMemberFee)</td>
-        <th>@Html.DisplayNameFor(model => model.StudentFee)</th>
-        <td>@Html.DisplayFor(model => model.StudentFee)</td>
+        <th colspan="1">@Html.DisplayNameFor(model => model.MemberFee)</th>
+        <td colspan="2">@Html.DisplayFor(model => model.MemberFee)</td>
+        <th colspan="2">@Html.DisplayNameFor(model => model.NonMemberFee)</th>
+        <td colspan="2">@Html.DisplayFor(model => model.NonMemberFee)</td>
+        <th colspan="1">@Html.DisplayNameFor(model => model.StudentFee)</th>
+        <td colspan="2">@Html.DisplayFor(model => model.StudentFee)</td>
     </tr>
 }
 <tr>
@@ -446,28 +450,20 @@
     </td>
 </tr>
 <tr>
-    <th>@Html.DisplayNameFor(model => model.CreatedAt)</th>
-    <td>@Html.DisplayFor(model => model.CreatedAt)</td>
-    <th>@Html.DisplayNameFor(model => model.UpdatedAt)</th>
-    <td>@Html.DisplayFor(model => model.UpdatedAt)</td>
+    <th colspan="2">@Html.DisplayNameFor(model => model.CreatedAt)</th>
+    <td colspan="8">@Html.DisplayFor(model => model.CreatedAt)</td>
+    <th colspan="2">@Html.DisplayNameFor(model => model.UpdatedAt)</th>
+    <td colspan="8">@Html.DisplayFor(model => model.UpdatedAt)</td>
 </tr>
 <tr>
-    <th>@Html.DisplayNameFor(model => model.NonMemberFee)</th>
-    <td>@Html.DisplayFor(model => model.NonMemberFee)</td>
-    <th>@Html.DisplayNameFor(model => model.StudentFee)</th>
-    <td>@Html.DisplayFor(model => model.StudentFee)</td>
-</tr>
-<tr>
-    <th>@Html.DisplayNameFor(model => model.CreatedBy)</th>
-    <td>@Html.DisplayFor(model => model.CreatedBy)</td>
-    <th>@Html.DisplayNameFor(model => model.UpdatedBy)</th>
-    <td>@Html.DisplayFor(model => model.UpdatedBy)</td>
+    <th colspan="2">@Html.DisplayNameFor(model => model.CreatedBy)</th>
+    <td colspan="8">@Html.DisplayFor(model => model.CreatedBy)</td>
+    <th colspan="2">@Html.DisplayNameFor(model => model.UpdatedBy)</th>
+    <td colspan="8">@Html.DisplayFor(model => model.UpdatedBy)</td>
 </tr>
 </table>
-
 </div>
 </div>
 </div>
 </div>
 </div>
-@* DisplayNameFor(model => model.Brochure) *@
