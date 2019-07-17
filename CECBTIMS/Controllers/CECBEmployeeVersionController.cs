@@ -13,26 +13,13 @@ namespace CECBTIMS.Controllers
         private CECB_ERPEntities db = new CECB_ERPEntities();
 
         // GET: Employee/Details
-        public ActionResult Details()
+        public async Task<ActionResult> Details(string method, string q)
         {
-            return View($"Details");
-        }
-
-        /**
-         *
-         * Find Employees in the CECB ERP Database
-         * 
-         */
-        public async Task<ActionResult> Find(string method,string q)
-        {
-
-
-            if (string.IsNullOrWhiteSpace(method) || string.IsNullOrWhiteSpace(q))
+            if (string.IsNullOrEmpty(method) || string.IsNullOrEmpty(q))
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return View($"Details");
             }
 
-            
             var employees = from em in db.cmn_EmployeeVersion
                 select em;
 
@@ -48,9 +35,28 @@ namespace CECBTIMS.Controllers
                     employees = employees.Where(em => em.FullName.Contains(q));
                     break;
             }
-            
+
             return View($"Details", await employees.ToListAsync());
+
         }
+
+        /**
+         *
+         * Find Employees in the CECB ERP Database
+         * 
+         */
+//        public async Task<ActionResult> Find(string method,string q)
+//        {
+//
+//
+//            if (string.IsNullOrWhiteSpace(method) || string.IsNullOrWhiteSpace(q))
+//            {
+//                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+//            }
+//
+//            
+//            
+//        }
 
         /**
          * Get More Details from the db

@@ -15,7 +15,7 @@
             <div class="col-8 mx-auto mb-5">
                 <div class="container">
 
-                    @using (Html.BeginForm($"Find", $"CECBEmployeeVersion", "",
+                    @using (Html.BeginForm($"Details", $"CECBEmployeeVersion", "",
                         FormMethod.Get, null))
                     {
 
@@ -36,6 +36,7 @@
                         <div class="form-group">
                             <div class="">
                                 <input type="submit" value="Find" class="btn btn-primary" />
+                                @Html.ActionLink("Clear Results", $"Details",null, new { @class = "btn btn-outline-secondary" })
                             </div>
                         </div>
                     }
