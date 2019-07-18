@@ -182,6 +182,7 @@
     <Compile Include="Controllers\CECBEmployeeVersionController.cs" />
     <Compile Include="Controllers\CECBWorkSpaceController.cs" />
     <Compile Include="Controllers\CostsController.cs" />
+    <Compile Include="Controllers\EmployeeVersionController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\OrganizersController.cs" />
@@ -440,6 +441,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\EmployeeVersion\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
