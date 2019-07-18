@@ -41,24 +41,6 @@ namespace CECBTIMS.Controllers
         }
 
         /**
-         *
-         * Find Employees in the CECB ERP Database
-         * 
-         */
-        //        public async Task<ActionResult> Find(string method,string q)
-        //        {
-        //
-        //
-        //            if (string.IsNullOrWhiteSpace(method) || string.IsNullOrWhiteSpace(q))
-        //            {
-        //                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-        //            }
-        //
-        //            
-        //            
-        //        }
-
-        /**
          * Get More Details from the db
          */
         public async Task<ActionResult> MoreDetails(Guid? id)

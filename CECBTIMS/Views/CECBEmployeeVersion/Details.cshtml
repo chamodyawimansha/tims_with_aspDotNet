@@ -1,5 +1,4 @@
-﻿@* @model CECBTIMS.Models.cmn_EmployeeVersion *@
-@model IEnumerable<CECBTIMS.Models.cmn_EmployeeVersion>
+﻿@model IEnumerable<CECBTIMS.Models.cmn_EmployeeVersion>
 
 @{
     ViewBag.Title = "Details";
@@ -59,12 +58,13 @@
                             <button type="button" class="close" data-dismiss="alert">&times;</button>
                             <strong>@Model.Count() </strong>results Found.
                         </div>
-
-
+                        
                         <table class="table table-bordered">
                             <tr>
                                 <th>#</th>
                                 <th>Full Name</th>
+                                <th>Designation</th>
+                                <th>Section</th>
                             </tr>
                             @{
                                 int i = 1;
@@ -72,7 +72,23 @@
                                 {
                                     <tr>
                                         <td>@i</td>
-                                        <td>@item.FullName</td>
+                                        <td>@item.Title @item.FullName</td>
+                                        @if (item.hrm_Designation != null)
+                                        {
+                                            <td>@item.hrm_Designation.DesignationName</td>
+                                        }
+                                        else
+                                        {
+                                            <td></td>
+                                        }
+                                        @if (item.cmn_WorkSpace != null)
+                                        { 
+                                        <td>@item.cmn_WorkSpace.WorkSpaceName</td>
+                                        }
+                                        else
+                                        {
+                                            <td></td>
+                                        }
                                         <td>
                                             Details 
                                             Select

@@ -121,6 +121,9 @@ namespace CECBTIMS.Controllers
             {
                 return HttpNotFound();
             }
+
+            ViewBag.ProgramType = (int) program.ProgramType;
+
             return View(program);
         }
 
