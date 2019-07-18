@@ -97,7 +97,7 @@ namespace CECBTIMS.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "Id,Title,ProgramType,StartDate,ApplicationClosingDate,ApplicationClosingTime,Brochure,Venue,EndDate,NotifiedBy,NotifiedOn,ProgramHours,DurationInDays,DurationInMonths,Department,Currency,ProgramFee,RegistrationFee,PerPersonFee,NoShowFee,MemberFee,NonMemberFee,StudentFee")] Program program)
+        public async Task<ActionResult> Create([Bind(Include = "Id,Title,ProgramType,StartDate,ApplicationClosingDate,ApplicationClosingTime,Venue,EndDate,NotifiedBy,NotifiedOn,ProgramHours,DurationInDays,DurationInMonths,Department,Currency,ProgramFee,RegistrationFee,PerPersonFee,NoShowFee,MemberFee,NonMemberFee,StudentFee")] Program program)
         {
             if (ModelState.IsValid)
             {
@@ -112,12 +112,6 @@ namespace CECBTIMS.Controllers
         // GET: Programs/Edit/5
         public async Task<ActionResult> Edit(int? id)
         {
-//            if (programToUpdate != null)
-//            {
-//                ViewBag.ProgramType = (int)programToUpdate.ProgramType;
-//                
-//                return View(programToUpdate);
-//            }
 
             if (id == null)
             {
@@ -134,22 +128,6 @@ namespace CECBTIMS.Controllers
             return View(program);
         }
 
-        // POST: Programs/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        //        [HttpPost]
-        //        [ValidateAntiForgeryToken]
-        //        public async Task<ActionResult> Edit([Bind(Include = "Id,Title,ProgramType,StartDate,ApplicationClosingDate,ApplicationClosingTime,Brochure,Venue,EndDate,NotifiedBy,NotifiedOn,ProgramHours,DurationInDays,DurationInMonths,Department,Currency,ProgramFee,RegistrationFee,PerPersonFee,NoShowFee,MemberFee,NonMemberFee,StudentFee,RowVersion")] Program program)
-        //        {
-        //            if (ModelState.IsValid)
-        //            {
-        //                db.Entry(program).State = EntityState.Modified;
-        //                await db.SaveChangesAsync();
-        //                return RedirectToAction("Index");
-        //            }
-        //            return View(program);
-        //            
-        //        }
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Edit(int? id, byte[] rowVersion)
@@ -157,7 +135,7 @@ namespace CECBTIMS.Controllers
 
             string[] fieldsToBind = new string[]
             {
-                "Title", "ProgramType", "StartDate", "ApplicationClosingDate", "ApplicationClosingTime", "Brochure",
+                "Title", "ProgramType", "StartDate", "ApplicationClosingDate", "ApplicationClosingTime",
                 "Venue", "EndDate", "NotifiedBy", "NotifiedOn", "ProgramHours", "DurationInDays", "DurationInMonths",
                 "Department", "Currency", "ProgramFee", "RegistrationFee", "PerPersonFee", "NoShowFee", "MemberFee",
                 "NonMemberFee", "StudentFee", "RowVersion"
@@ -289,7 +267,7 @@ namespace CECBTIMS.Controllers
                         programToUpdate.RowVersion = databaseValues.RowVersion;
                     }
                 }
-                catch (RetryLimitExceededException  error)
+                catch (RetryLimitExceededException  /*error*/)
                 {
 //                    ModelState.AddModelError(error.Message);
                     ModelState.AddModelError("", "Unable to save changes. Try again, and if the problem persists, see your system administrator.");
@@ -306,7 +284,7 @@ namespace CECBTIMS.Controllers
         {
             if (id == null)
             {
-                return new System.Web.Mvc.HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             Program program = await db.Programs.FindAsync(id);
             if (program == null)
@@ -321,10 +299,19 @@ namespace CECBTIMS.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteConfirmed(int id)
         {
+
             Program program = await db.Programs.FindAsync(id);
+            if (program == null)
+            {
+                return HttpNotFound();
+            }
+
             db.Programs.Remove(program);
             await db.SaveChangesAsync();
+
             return RedirectToAction("Index");
+
+            // Delete the raltionships
         }
 
         protected override void Dispose(bool disposing)
