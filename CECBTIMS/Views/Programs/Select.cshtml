@@ -1,0 +1,36 @@
+﻿
+@{
+    ViewBag.Title = "Select";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="col-8 mx-auto mb-lg-5">
+    <div class="card border-primary">
+        <div class="card-header">Select the Program type to Create</div>
+        <div class="card-body">
+            <div class="container">
+                <h4>@ViewBag.ProgramTitle</h4>
+
+                @using (Html.BeginForm($"Create", $"Programs", null,
+                    FormMethod.Get, null))
+                {
+                    <div class="form-group">
+                        <select name="programType" class="custom-select">
+                            <option value="1">Local Program</option>
+                            <option value="2">Foreign Program</option>
+                            <option value="3">In-House Program</option>
+                            <option value="4">Post-Graduation Program</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <div class="">
+                            <input type="submit" value="Create" class="btn btn-primary"/>
+                            @Html.ActionLink("Back",$"Index",$"Programs",new {id=ViewBag.ProgramId}, new{@class="btn btn-outline-primary"})
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>

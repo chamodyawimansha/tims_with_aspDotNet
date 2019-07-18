@@ -407,8 +407,8 @@
     </tr>
 }
 <tr>
-    <th>Other Costs and Fees</th>
-    <td colspan="3">
+    <th colspan="2">Other Costs and Fees</th>
+    <td colspan="8">
 
         @if (Model.Costs.Count > 0)
         {
@@ -451,15 +451,15 @@
 </tr>
 <tr>
     <th colspan="2">@Html.DisplayNameFor(model => model.CreatedAt)</th>
-    <td colspan="8">@Html.DisplayFor(model => model.CreatedAt)</td>
+    <td colspan="3">@Html.DisplayFor(model => model.CreatedAt)</td>
     <th colspan="2">@Html.DisplayNameFor(model => model.UpdatedAt)</th>
-    <td colspan="8">@Html.DisplayFor(model => model.UpdatedAt)</td>
+    <td colspan="3">@Html.DisplayFor(model => model.UpdatedAt)</td>
 </tr>
 <tr>
     <th colspan="2">@Html.DisplayNameFor(model => model.CreatedBy)</th>
-    <td colspan="8">@Html.DisplayFor(model => model.CreatedBy)</td>
+    <td colspan="3">@Html.DisplayFor(model => model.CreatedBy)</td>
     <th colspan="2">@Html.DisplayNameFor(model => model.UpdatedBy)</th>
-    <td colspan="8">@Html.DisplayFor(model => model.UpdatedBy)</td>
+    <td colspan="3">@Html.DisplayFor(model => model.UpdatedBy)</td>
 </tr>
 </table>
 </div>

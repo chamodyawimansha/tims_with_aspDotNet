@@ -79,9 +79,16 @@ namespace CECBTIMS.Controllers
         }
 
         // GET: Programs/Create
-        public ActionResult Create()
+        public ActionResult Create(int? programType)
         {
-            return View();
+            if (programType == null || !(programType >= 1) || !(programType <= 4))
+            {
+                return View($"Select");
+            }
+
+            ViewBag.ProgramType = programType;
+
+            return View($"Create");
         }
 
         // POST: Programs/Create
