@@ -67,7 +67,7 @@ namespace CECBTIMS.Controllers
                         join wks in db.cmn_WorkSpace on emp.WorkSpaceId equals wks.WorkSpaceId
                         join wkst in db.cmn_WorkSpaceType on wks.WorkSpaceTypeId equals wkst.WorkSpaceTypeId
                         join dsg in db.hrm_Designation on emp.DesignationId equals dsg.DesignationId
-                        join dsgc in db.hrm_DesignationCategory on dsg.DesignationCategoryId equals dsgc.DesignationCategoryId
+                        join dsgc in db.hrm_DesignationCategory on dsg.DesignationGroupId equals dsgc.DesignationCategoryId
                         where emp.EmployeeId == id && emp.IsActive
                         select new
                         {
