@@ -1,0 +1,131 @@
+﻿@model CECBTIMS.Models.Employee
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Employee</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.EPFNo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EPFNo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Title)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Title)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NameWithInitial)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NameWithInitial)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FullName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FullName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NIC)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NIC)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.WorkSpaceName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.WorkSpaceName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DesignationName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DesignationName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.EmployeeRecruitmentType)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EmployeeRecruitmentType)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.EmpStatus)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EmpStatus)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DateOfAppointment)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DateOfAppointment)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TypeOfContract)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TypeOfContract)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.OfficeEmail)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.OfficeEmail)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.MobileNumber)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MobileNumber)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PrivateEmail)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PrivateEmail)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.EmployeeId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

@@ -180,8 +180,8 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AgendaController.cs" />
     <Compile Include="Controllers\CECBEmployeeVersionController.cs" />
-    <Compile Include="Controllers\CECBWorkSpaceController.cs" />
     <Compile Include="Controllers\CostsController.cs" />
+    <Compile Include="Controllers\EmployeesController.cs" />
     <Compile Include="Controllers\EmployeeVersionController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -438,6 +438,11 @@
     <Content Include="Views\CECBWorkSpace\Details.cshtml" />
     <Content Include="Views\CECBWorkSpace\Index.cshtml" />
     <Content Include="Views\Programs\Select.cshtml" />
+    <Content Include="Views\Employees\Create.cshtml" />
+    <Content Include="Views\Employees\Delete.cshtml" />
+    <Content Include="Views\Employees\Details.cshtml" />
+    <Content Include="Views\Employees\Edit.cshtml" />
+    <Content Include="Views\Employees\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
