@@ -130,19 +130,19 @@ namespace CECBTIMS.Controllers
         // POST: Programs/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        //        [HttpPost]
-        //        [ValidateAntiForgeryToken]
-        //        public async Task<ActionResult> Edit([Bind(Include = "Id,Title,ProgramType,StartDate,ApplicationClosingDate,ApplicationClosingTime,Brochure,Venue,EndDate,NotifiedBy,NotifiedOn,ProgramHours,DurationInDays,DurationInMonths,Department,Currency,ProgramFee,RegistrationFee,PerPersonFee,NoShowFee,MemberFee,NonMemberFee,StudentFee,RowVersion")] Program program)
-        //        {
-        //            if (ModelState.IsValid)
-        //            {
-        //                db.Entry(program).State = EntityState.Modified;
-        //                await db.SaveChangesAsync();
-        //                return RedirectToAction("Index");
-        //            }
-        //            return View(program);
-        //            
-        //        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> Edit([Bind(Include = "Id,Title,ProgramType,StartDate,ApplicationClosingDate,ApplicationClosingTime,Brochure,Venue,EndDate,NotifiedBy,NotifiedOn,ProgramHours,DurationInDays,DurationInMonths,Department,Currency,ProgramFee,RegistrationFee,PerPersonFee,NoShowFee,MemberFee,NonMemberFee,StudentFee,RowVersion")] Program program)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Entry(program).State = EntityState.Modified;
+                await db.SaveChangesAsync();
+                return RedirectToAction("Index");
+            }
+            return View(program);
+            
+        }
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Edit(int? id, byte[] rowVersion)
