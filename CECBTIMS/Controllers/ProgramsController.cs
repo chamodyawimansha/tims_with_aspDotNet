@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.Data.Entity.Core.Objects;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Threading.Tasks;
@@ -185,7 +186,7 @@ namespace CECBTIMS.Controllers
                     db.Entry(programToUpdate).OriginalValues["RowVersion"] = rowVersion;
                     await db.SaveChangesAsync();
 
-                    return RedirectToAction($"Details", new {id = id});
+                    return RedirectToAction($"Details", new {id});
                 }
                 catch (DbUpdateConcurrencyException ex)
                 {
@@ -201,8 +202,90 @@ namespace CECBTIMS.Controllers
                     else
                     {
                         var databaseValues = (Program)databaseEntry.ToObject();
-                    
-                        ModelState.AddModelError(string.Empty, "The Program you attempted to edit was modified by another user after you got the original values. The edit operation was canceled and the current values in the database have been displayed. If you still want to edit this record, click the Save button again. Otherwise click the Back to List hyperlink.");
+
+                        if (databaseValues.Title != clientValues.Title)
+                        {
+                            ModelState.AddModelError("Title", "Current value: " + databaseValues.Title);
+                        }
+                        if (databaseValues.StartDate != clientValues.StartDate)
+                        {
+                            ModelState.AddModelError("StartDate", "Current value: " + databaseValues.StartDate);
+                        }
+                        if (databaseValues.ApplicationClosingDate != clientValues.ApplicationClosingDate)
+                        {
+                            ModelState.AddModelError("ApplicationClosingDate", "Current value: " + databaseValues.ApplicationClosingDate);
+                        }
+                        if (databaseValues.ApplicationClosingTime != clientValues.ApplicationClosingTime)
+                        {
+                            ModelState.AddModelError("ApplicationClosingTime", "Current value: " + databaseValues.ApplicationClosingTime);
+                        }
+                        if (databaseValues.Venue != clientValues.Venue)
+                        {
+                            ModelState.AddModelError("Venue", "Current value: " + databaseValues.Venue);
+                        }
+                        if (databaseValues.EndDate != clientValues.EndDate)
+                        {
+                            ModelState.AddModelError("EndDate", "Current value: " + databaseValues.EndDate);
+                        }
+                        if (databaseValues.NotifiedBy != clientValues.NotifiedBy)
+                        {
+                            ModelState.AddModelError("NotifiedBy", "Current value: " + databaseValues.NotifiedBy);
+                        }
+                        if (databaseValues.NotifiedOn != clientValues.NotifiedOn)
+                        {
+                            ModelState.AddModelError("NotifiedOn", "Current value: " + databaseValues.NotifiedOn);
+                        }
+                        if (databaseValues.ProgramHours != clientValues.ProgramHours)
+                        {
+                            ModelState.AddModelError("ProgramHours", "Current value: " + databaseValues.ProgramHours);
+                        }
+                        if (databaseValues.DurationInDays != clientValues.DurationInDays)
+                        {
+                            ModelState.AddModelError("DurationInDays", "Current value: " + databaseValues.DurationInDays);
+                        }
+                        if (databaseValues.DurationInMonths != clientValues.DurationInMonths)
+                        {
+                            ModelState.AddModelError("DurationInMonths", "Current value: " + databaseValues.DurationInMonths);
+                        }
+                        if (databaseValues.Department != clientValues.Department)
+                        {
+                            ModelState.AddModelError("Department", "Current value: " + databaseValues.Department);
+                        }
+                        if (databaseValues.Currency != clientValues.Currency)
+                        {
+                            ModelState.AddModelError("Currency", "Current value: " + databaseValues.Currency);
+                        }
+                        if (!databaseValues.ProgramFee.Equals(clientValues.ProgramFee))
+                        {
+                            ModelState.AddModelError("ProgramFee", "Current value: " + databaseValues.ProgramFee);
+                        }
+                        if (!databaseValues.RegistrationFee.Equals(clientValues.RegistrationFee))
+                        {
+                            ModelState.AddModelError("RegistrationFee", "Current value: " + databaseValues.RegistrationFee);
+                        }
+                        if (!databaseValues.PerPersonFee.Equals(clientValues.PerPersonFee))
+                        {
+                            ModelState.AddModelError("PerPersonFee", "Current value: " + databaseValues.PerPersonFee);
+                        }
+                        if (!databaseValues.NoShowFee.Equals(clientValues.NoShowFee))
+                        {
+                            ModelState.AddModelError("NoShowFee", "Current value: " + databaseValues.NoShowFee);
+                        }
+                        if (!databaseValues.MemberFee.Equals(clientValues.MemberFee))
+                        {
+                            ModelState.AddModelError("MemberFee", "Current value: " + databaseValues.MemberFee);
+                        }
+                        if (!databaseValues.NonMemberFee.Equals(clientValues.NonMemberFee))
+                        {
+                            ModelState.AddModelError("NonMemberFee", "Current value: " + databaseValues.NonMemberFee);
+                        }
+                        if (!databaseValues.StudentFee.Equals(clientValues.StudentFee))
+                        {
+                            ModelState.AddModelError("StudentFee", "Current value: " + databaseValues.StudentFee);
+                        }
+
+
+                        ModelState.AddModelError(string.Empty, "The Program you attempted to edit was modified by another user after you got the original values. The edit operation was canceled and the current values in the database have been displayed. If you still want to edit this record, click the Save button again. Otherwise click the Back Link.");
                         programToUpdate.RowVersion = databaseValues.RowVersion;
                     }
                 }
