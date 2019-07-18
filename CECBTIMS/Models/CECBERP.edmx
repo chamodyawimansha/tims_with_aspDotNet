@@ -1,0 +1,1071 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="CECB_ERPModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <!--Errors Found During Generation:
+warning 6013: The table/view 'CECB_ERP.dbo.AGMDGM' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
+        <EntityType Name="AGMDGM">
+          <Property Name="AGMCode" Type="varchar" MaxLength="50" />
+          <Property Name="DGMCode" Type="varchar" MaxLength="50" />
+          <Property Name="AGMId" Type="uniqueidentifier" />
+          <Property Name="DGMId" Type="uniqueidentifier" />
+        </EntityType>-->
+        <EntityType Name="cmn_Employee">
+          <Key>
+            <PropertyRef Name="EmployeeId" />
+          </Key>
+          <Property Name="EmployeeId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="EmployeeCode" Type="nvarchar(max)" />
+          <Property Name="NameWithInitial" Type="nvarchar(max)" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+          <Property Name="OrganizationId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="BusinessUnitId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="CreatedDateTime" Type="datetime" Nullable="false" />
+          <Property Name="CreatedUserId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="UpdatedDateTime" Type="datetime" />
+          <Property Name="UpdatedUserId" Type="uniqueidentifier" />
+          <Property Name="UserId" Type="uniqueidentifier" />
+          <Property Name="Project_ProjectId" Type="uniqueidentifier" />
+        </EntityType>
+        <EntityType Name="cmn_EmployeeVersion">
+          <Key>
+            <PropertyRef Name="EmployeeVersionId" />
+          </Key>
+          <Property Name="EmployeeVersionId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="EmployeeId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="EmployeeCode" Type="nvarchar" MaxLength="20" />
+          <Property Name="EPFNo" Type="nvarchar(max)" />
+          <Property Name="Title" Type="nvarchar" MaxLength="10" />
+          <Property Name="NameWithInitial" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="FullName" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="NIC" Type="nvarchar" MaxLength="15" />
+          <Property Name="Gender" Type="int" />
+          <Property Name="WorkSpaceId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="DesignationId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Religion" Type="int" />
+          <Property Name="BloodGroup" Type="int" />
+          <Property Name="DateOfBirth" Type="datetime" />
+          <Property Name="BasicSalary" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="CivilStatus" Type="int" />
+          <Property Name="HomeAddress" Type="nvarchar(max)" />
+          <Property Name="ContactAddress" Type="nvarchar(max)" />
+          <Property Name="LandphoneNumber" Type="nvarchar" MaxLength="10" />
+          <Property Name="MobileNumber" Type="nvarchar" MaxLength="10" />
+          <Property Name="PrivateEmail" Type="nvarchar" MaxLength="100" />
+          <Property Name="NextOfKin" Type="nvarchar" MaxLength="150" />
+          <Property Name="NextOfKinRelationShip" Type="nvarchar" MaxLength="150" />
+          <Property Name="EmployeeRecruitmentType" Type="nvarchar" MaxLength="10" />
+          <Property Name="DateOfAppointment" Type="datetime" />
+          <Property Name="TypeOfContract" Type="nvarchar" MaxLength="50" />
+          <Property Name="DataStatus" Type="int" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+          <Property Name="BusinessUnitId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="OrganizationId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="CreatedDateTime" Type="datetime" Nullable="false" />
+          <Property Name="CreatedUserId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="UpdatedDateTime" Type="datetime" />
+          <Property Name="UpdatedUserId" Type="uniqueidentifier" />
+          <Property Name="OfficeEmail" Type="nvarchar" MaxLength="100" />
+          <Property Name="PersonalFileNo" Type="nvarchar(max)" />
+          <Property Name="InitialBasicSalary" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="GradeId" Type="uniqueidentifier" />
+          <Property Name="AGMWorkSpaceId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="DGMWorkSpaceId" Type="uniqueidentifier" />
+          <Property Name="OfficeEmail2" Type="nvarchar" MaxLength="100" />
+          <Property Name="EmergencyContactNumber" Type="nvarchar" MaxLength="10" />
+          <Property Name="EmergencyContactNumber2" Type="nvarchar" MaxLength="10" />
+          <Property Name="EmergencyContactAddress" Type="nvarchar(max)" />
+          <Property Name="DateOfRetainment" Type="datetime" />
+          <Property Name="Race" Type="int" />
+          <Property Name="EmpStatus" Type="int" Nullable="false" />
+          <Property Name="Initial" Type="nvarchar(max)" />
+          <Property Name="Name" Type="nvarchar(max)" />
+          <Property Name="ImageUrl" Type="nvarchar(max)" />
+          <Property Name="DateOfExpiry" Type="datetime" />
+          <Property Name="DesignationCategoryId" Type="uniqueidentifier" />
+          <Property Name="IncrementDate" Type="datetime" />
+          <Property Name="SubSectionId" Type="uniqueidentifier" />
+          <Property Name="EffectiveDate" Type="datetime" />
+          <Property Name="ResignedDate" Type="datetime" />
+          <Property Name="Version" Type="int" Nullable="false" />
+          <Property Name="PhysicalLocationId" Type="uniqueidentifier" />
+          <Property Name="SNameWithInitial" Type="nvarchar" MaxLength="4000" />
+          <Property Name="SHomeAddress" Type="nvarchar" MaxLength="4000" />
+        </EntityType>
+        <EntityType Name="cmn_WorkSpace">
+          <Key>
+            <PropertyRef Name="WorkSpaceId" />
+          </Key>
+          <Property Name="WorkSpaceId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="WorkSpaceCode" Type="nvarchar(max)" />
+          <Property Name="LocationName" Type="nvarchar(max)" />
+          <Property Name="WorkSpaceName" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="ParentWorkSpaceId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="WorkSpaceTypeId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+          <Property Name="BusinessUnitId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="OrganizationId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="CreatedDateTime" Type="datetime" Nullable="false" />
+          <Property Name="CreatedUserId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="UpdatedDateTime" Type="datetime" />
+          <Property Name="UpdatedUserId" Type="uniqueidentifier" />
+          <Property Name="Incharge" Type="nvarchar(max)" />
+          <Property Name="LocationId" Type="uniqueidentifier" />
+          <Property Name="PhysicalLocationId" Type="uniqueidentifier" />
+          <Property Name="BusinessUnitCode" Type="nvarchar(max)" />
+          <Property Name="OrganizationCode" Type="nvarchar(max)" />
+          <Property Name="WorkSpaceAddress" Type="nvarchar(max)" />
+          <Property Name="TelephoneNumber" Type="nvarchar(max)" />
+          <Property Name="FaxNumber" Type="nvarchar(max)" />
+          <Property Name="HeadOftheWorkSpace" Type="uniqueidentifier" />
+          <Property Name="AccountCodeGN4Id" Type="uniqueidentifier" />
+          <Property Name="AccountCode" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="WorkSpaceAccountant" Type="uniqueidentifier" />
+          <Property Name="SWorkSpaceName" Type="nvarchar" MaxLength="4000" />
+        </EntityType>
+        <EntityType Name="cmn_WorkSpaceHistory">
+          <Key>
+            <PropertyRef Name="HistoryId" />
+          </Key>
+          <Property Name="HistoryId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="WorkSpaceId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="OldParentId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="NewParentId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="EfectiveDate" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="cmn_WorkSpaceType">
+          <Key>
+            <PropertyRef Name="WorkSpaceTypeId" />
+          </Key>
+          <Property Name="WorkSpaceTypeId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="WorkSpaceTypeName" Type="nvarchar(max)" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+          <Property Name="BusinessUnitId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="OrganizationId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="CreatedDateTime" Type="datetime" Nullable="false" />
+          <Property Name="CreatedUserId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="UpdatedDateTime" Type="datetime" />
+          <Property Name="UpdatedUserId" Type="uniqueidentifier" />
+          <Property Name="WorkSpaceHierarchy" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="hrm_Designation">
+          <Key>
+            <PropertyRef Name="DesignationId" />
+          </Key>
+          <Property Name="DesignationId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="DesignationName" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+          <Property Name="BusinessUnitId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="OrganizationId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="CreatedDateTime" Type="datetime" Nullable="false" />
+          <Property Name="CreatedUserId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="UpdatedDateTime" Type="datetime" />
+          <Property Name="UpdatedUserId" Type="uniqueidentifier" />
+          <Property Name="OldDesignationCode" Type="nvarchar(max)" />
+          <Property Name="DesignationGroupId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="SDesignationName" Type="nvarchar" MaxLength="4000" />
+        </EntityType>
+        <EntityType Name="hrm_DesignationCategory">
+          <Key>
+            <PropertyRef Name="DesignationCategoryId" />
+          </Key>
+          <Property Name="DesignationCategoryId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+          <Property Name="BusinessUnitId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="OrganizationId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="CreatedDateTime" Type="datetime" Nullable="false" />
+          <Property Name="CreatedUserId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="UpdatedDateTime" Type="datetime" />
+          <Property Name="UpdatedUserId" Type="uniqueidentifier" />
+          <Property Name="DesignationCategoryName" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="InitialSalary" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="MaxSalary" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+        </EntityType>
+        <EntityType Name="hrm_DesignationGroup">
+          <Key>
+            <PropertyRef Name="DesignationGroupId" />
+          </Key>
+          <Property Name="DesignationGroupId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="DesignationGroupCode" Type="nvarchar(max)" />
+          <Property Name="DesignationGroupName" Type="nvarchar(max)" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+          <Property Name="BusinessUnitId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="OrganizationId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="CreatedDateTime" Type="datetime" Nullable="false" />
+          <Property Name="CreatedUserId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="UpdatedDateTime" Type="datetime" />
+          <Property Name="UpdatedUserId" Type="uniqueidentifier" />
+        </EntityType>
+        <EntityType Name="hrm_EducationLevel">
+          <Key>
+            <PropertyRef Name="LevelId" />
+          </Key>
+          <Property Name="CreatedDateTime" Type="datetime" Nullable="false" />
+          <Property Name="LevelId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="LevelName" Type="nvarchar(max)" />
+          <Property Name="CreatedUserId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="OrganizationId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="BusinessUnitId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="UpdatedDateTime" Type="datetime" />
+          <Property Name="UpdatedUserId" Type="uniqueidentifier" />
+        </EntityType>
+        <EntityType Name="hrm_Grade">
+          <Key>
+            <PropertyRef Name="GradeId" />
+          </Key>
+          <Property Name="GradeId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="GradeName" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+          <Property Name="OrganizationId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="BusinessUnitId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="CreatedDateTime" Type="datetime" Nullable="false" />
+          <Property Name="CreatedUserId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="UpdatedDateTime" Type="datetime" />
+          <Property Name="UpdatedUserId" Type="uniqueidentifier" />
+        </EntityType>
+        <EntityType Name="hrm_Institute">
+          <Key>
+            <PropertyRef Name="InstituteId" />
+          </Key>
+          <Property Name="InstituteId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="InstituteName" Type="nvarchar(max)" />
+          <Property Name="CreatedDateTime" Type="datetime" Nullable="false" />
+          <Property Name="CreatedUserId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="OrganizationId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="BusinessUnitId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="UpdatedDateTime" Type="datetime" />
+          <Property Name="UpdatedUserId" Type="uniqueidentifier" />
+        </EntityType>
+        <Association Name="FK_cmn_EmployeeVersion_hrm_Designation">
+          <End Role="hrm_Designation" Type="Self.hrm_Designation" Multiplicity="1" />
+          <End Role="cmn_EmployeeVersion" Type="Self.cmn_EmployeeVersion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="hrm_Designation">
+              <PropertyRef Name="DesignationId" />
+            </Principal>
+            <Dependent Role="cmn_EmployeeVersion">
+              <PropertyRef Name="DesignationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_cmn_EmployeeVersion_dbo_cmn_Employee_EmployeeId">
+          <End Role="cmn_Employee" Type="Self.cmn_Employee" Multiplicity="1" />
+          <End Role="cmn_EmployeeVersion" Type="Self.cmn_EmployeeVersion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="cmn_Employee">
+              <PropertyRef Name="EmployeeId" />
+            </Principal>
+            <Dependent Role="cmn_EmployeeVersion">
+              <PropertyRef Name="EmployeeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_cmn_EmployeeVersion_dbo_cmn_WorkSpace_WorkSpaceId">
+          <End Role="cmn_WorkSpace" Type="Self.cmn_WorkSpace" Multiplicity="1" />
+          <End Role="cmn_EmployeeVersion" Type="Self.cmn_EmployeeVersion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="cmn_WorkSpace">
+              <PropertyRef Name="WorkSpaceId" />
+            </Principal>
+            <Dependent Role="cmn_EmployeeVersion">
+              <PropertyRef Name="WorkSpaceId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_cmn_EmployeeVersion_dbo_hrm_DesignationCategory_DesignationCategoryId">
+          <End Role="hrm_DesignationCategory" Type="Self.hrm_DesignationCategory" Multiplicity="0..1" />
+          <End Role="cmn_EmployeeVersion" Type="Self.cmn_EmployeeVersion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="hrm_DesignationCategory">
+              <PropertyRef Name="DesignationCategoryId" />
+            </Principal>
+            <Dependent Role="cmn_EmployeeVersion">
+              <PropertyRef Name="DesignationCategoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_cmn_EmployeeVersion_dbo_hrm_Grade_GradeId">
+          <End Role="hrm_Grade" Type="Self.hrm_Grade" Multiplicity="0..1" />
+          <End Role="cmn_EmployeeVersion" Type="Self.cmn_EmployeeVersion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="hrm_Grade">
+              <PropertyRef Name="GradeId" />
+            </Principal>
+            <Dependent Role="cmn_EmployeeVersion">
+              <PropertyRef Name="GradeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_cmn_WorkSpace_dbo_cmn_Employee_WorkSpaceAccountant">
+          <End Role="cmn_Employee" Type="Self.cmn_Employee" Multiplicity="0..1" />
+          <End Role="cmn_WorkSpace" Type="Self.cmn_WorkSpace" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="cmn_Employee">
+              <PropertyRef Name="EmployeeId" />
+            </Principal>
+            <Dependent Role="cmn_WorkSpace">
+              <PropertyRef Name="WorkSpaceAccountant" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_cmn_WorkSpace_dbo_cmn_WorkSpace_ParentWorkSpaceId">
+          <End Role="cmn_WorkSpace" Type="Self.cmn_WorkSpace" Multiplicity="1" />
+          <End Role="cmn_WorkSpace1" Type="Self.cmn_WorkSpace" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="cmn_WorkSpace">
+              <PropertyRef Name="WorkSpaceId" />
+            </Principal>
+            <Dependent Role="cmn_WorkSpace1">
+              <PropertyRef Name="ParentWorkSpaceId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_cmn_WorkSpace_dbo_cmn_WorkSpaceType_WorkSpaceTypeId">
+          <End Role="cmn_WorkSpaceType" Type="Self.cmn_WorkSpaceType" Multiplicity="1" />
+          <End Role="cmn_WorkSpace" Type="Self.cmn_WorkSpace" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="cmn_WorkSpaceType">
+              <PropertyRef Name="WorkSpaceTypeId" />
+            </Principal>
+            <Dependent Role="cmn_WorkSpace">
+              <PropertyRef Name="WorkSpaceTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_hrm_Designation_dbo_hrm_DesignationGroup_DesignationGroupId">
+          <End Role="hrm_DesignationGroup" Type="Self.hrm_DesignationGroup" Multiplicity="1" />
+          <End Role="hrm_Designation" Type="Self.hrm_Designation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="hrm_DesignationGroup">
+              <PropertyRef Name="DesignationGroupId" />
+            </Principal>
+            <Dependent Role="hrm_Designation">
+              <PropertyRef Name="DesignationGroupId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="CECB_ERPModelStoreContainer">
+          <EntitySet Name="cmn_Employee" EntityType="Self.cmn_Employee" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="cmn_EmployeeVersion" EntityType="Self.cmn_EmployeeVersion" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="cmn_WorkSpace" EntityType="Self.cmn_WorkSpace" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="cmn_WorkSpaceHistory" EntityType="Self.cmn_WorkSpaceHistory" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="cmn_WorkSpaceType" EntityType="Self.cmn_WorkSpaceType" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="hrm_Designation" EntityType="Self.hrm_Designation" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="hrm_DesignationCategory" EntityType="Self.hrm_DesignationCategory" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="hrm_DesignationGroup" EntityType="Self.hrm_DesignationGroup" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="hrm_EducationLevel" EntityType="Self.hrm_EducationLevel" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="hrm_Grade" EntityType="Self.hrm_Grade" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="hrm_Institute" EntityType="Self.hrm_Institute" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_cmn_EmployeeVersion_hrm_Designation" Association="Self.FK_cmn_EmployeeVersion_hrm_Designation">
+            <End Role="hrm_Designation" EntitySet="hrm_Designation" />
+            <End Role="cmn_EmployeeVersion" EntitySet="cmn_EmployeeVersion" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_cmn_EmployeeVersion_dbo_cmn_Employee_EmployeeId" Association="Self.FK_dbo_cmn_EmployeeVersion_dbo_cmn_Employee_EmployeeId">
+            <End Role="cmn_Employee" EntitySet="cmn_Employee" />
+            <End Role="cmn_EmployeeVersion" EntitySet="cmn_EmployeeVersion" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_cmn_EmployeeVersion_dbo_cmn_WorkSpace_WorkSpaceId" Association="Self.FK_dbo_cmn_EmployeeVersion_dbo_cmn_WorkSpace_WorkSpaceId">
+            <End Role="cmn_WorkSpace" EntitySet="cmn_WorkSpace" />
+            <End Role="cmn_EmployeeVersion" EntitySet="cmn_EmployeeVersion" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_cmn_EmployeeVersion_dbo_hrm_DesignationCategory_DesignationCategoryId" Association="Self.FK_dbo_cmn_EmployeeVersion_dbo_hrm_DesignationCategory_DesignationCategoryId">
+            <End Role="hrm_DesignationCategory" EntitySet="hrm_DesignationCategory" />
+            <End Role="cmn_EmployeeVersion" EntitySet="cmn_EmployeeVersion" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_cmn_EmployeeVersion_dbo_hrm_Grade_GradeId" Association="Self.FK_dbo_cmn_EmployeeVersion_dbo_hrm_Grade_GradeId">
+            <End Role="hrm_Grade" EntitySet="hrm_Grade" />
+            <End Role="cmn_EmployeeVersion" EntitySet="cmn_EmployeeVersion" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_cmn_WorkSpace_dbo_cmn_Employee_WorkSpaceAccountant" Association="Self.FK_dbo_cmn_WorkSpace_dbo_cmn_Employee_WorkSpaceAccountant">
+            <End Role="cmn_Employee" EntitySet="cmn_Employee" />
+            <End Role="cmn_WorkSpace" EntitySet="cmn_WorkSpace" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_cmn_WorkSpace_dbo_cmn_WorkSpace_ParentWorkSpaceId" Association="Self.FK_dbo_cmn_WorkSpace_dbo_cmn_WorkSpace_ParentWorkSpaceId">
+            <End Role="cmn_WorkSpace" EntitySet="cmn_WorkSpace" />
+            <End Role="cmn_WorkSpace1" EntitySet="cmn_WorkSpace" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_cmn_WorkSpace_dbo_cmn_WorkSpaceType_WorkSpaceTypeId" Association="Self.FK_dbo_cmn_WorkSpace_dbo_cmn_WorkSpaceType_WorkSpaceTypeId">
+            <End Role="cmn_WorkSpaceType" EntitySet="cmn_WorkSpaceType" />
+            <End Role="cmn_WorkSpace" EntitySet="cmn_WorkSpace" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_hrm_Designation_dbo_hrm_DesignationGroup_DesignationGroupId" Association="Self.FK_dbo_hrm_Designation_dbo_hrm_DesignationGroup_DesignationGroupId">
+            <End Role="hrm_DesignationGroup" EntitySet="hrm_DesignationGroup" />
+            <End Role="hrm_Designation" EntitySet="hrm_Designation" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="CECB_ERPModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="cmn_Employee">
+          <Key>
+            <PropertyRef Name="EmployeeId" />
+          </Key>
+          <Property Name="EmployeeId" Type="Guid" Nullable="false" />
+          <Property Name="EmployeeCode" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="NameWithInitial" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <Property Name="OrganizationId" Type="Guid" Nullable="false" />
+          <Property Name="BusinessUnitId" Type="Guid" Nullable="false" />
+          <Property Name="CreatedDateTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CreatedUserId" Type="Guid" Nullable="false" />
+          <Property Name="UpdatedDateTime" Type="DateTime" Precision="3" />
+          <Property Name="UpdatedUserId" Type="Guid" />
+          <Property Name="UserId" Type="Guid" />
+          <Property Name="Project_ProjectId" Type="Guid" />
+          <NavigationProperty Name="cmn_EmployeeVersion" Relationship="Self.FK_dbo_cmn_EmployeeVersion_dbo_cmn_Employee_EmployeeId" FromRole="cmn_Employee" ToRole="cmn_EmployeeVersion" />
+          <NavigationProperty Name="cmn_WorkSpace" Relationship="Self.FK_dbo_cmn_WorkSpace_dbo_cmn_Employee_WorkSpaceAccountant" FromRole="cmn_Employee" ToRole="cmn_WorkSpace" />
+        </EntityType>
+        <EntityType Name="cmn_EmployeeVersion">
+          <Key>
+            <PropertyRef Name="EmployeeVersionId" />
+          </Key>
+          <Property Name="EmployeeVersionId" Type="Guid" Nullable="false" />
+          <Property Name="EmployeeId" Type="Guid" Nullable="false" />
+          <Property Name="EmployeeCode" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="EPFNo" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Title" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="NameWithInitial" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="FullName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="NIC" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="Gender" Type="Int32" />
+          <Property Name="WorkSpaceId" Type="Guid" Nullable="false" />
+          <Property Name="DesignationId" Type="Guid" Nullable="false" />
+          <Property Name="Religion" Type="Int32" />
+          <Property Name="BloodGroup" Type="Int32" />
+          <Property Name="DateOfBirth" Type="DateTime" Precision="3" />
+          <Property Name="BasicSalary" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="CivilStatus" Type="Int32" />
+          <Property Name="HomeAddress" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ContactAddress" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="LandphoneNumber" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="MobileNumber" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="PrivateEmail" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="NextOfKin" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="NextOfKinRelationShip" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="EmployeeRecruitmentType" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="DateOfAppointment" Type="DateTime" Precision="3" />
+          <Property Name="TypeOfContract" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="DataStatus" Type="Int32" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <Property Name="BusinessUnitId" Type="Guid" Nullable="false" />
+          <Property Name="OrganizationId" Type="Guid" Nullable="false" />
+          <Property Name="CreatedDateTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CreatedUserId" Type="Guid" Nullable="false" />
+          <Property Name="UpdatedDateTime" Type="DateTime" Precision="3" />
+          <Property Name="UpdatedUserId" Type="Guid" />
+          <Property Name="OfficeEmail" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="PersonalFileNo" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="InitialBasicSalary" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="GradeId" Type="Guid" />
+          <Property Name="AGMWorkSpaceId" Type="Guid" Nullable="false" />
+          <Property Name="DGMWorkSpaceId" Type="Guid" />
+          <Property Name="OfficeEmail2" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="EmergencyContactNumber" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="EmergencyContactNumber2" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="EmergencyContactAddress" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="DateOfRetainment" Type="DateTime" Precision="3" />
+          <Property Name="Race" Type="Int32" />
+          <Property Name="EmpStatus" Type="Int32" Nullable="false" />
+          <Property Name="Initial" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ImageUrl" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="DateOfExpiry" Type="DateTime" Precision="3" />
+          <Property Name="DesignationCategoryId" Type="Guid" />
+          <Property Name="IncrementDate" Type="DateTime" Precision="3" />
+          <Property Name="SubSectionId" Type="Guid" />
+          <Property Name="EffectiveDate" Type="DateTime" Precision="3" />
+          <Property Name="ResignedDate" Type="DateTime" Precision="3" />
+          <Property Name="Version" Type="Int32" Nullable="false" />
+          <Property Name="PhysicalLocationId" Type="Guid" />
+          <Property Name="SNameWithInitial" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="SHomeAddress" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="cmn_Employee" Relationship="Self.FK_dbo_cmn_EmployeeVersion_dbo_cmn_Employee_EmployeeId" FromRole="cmn_EmployeeVersion" ToRole="cmn_Employee" />
+          <NavigationProperty Name="hrm_Designation" Relationship="Self.FK_cmn_EmployeeVersion_hrm_Designation" FromRole="cmn_EmployeeVersion" ToRole="hrm_Designation" />
+          <NavigationProperty Name="cmn_WorkSpace" Relationship="Self.FK_dbo_cmn_EmployeeVersion_dbo_cmn_WorkSpace_WorkSpaceId" FromRole="cmn_EmployeeVersion" ToRole="cmn_WorkSpace" />
+          <NavigationProperty Name="hrm_DesignationCategory" Relationship="Self.FK_dbo_cmn_EmployeeVersion_dbo_hrm_DesignationCategory_DesignationCategoryId" FromRole="cmn_EmployeeVersion" ToRole="hrm_DesignationCategory" />
+          <NavigationProperty Name="hrm_Grade" Relationship="Self.FK_dbo_cmn_EmployeeVersion_dbo_hrm_Grade_GradeId" FromRole="cmn_EmployeeVersion" ToRole="hrm_Grade" />
+        </EntityType>
+        <EntityType Name="cmn_WorkSpace">
+          <Key>
+            <PropertyRef Name="WorkSpaceId" />
+          </Key>
+          <Property Name="WorkSpaceId" Type="Guid" Nullable="false" />
+          <Property Name="WorkSpaceCode" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="LocationName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="WorkSpaceName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ParentWorkSpaceId" Type="Guid" Nullable="false" />
+          <Property Name="WorkSpaceTypeId" Type="Guid" Nullable="false" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <Property Name="BusinessUnitId" Type="Guid" Nullable="false" />
+          <Property Name="OrganizationId" Type="Guid" Nullable="false" />
+          <Property Name="CreatedDateTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CreatedUserId" Type="Guid" Nullable="false" />
+          <Property Name="UpdatedDateTime" Type="DateTime" Precision="3" />
+          <Property Name="UpdatedUserId" Type="Guid" />
+          <Property Name="Incharge" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="LocationId" Type="Guid" />
+          <Property Name="PhysicalLocationId" Type="Guid" />
+          <Property Name="BusinessUnitCode" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="OrganizationCode" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="WorkSpaceAddress" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="TelephoneNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="FaxNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="HeadOftheWorkSpace" Type="Guid" />
+          <Property Name="AccountCodeGN4Id" Type="Guid" />
+          <Property Name="AccountCode" Type="Guid" Nullable="false" />
+          <Property Name="WorkSpaceAccountant" Type="Guid" />
+          <Property Name="SWorkSpaceName" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="cmn_Employee" Relationship="Self.FK_dbo_cmn_WorkSpace_dbo_cmn_Employee_WorkSpaceAccountant" FromRole="cmn_WorkSpace" ToRole="cmn_Employee" />
+          <NavigationProperty Name="cmn_EmployeeVersion" Relationship="Self.FK_dbo_cmn_EmployeeVersion_dbo_cmn_WorkSpace_WorkSpaceId" FromRole="cmn_WorkSpace" ToRole="cmn_EmployeeVersion" />
+          <NavigationProperty Name="cmn_WorkSpace1" Relationship="Self.FK_dbo_cmn_WorkSpace_dbo_cmn_WorkSpace_ParentWorkSpaceId" FromRole="cmn_WorkSpace" ToRole="cmn_WorkSpace1" />
+          <NavigationProperty Name="cmn_WorkSpace2" Relationship="Self.FK_dbo_cmn_WorkSpace_dbo_cmn_WorkSpace_ParentWorkSpaceId" FromRole="cmn_WorkSpace1" ToRole="cmn_WorkSpace" />
+          <NavigationProperty Name="cmn_WorkSpaceType" Relationship="Self.FK_dbo_cmn_WorkSpace_dbo_cmn_WorkSpaceType_WorkSpaceTypeId" FromRole="cmn_WorkSpace" ToRole="cmn_WorkSpaceType" />
+        </EntityType>
+        <EntityType Name="cmn_WorkSpaceHistory">
+          <Key>
+            <PropertyRef Name="HistoryId" />
+          </Key>
+          <Property Name="HistoryId" Type="Guid" Nullable="false" />
+          <Property Name="WorkSpaceId" Type="Guid" Nullable="false" />
+          <Property Name="OldParentId" Type="Guid" Nullable="false" />
+          <Property Name="NewParentId" Type="Guid" Nullable="false" />
+          <Property Name="EfectiveDate" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <EntityType Name="cmn_WorkSpaceType">
+          <Key>
+            <PropertyRef Name="WorkSpaceTypeId" />
+          </Key>
+          <Property Name="WorkSpaceTypeId" Type="Guid" Nullable="false" />
+          <Property Name="WorkSpaceTypeName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <Property Name="BusinessUnitId" Type="Guid" Nullable="false" />
+          <Property Name="OrganizationId" Type="Guid" Nullable="false" />
+          <Property Name="CreatedDateTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CreatedUserId" Type="Guid" Nullable="false" />
+          <Property Name="UpdatedDateTime" Type="DateTime" Precision="3" />
+          <Property Name="UpdatedUserId" Type="Guid" />
+          <Property Name="WorkSpaceHierarchy" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="cmn_WorkSpace" Relationship="Self.FK_dbo_cmn_WorkSpace_dbo_cmn_WorkSpaceType_WorkSpaceTypeId" FromRole="cmn_WorkSpaceType" ToRole="cmn_WorkSpace" />
+        </EntityType>
+        <EntityType Name="hrm_Designation">
+          <Key>
+            <PropertyRef Name="DesignationId" />
+          </Key>
+          <Property Name="DesignationId" Type="Guid" Nullable="false" />
+          <Property Name="DesignationName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <Property Name="BusinessUnitId" Type="Guid" Nullable="false" />
+          <Property Name="OrganizationId" Type="Guid" Nullable="false" />
+          <Property Name="CreatedDateTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CreatedUserId" Type="Guid" Nullable="false" />
+          <Property Name="UpdatedDateTime" Type="DateTime" Precision="3" />
+          <Property Name="UpdatedUserId" Type="Guid" />
+          <Property Name="OldDesignationCode" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="DesignationGroupId" Type="Guid" Nullable="false" />
+          <Property Name="SDesignationName" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="cmn_EmployeeVersion" Relationship="Self.FK_cmn_EmployeeVersion_hrm_Designation" FromRole="hrm_Designation" ToRole="cmn_EmployeeVersion" />
+          <NavigationProperty Name="hrm_DesignationGroup" Relationship="Self.FK_dbo_hrm_Designation_dbo_hrm_DesignationGroup_DesignationGroupId" FromRole="hrm_Designation" ToRole="hrm_DesignationGroup" />
+        </EntityType>
+        <EntityType Name="hrm_DesignationCategory">
+          <Key>
+            <PropertyRef Name="DesignationCategoryId" />
+          </Key>
+          <Property Name="DesignationCategoryId" Type="Guid" Nullable="false" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <Property Name="BusinessUnitId" Type="Guid" Nullable="false" />
+          <Property Name="OrganizationId" Type="Guid" Nullable="false" />
+          <Property Name="CreatedDateTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CreatedUserId" Type="Guid" Nullable="false" />
+          <Property Name="UpdatedDateTime" Type="DateTime" Precision="3" />
+          <Property Name="UpdatedUserId" Type="Guid" />
+          <Property Name="DesignationCategoryName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="InitialSalary" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="MaxSalary" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+          <NavigationProperty Name="cmn_EmployeeVersion" Relationship="Self.FK_dbo_cmn_EmployeeVersion_dbo_hrm_DesignationCategory_DesignationCategoryId" FromRole="hrm_DesignationCategory" ToRole="cmn_EmployeeVersion" />
+        </EntityType>
+        <EntityType Name="hrm_DesignationGroup">
+          <Key>
+            <PropertyRef Name="DesignationGroupId" />
+          </Key>
+          <Property Name="DesignationGroupId" Type="Guid" Nullable="false" />
+          <Property Name="DesignationGroupCode" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="DesignationGroupName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <Property Name="BusinessUnitId" Type="Guid" Nullable="false" />
+          <Property Name="OrganizationId" Type="Guid" Nullable="false" />
+          <Property Name="CreatedDateTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CreatedUserId" Type="Guid" Nullable="false" />
+          <Property Name="UpdatedDateTime" Type="DateTime" Precision="3" />
+          <Property Name="UpdatedUserId" Type="Guid" />
+          <NavigationProperty Name="hrm_Designation" Relationship="Self.FK_dbo_hrm_Designation_dbo_hrm_DesignationGroup_DesignationGroupId" FromRole="hrm_DesignationGroup" ToRole="hrm_Designation" />
+        </EntityType>
+        <EntityType Name="hrm_EducationLevel">
+          <Key>
+            <PropertyRef Name="LevelId" />
+          </Key>
+          <Property Name="CreatedDateTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="LevelId" Type="Guid" Nullable="false" />
+          <Property Name="LevelName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedUserId" Type="Guid" Nullable="false" />
+          <Property Name="OrganizationId" Type="Guid" Nullable="false" />
+          <Property Name="BusinessUnitId" Type="Guid" Nullable="false" />
+          <Property Name="UpdatedDateTime" Type="DateTime" Precision="3" />
+          <Property Name="UpdatedUserId" Type="Guid" />
+        </EntityType>
+        <EntityType Name="hrm_Grade">
+          <Key>
+            <PropertyRef Name="GradeId" />
+          </Key>
+          <Property Name="GradeId" Type="Guid" Nullable="false" />
+          <Property Name="GradeName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <Property Name="OrganizationId" Type="Guid" Nullable="false" />
+          <Property Name="BusinessUnitId" Type="Guid" Nullable="false" />
+          <Property Name="CreatedDateTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CreatedUserId" Type="Guid" Nullable="false" />
+          <Property Name="UpdatedDateTime" Type="DateTime" Precision="3" />
+          <Property Name="UpdatedUserId" Type="Guid" />
+          <NavigationProperty Name="cmn_EmployeeVersion" Relationship="Self.FK_dbo_cmn_EmployeeVersion_dbo_hrm_Grade_GradeId" FromRole="hrm_Grade" ToRole="cmn_EmployeeVersion" />
+        </EntityType>
+        <EntityType Name="hrm_Institute">
+          <Key>
+            <PropertyRef Name="InstituteId" />
+          </Key>
+          <Property Name="InstituteId" Type="Guid" Nullable="false" />
+          <Property Name="InstituteName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedDateTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CreatedUserId" Type="Guid" Nullable="false" />
+          <Property Name="OrganizationId" Type="Guid" Nullable="false" />
+          <Property Name="BusinessUnitId" Type="Guid" Nullable="false" />
+          <Property Name="UpdatedDateTime" Type="DateTime" Precision="3" />
+          <Property Name="UpdatedUserId" Type="Guid" />
+        </EntityType>
+        <Association Name="FK_dbo_cmn_EmployeeVersion_dbo_cmn_Employee_EmployeeId">
+          <End Role="cmn_Employee" Type="Self.cmn_Employee" Multiplicity="1" />
+          <End Role="cmn_EmployeeVersion" Type="Self.cmn_EmployeeVersion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="cmn_Employee">
+              <PropertyRef Name="EmployeeId" />
+            </Principal>
+            <Dependent Role="cmn_EmployeeVersion">
+              <PropertyRef Name="EmployeeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_cmn_WorkSpace_dbo_cmn_Employee_WorkSpaceAccountant">
+          <End Role="cmn_Employee" Type="Self.cmn_Employee" Multiplicity="0..1" />
+          <End Role="cmn_WorkSpace" Type="Self.cmn_WorkSpace" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="cmn_Employee">
+              <PropertyRef Name="EmployeeId" />
+            </Principal>
+            <Dependent Role="cmn_WorkSpace">
+              <PropertyRef Name="WorkSpaceAccountant" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_cmn_EmployeeVersion_hrm_Designation">
+          <End Role="hrm_Designation" Type="Self.hrm_Designation" Multiplicity="1" />
+          <End Role="cmn_EmployeeVersion" Type="Self.cmn_EmployeeVersion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="hrm_Designation">
+              <PropertyRef Name="DesignationId" />
+            </Principal>
+            <Dependent Role="cmn_EmployeeVersion">
+              <PropertyRef Name="DesignationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_cmn_EmployeeVersion_dbo_cmn_WorkSpace_WorkSpaceId">
+          <End Role="cmn_WorkSpace" Type="Self.cmn_WorkSpace" Multiplicity="1" />
+          <End Role="cmn_EmployeeVersion" Type="Self.cmn_EmployeeVersion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="cmn_WorkSpace">
+              <PropertyRef Name="WorkSpaceId" />
+            </Principal>
+            <Dependent Role="cmn_EmployeeVersion">
+              <PropertyRef Name="WorkSpaceId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_cmn_EmployeeVersion_dbo_hrm_DesignationCategory_DesignationCategoryId">
+          <End Role="hrm_DesignationCategory" Type="Self.hrm_DesignationCategory" Multiplicity="0..1" />
+          <End Role="cmn_EmployeeVersion" Type="Self.cmn_EmployeeVersion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="hrm_DesignationCategory">
+              <PropertyRef Name="DesignationCategoryId" />
+            </Principal>
+            <Dependent Role="cmn_EmployeeVersion">
+              <PropertyRef Name="DesignationCategoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_cmn_EmployeeVersion_dbo_hrm_Grade_GradeId">
+          <End Role="hrm_Grade" Type="Self.hrm_Grade" Multiplicity="0..1" />
+          <End Role="cmn_EmployeeVersion" Type="Self.cmn_EmployeeVersion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="hrm_Grade">
+              <PropertyRef Name="GradeId" />
+            </Principal>
+            <Dependent Role="cmn_EmployeeVersion">
+              <PropertyRef Name="GradeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_cmn_WorkSpace_dbo_cmn_WorkSpace_ParentWorkSpaceId">
+          <End Role="cmn_WorkSpace" Type="Self.cmn_WorkSpace" Multiplicity="1" />
+          <End Role="cmn_WorkSpace1" Type="Self.cmn_WorkSpace" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="cmn_WorkSpace">
+              <PropertyRef Name="WorkSpaceId" />
+            </Principal>
+            <Dependent Role="cmn_WorkSpace1">
+              <PropertyRef Name="ParentWorkSpaceId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_cmn_WorkSpace_dbo_cmn_WorkSpaceType_WorkSpaceTypeId">
+          <End Role="cmn_WorkSpaceType" Type="Self.cmn_WorkSpaceType" Multiplicity="1" />
+          <End Role="cmn_WorkSpace" Type="Self.cmn_WorkSpace" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="cmn_WorkSpaceType">
+              <PropertyRef Name="WorkSpaceTypeId" />
+            </Principal>
+            <Dependent Role="cmn_WorkSpace">
+              <PropertyRef Name="WorkSpaceTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_hrm_Designation_dbo_hrm_DesignationGroup_DesignationGroupId">
+          <End Role="hrm_DesignationGroup" Type="Self.hrm_DesignationGroup" Multiplicity="1" />
+          <End Role="hrm_Designation" Type="Self.hrm_Designation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="hrm_DesignationGroup">
+              <PropertyRef Name="DesignationGroupId" />
+            </Principal>
+            <Dependent Role="hrm_Designation">
+              <PropertyRef Name="DesignationGroupId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="CECB_ERPEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="cmn_Employee" EntityType="Self.cmn_Employee" />
+          <EntitySet Name="cmn_EmployeeVersion" EntityType="Self.cmn_EmployeeVersion" />
+          <EntitySet Name="cmn_WorkSpace" EntityType="Self.cmn_WorkSpace" />
+          <EntitySet Name="cmn_WorkSpaceHistory" EntityType="Self.cmn_WorkSpaceHistory" />
+          <EntitySet Name="cmn_WorkSpaceType" EntityType="Self.cmn_WorkSpaceType" />
+          <EntitySet Name="hrm_Designation" EntityType="Self.hrm_Designation" />
+          <EntitySet Name="hrm_DesignationCategory" EntityType="Self.hrm_DesignationCategory" />
+          <EntitySet Name="hrm_DesignationGroup" EntityType="Self.hrm_DesignationGroup" />
+          <EntitySet Name="hrm_EducationLevel" EntityType="Self.hrm_EducationLevel" />
+          <EntitySet Name="hrm_Grade" EntityType="Self.hrm_Grade" />
+          <EntitySet Name="hrm_Institute" EntityType="Self.hrm_Institute" />
+          <AssociationSet Name="FK_dbo_cmn_EmployeeVersion_dbo_cmn_Employee_EmployeeId" Association="Self.FK_dbo_cmn_EmployeeVersion_dbo_cmn_Employee_EmployeeId">
+            <End Role="cmn_Employee" EntitySet="cmn_Employee" />
+            <End Role="cmn_EmployeeVersion" EntitySet="cmn_EmployeeVersion" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_cmn_WorkSpace_dbo_cmn_Employee_WorkSpaceAccountant" Association="Self.FK_dbo_cmn_WorkSpace_dbo_cmn_Employee_WorkSpaceAccountant">
+            <End Role="cmn_Employee" EntitySet="cmn_Employee" />
+            <End Role="cmn_WorkSpace" EntitySet="cmn_WorkSpace" />
+          </AssociationSet>
+          <AssociationSet Name="FK_cmn_EmployeeVersion_hrm_Designation" Association="Self.FK_cmn_EmployeeVersion_hrm_Designation">
+            <End Role="hrm_Designation" EntitySet="hrm_Designation" />
+            <End Role="cmn_EmployeeVersion" EntitySet="cmn_EmployeeVersion" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_cmn_EmployeeVersion_dbo_cmn_WorkSpace_WorkSpaceId" Association="Self.FK_dbo_cmn_EmployeeVersion_dbo_cmn_WorkSpace_WorkSpaceId">
+            <End Role="cmn_WorkSpace" EntitySet="cmn_WorkSpace" />
+            <End Role="cmn_EmployeeVersion" EntitySet="cmn_EmployeeVersion" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_cmn_EmployeeVersion_dbo_hrm_DesignationCategory_DesignationCategoryId" Association="Self.FK_dbo_cmn_EmployeeVersion_dbo_hrm_DesignationCategory_DesignationCategoryId">
+            <End Role="hrm_DesignationCategory" EntitySet="hrm_DesignationCategory" />
+            <End Role="cmn_EmployeeVersion" EntitySet="cmn_EmployeeVersion" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_cmn_EmployeeVersion_dbo_hrm_Grade_GradeId" Association="Self.FK_dbo_cmn_EmployeeVersion_dbo_hrm_Grade_GradeId">
+            <End Role="hrm_Grade" EntitySet="hrm_Grade" />
+            <End Role="cmn_EmployeeVersion" EntitySet="cmn_EmployeeVersion" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_cmn_WorkSpace_dbo_cmn_WorkSpace_ParentWorkSpaceId" Association="Self.FK_dbo_cmn_WorkSpace_dbo_cmn_WorkSpace_ParentWorkSpaceId">
+            <End Role="cmn_WorkSpace" EntitySet="cmn_WorkSpace" />
+            <End Role="cmn_WorkSpace1" EntitySet="cmn_WorkSpace" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_cmn_WorkSpace_dbo_cmn_WorkSpaceType_WorkSpaceTypeId" Association="Self.FK_dbo_cmn_WorkSpace_dbo_cmn_WorkSpaceType_WorkSpaceTypeId">
+            <End Role="cmn_WorkSpaceType" EntitySet="cmn_WorkSpaceType" />
+            <End Role="cmn_WorkSpace" EntitySet="cmn_WorkSpace" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_hrm_Designation_dbo_hrm_DesignationGroup_DesignationGroupId" Association="Self.FK_dbo_hrm_Designation_dbo_hrm_DesignationGroup_DesignationGroupId">
+            <End Role="hrm_DesignationGroup" EntitySet="hrm_DesignationGroup" />
+            <End Role="hrm_Designation" EntitySet="hrm_Designation" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="CECB_ERPModelStoreContainer" CdmEntityContainer="CECB_ERPEntities">
+          <EntitySetMapping Name="cmn_Employee">
+            <EntityTypeMapping TypeName="CECB_ERPModel.cmn_Employee">
+              <MappingFragment StoreEntitySet="cmn_Employee">
+                <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
+                <ScalarProperty Name="EmployeeCode" ColumnName="EmployeeCode" />
+                <ScalarProperty Name="NameWithInitial" ColumnName="NameWithInitial" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="OrganizationId" ColumnName="OrganizationId" />
+                <ScalarProperty Name="BusinessUnitId" ColumnName="BusinessUnitId" />
+                <ScalarProperty Name="CreatedDateTime" ColumnName="CreatedDateTime" />
+                <ScalarProperty Name="CreatedUserId" ColumnName="CreatedUserId" />
+                <ScalarProperty Name="UpdatedDateTime" ColumnName="UpdatedDateTime" />
+                <ScalarProperty Name="UpdatedUserId" ColumnName="UpdatedUserId" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="Project_ProjectId" ColumnName="Project_ProjectId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="cmn_EmployeeVersion">
+            <EntityTypeMapping TypeName="CECB_ERPModel.cmn_EmployeeVersion">
+              <MappingFragment StoreEntitySet="cmn_EmployeeVersion">
+                <ScalarProperty Name="EmployeeVersionId" ColumnName="EmployeeVersionId" />
+                <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
+                <ScalarProperty Name="EmployeeCode" ColumnName="EmployeeCode" />
+                <ScalarProperty Name="EPFNo" ColumnName="EPFNo" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="NameWithInitial" ColumnName="NameWithInitial" />
+                <ScalarProperty Name="FullName" ColumnName="FullName" />
+                <ScalarProperty Name="NIC" ColumnName="NIC" />
+                <ScalarProperty Name="Gender" ColumnName="Gender" />
+                <ScalarProperty Name="WorkSpaceId" ColumnName="WorkSpaceId" />
+                <ScalarProperty Name="DesignationId" ColumnName="DesignationId" />
+                <ScalarProperty Name="Religion" ColumnName="Religion" />
+                <ScalarProperty Name="BloodGroup" ColumnName="BloodGroup" />
+                <ScalarProperty Name="DateOfBirth" ColumnName="DateOfBirth" />
+                <ScalarProperty Name="BasicSalary" ColumnName="BasicSalary" />
+                <ScalarProperty Name="CivilStatus" ColumnName="CivilStatus" />
+                <ScalarProperty Name="HomeAddress" ColumnName="HomeAddress" />
+                <ScalarProperty Name="ContactAddress" ColumnName="ContactAddress" />
+                <ScalarProperty Name="LandphoneNumber" ColumnName="LandphoneNumber" />
+                <ScalarProperty Name="MobileNumber" ColumnName="MobileNumber" />
+                <ScalarProperty Name="PrivateEmail" ColumnName="PrivateEmail" />
+                <ScalarProperty Name="NextOfKin" ColumnName="NextOfKin" />
+                <ScalarProperty Name="NextOfKinRelationShip" ColumnName="NextOfKinRelationShip" />
+                <ScalarProperty Name="EmployeeRecruitmentType" ColumnName="EmployeeRecruitmentType" />
+                <ScalarProperty Name="DateOfAppointment" ColumnName="DateOfAppointment" />
+                <ScalarProperty Name="TypeOfContract" ColumnName="TypeOfContract" />
+                <ScalarProperty Name="DataStatus" ColumnName="DataStatus" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="BusinessUnitId" ColumnName="BusinessUnitId" />
+                <ScalarProperty Name="OrganizationId" ColumnName="OrganizationId" />
+                <ScalarProperty Name="CreatedDateTime" ColumnName="CreatedDateTime" />
+                <ScalarProperty Name="CreatedUserId" ColumnName="CreatedUserId" />
+                <ScalarProperty Name="UpdatedDateTime" ColumnName="UpdatedDateTime" />
+                <ScalarProperty Name="UpdatedUserId" ColumnName="UpdatedUserId" />
+                <ScalarProperty Name="OfficeEmail" ColumnName="OfficeEmail" />
+                <ScalarProperty Name="PersonalFileNo" ColumnName="PersonalFileNo" />
+                <ScalarProperty Name="InitialBasicSalary" ColumnName="InitialBasicSalary" />
+                <ScalarProperty Name="GradeId" ColumnName="GradeId" />
+                <ScalarProperty Name="AGMWorkSpaceId" ColumnName="AGMWorkSpaceId" />
+                <ScalarProperty Name="DGMWorkSpaceId" ColumnName="DGMWorkSpaceId" />
+                <ScalarProperty Name="OfficeEmail2" ColumnName="OfficeEmail2" />
+                <ScalarProperty Name="EmergencyContactNumber" ColumnName="EmergencyContactNumber" />
+                <ScalarProperty Name="EmergencyContactNumber2" ColumnName="EmergencyContactNumber2" />
+                <ScalarProperty Name="EmergencyContactAddress" ColumnName="EmergencyContactAddress" />
+                <ScalarProperty Name="DateOfRetainment" ColumnName="DateOfRetainment" />
+                <ScalarProperty Name="Race" ColumnName="Race" />
+                <ScalarProperty Name="EmpStatus" ColumnName="EmpStatus" />
+                <ScalarProperty Name="Initial" ColumnName="Initial" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ImageUrl" ColumnName="ImageUrl" />
+                <ScalarProperty Name="DateOfExpiry" ColumnName="DateOfExpiry" />
+                <ScalarProperty Name="DesignationCategoryId" ColumnName="DesignationCategoryId" />
+                <ScalarProperty Name="IncrementDate" ColumnName="IncrementDate" />
+                <ScalarProperty Name="SubSectionId" ColumnName="SubSectionId" />
+                <ScalarProperty Name="EffectiveDate" ColumnName="EffectiveDate" />
+                <ScalarProperty Name="ResignedDate" ColumnName="ResignedDate" />
+                <ScalarProperty Name="Version" ColumnName="Version" />
+                <ScalarProperty Name="PhysicalLocationId" ColumnName="PhysicalLocationId" />
+                <ScalarProperty Name="SNameWithInitial" ColumnName="SNameWithInitial" />
+                <ScalarProperty Name="SHomeAddress" ColumnName="SHomeAddress" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="cmn_WorkSpace">
+            <EntityTypeMapping TypeName="CECB_ERPModel.cmn_WorkSpace">
+              <MappingFragment StoreEntitySet="cmn_WorkSpace">
+                <ScalarProperty Name="WorkSpaceId" ColumnName="WorkSpaceId" />
+                <ScalarProperty Name="WorkSpaceCode" ColumnName="WorkSpaceCode" />
+                <ScalarProperty Name="LocationName" ColumnName="LocationName" />
+                <ScalarProperty Name="WorkSpaceName" ColumnName="WorkSpaceName" />
+                <ScalarProperty Name="ParentWorkSpaceId" ColumnName="ParentWorkSpaceId" />
+                <ScalarProperty Name="WorkSpaceTypeId" ColumnName="WorkSpaceTypeId" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="BusinessUnitId" ColumnName="BusinessUnitId" />
+                <ScalarProperty Name="OrganizationId" ColumnName="OrganizationId" />
+                <ScalarProperty Name="CreatedDateTime" ColumnName="CreatedDateTime" />
+                <ScalarProperty Name="CreatedUserId" ColumnName="CreatedUserId" />
+                <ScalarProperty Name="UpdatedDateTime" ColumnName="UpdatedDateTime" />
+                <ScalarProperty Name="UpdatedUserId" ColumnName="UpdatedUserId" />
+                <ScalarProperty Name="Incharge" ColumnName="Incharge" />
+                <ScalarProperty Name="LocationId" ColumnName="LocationId" />
+                <ScalarProperty Name="PhysicalLocationId" ColumnName="PhysicalLocationId" />
+                <ScalarProperty Name="BusinessUnitCode" ColumnName="BusinessUnitCode" />
+                <ScalarProperty Name="OrganizationCode" ColumnName="OrganizationCode" />
+                <ScalarProperty Name="WorkSpaceAddress" ColumnName="WorkSpaceAddress" />
+                <ScalarProperty Name="TelephoneNumber" ColumnName="TelephoneNumber" />
+                <ScalarProperty Name="FaxNumber" ColumnName="FaxNumber" />
+                <ScalarProperty Name="HeadOftheWorkSpace" ColumnName="HeadOftheWorkSpace" />
+                <ScalarProperty Name="AccountCodeGN4Id" ColumnName="AccountCodeGN4Id" />
+                <ScalarProperty Name="AccountCode" ColumnName="AccountCode" />
+                <ScalarProperty Name="WorkSpaceAccountant" ColumnName="WorkSpaceAccountant" />
+                <ScalarProperty Name="SWorkSpaceName" ColumnName="SWorkSpaceName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="cmn_WorkSpaceHistory">
+            <EntityTypeMapping TypeName="CECB_ERPModel.cmn_WorkSpaceHistory">
+              <MappingFragment StoreEntitySet="cmn_WorkSpaceHistory">
+                <ScalarProperty Name="HistoryId" ColumnName="HistoryId" />
+                <ScalarProperty Name="WorkSpaceId" ColumnName="WorkSpaceId" />
+                <ScalarProperty Name="OldParentId" ColumnName="OldParentId" />
+                <ScalarProperty Name="NewParentId" ColumnName="NewParentId" />
+                <ScalarProperty Name="EfectiveDate" ColumnName="EfectiveDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="cmn_WorkSpaceType">
+            <EntityTypeMapping TypeName="CECB_ERPModel.cmn_WorkSpaceType">
+              <MappingFragment StoreEntitySet="cmn_WorkSpaceType">
+                <ScalarProperty Name="WorkSpaceTypeId" ColumnName="WorkSpaceTypeId" />
+                <ScalarProperty Name="WorkSpaceTypeName" ColumnName="WorkSpaceTypeName" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="BusinessUnitId" ColumnName="BusinessUnitId" />
+                <ScalarProperty Name="OrganizationId" ColumnName="OrganizationId" />
+                <ScalarProperty Name="CreatedDateTime" ColumnName="CreatedDateTime" />
+                <ScalarProperty Name="CreatedUserId" ColumnName="CreatedUserId" />
+                <ScalarProperty Name="UpdatedDateTime" ColumnName="UpdatedDateTime" />
+                <ScalarProperty Name="UpdatedUserId" ColumnName="UpdatedUserId" />
+                <ScalarProperty Name="WorkSpaceHierarchy" ColumnName="WorkSpaceHierarchy" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="hrm_Designation">
+            <EntityTypeMapping TypeName="CECB_ERPModel.hrm_Designation">
+              <MappingFragment StoreEntitySet="hrm_Designation">
+                <ScalarProperty Name="DesignationId" ColumnName="DesignationId" />
+                <ScalarProperty Name="DesignationName" ColumnName="DesignationName" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="BusinessUnitId" ColumnName="BusinessUnitId" />
+                <ScalarProperty Name="OrganizationId" ColumnName="OrganizationId" />
+                <ScalarProperty Name="CreatedDateTime" ColumnName="CreatedDateTime" />
+                <ScalarProperty Name="CreatedUserId" ColumnName="CreatedUserId" />
+                <ScalarProperty Name="UpdatedDateTime" ColumnName="UpdatedDateTime" />
+                <ScalarProperty Name="UpdatedUserId" ColumnName="UpdatedUserId" />
+                <ScalarProperty Name="OldDesignationCode" ColumnName="OldDesignationCode" />
+                <ScalarProperty Name="DesignationGroupId" ColumnName="DesignationGroupId" />
+                <ScalarProperty Name="SDesignationName" ColumnName="SDesignationName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="hrm_DesignationCategory">
+            <EntityTypeMapping TypeName="CECB_ERPModel.hrm_DesignationCategory">
+              <MappingFragment StoreEntitySet="hrm_DesignationCategory">
+                <ScalarProperty Name="DesignationCategoryId" ColumnName="DesignationCategoryId" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="BusinessUnitId" ColumnName="BusinessUnitId" />
+                <ScalarProperty Name="OrganizationId" ColumnName="OrganizationId" />
+                <ScalarProperty Name="CreatedDateTime" ColumnName="CreatedDateTime" />
+                <ScalarProperty Name="CreatedUserId" ColumnName="CreatedUserId" />
+                <ScalarProperty Name="UpdatedDateTime" ColumnName="UpdatedDateTime" />
+                <ScalarProperty Name="UpdatedUserId" ColumnName="UpdatedUserId" />
+                <ScalarProperty Name="DesignationCategoryName" ColumnName="DesignationCategoryName" />
+                <ScalarProperty Name="InitialSalary" ColumnName="InitialSalary" />
+                <ScalarProperty Name="MaxSalary" ColumnName="MaxSalary" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="hrm_DesignationGroup">
+            <EntityTypeMapping TypeName="CECB_ERPModel.hrm_DesignationGroup">
+              <MappingFragment StoreEntitySet="hrm_DesignationGroup">
+                <ScalarProperty Name="DesignationGroupId" ColumnName="DesignationGroupId" />
+                <ScalarProperty Name="DesignationGroupCode" ColumnName="DesignationGroupCode" />
+                <ScalarProperty Name="DesignationGroupName" ColumnName="DesignationGroupName" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="BusinessUnitId" ColumnName="BusinessUnitId" />
+                <ScalarProperty Name="OrganizationId" ColumnName="OrganizationId" />
+                <ScalarProperty Name="CreatedDateTime" ColumnName="CreatedDateTime" />
+                <ScalarProperty Name="CreatedUserId" ColumnName="CreatedUserId" />
+                <ScalarProperty Name="UpdatedDateTime" ColumnName="UpdatedDateTime" />
+                <ScalarProperty Name="UpdatedUserId" ColumnName="UpdatedUserId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="hrm_EducationLevel">
+            <EntityTypeMapping TypeName="CECB_ERPModel.hrm_EducationLevel">
+              <MappingFragment StoreEntitySet="hrm_EducationLevel">
+                <ScalarProperty Name="CreatedDateTime" ColumnName="CreatedDateTime" />
+                <ScalarProperty Name="LevelId" ColumnName="LevelId" />
+                <ScalarProperty Name="LevelName" ColumnName="LevelName" />
+                <ScalarProperty Name="CreatedUserId" ColumnName="CreatedUserId" />
+                <ScalarProperty Name="OrganizationId" ColumnName="OrganizationId" />
+                <ScalarProperty Name="BusinessUnitId" ColumnName="BusinessUnitId" />
+                <ScalarProperty Name="UpdatedDateTime" ColumnName="UpdatedDateTime" />
+                <ScalarProperty Name="UpdatedUserId" ColumnName="UpdatedUserId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="hrm_Grade">
+            <EntityTypeMapping TypeName="CECB_ERPModel.hrm_Grade">
+              <MappingFragment StoreEntitySet="hrm_Grade">
+                <ScalarProperty Name="GradeId" ColumnName="GradeId" />
+                <ScalarProperty Name="GradeName" ColumnName="GradeName" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="OrganizationId" ColumnName="OrganizationId" />
+                <ScalarProperty Name="BusinessUnitId" ColumnName="BusinessUnitId" />
+                <ScalarProperty Name="CreatedDateTime" ColumnName="CreatedDateTime" />
+                <ScalarProperty Name="CreatedUserId" ColumnName="CreatedUserId" />
+                <ScalarProperty Name="UpdatedDateTime" ColumnName="UpdatedDateTime" />
+                <ScalarProperty Name="UpdatedUserId" ColumnName="UpdatedUserId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="hrm_Institute">
+            <EntityTypeMapping TypeName="CECB_ERPModel.hrm_Institute">
+              <MappingFragment StoreEntitySet="hrm_Institute">
+                <ScalarProperty Name="InstituteId" ColumnName="InstituteId" />
+                <ScalarProperty Name="InstituteName" ColumnName="InstituteName" />
+                <ScalarProperty Name="CreatedDateTime" ColumnName="CreatedDateTime" />
+                <ScalarProperty Name="CreatedUserId" ColumnName="CreatedUserId" />
+                <ScalarProperty Name="OrganizationId" ColumnName="OrganizationId" />
+                <ScalarProperty Name="BusinessUnitId" ColumnName="BusinessUnitId" />
+                <ScalarProperty Name="UpdatedDateTime" ColumnName="UpdatedDateTime" />
+                <ScalarProperty Name="UpdatedUserId" ColumnName="UpdatedUserId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

@@ -14,8 +14,13 @@ namespace CECBTIMS.Models
     
     public partial class hrm_Designation
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public hrm_Designation()
+        {
+            this.cmn_EmployeeVersion = new HashSet<cmn_EmployeeVersion>();
+        }
+    
         public System.Guid DesignationId { get; set; }
-        public System.Guid DesignationCategoryId { get; set; }
         public string DesignationName { get; set; }
         public bool IsActive { get; set; }
         public System.Guid BusinessUnitId { get; set; }
@@ -25,7 +30,11 @@ namespace CECBTIMS.Models
         public Nullable<System.DateTime> UpdatedDateTime { get; set; }
         public Nullable<System.Guid> UpdatedUserId { get; set; }
         public string OldDesignationCode { get; set; }
+        public System.Guid DesignationGroupId { get; set; }
+        public string SDesignationName { get; set; }
     
-        public virtual hrm_DesignationCategory hrm_DesignationCategory { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<cmn_EmployeeVersion> cmn_EmployeeVersion { get; set; }
+        public virtual hrm_DesignationGroup hrm_DesignationGroup { get; set; }
     }
 }

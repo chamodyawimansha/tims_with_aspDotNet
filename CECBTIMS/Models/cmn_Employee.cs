@@ -17,7 +17,8 @@ namespace CECBTIMS.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public cmn_Employee()
         {
-            this.hrm_EmployeeWorkAllocation = new HashSet<hrm_EmployeeWorkAllocation>();
+            this.cmn_EmployeeVersion = new HashSet<cmn_EmployeeVersion>();
+            this.cmn_WorkSpace = new HashSet<cmn_WorkSpace>();
         }
     
         public System.Guid EmployeeId { get; set; }
@@ -34,6 +35,8 @@ namespace CECBTIMS.Models
         public Nullable<System.Guid> Project_ProjectId { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<hrm_EmployeeWorkAllocation> hrm_EmployeeWorkAllocation { get; set; }
+        public virtual ICollection<cmn_EmployeeVersion> cmn_EmployeeVersion { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<cmn_WorkSpace> cmn_WorkSpace { get; set; }
     }
 }

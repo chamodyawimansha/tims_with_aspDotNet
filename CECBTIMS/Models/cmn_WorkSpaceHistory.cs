@@ -12,15 +12,12 @@ namespace CECBTIMS.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class hrm_Institute
+    public partial class cmn_WorkSpaceHistory
     {
-        public System.Guid InstituteId { get; set; }
-        public string InstituteName { get; set; }
-        public System.DateTime CreatedDateTime { get; set; }
-        public System.Guid CreatedUserId { get; set; }
-        public System.Guid OrganizationId { get; set; }
-        public System.Guid BusinessUnitId { get; set; }
-        public Nullable<System.DateTime> UpdatedDateTime { get; set; }
-        public Nullable<System.Guid> UpdatedUserId { get; set; }
+        public System.Guid HistoryId { get; set; }
+        public System.Guid WorkSpaceId { get; set; }
+        public System.Guid OldParentId { get; set; }
+        public System.Guid NewParentId { get; set; }
+        public System.DateTime EfectiveDate { get; set; }
     }
 }

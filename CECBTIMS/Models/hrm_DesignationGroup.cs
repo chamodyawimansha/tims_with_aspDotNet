@@ -12,24 +12,26 @@ namespace CECBTIMS.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class hrm_EducationClass
+    public partial class hrm_DesignationGroup
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public hrm_EducationClass()
+        public hrm_DesignationGroup()
         {
-            this.hrm_EmployeeEducationalQualifications = new HashSet<hrm_EmployeeEducationalQualifications>();
+            this.hrm_Designation = new HashSet<hrm_Designation>();
         }
     
-        public System.Guid EducationClassId { get; set; }
-        public string EducationClassName { get; set; }
+        public System.Guid DesignationGroupId { get; set; }
+        public string DesignationGroupCode { get; set; }
+        public string DesignationGroupName { get; set; }
+        public bool IsActive { get; set; }
+        public System.Guid BusinessUnitId { get; set; }
+        public System.Guid OrganizationId { get; set; }
         public System.DateTime CreatedDateTime { get; set; }
         public System.Guid CreatedUserId { get; set; }
-        public System.Guid OrganizationId { get; set; }
-        public System.Guid BusinessUnitId { get; set; }
         public Nullable<System.DateTime> UpdatedDateTime { get; set; }
         public Nullable<System.Guid> UpdatedUserId { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<hrm_EmployeeEducationalQualifications> hrm_EmployeeEducationalQualifications { get; set; }
+        public virtual ICollection<hrm_Designation> hrm_Designation { get; set; }
     }
 }

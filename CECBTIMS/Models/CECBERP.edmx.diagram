@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="bc118753132b4b51b401cb7f1f3802af" Name="Diagram1">
+        <EntityTypeShape EntityType="CECB_ERPModel.cmn_Employee" Width="1.5" PointX="0.75" PointY="10.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="CECB_ERPModel.cmn_EmployeeVersion" Width="1.5" PointX="5.25" PointY="5.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="CECB_ERPModel.cmn_WorkSpace" Width="1.5" PointX="3" PointY="9" IsExpanded="true" />
+        <EntityTypeShape EntityType="CECB_ERPModel.cmn_WorkSpaceHistory" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="CECB_ERPModel.cmn_WorkSpaceType" Width="1.5" PointX="0.75" PointY="16" IsExpanded="true" />
+        <EntityTypeShape EntityType="CECB_ERPModel.hrm_Designation" Width="1.5" PointX="3" PointY="3.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="CECB_ERPModel.hrm_DesignationCategory" Width="1.5" PointX="3" PointY="17.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="CECB_ERPModel.hrm_DesignationGroup" Width="1.5" PointX="0.75" PointY="4.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="CECB_ERPModel.hrm_EducationLevel" Width="1.5" PointX="5.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="CECB_ERPModel.hrm_Grade" Width="1.5" PointX="3" PointY="21.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="CECB_ERPModel.hrm_Institute" Width="1.5" PointX="7.75" PointY="0.75" IsExpanded="true" />
+        <AssociationConnector Association="CECB_ERPModel.FK_dbo_cmn_EmployeeVersion_dbo_cmn_Employee_EmployeeId" ManuallyRouted="false" />
+        <AssociationConnector Association="CECB_ERPModel.FK_dbo_cmn_WorkSpace_dbo_cmn_Employee_WorkSpaceAccountant" ManuallyRouted="false" />
+        <AssociationConnector Association="CECB_ERPModel.FK_cmn_EmployeeVersion_hrm_Designation" ManuallyRouted="false" />
+        <AssociationConnector Association="CECB_ERPModel.FK_dbo_cmn_EmployeeVersion_dbo_cmn_WorkSpace_WorkSpaceId" ManuallyRouted="false" />
+        <AssociationConnector Association="CECB_ERPModel.FK_dbo_cmn_EmployeeVersion_dbo_hrm_DesignationCategory_DesignationCategoryId" ManuallyRouted="false" />
+        <AssociationConnector Association="CECB_ERPModel.FK_dbo_cmn_EmployeeVersion_dbo_hrm_Grade_GradeId" ManuallyRouted="false" />
+        <AssociationConnector Association="CECB_ERPModel.FK_dbo_cmn_WorkSpace_dbo_cmn_WorkSpace_ParentWorkSpaceId" ManuallyRouted="false" />
+        <AssociationConnector Association="CECB_ERPModel.FK_dbo_cmn_WorkSpace_dbo_cmn_WorkSpaceType_WorkSpaceTypeId" ManuallyRouted="false" />
+        <AssociationConnector Association="CECB_ERPModel.FK_dbo_hrm_Designation_dbo_hrm_DesignationGroup_DesignationGroupId" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

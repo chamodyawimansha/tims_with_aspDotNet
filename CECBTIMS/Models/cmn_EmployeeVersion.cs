@@ -14,21 +14,6 @@ namespace CECBTIMS.Models
     
     public partial class cmn_EmployeeVersion
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public cmn_EmployeeVersion()
-        {
-            this.hrm_EmployeeChangeNAp = new HashSet<hrm_EmployeeChangeNAp>();
-            this.hrm_EmployeeEducationalQualifications = new HashSet<hrm_EmployeeEducationalQualifications>();
-            this.hrm_EmployeeExtension = new HashSet<hrm_EmployeeExtension>();
-            this.hrm_EmployeePosts = new HashSet<hrm_EmployeePosts>();
-            this.hrm_EmployeeProfessionalQualifications = new HashSet<hrm_EmployeeProfessionalQualifications>();
-            this.hrm_EmployeePromotion = new HashSet<hrm_EmployeePromotion>();
-            this.hrm_EmployeeReinstatement = new HashSet<hrm_EmployeeReinstatement>();
-            this.hrm_EmployeeReportingAfterLeave = new HashSet<hrm_EmployeeReportingAfterLeave>();
-            this.hrm_EmployeeTransfer = new HashSet<hrm_EmployeeTransfer>();
-            this.hrm_EmployeeWorkingExperience = new HashSet<hrm_EmployeeWorkingExperience>();
-        }
-    
         public System.Guid EmployeeVersionId { get; set; }
         public System.Guid EmployeeId { get; set; }
         public string EmployeeCode { get; set; }
@@ -40,10 +25,9 @@ namespace CECBTIMS.Models
         public Nullable<int> Gender { get; set; }
         public System.Guid WorkSpaceId { get; set; }
         public System.Guid DesignationId { get; set; }
-        public Nullable<System.Guid> PhysicalLocationId { get; set; }
         public Nullable<int> Religion { get; set; }
         public Nullable<int> BloodGroup { get; set; }
-        public System.DateTime DateOfBirth { get; set; }
+        public Nullable<System.DateTime> DateOfBirth { get; set; }
         public Nullable<decimal> BasicSalary { get; set; }
         public Nullable<int> CivilStatus { get; set; }
         public string HomeAddress { get; set; }
@@ -67,7 +51,7 @@ namespace CECBTIMS.Models
         public string OfficeEmail { get; set; }
         public string PersonalFileNo { get; set; }
         public decimal InitialBasicSalary { get; set; }
-        public System.Guid GradeId { get; set; }
+        public Nullable<System.Guid> GradeId { get; set; }
         public System.Guid AGMWorkSpaceId { get; set; }
         public Nullable<System.Guid> DGMWorkSpaceId { get; set; }
         public string OfficeEmail2 { get; set; }
@@ -83,26 +67,18 @@ namespace CECBTIMS.Models
         public Nullable<System.DateTime> DateOfExpiry { get; set; }
         public Nullable<System.Guid> DesignationCategoryId { get; set; }
         public Nullable<System.DateTime> IncrementDate { get; set; }
+        public Nullable<System.Guid> SubSectionId { get; set; }
+        public Nullable<System.DateTime> EffectiveDate { get; set; }
+        public Nullable<System.DateTime> ResignedDate { get; set; }
+        public int Version { get; set; }
+        public Nullable<System.Guid> PhysicalLocationId { get; set; }
+        public string SNameWithInitial { get; set; }
+        public string SHomeAddress { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<hrm_EmployeeChangeNAp> hrm_EmployeeChangeNAp { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<hrm_EmployeeEducationalQualifications> hrm_EmployeeEducationalQualifications { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<hrm_EmployeeExtension> hrm_EmployeeExtension { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<hrm_EmployeePosts> hrm_EmployeePosts { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<hrm_EmployeeProfessionalQualifications> hrm_EmployeeProfessionalQualifications { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<hrm_EmployeePromotion> hrm_EmployeePromotion { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<hrm_EmployeeReinstatement> hrm_EmployeeReinstatement { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<hrm_EmployeeReportingAfterLeave> hrm_EmployeeReportingAfterLeave { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<hrm_EmployeeTransfer> hrm_EmployeeTransfer { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<hrm_EmployeeWorkingExperience> hrm_EmployeeWorkingExperience { get; set; }
+        public virtual cmn_Employee cmn_Employee { get; set; }
+        public virtual hrm_Designation hrm_Designation { get; set; }
+        public virtual cmn_WorkSpace cmn_WorkSpace { get; set; }
+        public virtual hrm_DesignationCategory hrm_DesignationCategory { get; set; }
+        public virtual hrm_Grade hrm_Grade { get; set; }
     }
 }

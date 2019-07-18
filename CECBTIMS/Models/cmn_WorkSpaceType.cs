@@ -14,6 +14,12 @@ namespace CECBTIMS.Models
     
     public partial class cmn_WorkSpaceType
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public cmn_WorkSpaceType()
+        {
+            this.cmn_WorkSpace = new HashSet<cmn_WorkSpace>();
+        }
+    
         public System.Guid WorkSpaceTypeId { get; set; }
         public string WorkSpaceTypeName { get; set; }
         public bool IsActive { get; set; }
@@ -23,5 +29,9 @@ namespace CECBTIMS.Models
         public System.Guid CreatedUserId { get; set; }
         public Nullable<System.DateTime> UpdatedDateTime { get; set; }
         public Nullable<System.Guid> UpdatedUserId { get; set; }
+        public int WorkSpaceHierarchy { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<cmn_WorkSpace> cmn_WorkSpace { get; set; }
     }
 }

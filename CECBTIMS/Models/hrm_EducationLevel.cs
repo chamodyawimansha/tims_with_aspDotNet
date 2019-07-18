@@ -14,12 +14,6 @@ namespace CECBTIMS.Models
     
     public partial class hrm_EducationLevel
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public hrm_EducationLevel()
-        {
-            this.hrm_EmployeeEducationalQualifications = new HashSet<hrm_EmployeeEducationalQualifications>();
-        }
-    
         public System.DateTime CreatedDateTime { get; set; }
         public System.Guid LevelId { get; set; }
         public string LevelName { get; set; }
@@ -28,8 +22,5 @@ namespace CECBTIMS.Models
         public System.Guid BusinessUnitId { get; set; }
         public Nullable<System.DateTime> UpdatedDateTime { get; set; }
         public Nullable<System.Guid> UpdatedUserId { get; set; }
-    
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<hrm_EmployeeEducationalQualifications> hrm_EmployeeEducationalQualifications { get; set; }
     }
 }

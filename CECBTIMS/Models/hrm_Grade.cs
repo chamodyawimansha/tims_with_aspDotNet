@@ -14,6 +14,12 @@ namespace CECBTIMS.Models
     
     public partial class hrm_Grade
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public hrm_Grade()
+        {
+            this.cmn_EmployeeVersion = new HashSet<cmn_EmployeeVersion>();
+        }
+    
         public System.Guid GradeId { get; set; }
         public string GradeName { get; set; }
         public bool IsActive { get; set; }
@@ -23,5 +29,8 @@ namespace CECBTIMS.Models
         public System.Guid CreatedUserId { get; set; }
         public Nullable<System.DateTime> UpdatedDateTime { get; set; }
         public Nullable<System.Guid> UpdatedUserId { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<cmn_EmployeeVersion> cmn_EmployeeVersion { get; set; }
     }
 }

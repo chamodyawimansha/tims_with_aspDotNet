@@ -17,8 +17,8 @@ namespace CECBTIMS.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public cmn_WorkSpace()
         {
+            this.cmn_EmployeeVersion = new HashSet<cmn_EmployeeVersion>();
             this.cmn_WorkSpace1 = new HashSet<cmn_WorkSpace>();
-            this.hrm_EmployeeWorkAllocation = new HashSet<hrm_EmployeeWorkAllocation>();
         }
     
         public System.Guid WorkSpaceId { get; set; }
@@ -44,13 +44,16 @@ namespace CECBTIMS.Models
         public string FaxNumber { get; set; }
         public Nullable<System.Guid> HeadOftheWorkSpace { get; set; }
         public Nullable<System.Guid> AccountCodeGN4Id { get; set; }
-        public Nullable<System.Guid> AccountCode { get; set; }
+        public System.Guid AccountCode { get; set; }
         public Nullable<System.Guid> WorkSpaceAccountant { get; set; }
+        public string SWorkSpaceName { get; set; }
     
+        public virtual cmn_Employee cmn_Employee { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<cmn_EmployeeVersion> cmn_EmployeeVersion { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<cmn_WorkSpace> cmn_WorkSpace1 { get; set; }
         public virtual cmn_WorkSpace cmn_WorkSpace2 { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<hrm_EmployeeWorkAllocation> hrm_EmployeeWorkAllocation { get; set; }
+        public virtual cmn_WorkSpaceType cmn_WorkSpaceType { get; set; }
     }
 }

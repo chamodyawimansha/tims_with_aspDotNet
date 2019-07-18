@@ -17,7 +17,7 @@ namespace CECBTIMS.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public hrm_DesignationCategory()
         {
-            this.hrm_Designation = new HashSet<hrm_Designation>();
+            this.cmn_EmployeeVersion = new HashSet<cmn_EmployeeVersion>();
         }
     
         public System.Guid DesignationCategoryId { get; set; }
@@ -33,6 +33,6 @@ namespace CECBTIMS.Models
         public decimal MaxSalary { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<hrm_Designation> hrm_Designation { get; set; }
+        public virtual ICollection<cmn_EmployeeVersion> cmn_EmployeeVersion { get; set; }
     }
 }
