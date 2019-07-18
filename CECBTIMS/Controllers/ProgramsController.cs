@@ -98,7 +98,6 @@ namespace CECBTIMS.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create([Bind(Include = "Id,Title,ProgramType,StartDate,ApplicationClosingDate,ApplicationClosingTime,Brochure,Venue,EndDate,NotifiedBy,NotifiedOn,ProgramHours,DurationInDays,DurationInMonths,Department,Currency,ProgramFee,RegistrationFee,PerPersonFee,NoShowFee,MemberFee,NonMemberFee,StudentFee")] Program program)
         {
-
             if (ModelState.IsValid)
             {
                 db.Programs.Add(program);
@@ -112,9 +111,16 @@ namespace CECBTIMS.Controllers
         // GET: Programs/Edit/5
         public async Task<ActionResult> Edit(int? id)
         {
+//            if (programToUpdate != null)
+//            {
+//                ViewBag.ProgramType = (int)programToUpdate.ProgramType;
+//                
+//                return View(programToUpdate);
+//            }
+
             if (id == null)
             {
-                return new System.Web.Mvc.HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             Program program = await db.Programs.FindAsync(id);
             if (program == null)
@@ -122,7 +128,7 @@ namespace CECBTIMS.Controllers
                 return HttpNotFound();
             }
 
-            ViewBag.ProgramType = program.ProgramType;
+            ViewBag.ProgramType = (int)program.ProgramType;
 
             return View(program);
         }
@@ -208,6 +214,7 @@ namespace CECBTIMS.Controllers
 
             }
 
+            ViewBag.ProgramType = (int)programToUpdate.ProgramType;
             return View(programToUpdate);
         }
 
