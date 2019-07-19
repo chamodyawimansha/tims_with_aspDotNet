@@ -28,7 +28,6 @@ namespace CECBTIMS.Controllers
             ViewBag.DateSortParm = sortOrder == "Date" ? "date_desc" : "Date";
             ViewBag.ClosingSortParm = sortOrder == "ClosingDate" ? "closingdate_desc" : "ClosingDate";
             ViewBag.CreatedSortParm = sortOrder == "CreatedDate" ? "createddate_desc" : "CreatedDate";
-            ViewBag.TypeSortParm = sortOrder == "Type" ? "type_desc" : "Type";
 
             if (searchString != null)
             {
@@ -71,12 +70,6 @@ namespace CECBTIMS.Controllers
                     break;
                 case "createddate_desc":
                     programs = programs.OrderByDescending(s => s.CreatedAt);
-                    break;
-                case "Type":
-                    programs = programs.OrderBy(s => s.ProgramType);
-                    break;
-                case "type_desc":
-                    programs = programs.OrderByDescending(s => s.ProgramType);
                     break;
                 default:  
                     programs = programs.OrderBy(s => s.Title);
