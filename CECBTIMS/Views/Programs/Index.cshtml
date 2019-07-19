@@ -70,19 +70,19 @@
             <tr>
                 <th>#</th>
                 <th>
-                    @Html.ActionLink("Title", "Index", new { sortOrder = ViewBag.TitleSortParm, currentFilter = ViewBag.CurrentFilter })
+                    @Html.ActionLink("Title", "Index", new { sort = ViewBag.TitleSort})
                 </th>
                 <th>
-                    @Html.ActionLink("Program Type", "Index", new { sortOrder = ViewBag.TypeSortParm, currentFilter = ViewBag.CurrentFilter })
+                    @Html.ActionLink("Program Type", "Index", new { sort = ViewBag.TypeSortParm})
                 </th>
                 <th>
-                    @Html.ActionLink("Start Date", "Index", new { sortOrder = ViewBag.StartDateSortParm, currentFilter = ViewBag.CurrentFilter })
+                    @Html.ActionLink("Start Date", "Index", new { sort = ViewBag.startSort })
                 </th>
                 <th>
-                    @Html.ActionLink("Application Closing Date Time", "Index", new { sortOrder = ViewBag.ClosingDateSortParm, currentFilter = ViewBag.CurrentFilter })
+                    @Html.ActionLink("Application Closing Date Time", "Index", new { sort = ViewBag.closingSort })
                 </th>
                 <th>
-                    @Html.ActionLink("Created Date", "Index", new { sortOrder = ViewBag.CreatedDateSortParm, currentFilter = ViewBag.CurrentFilter })
+                    @Html.ActionLink("Created Date", "Index", new { sort = ViewBag.createdSort })
                 </th>
                 <th></th>
             </tr>

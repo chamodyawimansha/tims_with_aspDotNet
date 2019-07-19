@@ -31,25 +31,40 @@ namespace CECBTIMS.Controllers
                 programs = programs.Where(p => p.Title.Contains(search));
             }
 
+
             switch (sort)
             {
                 case "title_desc":
                     programs = programs.OrderByDescending(s => s.Title);
+                    ViewBag.TitleSort = "title_asc";
                     break;
-                case "title_acen":
+                case "title_asc":
                     programs = programs.OrderBy(s => s.Title);
+                    ViewBag.TitleSort = "title_desc";
                     break;
                 case "start_desc":
                     programs = programs.OrderByDescending(s => s.StartDate);
+                    ViewBag.startSort = "start_asc";
                     break;
-                case "start_acen":
+                case "start_asc":
                     programs = programs.OrderBy(s => s.StartDate);
+                    ViewBag.startSort = "start_desc";
                     break;
                 case "closing_desc":
                     programs = programs.OrderByDescending(s => s.ApplicationClosingDate);
+                    ViewBag.closingSort = "closing_asc";
+                    break;
+                case "closing_asc":
+                    programs = programs.OrderBy(s => s.ApplicationClosingDate);
+                    ViewBag.closingSort = "closing_desc";
+                    break;
+                case "created_asc":
+                    programs = programs.OrderByDescending(s => s.CreatedAt);
+                    ViewBag.createdSort = null;
                     break;
                 default: 
-                    programs = programs.OrderBy(s => s.ApplicationClosingDate);
+                    programs = programs.OrderBy(s => s.CreatedAt);
+                    ViewBag.createdSort = "created_asc";
                     break;
             }
             
