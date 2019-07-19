@@ -22,12 +22,13 @@ namespace CECBTIMS.Controllers
         // GET: Programs
         public async Task<ActionResult> Index(string sortOrder, int? countPerPage, string currentFilter, string searchString, int? page)
         {
-
-
-
+            
             ViewBag.CurrentSort = sortOrder;
             ViewBag.TitleSortParm = String.IsNullOrEmpty(sortOrder) ? "title_desc" : "";
-            ViewBag.DateSortParm = sortOrder == "Date" ? "date_desc" : "Date"; // start date
+            ViewBag.DateSortParm = sortOrder == "Date" ? "date_desc" : "Date";
+            ViewBag.ClosingSortParm = sortOrder == "ClosingDate" ? "closingdate_desc" : "ClosingDate";
+            ViewBag.CreatedSortParm = sortOrder == "CreatedDate" ? "createddate_desc" : "CreatedDate";
+            ViewBag.TypeSortParm = sortOrder == "Type" ? "type_desc" : "Type";
 
             if (searchString != null)
             {
@@ -59,7 +60,25 @@ namespace CECBTIMS.Controllers
                 case "date_desc":
                     programs = programs.OrderByDescending(s => s.StartDate);
                     break;
-                default:  // Name ascending 
+                case "ClosingDate":
+                    programs = programs.OrderBy(s => s.ApplicationClosingDate);
+                    break;
+                case "closingdate_desc":
+                    programs = programs.OrderByDescending(s => s.ApplicationClosingDate);
+                    break;
+                case "CreatedDate":
+                    programs = programs.OrderBy(s => s.CreatedAt);
+                    break;
+                case "createddate_desc":
+                    programs = programs.OrderByDescending(s => s.CreatedAt);
+                    break;
+                case "Type":
+                    programs = programs.OrderBy(s => s.ProgramType);
+                    break;
+                case "type_desc":
+                    programs = programs.OrderByDescending(s => s.ProgramType);
+                    break;
+                default:  
                     programs = programs.OrderBy(s => s.Title);
                     break;
             }
@@ -71,124 +90,6 @@ namespace CECBTIMS.Controllers
             return View(await programs.ToPagedListAsync(pageNumber, pageSize));
 
 
-            //            var programs = from p in db.Programs
-            //                select p;
-            //
-            //            if (!string.IsNullOrEmpty(search))
-            //            {
-            //                programs = programs.Where(p => p.Title.Contains(search));
-            //            }
-            ////
-            ////            title
-            ////                start
-            ////            closing
-            ////                created
-            //
-            //            switch (sort)
-            //            {
-            //                case "title_desc":
-            //                    programs = programs.OrderByDescending(s => s.Title);
-            //                    ViewBag.TitleSort = "title_asc";
-            //                    break;
-            //                case "title_asc":
-            //                    programs = programs.OrderBy(s => s.Title);
-            //                    ViewBag.TitleSort = "title_desc";
-            //                    break;
-            //                case "start_desc":
-            //                    programs = programs.OrderByDescending(s => s.StartDate);
-            //                    ViewBag.startSort = "start_asc";
-            //                    break;
-            //                case "start_asc":
-            //                    programs = programs.OrderBy(s => s.StartDate);
-            //                    ViewBag.startSort = "start_desc";
-            //                    break;
-            //                case "closing_desc":
-            //                    programs = programs.OrderByDescending(s => s.ApplicationClosingDate);
-            //                    ViewBag.closingSort = "closing_asc";
-            //                    break;
-            //                case "closing_asc":
-            //                    programs = programs.OrderBy(s => s.ApplicationClosingDate);
-            //                    ViewBag.closingSort = "closing_desc";
-            //                    break;
-            //                case "created_asc":
-            //                    programs = programs.OrderBy(s => s.CreatedAt);
-            //                    ViewBag.createdSort = null;
-            //                    break;
-            //                default: 
-            //                    programs = programs.OrderByDescending(s => s.CreatedAt);
-            //                    ViewBag.createdSort = "created_asc";
-            //                    break;
-            //            }
-            //            
-            //            var pageSize = countPerPage ?? 5;
-            //            var pageNumber = page ?? 1;
-            //
-            //            ViewBag.CurrentCountPerPage = pageSize;
-            //            ViewBag.CurrentPageNumber = pageNumber;
-            //
-            //
-            //            return View(await programs.ToPagedListAsync(pageNumber, pageSize));
-
-
-
-
-
-            //
-            //            ViewBag.CurrentSort = sort;
-            //            ViewBag.serachParam = search != "" ? search : null;
-            //
-            //            ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
-            //            ViewBag.DateSortParm = sortOrder == "Date" ? "date_desc" : "Date";
-            //
-            //            if (search != null)
-            //            {
-            //                page = 1;
-            //            }
-            //            else
-            //            {
-            //                search = sort;
-            //            }
-            //
-            ////            ViewBag.CurrentFilter = search;
-            //            // entry count for entry count selector
-            //            ViewBag.entryCount = countPerPage ?? 5;
-            //
-            //
-            //            var programs = from p in db.Programs
-            //                select p;
-            //
-            //            if (!String.IsNullOrEmpty(search))
-            //            {
-            //                programs = programs.Where(p => p.Title.Contains(search));
-            //            }
-            //
-            //            switch (sort)
-            //            {
-            //                case "title_desc":
-            //                    programs = programs.OrderByDescending(s => s.Title);
-            //                    break;
-            //                case "title_acen":
-            //                    programs = programs.OrderBy(s => s.Title);
-            //                    break;
-            //                case "start_desc":
-            //                    programs = programs.OrderByDescending(s => s.StartDate);
-            //                    break;
-            //                case "start_acen":
-            //                    programs = programs.OrderBy(s => s.StartDate);
-            //                    break;
-            //                case "closing_desc":
-            //                    programs = programs.OrderByDescending(s => s.ApplicationClosingDate);
-            //                    break;
-            //                default: 
-            //                    programs = programs.OrderBy(s => s.ApplicationClosingDate);
-            //                    break;
-            //            }
-            //            
-            //            var pageSize = countPerPage ?? 5;
-            //            var pageNumber = page ?? 1;
-            //
-            //
-            //            return View(await programs.ToPagedListAsync(pageNumber, pageSize));
         }
 
         // GET: Programs/Details/5
