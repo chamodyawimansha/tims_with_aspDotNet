@@ -78,8 +78,10 @@ namespace CECBTIMS.Controllers
 
             var pageSize = countPerPage ?? 5;
             var pageNumber = page ?? 1;
+            ViewBag.PageNumber = pageNumber;
 
-            
+
+
             return View(await programs.ToPagedListAsync(pageNumber, pageSize));
 
 
