@@ -31,6 +31,10 @@
         VacatedPost,
         ReleasedToCESL,
         Terminated
+    }
 
+    public enum ContractType
+    {
+        test = 1,
     }
 }

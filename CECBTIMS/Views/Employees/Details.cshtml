@@ -1,4 +1,5 @@
-﻿@model IEnumerable<CECBTIMS.Models.cmn_EmployeeVersion>
+﻿@using CECBTIMS.Models.Enums
+@model IEnumerable<CECBTIMS.Models.cmn_EmployeeVersion>
 
 @{
     ViewBag.Title = "Details";
@@ -6,7 +7,9 @@
 }
 
 
-<div class="col-10 mx-auto mb-5">
+
+
+<div class="col-10 mx-auto">
 
     <div class="card mb-4">
         <div class="card-header">Search Employees</div>
@@ -28,19 +31,19 @@
                         </div>
 
                         if (ViewBag.ProgramId != null)
-                         {
-                             <input type="hidden" name="programId" value="@(ViewBag.ProgramId)"/>
-                         }
+                        {
+                            <input type="hidden" name="programId" value="@(ViewBag.ProgramId)" />
+                        }
 
                         <div class="form-group">
                             <label for="qString">Search String</label>
-                            <input type="text" name="q" id="qString" class="form-control" required="required"/>
+                            <input type="text" name="q" id="qString" class="form-control" required="required" />
                         </div>
 
                         <div class="form-group">
                             <div class="">
-                                <input type="submit" value="Find" class="btn btn-primary"/>
-                                @Html.ActionLink("Clear Results", $"Details", new {programId = ViewBag.ProgramId}, new {@class = "btn btn-outline-secondary"})
+                                <input type="submit" value="Find" class="btn btn-primary" />
+                                @Html.ActionLink("Clear Results", $"Details", new { programId = ViewBag.ProgramId }, new { @class = "btn btn-outline-secondary" })
                             </div>
                         </div>
                     }
@@ -48,8 +51,8 @@
             </div>
         </div>
     </div>
-
-
+</div>
+<div class="col-12 mx-auto">
     @if (Model != null)
     {
         <div class="card border-primary">
@@ -63,13 +66,16 @@
                             <button type="button" class="close" data-dismiss="alert">&times;</button>
                             <strong>@Model.Count() </strong>results Found.
                         </div>
-                        
+
                         <table class="table table-bordered">
                             <tr>
                                 <th>#</th>
                                 <th>Full Name</th>
                                 <th>Designation</th>
                                 <th>Section</th>
+                                <th>Recruitment Type</th>
+                                <th>Date of Appointment</th>
+                                <th>Contract Type</th>
                             </tr>
                             @{
                                 int i = 1;
@@ -77,7 +83,19 @@
                                 {
                                     <tr>
                                         <td>@i</td>
-                                        <td>@item.Title @item.FullName</td>
+                                        <td>
+                                            @{
+                                                var titleName = "";
+
+                                                if (!string.IsNullOrEmpty(item.Title))
+                                                {
+                                                    titleName = int.TryParse(item.Title, out var title) ? ((Title)title).ToString() : item.Title;
+                                                }
+
+
+                                            }
+                                            @(titleName). @item.FullName
+                                        </td>
                                         @if (item.hrm_Designation != null)
                                         {
                                             <td>@item.hrm_Designation.DesignationName</td>
@@ -87,8 +105,8 @@
                                             <td></td>
                                         }
                                         @if (item.cmn_WorkSpace != null)
-                                        { 
-                                        <td>@item.cmn_WorkSpace.WorkSpaceName</td>
+                                        {
+                                            <td>@item.cmn_WorkSpace.WorkSpaceName</td>
                                         }
                                         else
                                         {
@@ -97,19 +115,18 @@
                                         <td>
                                             @if (ViewBag.ProgramId != null)
                                             {
-
-                                                using (Html.BeginForm($"Create", $"ProgramAssignments", null, FormMethod.Post, new{@class="d-inline"}))
+                                                using (Html.BeginForm($"Create", $"ProgramAssignments", null, FormMethod.Post, new { @class = "d-inline" }))
                                                 {
                                                     @Html.AntiForgeryToken()
-                                                    <input type="hidden" name="EmployeeId" value="@(item.EmployeeId)"/>
-                                                    <input type="hidden" name="EmployeeVersionId" value="@(item.EmployeeVersionId)"/>
-                                                    <input type="hidden" name="EPFNo" value="@(item.EPFNo)"/>
-                                                    <input type="hidden" name="ProgramId" value="@(ViewBag.ProgramId)"/>
-                                                    <input type="submit" value="Select" class="btn btn-primary btn-sm"/>
+                                                    <input type="hidden" name="EmployeeId" value="@(item.EmployeeId)" />
+                                                    <input type="hidden" name="EmployeeVersionId" value="@(item.EmployeeVersionId)" />
+                                                    <input type="hidden" name="EPFNo" value="@(item.EPFNo)" />
+                                                    <input type="hidden" name="ProgramId" value="@(ViewBag.ProgramId)" />
+                                                    <input type="submit" value="Select" class="btn btn-primary btn-sm" />
                                                 }
                                             }
 
-                                            @Html.ActionLink("Details", $"MoreDetails", new {id = item.EmployeeVersionId}, new {@class = "btn btn-sm btn-outline-secondary"})
+                                            @Html.ActionLink("Details", $"MoreDetails", new { id = item.EmployeeVersionId }, new { @class = "btn btn-sm btn-outline-secondary" })
                                         </td>
                                     </tr>
                                     i++;

@@ -1,8 +1,18 @@
-﻿@model CECBTIMS.Models.cmn_EmployeeVersion
+﻿@using CECBTIMS.Models.Enums
+@model CECBTIMS.Models.cmn_EmployeeVersion
 
 @{
-    ViewBag.Title = "Single";
+    ViewBag.Title = "Employee Details";
     Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@{
+    var titleName = "";
+
+    if (!string.IsNullOrEmpty(Model.Title))
+    {
+        titleName = int.TryParse(Model.Title, out var title) ? ((Title) title).ToString() : Model.Title;
+    }
 }
 
 
@@ -12,498 +22,101 @@
         <div class="card-header">Search Employees</div>
         <div class="card-body">
 
-            <div class="col-10 mx-auto mb-5">
+            <div class="col-12 mx-auto mb-5">
                 <div class="container">
+                    <h1>Select Button, Back button, hide select button if program id not available</h1>
+                    <table class="table table-bordered">
+                        <tr>
+                            <th colspan="2">Name</th>
+                            <td colspan="8">
+                                @(titleName). @Html.DisplayFor(model => model.FullName)
+                            </td>
+                        </tr>
+                        <tr>
+                            <th colspan="2">NIC</th>
+                            <td colspan="3">@Html.DisplayFor(model => model.NIC)</td>
+                            <th colspan="2">EPF No</th>
+                            <td colspan="3">@Html.DisplayFor(model => model.EPFNo)</td>
+                        </tr>
+                        <tr>
+                            <th colspan="2">Date Of Birth</th>
+                            <td colspan="8">@Html.DisplayFor(model => model.DateOfBirth)</td>
+                        </tr>
+                        <tr>
+                            <th colspan="2">Contact Address</th>
+                            <td colspan="8">@Html.DisplayFor(model => model.ContactAddress)</td>
+                        </tr>
+                        <tr>
+                            <th colspan="2">Home Address</th>
+                            <td colspan="8">@Html.DisplayFor(model => model.HomeAddress)</td>
+                        </tr>
+                        <tr>
+                            <th colspan="2">Mobile</th>
+                            <td colspan="3">@Html.DisplayFor(model => model.MobileNumber)</td>
+                            <th colspan="2">Phone</th>
+                            <td colspan="3">@Html.DisplayFor(model => model.LandphoneNumber)</td>
+                        </tr>
+                        <tr>
+                            <th colspan="2">Private Email</th>
+                            <td colspan="8">@Html.DisplayFor(model => model.PrivateEmail)</td>
+                        </tr>
+                        <tr>
+                            <th colspan="2">Office Email 1</th>
+                            <td colspan="3">@Html.DisplayFor(model => model.OfficeEmail)</td>
+                            <th colspan="2">Office Email 2</th>
+                            <td colspan="3">@Html.DisplayFor(model => model.OfficeEmail2)</td>
+                        </tr>
+                        <tr>
+                            <th colspan="2">Date of Appointment</th>
+                            <td colspan="3">@Html.DisplayFor(model => model.DateOfAppointment)</td>
+                            <th colspan="2">Recruitment Type</th>
+                            <td colspan="3">
+                                @{
+                                    var RType = "";
+
+                                    if (!string.IsNullOrEmpty(Model.EmployeeRecruitmentType))
+                                    {
+                                        RType = int.TryParse(Model.EmployeeRecruitmentType, out var type) ? ((RecruitmentType) type).ToString() : Model.EmployeeRecruitmentType;
+                                    }
+                                }
+                                @RType
+                            </td>
+                        </tr>
+                        <tr>
+                            <th colspan="2">Contract Type</th>
+                            <td colspan="8">
+                                @{
+                                    var CType = "";
+
+                                    if (!string.IsNullOrEmpty(Model.TypeOfContract))
+                                    {
+                                        CType = int.TryParse(Model.TypeOfContract, out var type) ? ((ContractType) type).ToString() : Model.TypeOfContract;
+                                    }
+                                }
+                                @CType
+                            </td>
+                        </tr>
+                        <tr>
+                            <th colspan="2">Employee Code</th>
+                            <td colspan="3">@Html.DisplayFor(model => model.cmn_Employee.EmployeeCode)</td>
+                            <th colspan="2">Work Space Code</th>
+                            <td colspan="3">@Html.DisplayFor(model => model.cmn_WorkSpace.WorkSpaceCode)</td>
+                        </tr>
+                        <tr>
+                            <th colspan="2">Designation Name</th>
+                            <td colspan="3"> @Html.DisplayFor(model => model.hrm_Designation.DesignationName)</td>
+                            <th colspan="2">Designation Category Name</th>
+                            <td colspan="3">@Html.DisplayFor(model => model.hrm_DesignationCategory.DesignationCategoryName)</td>
+                        </tr>
+                        <tr>
+                            <th colspan="2">Grade Name</th>
+                            <td colspan="8">@Html.DisplayFor(model => model.hrm_Grade.GradeName)</td>
+                        </tr>
+                    </table>
+
+
                 </div>
             </div>
         </div>
     </div>
 </div>
-
-
-<h2>Single</h2>
-
-<div>
-
-
-<h4>cmn_EmployeeVersion</h4>
-<hr/>
-<dl class="dl-horizontal">
-<dt>
-    @Html.DisplayNameFor(model => model.EmployeeCode)
-</dt>
-
-<dd>
-    @Html.DisplayFor(model => model.EmployeeCode)
-</dd>
-
-<dt>
-    @Html.DisplayNameFor(model => model.EPFNo)
-</dt>
-
-<dd>
-    @Html.DisplayFor(model => model.EPFNo)
-</dd>
-
-<dt>
-    @Html.DisplayNameFor(model => model.Title)
-</dt>
-
-<dd>
-    @Html.DisplayFor(model => model.Title)
-</dd>
-
-<dt>
-    @Html.DisplayNameFor(model => model.NameWithInitial)
-</dt>
-
-<dd>
-    @Html.DisplayFor(model => model.NameWithInitial)
-</dd>
-
-<dt>
-    @Html.DisplayNameFor(model => model.FullName)
-</dt>
-
-<dd>
-    @Html.DisplayFor(model => model.FullName)
-</dd>
-
-<dt>
-    @Html.DisplayNameFor(model => model.NIC)
-</dt>
-
-<dd>
-    @Html.DisplayFor(model => model.NIC)
-</dd>
-
-<dt>
-    @Html.DisplayNameFor(model => model.Gender)
-</dt>
-
-<dd>
-    @Html.DisplayFor(model => model.Gender)
-</dd>
-
-<dt>
-    @Html.DisplayNameFor(model => model.Religion)
-</dt>
-
-<dd>
-    @Html.DisplayFor(model => model.Religion)
-</dd>
-
-<dt>
-    @Html.DisplayNameFor(model => model.BloodGroup)
-</dt>
-
-<dd>
-    @Html.DisplayFor(model => model.BloodGroup)
-</dd>
-
-<dt>
-    @Html.DisplayNameFor(model => model.DateOfBirth)
-</dt>
-
-<dd>
-    @Html.DisplayFor(model => model.DateOfBirth)
-</dd>
-
-<dt>
-    @Html.DisplayNameFor(model => model.BasicSalary)
-</dt>
-
-<dd>
-    @Html.DisplayFor(model => model.BasicSalary)
-</dd>
-
-<dt>
-    @Html.DisplayNameFor(model => model.CivilStatus)
-</dt>
-
-<dd>
-    @Html.DisplayFor(model => model.CivilStatus)
-</dd>
-
-<dt>
-    @Html.DisplayNameFor(model => model.HomeAddress)
-</dt>
-
-<dd>
-    @Html.DisplayFor(model => model.HomeAddress)
-</dd>
-
-<dt>
-    @Html.DisplayNameFor(model => model.ContactAddress)
-</dt>
-
-<dd>
-    @Html.DisplayFor(model => model.ContactAddress)
-</dd>
-
-<dt>
-    @Html.DisplayNameFor(model => model.LandphoneNumber)
-</dt>
-
-<dd>
-    @Html.DisplayFor(model => model.LandphoneNumber)
-</dd>
-
-<dt>
-    @Html.DisplayNameFor(model => model.MobileNumber)
-</dt>
-
-<dd>
-    @Html.DisplayFor(model => model.MobileNumber)
-</dd>
-
-<dt>
-    @Html.DisplayNameFor(model => model.PrivateEmail)
-</dt>
-
-<dd>
-    @Html.DisplayFor(model => model.PrivateEmail)
-</dd>
-
-<dt>
-    @Html.DisplayNameFor(model => model.NextOfKin)
-</dt>
-
-<dd>
-    @Html.DisplayFor(model => model.NextOfKin)
-</dd>
-
-<dt>
-    @Html.DisplayNameFor(model => model.NextOfKinRelationShip)
-</dt>
-
-<dd>
-    @Html.DisplayFor(model => model.NextOfKinRelationShip)
-</dd>
-
-<dt>
-    @Html.DisplayNameFor(model => model.EmployeeRecruitmentType)
-</dt>
-
-<dd>
-    @Html.DisplayFor(model => model.EmployeeRecruitmentType)
-</dd>
-
-<dt>
-    @Html.DisplayNameFor(model => model.DateOfAppointment)
-</dt>
-
-<dd>
-    @Html.DisplayFor(model => model.DateOfAppointment)
-</dd>
-
-<dt>
-    @Html.DisplayNameFor(model => model.TypeOfContract)
-</dt>
-
-<dd>
-    @Html.DisplayFor(model => model.TypeOfContract)
-</dd>
-
-<dt>
-    @Html.DisplayNameFor(model => model.DataStatus)
-</dt>
-
-<dd>
-    @Html.DisplayFor(model => model.DataStatus)
-</dd>
-
-<dt>
-    @Html.DisplayNameFor(model => model.IsActive)
-</dt>
-
-<dd>
-    @Html.DisplayFor(model => model.IsActive)
-</dd>
-
-<dt>
-    @Html.DisplayNameFor(model => model.BusinessUnitId)
-</dt>
-
-<dd>
-    @Html.DisplayFor(model => model.BusinessUnitId)
-</dd>
-
-<dt>
-    @Html.DisplayNameFor(model => model.OrganizationId)
-</dt>
-
-<dd>
-    @Html.DisplayFor(model => model.OrganizationId)
-</dd>
-
-<dt>
-    @Html.DisplayNameFor(model => model.CreatedDateTime)
-</dt>
-
-<dd>
-    @Html.DisplayFor(model => model.CreatedDateTime)
-</dd>
-
-<dt>
-    @Html.DisplayNameFor(model => model.CreatedUserId)
-</dt>
-
-<dd>
-    @Html.DisplayFor(model => model.CreatedUserId)
-</dd>
-
-<dt>
-    @Html.DisplayNameFor(model => model.UpdatedDateTime)
-</dt>
-
-<dd>
-    @Html.DisplayFor(model => model.UpdatedDateTime)
-</dd>
-
-<dt>
-    @Html.DisplayNameFor(model => model.UpdatedUserId)
-</dt>
-
-<dd>
-    @Html.DisplayFor(model => model.UpdatedUserId)
-</dd>
-
-<dt>
-    @Html.DisplayNameFor(model => model.OfficeEmail)
-</dt>
-
-<dd>
-    @Html.DisplayFor(model => model.OfficeEmail)
-</dd>
-
-<dt>
-    @Html.DisplayNameFor(model => model.PersonalFileNo)
-</dt>
-
-<dd>
-    @Html.DisplayFor(model => model.PersonalFileNo)
-</dd>
-
-<dt>
-    @Html.DisplayNameFor(model => model.InitialBasicSalary)
-</dt>
-
-<dd>
-    @Html.DisplayFor(model => model.InitialBasicSalary)
-</dd>
-
-<dt>
-    @Html.DisplayNameFor(model => model.AGMWorkSpaceId)
-</dt>
-
-<dd>
-    @Html.DisplayFor(model => model.AGMWorkSpaceId)
-</dd>
-
-<dt>
-    @Html.DisplayNameFor(model => model.DGMWorkSpaceId)
-</dt>
-
-<dd>
-    @Html.DisplayFor(model => model.DGMWorkSpaceId)
-</dd>
-
-<dt>
-    @Html.DisplayNameFor(model => model.OfficeEmail2)
-</dt>
-
-<dd>
-    @Html.DisplayFor(model => model.OfficeEmail2)
-</dd>
-
-<dt>
-    @Html.DisplayNameFor(model => model.EmergencyContactNumber)
-</dt>
-
-<dd>
-    @Html.DisplayFor(model => model.EmergencyContactNumber)
-</dd>
-
-<dt>
-    @Html.DisplayNameFor(model => model.EmergencyContactNumber2)
-</dt>
-
-<dd>
-    @Html.DisplayFor(model => model.EmergencyContactNumber2)
-</dd>
-
-<dt>
-    @Html.DisplayNameFor(model => model.EmergencyContactAddress)
-</dt>
-
-<dd>
-    @Html.DisplayFor(model => model.EmergencyContactAddress)
-</dd>
-
-<dt>
-    @Html.DisplayNameFor(model => model.DateOfRetainment)
-</dt>
-
-<dd>
-    @Html.DisplayFor(model => model.DateOfRetainment)
-</dd>
-
-<dt>
-    @Html.DisplayNameFor(model => model.Race)
-</dt>
-
-<dd>
-    @Html.DisplayFor(model => model.Race)
-</dd>
-
-<dt>
-    @Html.DisplayNameFor(model => model.EmpStatus)
-</dt>
-
-<dd>
-    @Html.DisplayFor(model => model.EmpStatus)
-</dd>
-
-<dt>
-    @Html.DisplayNameFor(model => model.Initial)
-</dt>
-
-<dd>
-    @Html.DisplayFor(model => model.Initial)
-</dd>
-
-<dt>
-    @Html.DisplayNameFor(model => model.Name)
-</dt>
-
-<dd>
-    @Html.DisplayFor(model => model.Name)
-</dd>
-
-<dt>
-    @Html.DisplayNameFor(model => model.ImageUrl)
-</dt>
-
-<dd>
-    @Html.DisplayFor(model => model.ImageUrl)
-</dd>
-
-<dt>
-    @Html.DisplayNameFor(model => model.DateOfExpiry)
-</dt>
-
-<dd>
-    @Html.DisplayFor(model => model.DateOfExpiry)
-</dd>
-
-<dt>
-    @Html.DisplayNameFor(model => model.IncrementDate)
-</dt>
-
-<dd>
-    @Html.DisplayFor(model => model.IncrementDate)
-</dd>
-
-<dt>
-    @Html.DisplayNameFor(model => model.SubSectionId)
-</dt>
-
-<dd>
-    @Html.DisplayFor(model => model.SubSectionId)
-</dd>
-
-<dt>
-    @Html.DisplayNameFor(model => model.EffectiveDate)
-</dt>
-
-<dd>
-    @Html.DisplayFor(model => model.EffectiveDate)
-</dd>
-
-<dt>
-    @Html.DisplayNameFor(model => model.ResignedDate)
-</dt>
-
-<dd>
-    @Html.DisplayFor(model => model.ResignedDate)
-</dd>
-
-<dt>
-    @Html.DisplayNameFor(model => model.Version)
-</dt>
-
-<dd>
-    @Html.DisplayFor(model => model.Version)
-</dd>
-
-<dt>
-    @Html.DisplayNameFor(model => model.PhysicalLocationId)
-</dt>
-
-<dd>
-    @Html.DisplayFor(model => model.PhysicalLocationId)
-</dd>
-
-<dt>
-    @Html.DisplayNameFor(model => model.SNameWithInitial)
-</dt>
-
-<dd>
-    @Html.DisplayFor(model => model.SNameWithInitial)
-</dd>
-
-<dt>
-    @Html.DisplayNameFor(model => model.SHomeAddress)
-</dt>
-
-<dd>
-    @Html.DisplayFor(model => model.SHomeAddress)
-</dd>
-
-<dt>
-    @Html.DisplayNameFor(model => model.cmn_Employee.EmployeeCode)
-</dt>
-
-<dd>
-    @Html.DisplayFor(model => model.cmn_Employee.EmployeeCode)
-</dd>
-
-<dt>
-    @Html.DisplayNameFor(model => model.hrm_Designation.DesignationName)
-</dt>
-
-<dd>
-    @Html.DisplayFor(model => model.hrm_Designation.DesignationName)
-</dd>
-
-<dt>
-    @Html.DisplayNameFor(model => model.cmn_WorkSpace.WorkSpaceCode)
-</dt>
-
-<dd>
-    @Html.DisplayFor(model => model.cmn_WorkSpace.WorkSpaceCode)
-</dd>
-
-<dt>
-    @Html.DisplayNameFor(model => model.hrm_DesignationCategory.DesignationCategoryName)
-</dt>
-
-<dd>
-    @Html.DisplayFor(model => model.hrm_DesignationCategory.DesignationCategoryName)
-</dd>
-
-<dt>
-    @Html.DisplayNameFor(model => model.hrm_Grade.GradeName)
-</dt>
-
-<dd>
-    @Html.DisplayFor(model => model.hrm_Grade.GradeName)
-</dd>
-
-</dl>
-</div>
-<p>
-    @* @Html.ActionLink("Edit", "Edit", new { id = Model.EmployeeVersionId }) | *@
-    @* @Html.ActionLink("Back to List", "Index") *@
-</p>
