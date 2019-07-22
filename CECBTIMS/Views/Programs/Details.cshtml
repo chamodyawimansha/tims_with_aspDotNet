@@ -16,7 +16,7 @@
         @Html.ActionLink("Back to List", $"Index", "", new {@class = "btn btn-outline-secondary"})
         @Html.ActionLink("Edit", $"Edit", new {id = Model.Id}, new {@class = "btn btn-warning"})
         @Html.ActionLink("New", $"Edit", new {id = Model.Id}, new {@class = "btn btn-warning"})
-        @Html.ActionLink("Employees", $"Edit", new {id = Model.Id}, new {@class = "btn btn-warning"})
+        @Html.ActionLink("Employees", $"Details",$"Employee", new {id = Model.Id}, new {@class = "btn btn-warning"})
         @Html.ActionLink("Circulate", $"Edit", new {id = Model.Id}, new {@class = "btn btn-warning"})
         @Html.ActionLink("Delete", $"Delete", new {id = Model.Id}, new {@class = "btn btn-danger"})
         @Html.ActionLink("Documents", $"Edit", new {id = Model.Id}, new {@class = "btn btn-warning"})
