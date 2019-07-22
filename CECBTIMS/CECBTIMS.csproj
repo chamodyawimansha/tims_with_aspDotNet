@@ -179,7 +179,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AgendaController.cs" />
-    <Compile Include="Controllers\CECBEmployeeVersionController.cs" />
+    <Compile Include="Controllers\EmployeeController.cs" />
     <Compile Include="Controllers\CostsController.cs" />
     <Compile Include="Controllers\EmployeesController.cs" />
     <Compile Include="Controllers\EmployeeVersionController.cs" />
@@ -255,6 +255,7 @@
     <Compile Include="Models\hrm_Institute.cs">
       <DependentUpon>CECBERP.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\ProgramAssignment.cs" />
     <Compile Include="Models\ProgramEmploymentCategory.cs" />
     <Compile Include="Models\ProgramEmploymentNature.cs" />
     <Compile Include="Models\Requirement.cs" />
@@ -434,7 +435,7 @@
     <Content Include="Views\Agenda\Index.cshtml" />
     <Content Include="Views\ResourcePersons\Create.cshtml" />
     <Content Include="Views\ResourcePersons\Edit.cshtml" />
-    <Content Include="Views\CECBEmployeeVersion\Details.cshtml" />
+    <Content Include="Views\Employee\Details.cshtml" />
     <Content Include="Views\CECBWorkSpace\Details.cshtml" />
     <Content Include="Views\CECBWorkSpace\Index.cshtml" />
     <Content Include="Views\Programs\Select.cshtml" />
