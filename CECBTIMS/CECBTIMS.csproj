@@ -242,7 +242,7 @@
       <DependentUpon>CECBERP.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Employee.cs" />
-    <Compile Include="Models\EcebEnums.cs" />
+    <Compile Include="Models\Enums\EcebEnums.cs" />
     <Compile Include="Models\hrm_Designation.cs">
       <DependentUpon>CECBERP.tt</DependentUpon>
     </Compile>
@@ -264,20 +264,19 @@
     <Compile Include="Models\ProgramAssignment.cs" />
     <Compile Include="Models\ProgramEmploymentCategory.cs" />
     <Compile Include="Models\ProgramEmploymentNature.cs" />
-    <Compile Include="Models\Requirement.cs" />
     <Compile Include="Models\TargetGroup.cs" />
     <Compile Include="ViewModels\AccountViewModels.cs" />
     <Compile Include="DAL\ApplicationDbContext.cs" />
     <Compile Include="Models\Cost.cs" />
-    <Compile Include="Models\Currency.cs" />
-    <Compile Include="Models\EmployeeCategory.cs" />
-    <Compile Include="Models\EmploymentNature.cs" />
+    <Compile Include="Models\Enums\Currency.cs" />
+    <Compile Include="Models\Enums\EmployeeCategory.cs" />
+    <Compile Include="Models\Enums\EmploymentNature.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Organizer.cs" />
     <Compile Include="Models\Program.cs" />
     <Compile Include="Models\ProgramArrangement.cs" />
-    <Compile Include="Models\ProgramType.cs" />
+    <Compile Include="Models\Enums\ProgramType.cs" />
     <Compile Include="Models\ResourcePerson.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />

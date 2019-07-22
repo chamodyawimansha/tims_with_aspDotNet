@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
+using CECBTIMS.Models.Enums;
 
 /**
  * Base Program model. other 4 program types inherit this model

@@ -1,4 +1,4 @@
-﻿namespace CECBTIMS.Models
+﻿namespace CECBTIMS.Models.Enums
 {
     public enum ProgramType
     {

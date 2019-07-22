@@ -5,6 +5,7 @@ using System.Net;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 using CECBTIMS.Models;
+using CECBTIMS.Models.Enums;
 
 namespace CECBTIMS.Controllers
 {
