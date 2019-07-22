@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using System.Web.Mvc;
+using CECBTIMS.DAL;
 using CECBTIMS.Models;
 using CECBTIMS.Models.Enums;
 
@@ -12,10 +13,19 @@ namespace CECBTIMS.Controllers
     public class EmployeesController : Controller
     {
         private CECB_ERPEntities db = new CECB_ERPEntities();
+        private ApplicationDbContext default_db = new ApplicationDbContext();
 
         // GET: Employee/Details
-        public async Task<ActionResult> Details(string method, string q)
+        public async Task<ActionResult> Details(string method, string q, int? programId)
         {
+
+            if (programId != null)
+            {
+                //check the program available in the database and the assign the program id to viewbag
+                Program program = await default_db.Programs.FindAsync(programId);
+                ViewBag.ProgramId = program != null ? programId : null;
+            }
+
             if (string.IsNullOrEmpty(method) || string.IsNullOrEmpty(q))
             {
                 return View($"Details");
