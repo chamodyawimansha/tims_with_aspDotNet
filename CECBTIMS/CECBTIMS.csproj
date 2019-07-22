@@ -181,8 +181,6 @@
     <Compile Include="Controllers\AgendaController.cs" />
     <Compile Include="Controllers\EmployeeController.cs" />
     <Compile Include="Controllers\CostsController.cs" />
-    <Compile Include="Controllers\EmployeesController.cs" />
-    <Compile Include="Controllers\EmployeeVersionController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\OrganizersController.cs" />
@@ -201,6 +199,14 @@
     <Compile Include="Migrations\201907160253307_initialTimsMigration.cs" />
     <Compile Include="Migrations\201907160253307_initialTimsMigration.Designer.cs">
       <DependentUpon>201907160253307_initialTimsMigration.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201907220144192_ProAssAndEmp.cs" />
+    <Compile Include="Migrations\201907220144192_ProAssAndEmp.Designer.cs">
+      <DependentUpon>201907220144192_ProAssAndEmp.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201907220202522_programAssignmentModel.cs" />
+    <Compile Include="Migrations\201907220202522_programAssignmentModel.Designer.cs">
+      <DependentUpon>201907220202522_programAssignmentModel.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Agenda.cs" />
@@ -458,6 +464,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201907160253307_initialTimsMigration.resx">
       <DependentUpon>201907160253307_initialTimsMigration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201907220144192_ProAssAndEmp.resx">
+      <DependentUpon>201907220144192_ProAssAndEmp.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201907220202522_programAssignmentModel.resx">
+      <DependentUpon>201907220202522_programAssignmentModel.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

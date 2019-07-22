@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
@@ -8,8 +7,6 @@ namespace CECBTIMS.Models
 {
     public class Employee
     {
-        public int Id { get; set; }
-        public System.Guid EmployeeVersionId { get; set; }
         public System.Guid EmployeeId { get; set; }
         public string EPFNo { get; set; }
         public Title? Title { get; set; }
@@ -25,8 +22,5 @@ namespace CECBTIMS.Models
         public string OfficeEmail { get; set; }
         public string MobileNumber { get; set; }
         public string PrivateEmail { get; set; }
-
-        // main CECB db 
-        public virtual cmn_EmployeeVersion Cecb { get; set; }
     }
 }

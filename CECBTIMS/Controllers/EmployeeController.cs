@@ -4,15 +4,13 @@ using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using System.Web.Mvc;
-using CECBTIMS.DAL;
 using CECBTIMS.Models;
 
 namespace CECBTIMS.Controllers
 {
     public class EmployeeController : Controller
     {
-        private ApplicationDbContext db = new ApplicationDbContext();
-        private CECB_ERPEntities cecb_db = new CECB_ERPEntities();
+        private CECB_ERPEntities db = new CECB_ERPEntities();
 
         // GET: Employee/Details
         public async Task<ActionResult> Details(string method, string q)
@@ -22,19 +20,19 @@ namespace CECBTIMS.Controllers
                 return View($"Details");
             }
 
-            var employees = from em in db.Employees
+            var employees = from em in db.cmn_EmployeeVersion
                             select em;
 
             switch (method)
             {
                 case "EPFNo":
-                    employees = employees.Where(em => em.Cecb.EPFNo.Contains(q));
+                    employees = employees.Where(em => em.EPFNo.Contains(q));
                     break;
                 case "NIC":
-                    employees = employees.Where(em => em.Cecb.NIC.Contains(q));
+                    employees = employees.Where(em => em.NIC.Contains(q));
                     break;
                 default:
-                    employees = employees.Where(em => em.Cecb.FullName.Contains(q));
+                    employees = employees.Where(em => em.FullName.Contains(q));
                     break;
             }
 
@@ -43,15 +41,15 @@ namespace CECBTIMS.Controllers
         }
 
         /**
-         * Get More Details from the cecb_db
+         * Get More Details from the db
          */
         public async Task<ActionResult> MoreDetails(Guid? id)
         {
-            var query = from emp in cecb_db.cmn_EmployeeVersion
-                        join wks in cecb_db.cmn_WorkSpace on emp.WorkSpaceId equals wks.WorkSpaceId
-                        join wkst in cecb_db.cmn_WorkSpaceType on wks.WorkSpaceTypeId equals wkst.WorkSpaceTypeId
-                        join dsg in cecb_db.hrm_Designation on emp.DesignationId equals dsg.DesignationId
-                        join dsgc in cecb_db.hrm_DesignationCategory on dsg.DesignationGroupId equals dsgc.DesignationCategoryId
+            var query = from emp in db.cmn_EmployeeVersion
+                        join wks in db.cmn_WorkSpace on emp.WorkSpaceId equals wks.WorkSpaceId
+                        join wkst in db.cmn_WorkSpaceType on wks.WorkSpaceTypeId equals wkst.WorkSpaceTypeId
+                        join dsg in db.hrm_Designation on emp.DesignationId equals dsg.DesignationId
+                        join dsgc in db.hrm_DesignationCategory on dsg.DesignationGroupId equals dsgc.DesignationCategoryId
                         where emp.EmployeeId == id && emp.IsActive
                         select new
                         {
@@ -93,7 +91,7 @@ namespace CECBTIMS.Controllers
         {
             if (disposing)
             {
-                cecb_db.Dispose();
+                db.Dispose();
             }
 
             base.Dispose(disposing);
