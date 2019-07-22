@@ -185,6 +185,7 @@
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\OrganizersController.cs" />
     <Compile Include="Controllers\ProgramArrangementsController.cs" />
+    <Compile Include="Controllers\ProgramAssignmentsController.cs" />
     <Compile Include="Controllers\ProgramsController.cs" />
     <Compile Include="Controllers\RequirementsController.cs" />
     <Compile Include="Controllers\ResourcePersonsController.cs" />
@@ -207,6 +208,10 @@
     <Compile Include="Migrations\201907220202522_programAssignmentModel.cs" />
     <Compile Include="Migrations\201907220202522_programAssignmentModel.Designer.cs">
       <DependentUpon>201907220202522_programAssignmentModel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201907220529327_programAssignmentModelChanged.cs" />
+    <Compile Include="Migrations\201907220529327_programAssignmentModelChanged.Designer.cs">
+      <DependentUpon>201907220529327_programAssignmentModelChanged.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Agenda.cs" />
@@ -445,10 +450,11 @@
     <Content Include="Views\CECBWorkSpace\Details.cshtml" />
     <Content Include="Views\CECBWorkSpace\Index.cshtml" />
     <Content Include="Views\Programs\Select.cshtml" />
+    <Content Include="Views\Employees\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\EmployeeVersion\" />
+    <Folder Include="Views\ProgramAssignments\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -465,6 +471,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201907220202522_programAssignmentModel.resx">
       <DependentUpon>201907220202522_programAssignmentModel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201907220529327_programAssignmentModelChanged.resx">
+      <DependentUpon>201907220529327_programAssignmentModelChanged.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
