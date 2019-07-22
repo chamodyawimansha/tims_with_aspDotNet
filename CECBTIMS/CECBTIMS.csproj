@@ -213,6 +213,10 @@
     <Compile Include="Migrations\201907220529327_programAssignmentModelChanged.Designer.cs">
       <DependentUpon>201907220529327_programAssignmentModelChanged.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201907220821564_programAssignmentModelChanged1.cs" />
+    <Compile Include="Migrations\201907220821564_programAssignmentModelChanged1.Designer.cs">
+      <DependentUpon>201907220821564_programAssignmentModelChanged1.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Agenda.cs" />
     <Compile Include="Models\BaseCols.cs" />
@@ -474,6 +478,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201907220529327_programAssignmentModelChanged.resx">
       <DependentUpon>201907220529327_programAssignmentModelChanged.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201907220821564_programAssignmentModelChanged1.resx">
+      <DependentUpon>201907220821564_programAssignmentModelChanged1.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

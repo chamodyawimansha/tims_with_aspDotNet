@@ -53,7 +53,9 @@ namespace CECBTIMS.DAL
 
         public System.Data.Entity.DbSet<CECBTIMS.Models.ResourcePerson> ResourcePersons { get; set; }
 
-//        public System.Data.Entity.DbSet<CECBTIMS.Models.Employee> Employees { get; set; }
+        //        public System.Data.Entity.DbSet<CECBTIMS.Models.Employee> Employees { get; set; }
+
+        public System.Data.Entity.DbSet<CECBTIMS.Models.ProgramAssignment> ProgramAssignments { get; set; }
 
     }
 }

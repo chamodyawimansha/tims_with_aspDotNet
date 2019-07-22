@@ -7,59 +7,61 @@ using System.Threading.Tasks;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using CECBTIMS.DAL;
 using CECBTIMS.Models;
+using Microsoft.Ajax.Utilities;
 
 namespace CECBTIMS.Controllers
 {
     public class ProgramAssignmentsController : Controller
     {
-        private CECB_ERPEntities db = new CECB_ERPEntities();
+        private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: ProgramAssignments
-        public async Task<ActionResult> Index()
-        {
-            var programAssignments = db.ProgramAssignments.Include(p => p.Program);
-            return View(await programAssignments.ToListAsync());
-        }
+//        public async Task<ActionResult> Index()
+//        {
+//            var programAssignments = db.ProgramAssignments.Include(p => p.Program);
+//            return View(await programAssignments.ToListAsync());
+//        }
 
         // GET: ProgramAssignments/Details/5
-        public async Task<ActionResult> Details(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            ProgramAssignment programAssignment = await db.ProgramAssignments.FindAsync(id);
-            if (programAssignment == null)
-            {
-                return HttpNotFound();
-            }
-            return View(programAssignment);
-        }
+//        public async Task<ActionResult> Details(int? id)
+//        {
+//            if (id == null)
+//            {
+//                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+//            }
+//            ProgramAssignment programAssignment = await db.ProgramAssignments.FindAsync(id);
+//            if (programAssignment == null)
+//            {
+//                return HttpNotFound();
+//            }
+//            return View(programAssignment);
+//        }
 
         // GET: ProgramAssignments/Create
-        public ActionResult Create()
-        {
-            ViewBag.ProgramId = new SelectList(db.Programs, "Id", "Title");
-            return View();
-        }
+//        public ActionResult Create()
+//        {
+//            ViewBag.ProgramId = new SelectList(db.Programs, "Id", "Title");
+//            return View();
+//        }
 
         // POST: ProgramAssignments/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "Id,EmployeeId,EmployeeVersionId,EPFNo,ProgramId,CreatedAt,UpdatedAt,CreatedBy,UpdatedBy,RowVersion")] ProgramAssignment programAssignment)
+        public async Task<ActionResult> Create([Bind(Include = "EmployeeId,EmployeeVersionId,EPFNo,ProgramId")] ProgramAssignment programAssignment)
         {
             if (ModelState.IsValid)
             {
                 db.ProgramAssignments.Add(programAssignment);
                 await db.SaveChangesAsync();
-                return RedirectToAction("Index");
+
+                return RedirectToAction($"Index", $"Employees", new { programId = programAssignment.ProgramId });
             }
 
-            ViewBag.ProgramId = new SelectList(db.Programs, "Id", "Title", programAssignment.ProgramId);
-            return View(programAssignment);
+            return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
         }
 
         // GET: ProgramAssignments/Edit/5

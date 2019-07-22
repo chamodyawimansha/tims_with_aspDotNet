@@ -15,9 +15,15 @@ namespace CECBTIMS.Controllers
         private CECB_ERPEntities db = new CECB_ERPEntities();
         private ApplicationDbContext default_db = new ApplicationDbContext();
 
-        // GET: Employee/Details
-        public async Task<ActionResult> Details(string method, string q, int? programId)
+        public async Task<ActionResult> Index(int? programId)
         {
+            return Content("Saved" + programId.ToString());
+        }
+
+        // GET: Employee/Details
+            public async Task<ActionResult> Details(string method, string q, int? programId)
+        {
+            ViewBag.ProgramId = null;
 
             if (programId != null)
             {
@@ -92,7 +98,9 @@ namespace CECBTIMS.Controllers
                 PrivateEmail = data.employee.PrivateEmail
             };
 
-            return View($"Details", employee);
+            //            return View($"Details", employee);
+            return Content(employee.DesignationName);
+
         }
 
         //            https://www.guru99.com/c-sharp-serialization.html
