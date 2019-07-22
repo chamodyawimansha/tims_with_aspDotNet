@@ -17,6 +17,17 @@ namespace CECBTIMS.Controllers
 
         public async Task<ActionResult> Index(int? programId)
         {
+//
+//            get the employee ids from the program assignments
+//                get the inforamtio from the cecb db for each one
+//                    send it to index page
+//                        show program title
+//                        employee count
+//
+//                            full name
+//                                
+
+
             return Content("Saved" + programId.ToString());
         }
 
@@ -62,44 +73,19 @@ namespace CECBTIMS.Controllers
          */
         public async Task<ActionResult> MoreDetails(Guid? id)
         {
-            var query = from emp in db.cmn_EmployeeVersion
-                        join wks in db.cmn_WorkSpace on emp.WorkSpaceId equals wks.WorkSpaceId
-                        join wkst in db.cmn_WorkSpaceType on wks.WorkSpaceTypeId equals wkst.WorkSpaceTypeId
-                        join dsg in db.hrm_Designation on emp.DesignationId equals dsg.DesignationId
-                        join dsgc in db.hrm_DesignationCategory on dsg.DesignationGroupId equals dsgc.DesignationCategoryId
-                        where emp.EmployeeId == id && emp.IsActive
-                        select new
-                        {
-                            employee = emp,
-                            workSpace = wks,
-                            workSpaceType = wkst,
-                            designation = dsg,
-                            designationCategory = dsgc
-                        };
-
-            var data = await query.FirstAsync();
-
-            var employee = new Employee()
+            if (id == null)
             {
-                EmployeeId = data.employee.EmployeeId,
-                EPFNo = data.employee.EPFNo,
-                Title = (Title)int.Parse(data.employee.Title),
-                NameWithInitial = data.employee.NameWithInitial,
-                FullName = data.employee.FullName,
-                NIC = data.employee.NIC,
-                WorkSpaceName = data.workSpace.WorkSpaceName,
-                DesignationName = data.designation.DesignationName,
-                EmployeeRecruitmentType = (RecruitmentType)int.Parse(data.employee.EmployeeRecruitmentType),
-                EmpStatus = (EmployeeStatus)data.employee.EmpStatus,
-                DateOfAppointment = data.employee.DateOfAppointment,
-                TypeOfContract = data.employee.TypeOfContract,
-                OfficeEmail = data.employee.OfficeEmail,
-                MobileNumber = data.employee.MobileNumber,
-                PrivateEmail = data.employee.PrivateEmail
-            };
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
 
-            //            return View($"Details", employee);
-            return Content(employee.DesignationName);
+            var employee = await db.cmn_EmployeeVersion.FindAsync(id);
+
+            if (employee == null)
+            {
+                return HttpNotFound();
+            }
+
+            return View($"Single",employee);
 
         }
 
