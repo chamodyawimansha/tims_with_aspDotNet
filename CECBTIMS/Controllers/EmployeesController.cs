@@ -9,7 +9,7 @@ using CECBTIMS.Models.Enums;
 
 namespace CECBTIMS.Controllers
 {
-    public class EmployeeController : Controller
+    public class EmployeesController : Controller
     {
         private CECB_ERPEntities db = new CECB_ERPEntities();
 
