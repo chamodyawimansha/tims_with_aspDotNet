@@ -1,131 +1,115 @@
-﻿@model CECBTIMS.Models.Employee
+﻿@model IEnumerable<CECBTIMS.Models.cmn_EmployeeVersion>
 
 @{
     ViewBag.Title = "Details";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Details</h2>
 
-<div>
-    <h4>Employee</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.EPFNo)
-        </dt>
+<div class="col-10 mx-auto mb-5">
 
-        <dd>
-            @Html.DisplayFor(model => model.EPFNo)
-        </dd>
+    <div class="card mb-4">
+        <div class="card-header">Search Employees</div>
+        <div class="card-body">
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Title)
-        </dt>
+            <div class="col-10 mx-auto mb-5">
+                <div class="container">
 
-        <dd>
-            @Html.DisplayFor(model => model.Title)
-        </dd>
+                    @using (Html.BeginForm($"Details", $"CECBEmployeeVersion", "",
+                        FormMethod.Get, null))
+                    {
+                        <div class="form-group">
+                            <label for="method">Search Method</label>
+                            <select class="custom-select" id="method" name="method">
+                                <option value="FullName">Full Name</option>
+                                <option value="NIC">NIC Number</option>
+                                <option value="EPFNo">EPF Number</option>
+                            </select>
+                        </div>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.NameWithInitial)
-        </dt>
+                        <div class="form-group">
+                            <label for="qString">Search String</label>
+                            <input type="text" name="q" id="qString" class="form-control" required="required"/>
+                        </div>
 
-        <dd>
-            @Html.DisplayFor(model => model.NameWithInitial)
-        </dd>
+                        <div class="form-group">
+                            <div class="">
+                                <input type="submit" value="Find" class="btn btn-primary"/>
+                                @Html.ActionLink("Clear Results", $"Details", null, new {@class = "btn btn-outline-secondary"})
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.FullName)
-        </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.FullName)
-        </dd>
+    @if (Model != null)
+    {
+        <div class="card border-primary">
+            <div class="card-header">Search Results</div>
+            <div class="card-body">
+                <div class="container">
 
-        <dt>
-            @Html.DisplayNameFor(model => model.NIC)
-        </dt>
+                    @if (Model.Any())
+                    {
+                        <div class="alert alert-dismissible alert-success">
+                            <button type="button" class="close" data-dismiss="alert">&times;</button>
+                            <strong>@Model.Count() </strong>results Found.
+                        </div>
+                        
+                        <table class="table table-bordered">
+                            <tr>
+                                <th>#</th>
+                                <th>Full Name</th>
+                                <th>Designation</th>
+                                <th>Section</th>
+                            </tr>
+                            @{
+                                int i = 1;
+                                foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td>@i</td>
+                                        <td>@item.Title @item.FullName</td>
+                                        @if (item.hrm_Designation != null)
+                                        {
+                                            <td>@item.hrm_Designation.DesignationName</td>
+                                        }
+                                        else
+                                        {
+                                            <td></td>
+                                        }
+                                        @if (item.cmn_WorkSpace != null)
+                                        { 
+                                        <td>@item.cmn_WorkSpace.WorkSpaceName</td>
+                                        }
+                                        else
+                                        {
+                                            <td></td>
+                                        }
+                                        <td>
+                                            Details 
+                                            Select
+                                        </td>
+                                    </tr>
+                                    i++;
+                                }
+                            }
+                        </table>
+                    }
+                    else
+                    {
+                        <div class="alert alert-dismissible alert-warning">
+                            <button type="button" class="close" data-dismiss="alert">&times;</button>
+                            <h4 class="alert-heading">Oops!</h4>
+                            <p class="mb-0">No results Found.</p>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    }
 
-        <dd>
-            @Html.DisplayFor(model => model.NIC)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.WorkSpaceName)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.WorkSpaceName)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.DesignationName)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.DesignationName)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.EmployeeRecruitmentType)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.EmployeeRecruitmentType)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.EmpStatus)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.EmpStatus)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.DateOfAppointment)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.DateOfAppointment)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.TypeOfContract)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.TypeOfContract)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.OfficeEmail)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.OfficeEmail)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.MobileNumber)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.MobileNumber)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.PrivateEmail)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.PrivateEmail)
-        </dd>
-
-    </dl>
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.EmployeeId }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
