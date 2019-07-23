@@ -126,7 +126,7 @@
                                                 }
                                             }
 
-                                            @Html.ActionLink("Details", $"MoreDetails", new { id = item.EmployeeVersionId, programId = ViewBag.ProgramId }, new { @class = "btn btn-sm btn-outline-secondary" })
+                                            @Html.ActionLink("Details", $"MoreDetails", new { id = item.EmployeeVersionId, programId = ViewBag.ProgramId, rl = "/Employees/Details" }, new { @class = "btn btn-sm btn-outline-secondary" })
                                         </td>
                                     </tr>
                                     i++;

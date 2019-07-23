@@ -115,12 +115,18 @@ namespace CECBTIMS.Controllers
         // POST: ProgramAssignments/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> DeleteConfirmed(int id)
+        public async Task<ActionResult> DeleteConfirmed(Guid? EmployeeVersionId, int? programId)
         {
-            ProgramAssignment programAssignment = await db.ProgramAssignments.FindAsync(id);
+            if (EmployeeVersionId == null || programId == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            var programAssignment = await db.ProgramAssignments.Where(a => a.EmployeeVersionId == EmployeeVersionId).FirstAsync();
             db.ProgramAssignments.Remove(programAssignment);
             await db.SaveChangesAsync();
-            return RedirectToAction("Index");
+
+            //send success message
+            return RedirectToAction($"Index",$"Employees", new{programId});
         }
 
         protected override void Dispose(bool disposing)
