@@ -71,8 +71,17 @@ namespace CECBTIMS.Controllers
         /**
          * Get More Details from the db
          */
-        public async Task<ActionResult> MoreDetails(Guid? id)
+        public async Task<ActionResult> MoreDetails(Guid? id, int? programId)
         {
+            ViewBag.ProgramId = null;
+
+            if (programId != null)
+            {
+                //check the program available in the database and the assign the program id to viewbag
+                Program program = await default_db.Programs.FindAsync(programId);
+                ViewBag.ProgramId = program != null ? programId : null;
+            }
+
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);

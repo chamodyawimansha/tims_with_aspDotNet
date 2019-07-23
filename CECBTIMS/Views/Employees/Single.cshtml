@@ -19,12 +19,30 @@
 <div class="col-10 mx-auto mb-5">
 
     <div class="card mb-4">
-        <div class="card-header">Search Employees</div>
-        <div class="card-body">
+        <div class="card-header">
+            <p class="float-left">Employee Details</p>
+            <div class="float-right">
 
+                @if (ViewBag.ProgramId != null)
+                {
+                    using (Html.BeginForm($"Create", $"ProgramAssignments", null, FormMethod.Post, new {@class = "d-inline"}))
+                    {
+                        @Html.AntiForgeryToken()
+                        <input type="hidden" name="EmployeeId" value="@(Model.EmployeeId)"/>
+                        <input type="hidden" name="EmployeeVersionId" value="@(Model.EmployeeVersionId)"/>
+                        <input type="hidden" name="EPFNo" value="@(Model.EPFNo)"/>
+                        <input type="hidden" name="ProgramId" value="@(ViewBag.ProgramId)"/>
+                        <input type="submit" value="Select" class="btn btn-primary"/>
+                    }
+                }
+
+                @Html.ActionLink("Back", $"Details", new {programId = ViewBag.ProgramId}, new {@class = "btn btn-outline-secondary"})
+            </div>
+        </div>
+        <div class="card-body">
             <div class="col-12 mx-auto mb-5">
                 <div class="container">
-                    <h1>Select Button, Back button, hide select button if program id not available</h1>
+
                     <table class="table table-bordered">
                         <tr>
                             <th colspan="2">Name</th>
