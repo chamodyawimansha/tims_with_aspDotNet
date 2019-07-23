@@ -221,6 +221,10 @@
     <Compile Include="Migrations\201907230146466_programAssignmentForeignKey.Designer.cs">
       <DependentUpon>201907230146466_programAssignmentForeignKey.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201907230942496_FileModel.cs" />
+    <Compile Include="Migrations\201907230942496_FileModel.Designer.cs">
+      <DependentUpon>201907230942496_FileModel.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Agenda.cs" />
     <Compile Include="Models\BaseCols.cs" />
@@ -256,7 +260,9 @@
     </Compile>
     <Compile Include="Models\Employee.cs" />
     <Compile Include="Models\Enums\EcebEnums.cs" />
-    <Compile Include="Models\Enums\FileTypes.cs" />
+    <Compile Include="Models\Enums\FileMethod.cs" />
+    <Compile Include="Models\Enums\FileType.cs" />
+    <Compile Include="Models\File.cs" />
     <Compile Include="Models\hrm_Designation.cs">
       <DependentUpon>CECBERP.tt</DependentUpon>
     </Compile>
@@ -491,6 +497,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201907230146466_programAssignmentForeignKey.resx">
       <DependentUpon>201907230146466_programAssignmentForeignKey.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201907230942496_FileModel.resx">
+      <DependentUpon>201907230942496_FileModel.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

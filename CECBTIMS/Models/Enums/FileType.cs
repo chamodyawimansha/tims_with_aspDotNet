@@ -5,13 +5,13 @@ using System.Web;
 
 namespace CECBTIMS.Models.Enums
 {
-    public enum FileTypes
+    public enum FileType
     {
         docx = 1,
-        pdf,
-        doc,
-        png,
-        jpeg,
-        JPG,
+        pdf = 2,
+        doc = 3,
+        png = 4,
+        jpeg = 5,
+        jpg = 6,
     }
 }
