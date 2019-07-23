@@ -40,7 +40,6 @@ namespace CECBTIMS.Controllers
                 trainees.Add(await db.cmn_EmployeeVersion.FindAsync(item.EmployeeVersionId));
             }
 
-            return Content(trainees.Count.ToString());
             //
             //            get the employee ids from the program assignments
             //                get the inforamtio from the cecb db for each one
@@ -51,8 +50,8 @@ namespace CECBTIMS.Controllers
             //                            full name
             //                                
 
-
-            return View();
+            ViewBag.Program = program;
+            return View(trainees);
         }
 
         // GET: Employee/Details
@@ -95,9 +94,11 @@ namespace CECBTIMS.Controllers
         /**
          * Get More Details from the db
          */
-        public async Task<ActionResult> MoreDetails(Guid? id, int? programId)
+        public async Task<ActionResult> MoreDetails(Guid? id, int? programId, string rl)
         {
             ViewBag.ProgramId = null;
+
+            ViewBag.rl = string.IsNullOrWhiteSpace(rl) ? null : rl;
 
             if (programId != null)
             {

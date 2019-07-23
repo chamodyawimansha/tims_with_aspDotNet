@@ -1,12 +1,14 @@
-﻿@model CECBTIMS.Models.cmn_EmployeeVersion
+﻿@model IEnumerable<CECBTIMS.Models.cmn_EmployeeVersion>
 
 @{
-    ViewBag.Title = "Program Assignments";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+                /**/
+
+                ViewBag.Title = "Program Assignments";
+                Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 
-<div class="col-10 mx-auto mb-5">
+<div class="col-12 mx-auto mb-5">
     <div id="programContent">
         <div class="card">
             <div class="card-header">
@@ -19,11 +21,46 @@
             </div>
             <div class="card-body">
                 <div>
+                    <table class="table table-bordered mb-3">
+                        <tr>
+                            <th class="w-25">Program Title</th>
+                            <th class="w-75">@ViewBag.program.Title</th>
+                        </tr>
+                    </table>
+                    
                     <table class="table table-bordered">
                         <tr>
-                            <th colspan="2">Program Title</th>
-                            <th colspan="8">@ViewBag.program.Title</th>
+                            <th style="min-width: 5%; max-width: 10%">#</th>
+                            <th style="min-width: 35%; max-width: 40%">Name</th>
+                            <th style="width: 15%">Designation</th>
+                            <th style="width: 25%">Workspace</th>
+                            <th style="width: 15%"></th>
                         </tr>
+                        @{
+                            var i = 1;
+
+                            foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>@(i++)</td>
+                                    <td>@item.FullName</td>
+                                    <td>@item.hrm_Designation.DesignationName</td>
+                                    <td>@item.cmn_WorkSpace.WorkSpaceName</td>
+                                    <td>
+                                        @Html.ActionLink("Details", $"MoreDetails", $"Employees", new {id = item.EmployeeVersionId, rl = "/Employees?programId=6" }, new {@class = "btn btn-secondary btn-sm d-inline-block"})
+
+                                        @using (Html.BeginForm($"Delete", $"ProgramAssignments", "",
+                                            FormMethod.Post, new {@class = "d-inline-block"}))
+                                        {
+                                            @Html.AntiForgeryToken()
+                                            <input type="hidden" name="id" value="@item.EmployeeVersionId"/>
+                                            <input type="hidden" name="programId" value="@ViewBag.program.Id"/>
+                                            <input type="submit" value="Remove" class="btn btn-danger btn-sm d-inline-block"/>
+                                        }
+                                    </td>
+                                </tr>
+                            }
+                        }
                     </table>
                 </div>
             </div>
