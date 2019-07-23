@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
@@ -17,18 +18,41 @@ namespace CECBTIMS.Controllers
 
         public async Task<ActionResult> Index(int? programId)
         {
-//
-//            get the employee ids from the program assignments
-//                get the inforamtio from the cecb db for each one
-//                    send it to index page
-//                        show program title
-//                        employee count
-//
-//                            full name
-//                                
+            if (programId == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            //get the program
+            var program = await default_db.Programs.FindAsync(programId);
+
+            if (program == null)
+            {
+                return new HttpNotFoundResult();
+            }
+            // get program assignments
+            var programAssignments = await default_db.ProgramAssignments.Where(p => p.ProgramId == programId).ToListAsync();
+
+            var trainees = new List<cmn_EmployeeVersion>();
+
+            foreach (var item in programAssignments)
+            {
+                // get trainee data from the cecb database
+                trainees.Add(await db.cmn_EmployeeVersion.FindAsync(item.EmployeeVersionId));
+            }
+
+            return Content(trainees.Count.ToString());
+            //
+            //            get the employee ids from the program assignments
+            //                get the inforamtio from the cecb db for each one
+            //                    send it to index page
+            //                        show program title
+            //                        employee count
+            //
+            //                            full name
+            //                                
 
 
-            return Content("Saved" + programId.ToString());
+            return View();
         }
 
         // GET: Employee/Details
@@ -39,7 +63,7 @@ namespace CECBTIMS.Controllers
             if (programId != null)
             {
                 //check the program available in the database and the assign the program id to viewbag
-                Program program = await default_db.Programs.FindAsync(programId);
+                var program = await default_db.Programs.FindAsync(programId);
                 ViewBag.ProgramId = program != null ? programId : null;
             }
 
@@ -78,7 +102,7 @@ namespace CECBTIMS.Controllers
             if (programId != null)
             {
                 //check the program available in the database and the assign the program id to viewbag
-                Program program = await default_db.Programs.FindAsync(programId);
+                var program = await default_db.Programs.FindAsync(programId);
                 ViewBag.ProgramId = program != null ? programId : null;
             }
 

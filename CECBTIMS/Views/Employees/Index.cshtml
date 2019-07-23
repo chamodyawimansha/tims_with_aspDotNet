@@ -1,12 +1,32 @@
-﻿
+﻿@model CECBTIMS.Models.cmn_EmployeeVersion
+
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Program Assignments";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Index</h2>
 
-list all employees with current program
-selct option for add new trainee > go employee details find
+<div class="col-10 mx-auto mb-5">
+    <div id="programContent">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="float-left">Selected Employees</h4>
 
+                <div class="float-right" id="btn-group">
 
+                </div>
+
+            </div>
+            <div class="card-body">
+                <div>
+                    <table class="table table-bordered">
+                        <tr>
+                            <th colspan="2">Program Title</th>
+                            <th colspan="8">@ViewBag.program.Title</th>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
