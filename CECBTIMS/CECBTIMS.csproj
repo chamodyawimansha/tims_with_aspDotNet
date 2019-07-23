@@ -256,6 +256,7 @@
     </Compile>
     <Compile Include="Models\Employee.cs" />
     <Compile Include="Models\Enums\EcebEnums.cs" />
+    <Compile Include="Models\Enums\FileTypes.cs" />
     <Compile Include="Models\hrm_Designation.cs">
       <DependentUpon>CECBERP.tt</DependentUpon>
     </Compile>
