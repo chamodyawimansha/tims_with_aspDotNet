@@ -181,6 +181,7 @@
     <Compile Include="Controllers\AgendaController.cs" />
     <Compile Include="Controllers\EmployeesController.cs" />
     <Compile Include="Controllers\CostsController.cs" />
+    <Compile Include="Controllers\FilesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\OrganizersController.cs" />
@@ -224,6 +225,10 @@
     <Compile Include="Migrations\201907230942496_FileModel.cs" />
     <Compile Include="Migrations\201907230942496_FileModel.Designer.cs">
       <DependentUpon>201907230942496_FileModel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201907240137060_fileAndPrograRelationship.cs" />
+    <Compile Include="Migrations\201907240137060_fileAndPrograRelationship.Designer.cs">
+      <DependentUpon>201907240137060_fileAndPrograRelationship.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Agenda.cs" />
@@ -468,9 +473,11 @@
     <Content Include="Views\Programs\Select.cshtml" />
     <Content Include="Views\Employees\Index.cshtml" />
     <Content Include="Views\Employees\Single.cshtml" />
+    <Content Include="Views\Files\Upload.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Storage\" />
     <Folder Include="Views\ProgramAssignments\" />
   </ItemGroup>
   <ItemGroup>
@@ -500,6 +507,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201907230942496_FileModel.resx">
       <DependentUpon>201907230942496_FileModel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201907240137060_fileAndPrograRelationship.resx">
+      <DependentUpon>201907240137060_fileAndPrograRelationship.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

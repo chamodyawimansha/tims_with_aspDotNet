@@ -37,5 +37,8 @@ namespace CECBTIMS.Models
         public virtual DbSet<hrm_Grade> hrm_Grade { get; set; }
         public virtual DbSet<hrm_Institute> hrm_Institute { get; set; }
 
+        public System.Data.Entity.DbSet<CECBTIMS.Models.File> Files { get; set; }
+
+        public System.Data.Entity.DbSet<CECBTIMS.Models.Program> Programs { get; set; }
     }
 }

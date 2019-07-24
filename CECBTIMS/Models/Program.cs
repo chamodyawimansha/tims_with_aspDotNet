@@ -14,7 +14,7 @@ namespace CECBTIMS.Models
     public class Program : BaseCols
     {
         public int Id { get; set; }
-
+        [StringLength(255)]
         public string Title { get; set; }
         [Display(Name = "Program Type")]
         public ProgramType ProgramType { get; set; }
@@ -34,12 +34,14 @@ namespace CECBTIMS.Models
         [Display(Name = "Application Closing Time")]
         public DateTime ApplicationClosingTime { get; set; }
         public string Brochure { get; set; } // File upload: File Name
+        [StringLength(255)]
         public string Venue { get; set; } // Not For PostGrad
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         [Display(Name = "End Date")]
         public DateTime? EndDate { get; set; }
         [Display(Name = "Notified By")]
+        [StringLength(255)]
         public string NotifiedBy { get; set; } //  For Foreign
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
@@ -77,5 +79,6 @@ namespace CECBTIMS.Models
         public virtual ICollection<Requirement> Requirements { get; set; }
         public virtual ICollection<ProgramEmploymentCategory> ProgramEmploymentCategories { get; set; }
         public virtual ICollection<ProgramEmploymentNature> ProgramEmploymentNatures { get; set; }
+        public virtual ICollection<File> Files { get; set; }
     }
 }
