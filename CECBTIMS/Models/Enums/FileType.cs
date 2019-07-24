@@ -7,11 +7,11 @@ namespace CECBTIMS.Models.Enums
 {
     public enum FileType
     {
-        docx = 1,
-        pdf = 2,
-        doc = 3,
-        png = 4,
-        jpeg = 5,
-        jpg = 6,
+        DOCX = 1,
+        PDF = 2,
+        DOC = 3,
+        PNG = 4,
+        JPEG = 5,
+        JPG = 6,
     }
 }

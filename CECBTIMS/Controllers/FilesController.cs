@@ -74,10 +74,22 @@ namespace CECBTIMS.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> UploadFile(HttpPostedFileBase file,string title,string details,int? programId)
         {
-            if (file == null || file.ContentLength <= 0) return Content("Hello");
+            if (file == null || file.ContentLength <= 0) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 
-            var path = Path.Combine(Server.MapPath("~/Storage"),
-                Path.GetFileName(file.FileName) ?? throw new InvalidOperationException());
+            var fileExtension = Path.GetExtension(file.FileName)?.Replace(".", string.Empty);
+
+            //check if the file type is supported
+            if (!Enum.GetNames(typeof(FileType)).Contains(fileExtension))
+            {
+                ViewBag.Message = "File type is not supported";
+                return View($"Upload");
+            }
+
+            generateanewnamebefore store in the database
+
+
+
+            var path = Path.Combine(Server.MapPath("~/Storage"), Path.GetFileName(file.FileName) ?? throw new InvalidOperationException());
 
             try
             {
