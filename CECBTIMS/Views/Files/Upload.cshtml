@@ -7,13 +7,23 @@
 
 <div class="col-8 mx-auto mb-lg-5">
     <div class="card border-primary mb-3">
-        <div class="card-header">TimsFile Upload</div>
+        <div class="card-header">File Upload</div>
         <div class="card-body">
             <div class="container pt-4 pb-4">
                 @using (Html.BeginForm($"Upload", $"Files", null, FormMethod.Post, new {enctype = "multipart/form-data"}))
                 {
                     @Html.AntiForgeryToken()
                     @Html.ValidationSummary(true, "", new {@class = "text-danger"})
+
+                    <div class="form-group">
+                        <label for="title">File Title</label>
+                        <input type="text" class="form-control" id="title" name="title">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="details">File Details</label>
+                        <input type="text" class="form-control" id="details" name="details">
+                    </div>
 
                     <div class="form-group">
                         <label for="FileInput">Select a TimsFile</label>

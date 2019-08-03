@@ -76,46 +76,52 @@ namespace CECBTIMS.Controllers
         {
 
             if (file == null || file.ContentLength <= 0) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-
+            // get the file extension
             var fileExtension = Path.GetExtension(file.FileName)?.Replace(".", string.Empty);
-
             //check if the file type is supported
             if (!Enum.GetNames(typeof(FileType)).Contains(fileExtension))
             {
-                ViewBag.Message = "TimsFile type is not supported";
+                ViewBag.Message = "File type is not supported";
                 return View($"Upload"); 
             }
-
-            //            generateanewnamebefore store in the database
-
-            // new id
+            // generate id
             var id = Guid.NewGuid();
-
-            var newFile = new File();
-
-            // create new file model 
-
-            // save the file model
-
-            // if model valid
-                
-            
-
-
-
-            var path = Path.Combine(Server.MapPath("~/Storage"), Path.GetFileName(file.FileName) ?? throw new InvalidOperationException());
+            // generate a new file name
+            var newFileName = file.FileName + "-" + id;
+            //create new file object
+            var newFile = new TimsFile
+            {
+                Id = id,
+                Title = title,
+                Details = details,
+                FileName = newFileName,
+                OriginalFileName = file.FileName,
+                FileType = (FileType) Enum.Parse(typeof(FileType), fileExtension ?? throw new InvalidOperationException()),
+                FileMethod = (FileMethod) 1, // upload
+                ProgramId = programId,
+            };
+            // file path name
+            var path = Path.Combine(Server.MapPath("~/Storage"), Path.GetFileName(newFileName) ?? throw new InvalidOperationException());
 
             try
             {
+                // save file in the storage
                 file.SaveAs(path);
 
-                ViewBag.Message = "TimsFile uploaded successfully";
+                if (System.IO.File.Exists(path))
+                {
+                    //save the new file object in the database
+                    db.Files.Add(newFile);
+                    await db.SaveChangesAsync();
+                    ViewBag.Message = "File uploaded Successfully";
+                }
             }
             catch (Exception ex)
             {
-                ViewBag.Message = "ERROR:" + ex.Message.ToString();
+                ViewBag.Message = "File upload Failed:" + ex.Message.ToString();
             }
 
+            
             return View($"Upload");
         }
 

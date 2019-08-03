@@ -230,6 +230,10 @@
     <Compile Include="Migrations\201907240137060_fileAndPrograRelationship.Designer.cs">
       <DependentUpon>201907240137060_fileAndPrograRelationship.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201908031326075_FileClassChanged.cs" />
+    <Compile Include="Migrations\201908031326075_FileClassChanged.Designer.cs">
+      <DependentUpon>201908031326075_FileClassChanged.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Agenda.cs" />
     <Compile Include="Models\BaseCols.cs" />
@@ -510,6 +514,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201907240137060_fileAndPrograRelationship.resx">
       <DependentUpon>201907240137060_fileAndPrograRelationship.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201908031326075_FileClassChanged.resx">
+      <DependentUpon>201908031326075_FileClassChanged.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
