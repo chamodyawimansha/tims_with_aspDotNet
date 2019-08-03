@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using CECBTIMS.DAL;
 using CECBTIMS.Models;
 using CECBTIMS.Models.Enums;
 
@@ -15,7 +16,7 @@ namespace CECBTIMS.Controllers
 {
     public class FilesController : Controller
     {
-        private CECB_ERPEntities db = new CECB_ERPEntities();
+        private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Files
 //        public async Task<ActionResult> Index()
@@ -77,17 +78,20 @@ namespace CECBTIMS.Controllers
 
             if (file == null || file.ContentLength <= 0) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             // get the file extension
-            var fileExtension = Path.GetExtension(file.FileName)?.Replace(".", string.Empty);
+            var fileExtension = Path.GetExtension(file.FileName.ToUpper())?.Replace(".", string.Empty);
+
+
             //check if the file type is supported
             if (!Enum.GetNames(typeof(FileType)).Contains(fileExtension))
             {
                 ViewBag.Message = "File type is not supported";
                 return View($"Upload"); 
             }
+
             // generate id
             var id = Guid.NewGuid();
             // generate a new file name
-            var newFileName = file.FileName + "-" + id;
+            var newFileName = id + "_" + file.FileName;
             //create new file object
             var newFile = new TimsFile
             {
@@ -115,6 +119,11 @@ namespace CECBTIMS.Controllers
                     await db.SaveChangesAsync();
                     ViewBag.Message = "File uploaded Successfully";
                 }
+
+
+                //remove file from the storage if cant save on the db
+
+
             }
             catch (Exception ex)
             {
