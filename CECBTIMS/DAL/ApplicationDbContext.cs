@@ -57,7 +57,7 @@ namespace CECBTIMS.DAL
 
         public System.Data.Entity.DbSet<CECBTIMS.Models.ProgramAssignment> ProgramAssignments { get; set; }
 
-        public System.Data.Entity.DbSet<CECBTIMS.Models.File> Files { get; set; }
+        public System.Data.Entity.DbSet<CECBTIMS.Models.TimsFile> Files { get; set; }
 
 
     }

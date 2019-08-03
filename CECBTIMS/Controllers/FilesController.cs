@@ -31,7 +31,7 @@ namespace CECBTIMS.Controllers
 //            {
 //                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 //            }
-//            File file = await db.Files.FindAsync(id);
+//            TimsFile file = await db.Files.FindAsync(id);
 //            if (file == null)
 //            {
 //                return HttpNotFound();
@@ -51,7 +51,7 @@ namespace CECBTIMS.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
 //        [HttpPost]
 //        [ValidateAntiForgeryToken]
-//        public async Task<ActionResult> Create([Bind(Include = "Id,Title,Details,FileName,OriginalFileName,FileType,FileMethod,ProgramId,CreatedAt,UpdatedAt,CreatedBy,UpdatedBy,RowVersion")] File file)
+//        public async Task<ActionResult> Create([Bind(Include = "Id,Title,Details,FileName,OriginalFileName,FileType,FileMethod,ProgramId,CreatedAt,UpdatedAt,CreatedBy,UpdatedBy,RowVersion")] TimsFile file)
 //        {
 //            if (ModelState.IsValid)
 //            {
@@ -74,6 +74,7 @@ namespace CECBTIMS.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> UploadFile(HttpPostedFileBase file,string title,string details,int? programId)
         {
+
             if (file == null || file.ContentLength <= 0) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 
             var fileExtension = Path.GetExtension(file.FileName)?.Replace(".", string.Empty);
@@ -81,11 +82,24 @@ namespace CECBTIMS.Controllers
             //check if the file type is supported
             if (!Enum.GetNames(typeof(FileType)).Contains(fileExtension))
             {
-                ViewBag.Message = "File type is not supported";
-                return View($"Upload");
+                ViewBag.Message = "TimsFile type is not supported";
+                return View($"Upload"); 
             }
 
-            generateanewnamebefore store in the database
+            //            generateanewnamebefore store in the database
+
+            // new id
+            var id = Guid.NewGuid();
+
+            var newFile = new File();
+
+            // create new file model 
+
+            // save the file model
+
+            // if model valid
+                
+            
 
 
 
@@ -95,7 +109,7 @@ namespace CECBTIMS.Controllers
             {
                 file.SaveAs(path);
 
-                ViewBag.Message = "File uploaded successfully";
+                ViewBag.Message = "TimsFile uploaded successfully";
             }
             catch (Exception ex)
             {
@@ -113,7 +127,7 @@ namespace CECBTIMS.Controllers
 //            {
 //                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 //            }
-//            File file = await db.Files.FindAsync(id);
+//            TimsFile file = await db.Files.FindAsync(id);
 //            if (file == null)
 //            {
 //                return HttpNotFound();
@@ -127,7 +141,7 @@ namespace CECBTIMS.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
 //        [HttpPost]
 //        [ValidateAntiForgeryToken]
-//        public async Task<ActionResult> Edit([Bind(Include = "Id,Title,Details,FileName,OriginalFileName,FileType,FileMethod,ProgramId,CreatedAt,UpdatedAt,CreatedBy,UpdatedBy,RowVersion")] File file)
+//        public async Task<ActionResult> Edit([Bind(Include = "Id,Title,Details,FileName,OriginalFileName,FileType,FileMethod,ProgramId,CreatedAt,UpdatedAt,CreatedBy,UpdatedBy,RowVersion")] TimsFile file)
 //        {
 //            if (ModelState.IsValid)
 //            {
@@ -146,7 +160,7 @@ namespace CECBTIMS.Controllers
 //            {
 //                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 //            }
-//            File file = await db.Files.FindAsync(id);
+//            TimsFile file = await db.Files.FindAsync(id);
 //            if (file == null)
 //            {
 //                return HttpNotFound();
@@ -159,7 +173,7 @@ namespace CECBTIMS.Controllers
 //        [ValidateAntiForgeryToken]
 //        public async Task<ActionResult> DeleteConfirmed(Guid id)
 //        {
-//            File file = await db.Files.FindAsync(id);
+//            TimsFile file = await db.Files.FindAsync(id);
 //            db.Files.Remove(file);
 //            await db.SaveChangesAsync();
 //            return RedirectToAction("Index");

@@ -267,7 +267,7 @@
     <Compile Include="Models\Enums\EcebEnums.cs" />
     <Compile Include="Models\Enums\FileMethod.cs" />
     <Compile Include="Models\Enums\FileType.cs" />
-    <Compile Include="Models\File.cs" />
+    <Compile Include="Models\TimsFile.cs" />
     <Compile Include="Models\hrm_Designation.cs">
       <DependentUpon>CECBERP.tt</DependentUpon>
     </Compile>

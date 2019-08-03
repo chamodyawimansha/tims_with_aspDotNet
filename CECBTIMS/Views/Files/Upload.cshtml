@@ -1,4 +1,4 @@
-﻿@model CECBTIMS.Models.File
+﻿@model CECBTIMS.Models.TimsFile
 
 @{
     ViewBag.Title = "Upload";
@@ -7,7 +7,7 @@
 
 <div class="col-8 mx-auto mb-lg-5">
     <div class="card border-primary mb-3">
-        <div class="card-header">File Upload</div>
+        <div class="card-header">TimsFile Upload</div>
         <div class="card-body">
             <div class="container pt-4 pb-4">
                 @using (Html.BeginForm($"Upload", $"Files", null, FormMethod.Post, new {enctype = "multipart/form-data"}))
@@ -16,7 +16,7 @@
                     @Html.ValidationSummary(true, "", new {@class = "text-danger"})
 
                     <div class="form-group">
-                        <label for="FileInput">Select a File</label>
+                        <label for="FileInput">Select a TimsFile</label>
                         <input type="file" class="form-control-file" id="FileInput" name="file" aria-describedby="fileHelp">
                         <small id="fileHelp" class="form-text text-muted">Only Pdf, Docx, Doc, PNG, JPG and JPEG are allowed</small>
                     </div>

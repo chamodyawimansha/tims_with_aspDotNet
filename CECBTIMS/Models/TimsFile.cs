@@ -7,7 +7,7 @@ using CECBTIMS.Models.Enums;
 
 namespace CECBTIMS.Models
 {
-    public class File : BaseCols
+    public class TimsFile : BaseCols
     {
         public Guid Id { get; set; }
         [StringLength(255)]

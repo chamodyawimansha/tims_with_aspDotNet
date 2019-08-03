@@ -33,7 +33,7 @@ namespace CECBTIMS.Models
         [DataType(DataType.Time)]
         [Display(Name = "Application Closing Time")]
         public DateTime ApplicationClosingTime { get; set; }
-        public string Brochure { get; set; } // File upload: File Name
+        public string Brochure { get; set; } // TimsFile upload: TimsFile Name
         [StringLength(255)]
         public string Venue { get; set; } // Not For PostGrad
         [DataType(DataType.Date)]
@@ -79,6 +79,6 @@ namespace CECBTIMS.Models
         public virtual ICollection<Requirement> Requirements { get; set; }
         public virtual ICollection<ProgramEmploymentCategory> ProgramEmploymentCategories { get; set; }
         public virtual ICollection<ProgramEmploymentNature> ProgramEmploymentNatures { get; set; }
-        public virtual ICollection<File> Files { get; set; }
+        public virtual ICollection<TimsFile> Files { get; set; }
     }
 }
