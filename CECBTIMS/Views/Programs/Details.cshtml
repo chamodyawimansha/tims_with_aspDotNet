@@ -10,7 +10,7 @@
 <div id="programContent">
 <div class="card">
 <div class="card-header">
-    <h4 class="float-left">Program details</h4>
+    @* <h4 class="float-left">Program details</h4> *@
 
     <div class="float-right" id="btn-group">
         @Html.ActionLink("Back to List", $"Index", "", new {@class = "btn btn-outline-secondary"})
@@ -461,6 +461,22 @@
     <td colspan="3">@Html.DisplayFor(model => model.CreatedBy)</td>
     <th colspan="2">@Html.DisplayNameFor(model => model.UpdatedBy)</th>
     <td colspan="3">@Html.DisplayFor(model => model.UpdatedBy)</td>
+</tr>
+<tr>
+    <th colspan="2">Program Brochure</th>
+    <td colspan="8">
+        
+        @foreach (var item in Model.Files)
+        {
+            @Html.ActionLink("View", $"Download", $"Files", new {id = item.Id}, new {@class = "btn btn-sm btn-primary"})
+        }
+        
+        @Html.ActionLink("Upload", $"Upload", $"Files", new {programId = Model.Id}, new {@class = "btn btn-sm btn-outline-primary"})
+
+        Upload
+        Remove
+        Edit
+    </td>
 </tr>
 </table>
 </div>

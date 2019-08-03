@@ -19,58 +19,65 @@ namespace CECBTIMS.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Files
-//        public async Task<ActionResult> Index()
-//        {
-//            var files = db.Files.Include(f => f.Program);
-//            return View(await files.ToListAsync());
-//        }
+        //        public async Task<ActionResult> Index()
+        //        {
+        //            var files = db.Files.Include(f => f.Program);
+        //            return View(await files.ToListAsync());
+        //        }
 
-        // GET: Files/Details/5
-//        public async Task<ActionResult> Details(Guid? id)
-//        {
-//            if (id == null)
-//            {
-//                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-//            }
-//            TimsFile file = await db.Files.FindAsync(id);
-//            if (file == null)
-//            {
-//                return HttpNotFound();
-//            }
-//            return View(file);
-//        }
 
-        // GET: Files/Create
-//        public ActionResult Create()
-//        {
-//            ViewBag.ProgramId = new SelectList(db.Programs, "Id", "Title");
-//            return View();
-//        }
+        //        public async Task<ActionResult> Details(Guid? id)
+        //        {
+        //            if (id == null)
+        //            {
+        //                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+        //            }
+        //            TimsFile file = await db.Files.FindAsync(id);
+        //            if (file == null)
+        //            {
+        //                return HttpNotFound();
+        //            }
+        //            return View(file);
+        //        }
 
-        // POST: Files/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-//        [HttpPost]
-//        [ValidateAntiForgeryToken]
-//        public async Task<ActionResult> Create([Bind(Include = "Id,Title,Details,FileName,OriginalFileName,FileType,FileMethod,ProgramId,CreatedAt,UpdatedAt,CreatedBy,UpdatedBy,RowVersion")] TimsFile file)
-//        {
-//            if (ModelState.IsValid)
-//            {
-//                file.Id = Guid.NewGuid();
-//                db.Files.Add(file);
-//                await db.SaveChangesAsync();
-//                return RedirectToAction("Index");
-//            }
-//
-//            ViewBag.ProgramId = new SelectList(db.Programs, "Id", "Title", file.ProgramId);
-//            return View(file);
-//        }
-
-        public ActionResult Upload()
+        public async Task<ActionResult> Download(Guid? id)
         {
-            return View();
+            if (id == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+
+            var file = await db.Files.FindAsync(id);
+
+            if (file == null) return HttpNotFound();
+
+            var path = Path.Combine(Server.MapPath("~/Storage"), Path.GetFileName(file.FileName) ?? throw new InvalidOperationException());
+
+            if (System.IO.File.Exists(path))
+            {
+
+                return DownloadFile(path, file.FileName);
+            }
+
+            return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+
         }
 
+        public FileResult DownloadFile(string path,string fileName)
+        {
+            return File(path, MimeMapping.GetMimeMapping(path), fileName);
+        }
+
+        public async Task<ActionResult> Upload(int? programId)
+        {
+            if (programId == null) return View();
+
+            var program = await db.Programs.FindAsync(programId);
+            if (program == null) return HttpNotFound();
+
+            ViewBag.ProgramId = programId;
+            return View();
+
+        }
+
+        
         [HttpPost, ActionName("Upload")]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> UploadFile(HttpPostedFileBase file,string title,string details,int? programId)
@@ -121,7 +128,20 @@ namespace CECBTIMS.Controllers
                 }
 
 
+
+
+
+
+
+
                 //remove file from the storage if cant save on the db
+
+
+
+
+
+
+
 
 
             }
