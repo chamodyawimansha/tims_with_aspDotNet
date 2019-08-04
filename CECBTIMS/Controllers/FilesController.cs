@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -65,12 +66,16 @@ namespace CECBTIMS.Controllers
             return File(path, MimeMapping.GetMimeMapping(path), fileName);
         }
 
-        public async Task<ActionResult> Upload(int? programId)
+        public async Task<ActionResult> Upload(int? programId,string details)
         {
             if (programId == null) return View();
 
+            if(string.IsNullOrWhiteSpace(details)) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+
             var program = await db.Programs.FindAsync(programId);
             if (program == null) return HttpNotFound();
+
+            ViewBag.Details = details;
 
             ViewBag.ProgramId = programId;
             return View();
@@ -179,20 +184,31 @@ namespace CECBTIMS.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost, ActionName("Edit")]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> EditFile(Guid? Id, HttpPostedFileBase file, int? programId, string title, string details, byte[] rowVersion)
+        public async Task<ActionResult> EditFile(Guid id, HttpPostedFileBase file, int? programId, string title, byte[] rowVersion)
         {
-            // get the file object from the database
-            var fileInDb = await db.Files.FindAsync(Id);
 
-            if (fileInDb == null) return HttpNotFound();
+            // get the to be update file object from the database
+            var fileInDb = await db.Files.FindAsync(id);
+
+            // check the file is not empty
+            if (fileInDb == null)
+            {
+                var deletedFile = new TimsFile();
+                TryUpdateModel(deletedFile);
+                ModelState.AddModelError(string.Empty, "Unable to save changes. The File was deleted by another user.");
+
+                return View(deletedFile);
+            }
 
             var newFileName = "";
-
+            var newOriginalFileName = "";
+            var newFileExtension = "";
+            
             //check if the file is going to change
-            if (file != null && !(file.ContentLength <= 0))
+            if (file != null)
             {
                 //get the new file ext
-                var newFileExtension = Path.GetExtension(file.FileName.ToUpper())?.Replace(".", string.Empty);
+                newFileExtension = Path.GetExtension(file.FileName.ToUpper())?.Replace(".", string.Empty);
                 //check the new file ext is right
                 if (!Enum.GetNames(typeof(FileType)).Contains(newFileExtension))
                 {
@@ -200,7 +216,8 @@ namespace CECBTIMS.Controllers
                     return View($"Edit");
                 }
 
-                var currentFilepath = Path.Combine(Server.MapPath("~/Storage"), Path.GetFileName(fileInDb.FileName) ?? throw new InvalidOperationException());
+                var currentFilepath = Path.Combine(Server.MapPath("~/Storage"),
+                    Path.GetFileName(fileInDb.FileName) ?? throw new InvalidOperationException());
 
                 //remove the file if available in the storage
                 if (System.IO.File.Exists(currentFilepath))
@@ -209,9 +226,11 @@ namespace CECBTIMS.Controllers
                 }
 
                 //new name
-                newFileName = Id + "_" + file.FileName;
+                newOriginalFileName = file.FileName;
+                newFileName = id + "_" + file.FileName;
 
-                var newFilePath = Path.Combine(Server.MapPath("~/Storage"), Path.GetFileName(newFileName) ?? throw new InvalidOperationException());
+                var newFilePath = Path.Combine(Server.MapPath("~/Storage"),
+                    Path.GetFileName(newFileName) ?? throw new InvalidOperationException());
                 // store file in the storage
                 try
                 {
@@ -222,21 +241,76 @@ namespace CECBTIMS.Controllers
                     ViewBag.Message = "File upload Failed:" + ex.Message.ToString();
                     return View($"Edit");
                 }
-         
-
 
             }
 
             // update details in the database
-            
+            fileInDb.Title = title;
+            fileInDb.FileName = newFileName == "" ? fileInDb.FileName : newFileName;
+            fileInDb.OriginalFileName = newOriginalFileName == "" ? fileInDb.OriginalFileName : newOriginalFileName;
+            fileInDb.FileType = newFileExtension == ""
+                ? fileInDb.FileType
+                : (FileType)Enum.Parse(typeof(FileType), newFileExtension ?? throw new InvalidOperationException()); ;
+            fileInDb.FileMethod = FileMethod.Upload;
+            fileInDb.ProgramId = programId;
+            fileInDb.UpdatedAt = DateTime.Now;
+            fileInDb.RowVersion = rowVersion;
 
+            if (TryUpdateModel(fileInDb))
+            {
+                try
+                {
+                    db.Entry(fileInDb).OriginalValues["RowVersion"] = rowVersion;
+                    await db.SaveChangesAsync();
 
+                    ViewBag.Message = "File Updated";
+                    return View(fileInDb);
+                }
+                catch (DbUpdateConcurrencyException ex)
+                {
+                    var entry = ex.Entries.Single();
+                    var clientValues = (TimsFile) entry.Entity;
+                    var databaseEntry = entry.GetDatabaseValues();
 
-            // if file upload failed remove the data from the storage and notify to re upload
+                    if (databaseEntry == null)
+                    {
+                        ModelState.AddModelError(string.Empty,
+                            "Unable to save changes. The File was deleted by another user.");
+                    }
+                    else
+                    {
+                        var databaseValues = (TimsFile) databaseEntry.ToObject();
+                        
+                        if (databaseValues.Title != clientValues.Title)
+                        {
+                            ModelState.AddModelError("Title", "Current value: " + databaseValues.Title);
+                        }
 
-            return Content(programId.ToString());
+                        if (databaseValues.Details != clientValues.Details)
+                        {
+                            ModelState.AddModelError("Details", "Current value: " + databaseValues.Details);
+                        }
+                        
 
+                        ModelState.AddModelError(string.Empty,
+                            "The File you attempted to edit was modified by another user after you got the original values. The edit operation was canceled and the current values in the database have been displayed. If you still want to edit this record, click the Save button again. Otherwise click the Back Link.");
 
+                        fileInDb.RowVersion = databaseValues.RowVersion;
+                    }
+                }
+                catch (RetryLimitExceededException /*error*/)
+                {
+                    //ModelState.AddModelError(error.Message);
+                    ModelState.AddModelError("",
+                        "Unable to save changes. Try again, and if the problem persists, see your system administrator.");
+                }
+
+                // if file upload failed remove the data from the storage and notify to re upload
+                
+
+            }
+
+            return View(fileInDb);
         }
 //
 //        // GET: Files/Delete/5

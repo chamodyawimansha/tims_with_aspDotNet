@@ -19,15 +19,14 @@
                     @Html.HiddenFor(model => model.Id)
                     <input type="hidden" name="programId" value="@(ViewBag.ProgramId)" />
                     <div class="form-group">
-                        @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-2" })
+                        @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label" })
                         @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control" } })
                         @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
                     </div>
 
                     <div class="form-group">
-                        @Html.LabelFor(model => model.Details, htmlAttributes: new { @class = "control-label col-md-2" })
-                        @Html.EditorFor(model => model.Details, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.Details, "", new { @class = "text-danger" })
+                        <label for="currentFile">Current File Name</label>
+                        <input type="text" value="@(Model.OriginalFileName)" class="form-control" readonly="readonly"/>
                     </div>
 
                     <div class="form-group">
@@ -36,7 +35,7 @@
                         <small id="fileHelp" class="form-text text-muted">Only Pdf, Docx, Doc, PNG, JPG and JPEG are allowed</small>
                         <small id="fileHelp" class="form-text text-muted">If you Don't want re-upload, leave this field empty.</small>
                     </div>
-
+                    
                     <div class="form-group float-right">
                         clear selected file
                         Back link

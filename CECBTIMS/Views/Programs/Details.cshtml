@@ -514,7 +514,7 @@
 
         @if (Model.Files.Count == 0)
         {
-            @Html.ActionLink("Upload", $"Upload", $"Files", new {programId = Model.Id}, new {@class = "btn btn-sm btn-outline-primary"})
+            @Html.ActionLink("Upload", $"Upload", $"Files", new {programId = Model.Id, details = "Program Brochure" }, new {@class = "btn btn-sm btn-outline-primary"})
         }
 
     </td>
