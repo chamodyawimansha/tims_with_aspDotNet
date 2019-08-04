@@ -502,7 +502,14 @@
 
         @foreach (var item in Model.Files)
         {
-            @Html.ActionLink("View", $"Download", $"Files", new {id = item.Id}, new {@class = "btn btn-sm btn-primary"})
+
+            <p>@item.OriginalFileName</p>
+
+            @Html.ActionLink("View", $"Download", $"Files", new {id = item.Id}, new {@class = "btn btn-sm btn-primary mr-sm-1"})
+
+            @Html.ActionLink("Edit", $"Edit", $"Files", new {id = item.Id}, new {@class = "btn btn-sm btn-primary mr-sm-1" })
+
+            @Html.ActionLink("Remove", $"Delete", $"Files", new {id = item.Id}, new {@class = "btn btn-sm btn-primary mr-sm-1" })
         }
 
         @if (Model.Files.Count == 0)
@@ -510,10 +517,6 @@
             @Html.ActionLink("Upload", $"Upload", $"Files", new {programId = Model.Id}, new {@class = "btn btn-sm btn-outline-primary"})
         }
 
-
-        Upload
-        Remove
-        Edit
     </td>
 </tr>
 </table>
