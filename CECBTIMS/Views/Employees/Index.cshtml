@@ -15,7 +15,8 @@
                 <h4 class="float-left">Selected Employees</h4>
 
                 <div class="float-right" id="btn-group">
-
+                    back to programs
+                    @Html.ActionLink("Add Employees", $"Details", $"Employees", new {programId = ViewBag.program.Id}, new {@class = "btn btn-secondary"})
                 </div>
 
             </div>
