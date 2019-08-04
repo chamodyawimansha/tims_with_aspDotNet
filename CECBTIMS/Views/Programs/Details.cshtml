@@ -6,59 +6,57 @@
 }
 
 
-<div class="col-10 mx-auto mb-5">
 <div id="programContent">
 <div class="card">
 <div class="card-header">
     <h4 class="float-left">Program details</h4>
-    
+    <div class="float-right" id="btn-group">
+
+        <a href="@Url.Action($"Index", $"Programs")" class="btn btn-outline-secondary">
+            <span class="fa fa-arrow-left mr-sm-1" aria-hidden="true"></span>
+            Back to List
+        </a>
+
+        <a href="@Url.Action($"Create", $"Programs", new {id = Model.Id})" class="btn btn-primary">
+            <span class="fa fa-plus mr-sm-1" aria-hidden="true"></span>
+            New
+        </a>
+
+        <a href="@Url.Action($"Edit", $"Programs", new {id = Model.Id})" class="btn btn-primary">
+            <span class="fa fa-pencil mr-sm-1" aria-hidden="true"></span>
+            Edit
+        </a>
+
+        <a href="@Url.Action($"Delete", $"Employees", new {programId = Model.Id})" class="btn btn-danger">
+            <span class="fa fa-trash mr-sm-1" aria-hidden="true"></span>
+            Delete
+        </a>
+
+        <a href="@Url.Action($"Index", $"Employees", new {programId = Model.Id})" class="btn btn-primary">
+            <span class="fa fa-user mr-sm-1" aria-hidden="true"></span>
+            Employees
+        </a>
+
+        <a href="@Url.Action($"Index", $"Employees", new {programId = Model.Id})" class="btn btn-primary">
+            <span class="fa fa-refresh mr-sm-1" aria-hidden="true"></span>
+            Circulate
+        </a>
+
+        <a href="@Url.Action($"Index", $"Employees", new {programId = Model.Id})" class="btn btn-primary">
+            <span class="fa fa-file mr-sm-1" aria-hidden="true"></span>
+            Documents
+        </a>
+        <a href="@Url.Action($"Index", $"Employees", new {programId = Model.Id})" class="btn btn-primary">
+            <span class="fa fa-file-pdf-o mr-sm-1" aria-hidden="true"></span>
+            Reports
+        </a>
+
+    </div>
 </div>
 <div class="card-body">
-    
-<div class="mb-5" id="btn-group" style="text-align: center">
-    
-    
-    
-    <a href="@Url.Action($"Index", $"Programs")" class="btn btn-outline-secondary">
-        <span class="fa fa-arrow-left mr-sm-1" aria-hidden="true"></span>
-        Back to List
-    </a>
-    
-    <a href="@Url.Action($"Create", $"Programs",new {id = Model.Id})" class="btn btn-primary">
-        <span class="fa fa-plus mr-sm-1" aria-hidden="true"></span>
-        New
-    </a>
-    
-    <a href="@Url.Action($"Edit", $"Programs",new {id = Model.Id})" class="btn btn-primary">
-        <span class="fa fa-pencil mr-sm-1" aria-hidden="true"></span>
-        Edit
-    </a>
-    
-    <a href="@Url.Action($"Delete", $"Employees",new {programId = Model.Id})" class="btn btn-danger">
-        <span class="fa fa-trash mr-sm-1" aria-hidden="true"></span>
-        Delete
-    </a> 
-    
-    <a href="@Url.Action($"Index", $"Employees",new {programId = Model.Id})" class="btn btn-primary">
-        <span class="fa fa-user mr-sm-1" aria-hidden="true"></span>
-        Employees
-    </a>    
-    
-    <a href="@Url.Action($"Index", $"Employees",new {programId = Model.Id})" class="btn btn-primary">
-        <span class="fa fa-refresh mr-sm-1" aria-hidden="true"></span>
-        Circulate
-    </a>    
+<div class="row">
+<div class="col-9 mb-5">
 
-    <a href="@Url.Action($"Index", $"Employees",new {programId = Model.Id})" class="btn btn-primary">
-        <span class="fa fa-file mr-sm-1" aria-hidden="true"></span>
-        Documents
-    </a>    
-    <a href="@Url.Action($"Index", $"Employees",new {programId = Model.Id})" class="btn btn-primary">
-        <span class="fa fa-file-pdf-o mr-sm-1" aria-hidden="true"></span>
-        Reports
-    </a>
-
-</div>
 
 <h4 class="d-inline-block mr-sm-2">@Html.DisplayFor(model => model.Title)</h4><span class="badge badge-primary">@Html.DisplayFor(model => model.ProgramType)</span>
 
@@ -508,21 +506,24 @@
 
                 @Html.ActionLink("View", $"Download", $"Files", new {id = item.Id}, new {@class = "btn btn-sm btn-primary mr-sm-1"})
 
-                @Html.ActionLink("Edit", $"Edit", $"Files", new {id = item.Id}, new {@class = "btn btn-sm btn-primary mr-sm-1" })
+                @Html.ActionLink("Edit", $"Edit", $"Files", new {id = item.Id}, new {@class = "btn btn-sm btn-primary mr-sm-1"})
 
-                @Html.ActionLink("Remove", $"Delete", $"Files", new {id = item.Id}, new {@class = "btn btn-sm btn-primary mr-sm-1" })
+                @Html.ActionLink("Remove", $"Delete", $"Files", new {id = item.Id}, new {@class = "btn btn-sm btn-primary mr-sm-1"})
             }
-
         }
 
         @if (Model.Files.Count == 0)
         {
-            @Html.ActionLink("Upload", $"Upload", $"Files", new {programId = Model.Id, details = "Program Brochure" }, new {@class = "btn btn-sm btn-outline-primary"})
+            @Html.ActionLink("Upload", $"Upload", $"Files", new {programId = Model.Id, details = "Program Brochure"}, new {@class = "btn btn-sm btn-outline-primary"})
         }
 
     </td>
 </tr>
 </table>
+</div>
+</div>
+<div class="col-3">
+    Program Image here and other things
 </div>
 </div>
 </div>

@@ -5,116 +5,41 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Delete</h2>
 
-<h3>Are you sure you want to delete this?</h3>
-<div>
-    <h4>TimsFile</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Program.Title)
-        </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Program.Title)
-        </dd>
+<div class="col-8 mx-auto mb-lg-5">
+    <div class="card border-primary mb-3">
+        <div class="card-header">File Delete</div>
+        <div class="card-body">
+            <div class="container pt-2 pb-4">
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Title)
-        </dt>
+                <h4 class="mb-4">You are about to delete the following file. Are you sure?</h4>
+                
+                @using (Html.BeginForm($"Delete", $"Files", null, FormMethod.Post))
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    @Html.HiddenFor(model => model.Id)
 
-        <dd>
-            @Html.DisplayFor(model => model.Title)
-        </dd>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label" })
+                        <input type="text" class="form-control" value="@(Model.Title)" readonly="readonly"/>
+                        @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
+                    </div>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Details)
-        </dt>
+                    <div class="form-group">
+                        <label for="OriginalFileName">Original File Name</label>
+                        <input type="text" class="form-control" value="@(Model.OriginalFileName)" readonly="readonly"/>
+                        @Html.ValidationMessageFor(model => model.OriginalFileName, "", new { @class = "text-danger" })
+                    </div>
 
-        <dd>
-            @Html.DisplayFor(model => model.Details)
-        </dd>
+                    <div class="form-group float-right">
+                        <input type="submit" value="Delete" class="btn btn-danger"/>
+                    </div>
+                }
 
-        <dt>
-            @Html.DisplayNameFor(model => model.FileName)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.FileName)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.OriginalFileName)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.OriginalFileName)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.FileType)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.FileType)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.FileMethod)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.FileMethod)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.CreatedAt)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.CreatedAt)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.UpdatedAt)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.UpdatedAt)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.CreatedBy)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.CreatedBy)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.UpdatedBy)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.UpdatedBy)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.RowVersion)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.RowVersion)
-        </dd>
-
-    </dl>
-
-    @using (Html.BeginForm()) {
-        @Html.AntiForgeryToken()
-
-        <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-default" />
+                @ViewBag.Message
+            </div>
         </div>
-    }
+    </div>
 </div>

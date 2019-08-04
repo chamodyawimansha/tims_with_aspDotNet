@@ -334,17 +334,37 @@ namespace CECBTIMS.Controllers
             }
             return View(file);
         }
-//
-//        // POST: Files/Delete/5
-//        [HttpPost, ActionName("Delete")]
-//        [ValidateAntiForgeryToken]
-//        public async Task<ActionResult> DeleteConfirmed(Guid id)
-//        {
-//            TimsFile file = await db.Files.FindAsync(id);
-//            db.Files.Remove(file);
-//            await db.SaveChangesAsync();
-//            return RedirectToAction("Index");
-//        }
+
+         // POST: Files/Delete/5
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> DeleteConfirmed(Guid id)
+        {
+            var file = await db.Files.FindAsync(id);
+            if(file == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+
+            //remove file from the storage 
+            var filepath = Path.Combine(Server.MapPath("~/Storage"),
+                Path.GetFileName(file.FileName) ?? throw new InvalidOperationException());
+
+            if (System.IO.File.Exists(filepath))
+            {
+                System.IO.File.Delete(filepath);
+            }
+            // make sure the file delete from the storage
+            if (System.IO.File.Exists(filepath))
+            {
+                ViewBag.Message = "File couldn't Delete from the Storage. ";
+                return View($"Delete");
+            }
+
+            // remove file object from the database
+            db.Files.Remove(file);
+            await db.SaveChangesAsync();
+
+            ViewBag.Message = "File deleted";
+            return View($"Delete", new TimsFile());
+        }
 
         protected override void Dispose(bool disposing)
         {
