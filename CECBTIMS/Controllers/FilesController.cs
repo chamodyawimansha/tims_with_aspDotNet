@@ -173,9 +173,7 @@ namespace CECBTIMS.Controllers
             {
                 return HttpNotFound();
             }
-
-            ViewBag.ProgramId = file.Program.Id;
-
+            
             return View(file);
         }
 
@@ -184,7 +182,7 @@ namespace CECBTIMS.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost, ActionName("Edit")]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> EditFile(Guid id, HttpPostedFileBase file, int? programId, string title, byte[] rowVersion)
+        public async Task<ActionResult> EditFile(Guid id, HttpPostedFileBase file, string title, byte[] rowVersion)
         {
 
             // get the to be update file object from the database
@@ -251,8 +249,6 @@ namespace CECBTIMS.Controllers
             fileInDb.FileType = newFileExtension == ""
                 ? fileInDb.FileType
                 : (FileType)Enum.Parse(typeof(FileType), newFileExtension ?? throw new InvalidOperationException()); ;
-            fileInDb.FileMethod = FileMethod.Upload;
-            fileInDb.ProgramId = programId;
             fileInDb.UpdatedAt = DateTime.Now;
             fileInDb.RowVersion = rowVersion;
 
@@ -286,9 +282,9 @@ namespace CECBTIMS.Controllers
                             ModelState.AddModelError("Title", "Current value: " + databaseValues.Title);
                         }
 
-                        if (databaseValues.Details != clientValues.Details)
+                        if (databaseValues.OriginalFileName != clientValues.OriginalFileName)
                         {
-                            ModelState.AddModelError("Details", "Current value: " + databaseValues.Details);
+                            ModelState.AddModelError("OriginalFileName", "Current value: " + databaseValues.OriginalFileName);
                         }
                         
 
