@@ -301,28 +301,39 @@ namespace CECBTIMS.Controllers
                         "Unable to save changes. Try again, and if the problem persists, see your system administrator.");
                 }
 
+
+
+
+
                 // if file upload failed remove the data from the storage and notify to re upload
                 
+
+
+
+
+
 
             }
 
             return View(fileInDb);
         }
-//
-//        // GET: Files/Delete/5
-//        public async Task<ActionResult> Delete(Guid? id)
-//        {
-//            if (id == null)
-//            {
-//                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-//            }
-//            TimsFile file = await db.Files.FindAsync(id);
-//            if (file == null)
-//            {
-//                return HttpNotFound();
-//            }
-//            return View(file);
-//        }
+
+        // GET: Files/Delete/5
+        public async Task<ActionResult> Delete(Guid? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            var file = await db.Files.FindAsync(id);
+
+            if (file == null)
+            {
+                return HttpNotFound();
+            }
+            return View(file);
+        }
 //
 //        // POST: Files/Delete/5
 //        [HttpPost, ActionName("Delete")]
