@@ -502,14 +502,17 @@
 
         @foreach (var item in Model.Files)
         {
+            if (item.Details == "Program Brochure")
+            {
+                <p>@item.OriginalFileName</p>
 
-            <p>@item.OriginalFileName</p>
+                @Html.ActionLink("View", $"Download", $"Files", new {id = item.Id}, new {@class = "btn btn-sm btn-primary mr-sm-1"})
 
-            @Html.ActionLink("View", $"Download", $"Files", new {id = item.Id}, new {@class = "btn btn-sm btn-primary mr-sm-1"})
+                @Html.ActionLink("Edit", $"Edit", $"Files", new {id = item.Id}, new {@class = "btn btn-sm btn-primary mr-sm-1" })
 
-            @Html.ActionLink("Edit", $"Edit", $"Files", new {id = item.Id}, new {@class = "btn btn-sm btn-primary mr-sm-1" })
+                @Html.ActionLink("Remove", $"Delete", $"Files", new {id = item.Id}, new {@class = "btn btn-sm btn-primary mr-sm-1" })
+            }
 
-            @Html.ActionLink("Remove", $"Delete", $"Files", new {id = item.Id}, new {@class = "btn btn-sm btn-primary mr-sm-1" })
         }
 
         @if (Model.Files.Count == 0)
