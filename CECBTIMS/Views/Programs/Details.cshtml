@@ -219,25 +219,25 @@
     <tr>
         <th colspan="2">Employment Category</th>
         <td colspan="3">
-            @if (Model.ProgramEmploymentCategories != null)
+            @if (Model.EmploymentCategories != null)
             {
                 <ul>
-                    @foreach (var item in Model.ProgramEmploymentCategories)
+                    @foreach (var item in Model.EmploymentCategories)
                     {
-                        <li>@Html.DisplayFor(model => item.EmployeeCategory)</li>
+                        <li>@Html.DisplayFor(model => item.EmpCategory)</li>
                     }
                 </ul>
             }
-            <a href="">Add an Employment Category</a>
+            @Html.ActionLink("Add an Employment Category", $"Create", $"Categories", new {programId = Model.Id, title = Model.Title}, new {@class = "btn btn-sm btn-outline-secondary"})
         </td>
         <th colspan="2">Employment Nature</th>
         <td colspan="3">
-            @if (Model.ProgramEmploymentNatures != null)
+            @if (Model.EmploymentNatures != null)
             {
                 <ul>
-                    @foreach (var item in Model.ProgramEmploymentNatures)
+                    @foreach (var item in Model.EmploymentNatures)
                     {
-                        <li>@Html.DisplayFor(model => item.EmploymentNature)</li>
+                        <li>@Html.DisplayFor(model => item.EmpNature)</li>
                     }
                 </ul>
             }

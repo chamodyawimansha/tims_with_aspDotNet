@@ -179,6 +179,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AgendaController.cs" />
+    <Compile Include="Controllers\CategoriesController.cs" />
     <Compile Include="Controllers\EmployeesController.cs" />
     <Compile Include="Controllers\CostsController.cs" />
     <Compile Include="Controllers\FilesController.cs" />
@@ -237,6 +238,14 @@
     <Compile Include="Migrations\201908050053231_EmployementNatureAndEmpCatCreated.cs" />
     <Compile Include="Migrations\201908050053231_EmployementNatureAndEmpCatCreated.Designer.cs">
       <DependentUpon>201908050053231_EmployementNatureAndEmpCatCreated.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201908050108006_OldEmpCatAndEmpNatRemoved.cs" />
+    <Compile Include="Migrations\201908050108006_OldEmpCatAndEmpNatRemoved.Designer.cs">
+      <DependentUpon>201908050108006_OldEmpCatAndEmpNatRemoved.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201908050136218_EnumChangeEmpCat.cs" />
+    <Compile Include="Migrations\201908050136218_EnumChangeEmpCat.Designer.cs">
+      <DependentUpon>201908050136218_EnumChangeEmpCat.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Agenda.cs" />
@@ -297,8 +306,6 @@
       <DependentUpon>CECBERP.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ProgramAssignment.cs" />
-    <Compile Include="Models\ProgramEmploymentCategory.cs" />
-    <Compile Include="Models\ProgramEmploymentNature.cs" />
     <Compile Include="Models\Requirement.cs" />
     <Compile Include="Models\TargetGroup.cs" />
     <Compile Include="ViewModels\AccountViewModels.cs" />
@@ -486,11 +493,15 @@
     <Content Include="Views\Files\Upload.cshtml" />
     <Content Include="Views\Files\Edit.cshtml" />
     <Content Include="Views\Files\Delete.cshtml" />
+    <Content Include="Views\Categories\Create.cshtml" />
+    <Content Include="Views\Categories\Delete.cshtml" />
+    <Content Include="Views\Categories\Details.cshtml" />
+    <Content Include="Views\Categories\Edit.cshtml" />
+    <Content Include="Views\Categories\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Storage\" />
-    <Folder Include="Views\ProgramAssignments\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -528,6 +539,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201908050053231_EmployementNatureAndEmpCatCreated.resx">
       <DependentUpon>201908050053231_EmployementNatureAndEmpCatCreated.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201908050108006_OldEmpCatAndEmpNatRemoved.resx">
+      <DependentUpon>201908050108006_OldEmpCatAndEmpNatRemoved.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201908050136218_EnumChangeEmpCat.resx">
+      <DependentUpon>201908050136218_EnumChangeEmpCat.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
