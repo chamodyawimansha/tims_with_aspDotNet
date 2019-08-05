@@ -185,6 +185,7 @@
     <Compile Include="Controllers\FilesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\NaturesController.cs" />
     <Compile Include="Controllers\OrganizersController.cs" />
     <Compile Include="Controllers\ProgramArrangementsController.cs" />
     <Compile Include="Controllers\ProgramAssignmentsController.cs" />
@@ -498,6 +499,11 @@
     <Content Include="Views\Categories\Details.cshtml" />
     <Content Include="Views\Categories\Edit.cshtml" />
     <Content Include="Views\Categories\Index.cshtml" />
+    <Content Include="Views\Natures\Create.cshtml" />
+    <Content Include="Views\Natures\Delete.cshtml" />
+    <Content Include="Views\Natures\Details.cshtml" />
+    <Content Include="Views\Natures\Edit.cshtml" />
+    <Content Include="Views\Natures\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

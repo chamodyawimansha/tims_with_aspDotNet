@@ -60,5 +60,7 @@ namespace CECBTIMS.DAL
         public System.Data.Entity.DbSet<CECBTIMS.Models.TimsFile> Files { get; set; }
 
         public System.Data.Entity.DbSet<CECBTIMS.Models.EmploymentCategory> EmploymentCategories { get; set; }
+
+        public System.Data.Entity.DbSet<CECBTIMS.Models.EmploymentNature> EmploymentNatures { get; set; }
     }
 }
