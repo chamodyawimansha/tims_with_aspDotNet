@@ -7,13 +7,13 @@ namespace CECBTIMS.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.2.0-61023")]
-    public sealed partial class EmployementNatureAndEmpCatCreated : IMigrationMetadata
+    public sealed partial class EmpCatAndEmpNat : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(EmployementNatureAndEmpCatCreated));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(EmpCatAndEmpNat));
         
         string IMigrationMetadata.Id
         {
-            get { return "201908050053231_EmployementNatureAndEmpCatCreated"; }
+            get { return "201908051401364_EmpCatAndEmpNat"; }
         }
         
         string IMigrationMetadata.Source

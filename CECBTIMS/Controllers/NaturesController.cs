@@ -16,32 +16,15 @@ namespace CECBTIMS.Controllers
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
-        // GET: Natures
-        public async Task<ActionResult> Index()
-        {
-            var employmentNatures = db.EmploymentNatures.Include(e => e.Program);
-            return View(await employmentNatures.ToListAsync());
-        }
-
-        // GET: Natures/Details/5
-        public async Task<ActionResult> Details(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            EmploymentNature employmentNature = await db.EmploymentNatures.FindAsync(id);
-            if (employmentNature == null)
-            {
-                return HttpNotFound();
-            }
-            return View(employmentNature);
-        }
 
         // GET: Natures/Create
-        public ActionResult Create()
+        public ActionResult Create(int? programId)
         {
-            ViewBag.ProgramId = new SelectList(db.Programs, "Id", "Title");
+
+            if (programId == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+
+            ViewBag.ProgramId = programId;
+
             return View();
         }
 
@@ -50,76 +33,29 @@ namespace CECBTIMS.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "Id,ProgramId")] EmploymentNature employmentNature)
+        public async Task<ActionResult> Create([Bind(Include = "Id,ProgramId,EmpNature")] EmploymentNature employmentNature)
         {
-            if (ModelState.IsValid)
-            {
-                db.EmploymentNatures.Add(employmentNature);
-                await db.SaveChangesAsync();
-                return RedirectToAction("Index");
-            }
 
-            ViewBag.ProgramId = new SelectList(db.Programs, "Id", "Title", employmentNature.ProgramId);
-            return View(employmentNature);
-        }
+            if (!ModelState.IsValid) return View(employmentNature);
 
-        // GET: Natures/Edit/5
-        public async Task<ActionResult> Edit(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            EmploymentNature employmentNature = await db.EmploymentNatures.FindAsync(id);
-            if (employmentNature == null)
-            {
-                return HttpNotFound();
-            }
-            ViewBag.ProgramId = new SelectList(db.Programs, "Id", "Title", employmentNature.ProgramId);
-            return View(employmentNature);
-        }
+            db.EmploymentNatures.Add(employmentNature);
+            await db.SaveChangesAsync();
 
-        // POST: Natures/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "Id,ProgramId")] EmploymentNature employmentNature)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Entry(employmentNature).State = EntityState.Modified;
-                await db.SaveChangesAsync();
-                return RedirectToAction("Index");
-            }
-            ViewBag.ProgramId = new SelectList(db.Programs, "Id", "Title", employmentNature.ProgramId);
-            return View(employmentNature);
-        }
-
-        // GET: Natures/Delete/5
-        public async Task<ActionResult> Delete(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            EmploymentNature employmentNature = await db.EmploymentNatures.FindAsync(id);
-            if (employmentNature == null)
-            {
-                return HttpNotFound();
-            }
-            return View(employmentNature);
+            return RedirectToAction("Details", $"Programs", new { id = employmentNature.ProgramId });
         }
 
         // POST: Natures/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> DeleteConfirmed(int id)
+        public async Task<ActionResult> DeleteConfirmed(int id, int programId)
         {
-            EmploymentNature employmentNature = await db.EmploymentNatures.FindAsync(id);
-            db.EmploymentNatures.Remove(employmentNature);
+
+            var employmentNature = await db.EmploymentNatures.FindAsync(id);
+            db.EmploymentNatures.Remove(employmentNature ?? throw new InvalidOperationException());
+
             await db.SaveChangesAsync();
-            return RedirectToAction("Index");
+
+            return RedirectToAction("Details", $"Programs", new { id = programId });
         }
 
         protected override void Dispose(bool disposing)

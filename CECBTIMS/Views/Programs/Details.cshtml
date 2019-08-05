@@ -240,10 +240,7 @@
                     }
                 </table>
             }
-
-
-
-
+            
             @Html.ActionLink("Add an Employment Category", $"Create", $"Categories", new { programId = Model.Id, title = Model.Title }, new { @class = "btn btn-sm  btn-link" })
 </td>
     </tr>
@@ -252,14 +249,26 @@
         <td colspan="8">
             @if (Model.EmploymentNatures != null)
             {
-                <ul>
+                <table class="table table-borderless">
                     @foreach (var item in Model.EmploymentNatures)
                     {
-                        <li>@Html.DisplayFor(model => item.EmpNature)</li>
+                        <tr>
+                            <td class="w-50">@item.EmpNature</td>
+                            <td class="w-50">
+                                @using (Html.BeginForm($"Delete", $"Natures", "",
+                                    FormMethod.Post, new { @class = "d-inline-block" }))
+                                {
+                                    @Html.AntiForgeryToken()
+                                    <input type="hidden" name="id" value="@item.Id" />
+                                    <input type="hidden" name="ProgramId" value="@Model.Id" />
+                                    <input type="submit" value="Remove" class="btn btn-danger btn-sm d-inline-block" />
+                                }
+                            </td>
+                        </tr>
                     }
-                </ul>
+                </table>
             }
-            @Html.ActionLink("Add an Employment Nature", $"Create", $"Categories", new {programId = Model.Id, title = Model.Title}, new {@class = "btn btn-sm  btn-link" })
+            @Html.ActionLink("Add an Employment Nature", $"Create", $"Natures", new { programId = Model.Id, title = Model.Title }, new { @class = "btn btn-sm  btn-link" })
         </td>
     </tr>
 }

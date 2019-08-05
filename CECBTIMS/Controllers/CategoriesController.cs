@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using System.Net;
 using System.Web.Mvc;
 using CECBTIMS.DAL;
@@ -41,7 +42,7 @@ namespace CECBTIMS.Controllers
         {
             
             var employmentCategory = await db.EmploymentCategories.FindAsync(id);
-            db.EmploymentCategories.Remove(employmentCategory);
+            db.EmploymentCategories.Remove(employmentCategory ?? throw new InvalidOperationException());
 
             await db.SaveChangesAsync();
 

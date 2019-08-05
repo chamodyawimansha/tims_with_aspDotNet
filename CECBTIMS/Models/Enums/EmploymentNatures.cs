@@ -1,6 +1,6 @@
 ﻿namespace CECBTIMS.Models.Enums
 {
-    public enum EmploymentNature
+    public enum EmploymentNatures
     {
         Permanent = 1, 
         FixedContract = 2,

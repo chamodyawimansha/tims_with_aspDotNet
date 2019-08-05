@@ -236,17 +236,13 @@
     <Compile Include="Migrations\201908031326075_FileClassChanged.Designer.cs">
       <DependentUpon>201908031326075_FileClassChanged.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201908050053231_EmployementNatureAndEmpCatCreated.cs" />
-    <Compile Include="Migrations\201908050053231_EmployementNatureAndEmpCatCreated.Designer.cs">
-      <DependentUpon>201908050053231_EmployementNatureAndEmpCatCreated.cs</DependentUpon>
+    <Compile Include="Migrations\201908051401364_EmpCatAndEmpNat.cs" />
+    <Compile Include="Migrations\201908051401364_EmpCatAndEmpNat.Designer.cs">
+      <DependentUpon>201908051401364_EmpCatAndEmpNat.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201908050108006_OldEmpCatAndEmpNatRemoved.cs" />
-    <Compile Include="Migrations\201908050108006_OldEmpCatAndEmpNatRemoved.Designer.cs">
-      <DependentUpon>201908050108006_OldEmpCatAndEmpNatRemoved.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201908050136218_EnumChangeEmpCat.cs" />
-    <Compile Include="Migrations\201908050136218_EnumChangeEmpCat.Designer.cs">
-      <DependentUpon>201908050136218_EnumChangeEmpCat.cs</DependentUpon>
+    <Compile Include="Migrations\201908051412410_empNatureModelChange.cs" />
+    <Compile Include="Migrations\201908051412410_empNatureModelChange.Designer.cs">
+      <DependentUpon>201908051412410_empNatureModelChange.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Agenda.cs" />
@@ -314,7 +310,7 @@
     <Compile Include="Models\Cost.cs" />
     <Compile Include="Models\Enums\Currency.cs" />
     <Compile Include="Models\Enums\EmployeeCategory.cs" />
-    <Compile Include="Models\Enums\EmploymentNature.cs" />
+    <Compile Include="Models\Enums\EmploymentNatures.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Organizer.cs" />
@@ -494,20 +490,12 @@
     <Content Include="Views\Files\Upload.cshtml" />
     <Content Include="Views\Files\Edit.cshtml" />
     <Content Include="Views\Files\Delete.cshtml" />
-    <Content Include="Views\Categories\Create.cshtml" />
-    <Content Include="Views\Categories\Delete.cshtml" />
-    <Content Include="Views\Categories\Details.cshtml" />
-    <Content Include="Views\Categories\Edit.cshtml" />
-    <Content Include="Views\Categories\Index.cshtml" />
     <Content Include="Views\Natures\Create.cshtml" />
-    <Content Include="Views\Natures\Delete.cshtml" />
-    <Content Include="Views\Natures\Details.cshtml" />
-    <Content Include="Views\Natures\Edit.cshtml" />
-    <Content Include="Views\Natures\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Storage\" />
+    <Folder Include="Views\Categories\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -543,14 +531,11 @@
     <EmbeddedResource Include="Migrations\201908031326075_FileClassChanged.resx">
       <DependentUpon>201908031326075_FileClassChanged.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201908050053231_EmployementNatureAndEmpCatCreated.resx">
-      <DependentUpon>201908050053231_EmployementNatureAndEmpCatCreated.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201908051401364_EmpCatAndEmpNat.resx">
+      <DependentUpon>201908051401364_EmpCatAndEmpNat.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201908050108006_OldEmpCatAndEmpNatRemoved.resx">
-      <DependentUpon>201908050108006_OldEmpCatAndEmpNatRemoved.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201908050136218_EnumChangeEmpCat.resx">
-      <DependentUpon>201908050136218_EnumChangeEmpCat.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201908051412410_empNatureModelChange.resx">
+      <DependentUpon>201908051412410_empNatureModelChange.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
