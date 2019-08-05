@@ -80,5 +80,7 @@ namespace CECBTIMS.Models
         public virtual ICollection<ProgramEmploymentCategory> ProgramEmploymentCategories { get; set; }
         public virtual ICollection<ProgramEmploymentNature> ProgramEmploymentNatures { get; set; }
         public virtual ICollection<TimsFile> Files { get; set; }
+        public virtual ICollection<EmploymentCategory> EmploymentCategories { get; set; }
+        public virtual ICollection<EmploymentNature> EmploymentNatures { get; set; }
     }
 }
