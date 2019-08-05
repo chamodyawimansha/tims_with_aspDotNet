@@ -10,34 +10,35 @@
 </head>
 <body>
 
+@if (Request.IsAuthenticated)
+{
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container">
+            @Html.ActionLink("CECB - TIMS", $"Index", $"Home", new {area = ""}, new {@class = "navbar-brand"})
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
 
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
-    <div class="container">
-        @Html.ActionLink("CECB - TIMS", $"Index", $"Home", new {area = ""}, new {@class = "navbar-brand"})
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-
-        <div class="collapse navbar-collapse" id="navbarColor01">
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item">
-                    @* @Html.ActionLink("Home", "Index", "Home", new {@class = "nav-link"}) *@
-                </li>
-                <li class="nav-item">
-                    @Html.ActionLink("Programs", $"Index", $"Programs",null, new {@class = "nav-link"})
-                </li>
-                <li class="nav-item">
-                    @Html.ActionLink("Program Organizers", $"Index", $"Organizers", null, new {@class = "nav-link"})
-                </li>
-                <li class="nav-item">
-                    @Html.ActionLink("Employees", $"Details", $"Employee","", new {@class = "nav-link"})
-                </li>
-            </ul>
-            @Html.Partial("_LoginPartial")
+            <div class="collapse navbar-collapse" id="navbarColor01">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item">
+                        @* @Html.ActionLink("Home", "Index", "Home", new {@class = "nav-link"}) *@
+                    </li>
+                    <li class="nav-item">
+                        @Html.ActionLink("Programs", $"Index", $"Programs", null, new {@class = "nav-link"})
+                    </li>
+                    <li class="nav-item">
+                        @Html.ActionLink("Program Organizers", $"Index", $"Organizers", null, new {@class = "nav-link"})
+                    </li>
+                    <li class="nav-item">
+                        @Html.ActionLink("Employees", $"Details", $"Employee", "", new {@class = "nav-link"})
+                    </li>
+                </ul>
+                @Html.Partial("_LoginPartial")
+            </div>
         </div>
-    </div>
-</nav>
-
+    </nav>
+}
 <div class="container body-content">
     @RenderBody()
   
