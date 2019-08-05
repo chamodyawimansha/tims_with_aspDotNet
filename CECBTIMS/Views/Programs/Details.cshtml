@@ -218,20 +218,38 @@
 {
     <tr>
         <th colspan="2">Employment Category</th>
-        <td colspan="3">
+        <td colspan="8">
             @if (Model.EmploymentCategories != null)
             {
-                <ul>
+                <table class="table table-borderless">
                     @foreach (var item in Model.EmploymentCategories)
                     {
-                        <li>@Html.DisplayFor(model => item.EmpCategory)</li>
+                        <tr>
+                            <td class="w-50">@item.EmpCategory</td>
+                            <td class="w-50">
+                                @using (Html.BeginForm($"Delete", $"Categories", "",
+                                    FormMethod.Post, new {@class = "d-inline-block"}))
+                                {
+                                    @Html.AntiForgeryToken()
+                                    <input type="hidden" name="id" value="@item.Id"/>
+                                    <input type="hidden" name="ProgramId" value="@Model.Id"/>
+                                    <input type="submit" value="Remove" class="btn btn-danger btn-sm d-inline-block"/>
+                                }
+                            </td>
+                        </tr>
                     }
-                </ul>
+                </table>
             }
-            @Html.ActionLink("Add an Employment Category", $"Create", $"Categories", new {programId = Model.Id, title = Model.Title}, new {@class = "btn btn-sm btn-outline-secondary"})
-        </td>
+
+
+
+
+            @Html.ActionLink("Add an Employment Category", $"Create", $"Categories", new { programId = Model.Id, title = Model.Title }, new { @class = "btn btn-sm  btn-link" })
+</td>
+    </tr>
+    <tr>
         <th colspan="2">Employment Nature</th>
-        <td colspan="3">
+        <td colspan="8">
             @if (Model.EmploymentNatures != null)
             {
                 <ul>
@@ -241,7 +259,7 @@
                     }
                 </ul>
             }
-            <a href="">Add an Employment Nature</a>
+            @Html.ActionLink("Add an Employment Nature", $"Create", $"Categories", new {programId = Model.Id, title = Model.Title}, new {@class = "btn btn-sm  btn-link" })
         </td>
     </tr>
 }

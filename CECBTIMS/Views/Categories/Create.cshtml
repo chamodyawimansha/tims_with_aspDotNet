@@ -28,8 +28,7 @@
           
                         @Html.ValidationMessageFor(model => model.ProgramId, "", new { @class = "text-danger" })
                     </div>
-
-
+                    
                     <div class="form-group float-right">
                         @Html.ActionLink("Back", $"Details", $"Programs", new {id = ViewBag.ProgramId}, new {@class = "btn btn-secondary"})
                         <input type="submit" value="Add" class="btn btn-primary"/>
