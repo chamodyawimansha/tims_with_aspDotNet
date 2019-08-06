@@ -20,11 +20,11 @@ namespace CECBTIMS.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Files
-        //        public async Task<ActionResult> Index()
-        //        {
-        //            var files = db.Files.Include(f => f.Program);
-        //            return View(await files.ToListAsync());
-        //        }
+        public async Task<ActionResult> Index()
+        {
+            var files = db.Files.Include(f => f.Program);
+            return View(await files.ToListAsync());
+        }
 
 
         //        public async Task<ActionResult> Details(Guid? id)
@@ -40,6 +40,26 @@ namespace CECBTIMS.Controllers
         //            }
         //            return View(file);
         //        }
+
+        public async Task<ActionResult> Upload(int? programId, string details, string message)
+        {
+
+            if (string.IsNullOrWhiteSpace(details)) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+
+            if (programId != null)
+            {
+                var program = await db.Programs.FindAsync(programId);
+                if (program == null) return HttpNotFound();
+            }
+
+            ViewBag.Message = message;
+            ViewBag.Details = details;
+            ViewBag.ProgramId = programId;
+
+            return View();
+
+        }
+
 
         public async Task<ActionResult> Download(Guid? id)
         {
@@ -66,23 +86,6 @@ namespace CECBTIMS.Controllers
             return File(path, MimeMapping.GetMimeMapping(path), fileName);
         }
 
-        public async Task<ActionResult> Upload(int? programId,string details)
-        {
-            if (programId == null) return View();
-
-            if(string.IsNullOrWhiteSpace(details)) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-
-            var program = await db.Programs.FindAsync(programId);
-            if (program == null) return HttpNotFound();
-
-            ViewBag.Details = details;
-
-            ViewBag.ProgramId = programId;
-            return View();
-
-        }
-
-        
         [HttpPost, ActionName("Upload")]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> UploadFile(HttpPostedFileBase file,string title,string details,int? programId)
@@ -99,7 +102,20 @@ namespace CECBTIMS.Controllers
                 ViewBag.Message = "File type is not supported";
                 return View($"Upload"); 
             }
-
+            
+            if (details.Equals("DocumentTemplate"))
+            {
+          
+                if (!fileExtension.Equals("DOCX"))
+                {
+                    return RedirectToAction($"Upload", new
+                    {
+                        details = "DocumentTemplate",
+                        message = "File type is not supported as a Document Template. Only DOCX are supported"
+                });
+                }
+            }
+            
             // generate id
             var id = Guid.NewGuid();
             // generate a new file name

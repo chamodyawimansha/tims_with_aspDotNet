@@ -7,7 +7,19 @@
 
 <div class="col-8 mx-auto mb-lg-5">
     <div class="card border-primary mb-3">
-        <div class="card-header">File Upload</div>
+        <div class="card-header">
+            File Upload -
+
+            @if (ViewBag.ProgramId == null)
+            {
+                <span>Document Template</span>
+            }
+            else
+            {
+                <span>Program Brochure</span>
+            }
+
+        </div>
         <div class="card-body">
             <div class="container pt-4 pb-4">
                 @using (Html.BeginForm($"Upload", $"Files", null, FormMethod.Post, new {enctype = "multipart/form-data"}))
@@ -21,14 +33,15 @@
                         @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
                     </div>
 
+
                     <input type="hidden" id="details" name="details" value="@(ViewBag.Details)">
 
                     <div class="form-group">
-                        <label for="FileInput">Select a TimsFile</label>
+                        <label for="FileInput">Select a File</label>
                         <input type="file" class="form-control-file" id="FileInput" name="file" aria-describedby="fileHelp">
                         <small id="fileHelp" class="form-text text-muted">Only Pdf, Docx, Doc, PNG, JPG and JPEG are allowed</small>
                     </div>
-
+                    
                     <div class="form-group">
                         <input type="submit" value="Upload" class="btn btn-primary"/>
                     </div>
