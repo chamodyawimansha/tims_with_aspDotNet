@@ -288,6 +288,7 @@
     <Compile Include="Models\cmn_WorkSpaceType.cs">
       <DependentUpon>CECBERP.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Helpers.cs" />
     <Compile Include="Models\Employee.cs" />
     <Compile Include="Models\EmploymentCategory.cs" />
     <Compile Include="Models\EmploymentNature.cs" />
@@ -506,7 +507,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Storage\" />
     <Folder Include="Views\Categories\" />
     <Folder Include="Views\Document\" />
   </ItemGroup>

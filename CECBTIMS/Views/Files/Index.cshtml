@@ -1,38 +1,81 @@
-﻿@model IEnumerable<CECBTIMS.Models.TimsFile>
+﻿@using PagedList.Mvc
+@model PagedList.IPagedList<CECBTIMS.Models.TimsFile>
 
 @{
-    ViewBag.Title = "Intex";
+    ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
 
 <div class="col-12 mx-auto mb-lg-5">
     <div class="card border-primary mb-3">
         <div class="card-header">
             File Manager
             
-            upload a template
+            @Html.ActionLink("Upload a template", $"Upload", new{ currentFilter = ViewBag.currentFilter as string, details = "DocumentTemplate"}, new { @class = "btn btn-primary float-right" })
         </div>
         <div class="card-body">
             <div class="container">
+                
+                <h1>show total and how many showing this and others</h1>
+
+                <div class="searchForm float-left">
+                    @* HTML Form For search Program *@
+                    @using (Html.BeginForm($"Index", $"Files", FormMethod.Get, new { @class = "form-inline mb-3" }))
+                    {
+
+                        <div class="form-group mb-2">
+                            <input type="text" readonly class="form-control-plaintext" value="Find by Title :" style="width:90px">
+                        </div>
+                        <div class="form-group mx-sm-3 mb-2">
+                            @Html.TextBox("searchString", ViewBag.currentFilter as string, new { @class = "form-control", placeholder = "Search" })
+                        </div>
+                        <input type="submit" class="btn btn-secondary mr-sm-2 mb-2" value="Search" />
+
+                        if (ViewBag.serachParam != null)
+                        {
+                            @Html.ActionLink("Clear", $"Index", ViewBag.currentFilter as string, new { @class = "btn btn-primary mb-2" })
+                        }
+
+                    }
+                </div>
+
+                <div class="tableEntryCount float-right">
+                    <input type="text" readonly class="form-control-plaintext" value="Show">
+                    <select class="entryCountSelect">
+                        <option value="none" selected disabled hidden>
+                            @ViewBag.entryCount
+                        </option>
+                        <option value="/Files?countPerPage=5">5</option>
+                        <option value="/Files?countPerPage=10">10</option>
+                        <option value="/Files?countPerPage=50">50</option>
+                        <option value="/Files?countPerPage=100">100</option>
+                    </select>
+                    <input type="text" readonly class="form-control-plaintext" value="Entries">
+                </div>
+
+
                 <table class="table table-bordered">
                     <tr>
                         <th>#</th>
-                        <th  style="width: 20%">Title</th>
+                        <th style="width: 20%">Title</th>
+                        <th>Details</th>
                         <th style="width: 20%">Original File Name</th>
                         <th>Type</th>
                         <th>Created Method</th>
                         <th>Created On</th>
                         <th>Created By</th>
-                        <th></th>
+                        <th style="width: 7%"></th>
                     </tr>
                     @foreach (var item in Model)
                     {
                         <tr>
-                            <td>
-                               
-                            </td>
+                            <td></td>
                             <td>
                                 @Html.DisplayFor(modelItem => item.Title)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Details)
                             </td>
                             <td>
                                 @Html.DisplayFor(modelItem => item.OriginalFileName)
@@ -60,7 +103,16 @@
                         </tr>
                     }
                 </table>
+
+                Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+                @Html.PagedListPager(Model, page => Url.Action($"Index",
+                    new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
             </div>
         </div>
     </div>
 </div>
+
+@section Scripts {
+    @Scripts.Render("~/scripts/site.js")
+}

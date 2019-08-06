@@ -24,6 +24,7 @@ namespace CECBTIMS.Controllers
         {
             
             ViewBag.CurrentSort = sortOrder;
+            ViewBag.serachParam = searchString;
             ViewBag.TitleSortParm = String.IsNullOrEmpty(sortOrder) ? "title_desc" : "";
             ViewBag.DateSortParm = sortOrder == "Date" ? "date_desc" : "Date";
             ViewBag.ClosingSortParm = sortOrder == "ClosingDate" ? "closingdate_desc" : "ClosingDate";

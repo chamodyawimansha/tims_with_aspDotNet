@@ -12,6 +12,7 @@ using System.Web.Mvc;
 using CECBTIMS.DAL;
 using CECBTIMS.Models;
 using CECBTIMS.Models.Enums;
+using PagedList.EntityFramework;
 
 namespace CECBTIMS.Controllers
 {
@@ -20,10 +21,96 @@ namespace CECBTIMS.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Files
-        public async Task<ActionResult> Index()
+        public async Task<ActionResult> Index(string sortOrder, int? countPerPage, string currentFilter, string searchString, int? page)
         {
-            var files = db.Files.Include(f => f.Program);
-            return View(await files.ToListAsync());
+            
+            ViewBag.CurrentSort = sortOrder;
+            ViewBag.serachParam = searchString;
+            ViewBag.TitleSortParm = String.IsNullOrEmpty(sortOrder) ? "title_desc" : "";
+            ViewBag.DateSortParm = sortOrder == "Date" ? "date_desc" : "Date";
+            ViewBag.MethodSortParm = sortOrder == "CreatedMethod" ? "createdMethod_desc" : "CreatedMethod";
+            ViewBag.ExtSortParm = sortOrder == "FileExt" ? "fileExt_desc" : "FileExt";
+
+            if (searchString != null)
+            {
+                page = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
+
+            ViewBag.CurrentFilter = searchString;
+
+            var files = from f in db.Files
+                           select f;
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                files = files.Where(f => f.Title.Contains(searchString));
+            }
+
+            switch (sortOrder)
+            {
+                case "title_desc":
+                    files = files.OrderByDescending(f => f.Title);
+                    break;
+                case "Date":
+                    files = files.OrderBy(f => f.CreatedAt);
+                    break;
+                case "date_desc":
+                    files = files.OrderByDescending(f => f.CreatedAt);
+                    break;
+                case "CreatedMethod":
+                    files = files.OrderBy(f => f.FileMethod);
+                    break;
+                case "createdMethod_desc":
+                    files = files.OrderByDescending(f => f.FileMethod);
+                    break;
+                case "FileExt":
+                    files = files.OrderBy(f => f.FileType);
+                    break;
+                case "fileExt_desc":
+                    files = files.OrderByDescending(f => f.FileType);
+                    break;
+                default:
+                    files = files.OrderBy(f => f.Title);
+                    break;
+            }
+
+            var pageSize = countPerPage ?? 5;
+            var pageNumber = page ?? 1;
+            ViewBag.PageNumber = pageNumber;
+
+
+
+            return View(await files.ToPagedListAsync(pageNumber, pageSize));
+
+
+
+
+
+
+
+//
+//            var files = db.Files.Include(f => f.Program);
+//            return View(await files.ToListAsync());
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         }
 
 
