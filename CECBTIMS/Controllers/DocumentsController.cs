@@ -1,5 +1,4 @@
 ﻿using DocumentFormat.OpenXml.Packaging;
-using OpenXmlPowerTools;
 using System;
 using System.Data;
 using System.Globalization;
@@ -13,6 +12,7 @@ using System.Text.RegularExpressions;
 using CECBTIMS.DAL;
 using CECBTIMS.Models;
 using DocumentFormat.OpenXml;
+using DocumentFormat.OpenXml.Drawing;
 
 
 namespace CECBTIMS.Controllers
@@ -32,6 +32,14 @@ namespace CECBTIMS.Controllers
         public async Task<ActionResult> Generate(Guid? id)
         {
 
+            string[] VarList =
+            {
+                "YEAR",
+                "TODAY",
+                "PROGRAMTITLE",
+
+            };
+
             //// filepath is a string which contains the path where the new document has to be created
             var sourceFile = Server.MapPath("~/Storage/a0a8e2fb-bb6c-4ad9-8d6b-4102a01e9506_Approvel letter.docx");
 
@@ -39,129 +47,42 @@ namespace CECBTIMS.Controllers
 
             System.IO.File.Copy(sourceFile, destinationFile, true);
 
-            using (WordprocessingDocument wordDoc = WordprocessingDocument.Open(destinationFile, true))
+
+
+
+            using (var wordDoc = WordprocessingDocument.Open(destinationFile, true))
             {
-                SimplifyMarkupSettings settings = new SimplifyMarkupSettings
-                {
-                    NormalizeXml = true, // Merges Run's in a paragraph with similar formatting
-
-                };
-                MarkupSimplifier.SimplifyMarkup(doc, settings);
-
+            
                 string docText = null;
                 using (var sr = new StreamReader(wordDoc.MainDocumentPart.GetStream()))
                 {
                     docText = sr.ReadToEnd();
                 }
 
-                var regexText = new Regex("{year}");
-                docText = regexText.Replace(docText, Helpers.GetYear());
+                foreach (var var in VarList)
+                {
+                    if (docText.Contains("VAR" + var))
+                    {
+                        docText = new Regex("VAR" + var).Replace(docText, Helpers.CallMethod(var, null));
+                    }
+
+                }
+
+                // call method from variable names
+                
 
                 using (var sw = new StreamWriter(wordDoc.MainDocumentPart.GetStream(FileMode.Create)))
                 {
                     sw.Write(docText);
                 }
-            }
 
-            //            using (var doc = WordprocessingDocument.Open(destinationFile, true))
-            //            {
-            //                var body = doc.MainDocumentPart.Document.Body;
-            //                var paras = body.Elements<Paragraph>();
-            //
-            //                foreach (var para in paras)
-            //                {
-            //                    foreach (var run in para.Elements<Run>())
-            //                    {
-            //                        foreach (var text in run.Elements<Text>())
-            //                        {
-            //                            if (text.Text.Contains("${year}"))
-            //                            {
-            //                                text.Text = text.Text.Replace("${year}", Helpers.GetYear());
-            //                            }
-            //
-            ////                            if (text.Text.Contains("${today}"))
-            ////                            {
-            ////                                text.Text = text.Text.Replace("${today}", Helpers.GetToday());
-            ////                            }
-            ////
-            ////                            if (text.Text.Contains("${program_title}"))
-            ////                            {
-            ////                                text.Text = text.Text.Replace("${program_title}", Helpers.GetToday());
-            ////                            }
-            //
-            //                        }
-            //                    }
-            //                }
-            //            }
+            }
 
 
             return DownloadDoc(destinationFile, "Approvel_letter_edited.docx");
 
 
 
-                //            var dt = new DataTable();
-                //            dt.Columns.Add("ID");
-                //            dt.Columns.Add("Name");
-                //            dt.Columns.Add("Sex");
-                //            dt.Rows.Add(1, "Tom", "male");
-                //            dt.Rows.Add(2, "Jim", "male");
-                //            dt.Rows.Add(3, "LiSa", "female");
-                //            dt.Rows.Add(4, "LiLi", "female");
-                //
-                //
-                //            var path = Server.MapPath("~/Storage/a0a8e2fb-bb6c-4ad9-8d6b-4102a01e9506_Approvel letter.docx");
-                //            var resultPath = Server.MapPath("~/Storage/OpenXmlExample.docx");
-                //
-                //
-                //
-                //            var document = WordprocessingDocument.Open(path, true);
-                //
-                //            var mainPart = document.MainDocumentPart;
-                //
-                //            var res = from mark in mainPart.Document.Body.Descendants<BookmarkStart>()
-                //                where mark.Name == "DataTableBookMark"
-                //                      select mark;
-                //
-                //
-                //            var bookmark = res.SingleOrDefault();
-                //
-                //            if (bookmark != null)
-                //            {
-                //                var parent = bookmark.Parent;
-                //
-                //                DocumentFormat.OpenXml.Wordprocessing.Table table = new DocumentFormat.OpenXml.Wordprocessing.Table();
-                //                TableProperties tblProp = new DocumentFormat.OpenXml.Wordprocessing.TableProperties(
-                //                    new TableBorders(
-                //                        new Border()
-                //                        {
-                //                            Val = new DocumentFormat.OpenXml.EnumValue<BorderValues>(BorderValues.DotDash),
-                //                            Size = 24
-                //                        }
-                //                    )
-                //                );
-                //
-                //                table.AppendChild<TableProperties>(tblProp);
-                //                for (int i = 0; i < dt.Rows.Count; i++)
-                //                {
-                //                    DocumentFormat.OpenXml.Wordprocessing.TableRow tr = new DocumentFormat.OpenXml.Wordprocessing.TableRow();
-                //                    for (int j = 0; j < dt.Columns.Count; j++)
-                //                    {
-                //
-                //                        DocumentFormat.OpenXml.Wordprocessing.TableCell tc = new DocumentFormat.OpenXml.Wordprocessing.TableCell();
-                //                        tc.Append(new TableCellProperties(new TableCellWidth() { Type = TableWidthUnitValues.Dxa, Width = "240" }));
-                //                        tc.Append(new Paragraph(new Run(new Text(dt.Rows[i][j].ToString()))));
-                //                        tr.Append(tc);
-                //                    }
-                //                    table.Append(tr);
-                //                }
-                //
-                //                parent.InsertAfterSelf(table);
-                //
-                //            }
-                //
-                //
-                //
-                //
 
             return Content("Hello");
 
