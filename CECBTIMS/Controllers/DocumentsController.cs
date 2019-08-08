@@ -14,6 +14,7 @@ using CECBTIMS.Models;
 using CECBTIMS.Models.Enums;
 using DocumentFormat.OpenXml;
 using DocumentFormat.OpenXml.Drawing;
+using DocumentFormat.OpenXml.Wordprocessing;
 using Path = System.IO.Path;
 
 
@@ -105,10 +106,25 @@ namespace CECBTIMS.Controllers
                     docText = method != null ? new Regex("VAR" + var).Replace(docText, (string)method.Invoke(classInstance, null)) : new Regex("VAR" + var).Replace(docText, "Null");
                 }
 
-                
+
                 /**
                  * Process table values
                  */
+
+                var mainPart = wordDoc.MainDocumentPart;
+                var document = mainPart.Document;
+                var bookmarks = document.Body.Descendants<BookmarkStart>();
+
+
+                // crate new table and add it to the table book mark
+                // devide col width avg
+
+                // add bookmark to table in the word document
+
+                //add table to a bookmark
+
+                //fill existing table with data
+
 
 
                 /**
