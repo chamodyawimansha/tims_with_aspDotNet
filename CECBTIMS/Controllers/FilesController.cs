@@ -156,8 +156,10 @@ namespace CECBTIMS.Controllers
 
             if (file == null) return HttpNotFound();
 
-            var path = Path.Combine(Server.MapPath("~/Storage"), Path.GetFileName(file.FileName) ?? throw new InvalidOperationException());
+            var path = Path.Combine(Server.MapPath("~/Storage/up"), Path.GetFileName(file.FileName) ?? throw new InvalidOperationException());
 
+            if (file.FileMethod == FileMethod.Generate) path = Path.Combine(Server.MapPath("~/Storage/gen"), Path.GetFileName(file.FileName) ?? throw new InvalidOperationException());
+            
             if (System.IO.File.Exists(path))
             {
 
