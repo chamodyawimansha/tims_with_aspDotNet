@@ -258,6 +258,10 @@
     <Compile Include="Migrations\201908051412410_empNatureModelChange.Designer.cs">
       <DependentUpon>201908051412410_empNatureModelChange.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201908080546273_programOrgs.cs" />
+    <Compile Include="Migrations\201908080546273_programOrgs.Designer.cs">
+      <DependentUpon>201908080546273_programOrgs.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Agenda.cs" />
     <Compile Include="Models\BaseCols.cs" />
@@ -291,6 +295,7 @@
     <Compile Include="Models\cmn_WorkSpaceType.cs">
       <DependentUpon>CECBERP.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\DocumentHelper.cs" />
     <Compile Include="Models\Helpers.cs" />
     <Compile Include="Models\Employee.cs" />
     <Compile Include="Models\EmploymentCategory.cs" />
@@ -507,6 +512,7 @@
     <Content Include="Views\Files\Delete.cshtml" />
     <Content Include="Views\Natures\Create.cshtml" />
     <Content Include="Views\Files\Index.cshtml" />
+    <None Include="Storage\.gitignore" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -552,6 +558,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201908051412410_empNatureModelChange.resx">
       <DependentUpon>201908051412410_empNatureModelChange.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201908080546273_programOrgs.resx">
+      <DependentUpon>201908080546273_programOrgs.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

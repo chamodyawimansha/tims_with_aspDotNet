@@ -10,7 +10,7 @@ namespace CECBTIMS.Models
         public int ProgramId { get; set; }
         public int OrganizerId { get; set; }
 
-        public virtual Organizer Organizer { get; set; }
         public virtual Program Program { get; set; }
+        public virtual Organizer Organizer { get; set; }
     }
 }

@@ -143,14 +143,14 @@
     <th colspan="2">Organised By</th>
     <td colspan="8">
 
-        @if (Model.Organizers.Count > 0)
+        @if (Model.ProgramArrangements.Count > 0)
         {
             <table class="table table-bordered">
                 <tr>
                     <th>Organisation Name</th>
                     <th style="width: 10%"></th>
                 </tr>
-                @foreach (var item in Model.Organizers)
+                @foreach (var item in Model.ProgramArrangements)
                 {
                     <tr>
                         <td>

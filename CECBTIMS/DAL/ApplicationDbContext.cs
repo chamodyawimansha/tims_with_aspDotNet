@@ -16,11 +16,6 @@ namespace CECBTIMS.DAL
 
         public DbSet<Program> Programs { get; set; }
 
-//        public DbSet<ResourcePerson> ResourcePersons { get; set; }
-//        public DbSet<ProgramResourcePersons> ProgramResourcePersons { get; set; }
-//        public DbSet<Cost> Costs { get; set; }
-        //        public DbSet<Organizer> Organizers { get; set; }
-        //        public DbSet<ProgramArrangement> ProgramArrangements { get; set; }
 
         public static ApplicationDbContext Create()
         {

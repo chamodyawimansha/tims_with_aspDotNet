@@ -74,7 +74,6 @@ namespace CECBTIMS.Models
         public virtual ICollection<Agenda> Agendas { get; set; }
         public virtual ICollection<TargetGroup> TargetGroups { get; set; }
         public virtual ICollection<ResourcePerson> ResourcePersons { get; set; }
-        public virtual ICollection<ProgramArrangement> Organizers { get; set; }
         public virtual ICollection<Cost> Costs { get; set; }
         public virtual ICollection<Requirement> Requirements { get; set; }
         public virtual ICollection<TimsFile> Files { get; set; }
