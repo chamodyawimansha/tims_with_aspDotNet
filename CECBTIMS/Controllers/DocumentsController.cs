@@ -11,8 +11,10 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using CECBTIMS.DAL;
 using CECBTIMS.Models;
+using CECBTIMS.Models.Enums;
 using DocumentFormat.OpenXml;
 using DocumentFormat.OpenXml.Drawing;
+using Path = System.IO.Path;
 
 
 namespace CECBTIMS.Controllers
@@ -34,7 +36,7 @@ namespace CECBTIMS.Controllers
             "STUDENTFEE",
         };
 
-        public async Task<ActionResult> Generate(Guid? id, int programId, int? employeeId, bool download)
+        public async Task<ActionResult> Generate(Guid? id, int programId, int? employeeId, string title, string details, bool download)
         {
             /**
              * Validate request
@@ -62,7 +64,7 @@ namespace CECBTIMS.Controllers
             /**
              * Process the document
              */
-             Process(destinationFile, destinationFileName, programId, employeeId);
+             Process(destinationFile, destinationFileName, programId, employeeId, title, details);
             /**
              * if download true download the file and return to the page, otherwise return
              */
@@ -74,7 +76,7 @@ namespace CECBTIMS.Controllers
         }
 
         // process the document generation
-        private void Process(string destinationFile,string destinationFileName, int programId, int? employeeId)
+        private void Process(string destinationFile,string destinationFileName, int programId, int? employeeId, string title, string details)
         {
             using (var wordDoc = WordprocessingDocument.Open(destinationFile, true))
             {
@@ -119,12 +121,43 @@ namespace CECBTIMS.Controllers
                 /**
                  * Save the document in the database
                  */
-                Save();
+                Save(title, details, destinationFileName,programId);
             }
         }
         // save generated file in th database
-        private bool Save()
+        private bool Save(string title, string details, string newFileName, int programId)
         {
+            //create new file object
+            var newFile = new TimsFile
+            {
+                Id = Guid.NewGuid(),
+                Title = title,
+                Details = details,
+                FileName = newFileName,
+                OriginalFileName = newFileName,
+                FileType = (FileType) Enum.Parse(typeof(FileType), "DOCX" ?? throw new InvalidOperationException()),
+                FileMethod = FileMethod.Generate, // generate
+                ProgramId = programId,
+            };
+            // file path name
+            var path = Path.Combine(Server.MapPath("~/Storage/gen"),
+                Path.GetFileName(newFileName) ?? throw new InvalidOperationException());
+
+            try
+            {
+                if (System.IO.File.Exists(path))
+                {
+                    //save the new file object in the database
+                    _db.Files.Add(newFile);
+                    _db.SaveChanges();
+                    return true;
+                }
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+
             return false;
         }
 
