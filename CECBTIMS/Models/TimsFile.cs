@@ -23,7 +23,7 @@ namespace CECBTIMS.Models
         public int? ProgramId { get; set; }
 
         public virtual Program Program { get; set; }
-
+        public virtual ICollection<TableColumn> TableColumns { get; set; }
 
     }
 }
