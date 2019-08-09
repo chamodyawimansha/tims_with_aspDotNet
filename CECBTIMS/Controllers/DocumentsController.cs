@@ -37,7 +37,7 @@ namespace CECBTIMS.Controllers
             "STUDENTFEE",
         };
 
-        public async Task<ActionResult> Generate(Guid? id, int programId, int? employeeId, string title, string details, bool download)
+        public async Task<ActionResult> Generate(Guid? id, int programId, int? employeeId, string title, string details, bool download, string[] columnNames)
         {
             /**
              * Validate request
@@ -111,19 +111,15 @@ namespace CECBTIMS.Controllers
                  * Process table values
                  */
 
-                var mainPart = wordDoc.MainDocumentPart;
-                var document = mainPart.Document;
-                var bookmarks = document.Body.Descendants<BookmarkStart>();
-
-
-                // crate new table and add it to the table book mark
-                // devide col width avg
-
-                // add bookmark to table in the word document
-
-                //add table to a bookmark
-
-                //fill existing table with data
+                // default columns
+                // user chooses the columns otherwise default
+                    // add default columns table
+                    // add has table checkbox to the template upload
+                    // name or choose from previouis default columns in the upload
+                
+                // choose the coummns before generate
+                //process the table
+                // add table to the bookmark in the template
 
 
 
