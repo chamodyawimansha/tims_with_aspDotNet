@@ -15,7 +15,21 @@ using CECBTIMS.Models.Enums;
 using DocumentFormat.OpenXml;
 using DocumentFormat.OpenXml.Drawing;
 using DocumentFormat.OpenXml.Wordprocessing;
+using BottomBorder = DocumentFormat.OpenXml.Wordprocessing.BottomBorder;
+using InsideHorizontalBorder = DocumentFormat.OpenXml.Wordprocessing.InsideHorizontalBorder;
+using InsideVerticalBorder = DocumentFormat.OpenXml.Wordprocessing.InsideVerticalBorder;
+using LeftBorder = DocumentFormat.OpenXml.Wordprocessing.LeftBorder;
+using Paragraph = DocumentFormat.OpenXml.Wordprocessing.Paragraph;
 using Path = System.IO.Path;
+using RightBorder = DocumentFormat.OpenXml.Wordprocessing.RightBorder;
+using Run = DocumentFormat.OpenXml.Wordprocessing.Run;
+using RunProperties = DocumentFormat.OpenXml.Wordprocessing.RunProperties;
+using Table = DocumentFormat.OpenXml.Wordprocessing.Table;
+using TableCell = DocumentFormat.OpenXml.Wordprocessing.TableCell;
+using TableProperties = DocumentFormat.OpenXml.Wordprocessing.TableProperties;
+using TableRow = DocumentFormat.OpenXml.Wordprocessing.TableRow;
+using Text = DocumentFormat.OpenXml.Wordprocessing.Text;
+using TopBorder = DocumentFormat.OpenXml.Wordprocessing.TopBorder;
 
 
 namespace CECBTIMS.Controllers
@@ -79,6 +93,11 @@ namespace CECBTIMS.Controllers
         // process the document generation
         private void Process(string destinationFile,string destinationFileName, int programId, int? employeeId, string title, string details)
         {
+
+            ProcessTable(destinationFile);
+
+            return;
+
             using (var wordDoc = WordprocessingDocument.Open(destinationFile, true))
             {
                 string docText = null;
@@ -141,6 +160,110 @@ namespace CECBTIMS.Controllers
                 Save(title, details, destinationFileName,programId);
             }
         }
+
+        private static void ProcessTable(string destinationFile)
+        {
+            /**
+             * Create the table
+             */
+            Table table = null;
+            TableRow row = null;
+
+            //create table
+            table = new Table();
+
+            SetTableStyle(table);
+
+            //add first row with title            
+            row = new TableRow();
+            row.Append(CreateCell("Column A"));
+            row.Append(CreateCell("Column B"));
+            row.Append(CreateCell("Column C"));
+
+            table.Append(row);
+
+            //add content rows
+            for (int rowNumber = 1; rowNumber <= 5; rowNumber++)
+            {
+                row = new TableRow();
+
+                row.Append(CreateCell("A" + rowNumber.ToString()));
+                row.Append(CreateCell("B" + rowNumber.ToString()));
+                row.Append(CreateCell("C" + rowNumber.ToString()));
+
+                table.Append(row);
+            }
+
+//            //add table to body
+//            var body = new Body(table);
+//            var document = new Document(body);
+//
+//            //create file
+//            using (var file = WordprocessingDocument.Create(destinationFile, WordprocessingDocumentType.Document))
+//            {
+//                file.AddMainDocumentPart();
+//                file.MainDocumentPart.Document = document;
+//                file.MainDocumentPart.Document.Save();
+//            }
+
+
+            /**
+             * Add the table after the bookmark
+             */
+
+            using (var doc = WordprocessingDocument.Open(destinationFile, true))
+            {
+                var mainPart = doc.MainDocumentPart;
+                // Find the table bookmark from the document
+                var res = from bm in mainPart.Document.Body.Descendants<BookmarkStart>()
+                          where bm.Name == "DataTableBookMark"
+                          select bm;
+
+                var bookmark = res.SingleOrDefault();
+                if (bookmark != null)
+                {
+                    var parent = bookmark.Parent;   // bookmark's parent element
+                    // insert after bookmark parent
+                    parent.InsertAfterSelf(table);
+                }
+
+                // close saves all parts and closes the document
+                doc.Close();
+            }
+
+
+        }
+
+        private static TableCell CreateCell(string text)
+        {
+            return new TableCell(new Paragraph(new Run(new Text(text))));
+        }
+
+        private static void SetTableStyle(Table table)
+        {
+            TableProperties properties = new TableProperties();
+
+            //table borders
+            TableBorders borders = new TableBorders();
+
+            borders.TopBorder = new TopBorder() { Val = new EnumValue<BorderValues>(BorderValues.Single) };
+            borders.BottomBorder = new BottomBorder() { Val = new EnumValue<BorderValues>(BorderValues.Single) };
+            borders.LeftBorder = new LeftBorder() { Val = new EnumValue<BorderValues>(BorderValues.Single) };
+            borders.RightBorder = new RightBorder() { Val = new EnumValue<BorderValues>(BorderValues.Single) };
+            borders.InsideHorizontalBorder = new InsideHorizontalBorder() { Val = BorderValues.Single };
+            borders.InsideVerticalBorder = new InsideVerticalBorder() { Val = BorderValues.Single };
+
+            properties.Append(borders);
+
+            //set the table width to page width
+            TableWidth tableWidth = new TableWidth() { Width = "5000", Type = TableWidthUnitValues.Pct };
+            properties.Append(tableWidth);
+
+            //add properties to table
+            table.Append(properties);
+        }
+
+
         // save generated file in th database
         private bool Save(string title, string details, string newFileName, int programId)
         {
