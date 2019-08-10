@@ -6,8 +6,9 @@ using System.Web;
 namespace CECBTIMS.Models
 {
     public enum TableColumnName{
-
+        // column names
     }
+
     public class TableColumn : BaseCols
     {
         public int Id { get; set; }
