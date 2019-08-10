@@ -80,6 +80,10 @@ namespace CECBTIMS.Controllers
              * Process the document
              */
              Process(destinationFile, destinationFileName, programId, employeeId, title, details);
+             /**
+              * Process the table
+              */
+            ProcessTable(destinationFile);
             /**
              * if download true download the file and return to the page, otherwise return
              */
@@ -94,12 +98,9 @@ namespace CECBTIMS.Controllers
         private void Process(string destinationFile,string destinationFileName, int programId, int? employeeId, string title, string details)
         {
 
-            ProcessTable(destinationFile);
-
-            return;
-
             using (var wordDoc = WordprocessingDocument.Open(destinationFile, true))
             {
+
                 string docText = null;
                 /**
                  * store the document in a string variable
@@ -125,28 +126,6 @@ namespace CECBTIMS.Controllers
                     docText = method != null ? new Regex("VAR" + var).Replace(docText, (string)method.Invoke(classInstance, null)) : new Regex("VAR" + var).Replace(docText, "Null");
                 }
 
-
-                /**
-                 * Process table values
-                 */
-
-                // default columns
-                // user chooses the columns otherwise default
-                    // add default columns table
-                    // add has table checkbox to the template upload
-                    // name or choose from previouis default columns in the upload
-                
-                // choose the coummns before generate
-                //process the table
-                // add table to the bookmark in the template
-
-
-
-
-                //create table from const column names
-
-
-
                 /**
                  * write the changes to the file
                  */
@@ -154,6 +133,8 @@ namespace CECBTIMS.Controllers
                 {
                     sw.Write(docText);
                 }
+
+                return;
                 /**
                  * Save the document in the database
                  */
@@ -161,21 +142,51 @@ namespace CECBTIMS.Controllers
             }
         }
 
-        private static void ProcessTable(string destinationFile)
+        private void ProcessVariables()
+        {
+            
+        }
+
+        //        ProcessInfo table Inserted cols
+        // return table
+
+        private void ProcessTable(string destinationFile)
+        {
+            /**
+            * Add the table after the bookmark
+            */
+
+            using (var doc = WordprocessingDocument.Open(destinationFile, true))
+            {
+                var mainPart = doc.MainDocumentPart;
+                // Find the table bookmark from the document
+                var res = from bm in mainPart.Document.Body.Descendants<BookmarkStart>()
+                    where bm.Name == "DataTableBookMark"
+                    select bm;
+
+                var bookmark = res.SingleOrDefault();
+                if (bookmark != null)
+                {
+                    var parent = bookmark.Parent;   // bookmark's parent element
+                    // insert after bookmark parent
+                    parent.InsertAfterSelf(GetTable());
+                }
+
+                // close saves all parts and closes the document
+                doc.Close();
+            }
+        }
+        private Table GetTable()
         {
             /**
              * Create the table
              */
-            Table table = null;
-            TableRow row = null;
-
-            //create table
-            table = new Table();
-
+            var table = new Table();
+            var row = new TableRow();
+            
             SetTableStyle(table);
 
             //add first row with title            
-            row = new TableRow();
             row.Append(CreateCell("Column A"));
             row.Append(CreateCell("Column B"));
             row.Append(CreateCell("Column C"));
@@ -194,44 +205,7 @@ namespace CECBTIMS.Controllers
                 table.Append(row);
             }
 
-//            //add table to body
-//            var body = new Body(table);
-//            var document = new Document(body);
-//
-//            //create file
-//            using (var file = WordprocessingDocument.Create(destinationFile, WordprocessingDocumentType.Document))
-//            {
-//                file.AddMainDocumentPart();
-//                file.MainDocumentPart.Document = document;
-//                file.MainDocumentPart.Document.Save();
-//            }
-
-
-            /**
-             * Add the table after the bookmark
-             */
-
-            using (var doc = WordprocessingDocument.Open(destinationFile, true))
-            {
-                var mainPart = doc.MainDocumentPart;
-                // Find the table bookmark from the document
-                var res = from bm in mainPart.Document.Body.Descendants<BookmarkStart>()
-                          where bm.Name == "DataTableBookMark"
-                          select bm;
-
-                var bookmark = res.SingleOrDefault();
-                if (bookmark != null)
-                {
-                    var parent = bookmark.Parent;   // bookmark's parent element
-                    // insert after bookmark parent
-                    parent.InsertAfterSelf(table);
-                }
-
-                // close saves all parts and closes the document
-                doc.Close();
-            }
-
-
+            return table;
         }
 
         private static TableCell CreateCell(string text)
@@ -239,12 +213,12 @@ namespace CECBTIMS.Controllers
             return new TableCell(new Paragraph(new Run(new Text(text))));
         }
 
-        private static void SetTableStyle(Table table)
+        private static void SetTableStyle(OpenXmlElement table)
         {
-            TableProperties properties = new TableProperties();
+            var properties = new TableProperties();
 
             //table borders
-            TableBorders borders = new TableBorders();
+            var borders = new TableBorders();
 
             borders.TopBorder = new TopBorder() { Val = new EnumValue<BorderValues>(BorderValues.Single) };
             borders.BottomBorder = new BottomBorder() { Val = new EnumValue<BorderValues>(BorderValues.Single) };
