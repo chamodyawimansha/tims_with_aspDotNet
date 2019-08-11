@@ -123,7 +123,32 @@ namespace CECBTIMS.Controllers
 
         }
 
-        //            https://www.guru99.com/c-sharp-serialization.html
+        /**
+ * need employee version id and return converted Employee
+ */
+        internal static Employee FindEmployee(Guid? id)
+        {
+            var employee = db.cmn_EmployeeVersion.Find(id, "EmployeeVersionId");
+
+            return new Employee()
+            {
+                EmployeeId = employee.EmployeeVersionId,
+                EPFNo = employee.EPFNo,
+                Title = 
+                NameWithInitial = 
+                FullName
+                NIC
+                WorkSpaceName
+                DesignationName
+                EmployeeRecruitmentType
+                EmpStatus
+                DateOfAppointment
+                TypeOfContract
+                OfficeEmail
+                MobileNumber
+                PrivateEmail
+            };
+        }
 
 
         protected override void Dispose(bool disposing)

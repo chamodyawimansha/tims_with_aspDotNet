@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity.Core.Common.EntitySql;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
+using CECBTIMS.Controllers;
 using CECBTIMS.DAL;
 
 namespace CECBTIMS.Models
@@ -10,7 +12,7 @@ namespace CECBTIMS.Models
     public class DocumentHelper
     {
         private readonly Program _program;
-        private readonly List<cmn_EmployeeVersion> _TraineeList;
+        private readonly List<Employee> _TraineeList;
 
         private ApplicationDbContext db = new ApplicationDbContext();
         private CECB_ERPEntities cecb_db = new CECB_ERPEntities();
@@ -32,16 +34,16 @@ namespace CECBTIMS.Models
         /**
          * Get the current program's trainee list
          */
-        private List<cmn_EmployeeVersion> GetTrainees()
+        private List<Employee> GetTrainees()
         {
             var programAssignments = _program.ProgramAssignments;
-            List<cmn_EmployeeVersion> traineeList = null;
+            List<Employee> traineeList = null;
 
             if (programAssignments == null) return traineeList = null;
 
             foreach (var item in programAssignments)
             {
-                var employee = cecb_db.cmn_EmployeeVersion.Find(item.EmployeeVersionId, "EmployeeVersionId");
+                var employee = EmployeesController.FindEmployee(item.EmployeeVersionId);
                 if (employee != null)
                 {
                     traineeList.Add(employee);
@@ -114,6 +116,18 @@ namespace CECBTIMS.Models
         {
             return "24";
         }
+
+
+
+        /**
+         * function to get trainee data
+         */
+
+        public string GetName(Employee employee)
+        {
+
+        }
+
 
     }
 }

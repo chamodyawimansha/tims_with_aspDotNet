@@ -230,7 +230,7 @@ namespace CECBTIMS.Controllers
 
 
             //add content rows
-            for (int rowNumber = 1; rowNumber <= 5; rowNumber++)
+            for (var rowNumber = 1; rowNumber <= 5; rowNumber++)
             {
                 row = new TableRow();
 
