@@ -229,7 +229,6 @@ namespace CECBTIMS.Controllers
 
             table.Append(row);
 
-
             /**
              * Add Table Data
              */
