@@ -10,27 +10,46 @@ namespace CECBTIMS.Models
     public class DocumentHelper
     {
         private readonly Program _program;
-        private readonly Program _Employee;
+        private readonly List<cmn_EmployeeVersion> _TraineeList;
 
         private ApplicationDbContext db = new ApplicationDbContext();
-
+        private CECB_ERPEntities cecb_db = new CECB_ERPEntities();
 
         public DocumentHelper(int programId)
         {
             _program = GetProgram(programId);
+            _TraineeList = GetTrainees();
         }
 
-//        public DocumentHelper(int programId, int employeeId)
-//        {
-//            //get program function
-//            //get employee function
-//        }
-
+        /**
+         * get the current program
+         */
         private Program GetProgram(int programId)
         {
             return db.Programs.Find(programId);
         }
 
+        /**
+         * Get the current program's trainee list
+         */
+        private List<cmn_EmployeeVersion> GetTrainees()
+        {
+            var programAssignments = _program.ProgramAssignments;
+            List<cmn_EmployeeVersion> traineeList = null;
+
+            if (programAssignments == null) return traineeList = null;
+
+            foreach (var item in programAssignments)
+            {
+                var employee = cecb_db.cmn_EmployeeVersion.Find(item.EmployeeVersionId, "EmployeeVersionId");
+                if (employee != null)
+                {
+                    traineeList.Add(employee);
+                }
+            }
+            
+            return traineeList;
+        }
 
         // return the file number
         public string GetFilenumber()
@@ -87,7 +106,9 @@ namespace CECBTIMS.Models
         //Test function
         public string GetName()
         {
-            return "John Doe";
+            // this is a array cant get one
+            // add getter method to return the list of trainees
+            return _TraineeList.;
         }
         public string GetAge()
         {

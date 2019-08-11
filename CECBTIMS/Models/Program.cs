@@ -71,6 +71,7 @@ namespace CECBTIMS.Models
         public float? StudentFee { get; set; }
 
         public virtual ICollection<ProgramArrangement> ProgramArrangements { get; set; }
+        public virtual ICollection<ProgramAssignment> ProgramAssignments { get; set; }
         public virtual ICollection<Agenda> Agendas { get; set; }
         public virtual ICollection<TargetGroup> TargetGroups { get; set; }
         public virtual ICollection<ResourcePerson> ResourcePersons { get; set; }

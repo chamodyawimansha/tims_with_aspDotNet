@@ -57,7 +57,8 @@ namespace CECBTIMS.Controllers
 
         private string _destinationFileName;
         private string _destinationFile;
-
+        private Type _helperClass;
+        private object _classInstance;
         /**
          * Copy the word template to a new file
          */
@@ -121,6 +122,11 @@ namespace CECBTIMS.Controllers
             return Content("page returned");
         }
 
+        private void InstantiateHelperClass(int programId)
+        {
+            _helperClass = typeof(DocumentHelper);
+            _classInstance = Activator.CreateInstance(_helperClass, programId);
+        }
 
         /**
          * Replace variables in the document
@@ -137,23 +143,20 @@ namespace CECBTIMS.Controllers
                 {
                     docText = sr.ReadToEnd();
                 }
-
                 /**
                  * Instantiate the document helper class with parameters
                  */
-                var helperClass = typeof(DocumentHelper);
-                var classInstance = Activator.CreateInstance(helperClass, programId);
-                if (employeeId != null) classInstance = Activator.CreateInstance(helperClass, programId, employeeId);
+                this.InstantiateHelperClass(programId);
                 /**
                  * Replacing the values in the template
                  */
                 foreach (var var in _varList)
                 {
                     if (!docText.Contains("VAR" + var)) continue;
-                    var method = helperClass.GetMethod(Helpers.FigureVarName(var));
+                    var method = _helperClass.GetMethod(Helpers.FigureVarName(var));
 
                     docText = method != null
-                        ? new Regex("VAR" + var).Replace(docText, (string) method.Invoke(classInstance, null))
+                        ? new Regex("VAR" + var).Replace(docText, (string) method.Invoke(_classInstance, null))
                         : new Regex("VAR" + var).Replace(docText, "Null");
                 }
 
@@ -224,10 +227,6 @@ namespace CECBTIMS.Controllers
             }
 
             table.Append(row);
-
-
-            // get employees for a sample data
-            var employees = _db2.cmn_EmployeeVersion.ToList();
 
 
             //add content rows
