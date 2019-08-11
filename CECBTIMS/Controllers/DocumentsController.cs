@@ -1,5 +1,6 @@
 ﻿using DocumentFormat.OpenXml.Packaging;
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Globalization;
 using System.Net;
@@ -229,17 +230,37 @@ namespace CECBTIMS.Controllers
             table.Append(row);
 
 
-            //add content rows
-            for (var rowNumber = 1; rowNumber <= 5; rowNumber++)
+            /**
+             * Add Table Data
+             */
+
+            var method = _helperClass.GetMethod("GetEmployess");
+            var traineeList = (List<Employee>) method.Invoke(_classInstance, null);
+
+                // convert tl to object list
+
+            foreach (var item in traineeList)
             {
                 row = new TableRow();
 
-                row.Append(CreateCell("A" + rowNumber.ToString()));
-                row.Append(CreateCell("B" + rowNumber.ToString()));
-                row.Append(CreateCell("C" + rowNumber.ToString()));
+                row.Append(CreateCell(item.NameWithInitial));
+                row.Append(CreateCell(item.NIC));
+                row.Append(CreateCell(item.DesignationName));
 
                 table.Append(row);
             }
+
+            //add content rows
+//            for (var rowNumber = 1; rowNumber <= 5; rowNumber++)
+//            {
+//                row = new TableRow();
+//
+//                row.Append(CreateCell("A" + rowNumber.ToString()));
+//                row.Append(CreateCell("B" + rowNumber.ToString()));
+//                row.Append(CreateCell("C" + rowNumber.ToString()));
+//
+//                table.Append(row);
+//            }
 
             return table;
         }

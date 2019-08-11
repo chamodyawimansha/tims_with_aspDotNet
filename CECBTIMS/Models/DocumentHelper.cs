@@ -6,13 +6,14 @@ using System.Threading.Tasks;
 using System.Web;
 using CECBTIMS.Controllers;
 using CECBTIMS.DAL;
+using CECBTIMS.Models.Enums;
 
 namespace CECBTIMS.Models
 {
     public class DocumentHelper
     {
         private readonly Program _program;
-        private readonly List<Employee> _TraineeList;
+        private readonly List<Employee> _traineeList;
 
         private ApplicationDbContext db = new ApplicationDbContext();
         private CECB_ERPEntities cecb_db = new CECB_ERPEntities();
@@ -20,7 +21,7 @@ namespace CECBTIMS.Models
         public DocumentHelper(int programId)
         {
             _program = GetProgram(programId);
-            _TraineeList = GetTrainees();
+            _traineeList = GetTrainees();
         }
 
         /**
@@ -37,9 +38,9 @@ namespace CECBTIMS.Models
         private List<Employee> GetTrainees()
         {
             var programAssignments = _program.ProgramAssignments;
-            List<Employee> traineeList = null;
+            var traineeList = new List<Employee>();
 
-            if (programAssignments == null) return traineeList = null;
+//            if (programAssignments == null) return traineeList = null;
 
             foreach (var item in programAssignments)
             {
@@ -104,28 +105,87 @@ namespace CECBTIMS.Models
             return _program.StudentFee.ToString();
         }
 
-
-        //Test function
-        public string GetName()
+        public List<Employee> GetEmployess()
         {
-            // this is a array cant get one
-            // add getter method to return the list of trainees
-            return _TraineeList.;
+            return this._traineeList;
         }
-        public string GetAge()
-        {
-            return "24";
-        }
-
-
-
         /**
          * function to get trainee data
-         */
+         */    
 
+        public string GetEmployeeId(Employee employee)
+        {
+            return employee.EmployeeId.ToString();
+        }
+        public string GetEPFNo(Employee employee)
+        {
+            return employee.EPFNo;
+        }
+        public string GetTitle(Employee employee)
+        {
+            return employee.Title.ToString();
+        }
         public string GetName(Employee employee)
         {
+            return employee.FullName;
+        }
+        public string GetNameShort(Employee employee)
+        {
+            return employee.NameWithInitial;
+        }
+        public string GetNameWithTitle(Employee employee)
+        {
+            return employee.Title + ". " +employee.NameWithInitial;
+        }
+        public string GetNIC(Employee employee)
+        {
+            return employee.NIC;
+        }
 
+
+
+
+
+
+        public string GetWorkSpaceName(Employee employee)
+        {
+            return employee.FullName;
+        }
+
+        public string GetDesignationName(Employee employee)
+        {
+            return employee.FullName;
+        }
+
+        public string GetEmployeeRecruitmentType(Employee employee)
+        {
+            return employee.FullName;
+        }
+        public string GetEmpStatus(Employee employee)
+        {
+            return employee.FullName;
+        }
+        public string GetDateOfAppointment(Employee employee)
+        {
+            return employee.FullName;
+        }
+        public string GetTypeOfContract(Employee employee)
+        {
+            return employee.FullName;
+        }
+        public string GetOfficeEmail(Employee employee)
+        {
+            return employee.FullName;
+        }
+
+        public string GetMobileNumber(Employee employee)
+        {
+            return employee.FullName;
+        }
+
+        public string GetPrivateEmail(Employee employee)
+        {
+            return employee.FullName;
         }
 
 

@@ -13,7 +13,7 @@ namespace CECBTIMS.Controllers
 {
     public class EmployeesController : Controller
     {
-        private CECB_ERPEntities db = new CECB_ERPEntities();
+        private static CECB_ERPEntities db = new CECB_ERPEntities();
         private ApplicationDbContext default_db = new ApplicationDbContext();
 
         public async Task<ActionResult> Index(int? programId)
@@ -124,30 +124,32 @@ namespace CECBTIMS.Controllers
         }
 
         /**
- * need employee version id and return converted Employee
- */
-        internal static Employee FindEmployee(Guid? id)
+         * Need employee version id and return converted Employee
+         */
+        internal static Employee FindEmployee(Guid id)
         {
-            var employee = db.cmn_EmployeeVersion.Find(id, "EmployeeVersionId");
-
+            var employee = db.cmn_EmployeeVersion.First(vid => vid.EmployeeVersionId == id);
+            if (employee == null) return new Employee();
             return new Employee()
-            {
-                EmployeeId = employee.EmployeeVersionId,
-                EPFNo = employee.EPFNo,
-                Title = 
-                NameWithInitial = 
-                FullName
-                NIC
-                WorkSpaceName
-                DesignationName
-                EmployeeRecruitmentType
-                EmpStatus
-                DateOfAppointment
-                TypeOfContract
-                OfficeEmail
-                MobileNumber
-                PrivateEmail
-            };
+                {
+                    EmployeeId = employee.EmployeeVersionId,
+                    EPFNo = employee.EPFNo,
+                    Title = int.TryParse(employee.Title, out var t) ? (Title) t : Title.Null,
+                    NameWithInitial = employee.NameWithInitial,
+                    FullName = employee.FullName,
+                    NIC = employee.NIC,
+                    WorkSpaceName = employee.cmn_WorkSpace != null ? employee.cmn_WorkSpace.WorkSpaceName : "Null",
+                    DesignationName = employee.hrm_Designation != null ? employee.hrm_Designation.DesignationName : "Null",
+                    EmployeeRecruitmentType = int.TryParse(employee.EmployeeRecruitmentType, out var rt)
+                        ? (RecruitmentType) rt
+                        : RecruitmentType.Null,
+                    EmpStatus = (EmployeeStatus) employee.EmpStatus,
+                    DateOfAppointment = employee.DateOfAppointment,
+                    TypeOfContract = employee.TypeOfContract,
+                    OfficeEmail = employee.OfficeEmail,
+                    MobileNumber = employee.MobileNumber,
+                    PrivateEmail = employee.PrivateEmail
+                };
         }
 
 

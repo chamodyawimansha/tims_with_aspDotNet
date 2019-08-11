@@ -6,7 +6,8 @@
         Eng = 2,
         Mr = 3,
         Mrs = 4,
-        Miss = 5
+        Miss = 5,
+        Null = 6
     }
 
     public enum RecruitmentType
@@ -18,6 +19,7 @@
         //LabourContract
         Assignment,
         //ManPower
+        Null
     }
 
     public enum EmployeeStatus
@@ -30,7 +32,8 @@
         StudyLeave,
         VacatedPost,
         ReleasedToCESL,
-        Terminated
+        Terminated,
+        Null
     }
 
     public enum ContractType
