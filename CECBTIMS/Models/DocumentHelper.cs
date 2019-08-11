@@ -9,9 +9,8 @@ namespace CECBTIMS.Models
 {
     public class DocumentHelper
     {
-
         private readonly Program _program;
-//        private readonly Program _Employee;
+        private readonly Program _Employee;
 
         private ApplicationDbContext db = new ApplicationDbContext();
 
@@ -21,11 +20,11 @@ namespace CECBTIMS.Models
             _program = GetProgram(programId);
         }
 
-        public DocumentHelper(int programId, int employeeId)
-        {
-            //get program function
-            //get employee function
-        }
+//        public DocumentHelper(int programId, int employeeId)
+//        {
+//            //get program function
+//            //get employee function
+//        }
 
         private Program GetProgram(int programId)
         {
@@ -82,6 +81,17 @@ namespace CECBTIMS.Models
         public string GetStudentfee()
         {
             return _program.StudentFee.ToString();
+        }
+
+
+        //Test function
+        public string GetName()
+        {
+            return "John Doe";
+        }
+        public string GetAge()
+        {
+            return "24";
         }
 
     }

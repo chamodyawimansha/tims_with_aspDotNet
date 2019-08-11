@@ -33,10 +33,14 @@ using TopBorder = DocumentFormat.OpenXml.Wordprocessing.TopBorder;
 
 
 namespace CECBTIMS.Controllers
-{   
+{
     public class DocumentsController : Controller
     {
         private readonly ApplicationDbContext _db = new ApplicationDbContext();
+
+        //only for development
+        private readonly CECB_ERPEntities _db2 = new CECB_ERPEntities();
+
 
         private readonly string[] _varList =
         {
@@ -51,56 +55,80 @@ namespace CECBTIMS.Controllers
             "STUDENTFEE",
         };
 
-        public async Task<ActionResult> Generate(Guid? id, int programId, int? employeeId, string title, string details, bool download, string[] columnNames)
+        private string _destinationFileName;
+        private string _destinationFile;
+
+        /**
+         * Copy the word template to a new file
+         */
+        private void ProcessTemplate(TimsFile file)
+        {
+            /**
+             * get the document template from the storage
+             */
+            var template = System.IO.Path.Combine(Server.MapPath("~/Storage"),
+                System.IO.Path.GetFileName(file.FileName) ?? throw new InvalidOperationException());
+            /**
+             * Generate a new file name and select a path for the new document
+             */
+            this._destinationFileName = Guid.NewGuid().ToString("N") + ".docx";
+            this._destinationFile = Server.MapPath("~/Storage/gen/" + _destinationFileName);
+            /**
+             * Copy the template with the new name for processing.
+             */
+            System.IO.File.Copy(template, _destinationFile, false);
+        }
+
+
+        public async Task<ActionResult> Generate(Guid? id, int programId, int? employeeId, string title, string details,
+            bool download, string[] columnNames)
         {
             /**
              * Validate request
              */
             if (id == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            if (await _db.Programs.FindAsync(programId) == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            if (await _db.Programs.FindAsync(programId) == null)
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             /**
              * select the file record in the database. return bad request if not available
              */
             var file = await _db.Files.FindAsync(id);
-            if(file == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            if (file == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+
             /**
-             * get the document template from the storage
+             * Process the template file
              */
-            var template = System.IO.Path.Combine(Server.MapPath("~/Storage"), System.IO.Path.GetFileName(file.FileName) ?? throw new InvalidOperationException());
-            /**
-             * Generate a new file name and select a path for the new document
-             */
-            var destinationFileName = Guid.NewGuid().ToString("N") + ".docx";
-            var destinationFile = Server.MapPath("~/Storage/gen/"+ destinationFileName);
-            /**
-             * Copy the template with the new name for processing.
-             */
-            System.IO.File.Copy(template, destinationFile, false);
+            this.ProcessTemplate(file);
             /**
              * Process the document
              */
-             Process(destinationFile, destinationFileName, programId, employeeId, title, details);
-             /**
-              * Process the table
-              */
-            ProcessTable(destinationFile);
+            this.ProcessVariables(programId, employeeId);
+            /**
+             * Process the table
+             */
+            this.ProcessTable();
             /**
              * if download true download the file and return to the page, otherwise return
              */
-            if (download == true) return Download(destinationFile, destinationFileName);
+            if (download == true) return Download();
+            /**
+             * Save the created document details in the database
+             */
+//            this.Save(title,details,programId);
 
 
             //return to page
             return Content("page returned");
         }
 
-        // process the document generation
-        private void Process(string destinationFile,string destinationFileName, int programId, int? employeeId, string title, string details)
+
+        /**
+         * Replace variables in the document
+         */
+        private void ProcessVariables(int programId, int? employeeId)
         {
-
-            using (var wordDoc = WordprocessingDocument.Open(destinationFile, true))
+            using (var wordDoc = WordprocessingDocument.Open(_destinationFile, true))
             {
-
                 string docText = null;
                 /**
                  * store the document in a string variable
@@ -109,6 +137,7 @@ namespace CECBTIMS.Controllers
                 {
                     docText = sr.ReadToEnd();
                 }
+
                 /**
                  * Instantiate the document helper class with parameters
                  */
@@ -123,7 +152,9 @@ namespace CECBTIMS.Controllers
                     if (!docText.Contains("VAR" + var)) continue;
                     var method = helperClass.GetMethod(Helpers.FigureVarName(var));
 
-                    docText = method != null ? new Regex("VAR" + var).Replace(docText, (string)method.Invoke(classInstance, null)) : new Regex("VAR" + var).Replace(docText, "Null");
+                    docText = method != null
+                        ? new Regex("VAR" + var).Replace(docText, (string) method.Invoke(classInstance, null))
+                        : new Regex("VAR" + var).Replace(docText, "Null");
                 }
 
                 /**
@@ -133,30 +164,18 @@ namespace CECBTIMS.Controllers
                 {
                     sw.Write(docText);
                 }
-
-                return;
-                /**
-                 * Save the document in the database
-                 */
-                Save(title, details, destinationFileName,programId);
             }
         }
 
-        private void ProcessVariables()
-        {
-            
-        }
-
-        //        ProcessInfo table Inserted cols
-        // return table
-
-        private void ProcessTable(string destinationFile)
+        /**
+         * Insert the data tables after the DataTableBookMark
+         */
+        private void ProcessTable()
         {
             /**
             * Add the table after the bookmark
             */
-
-            using (var doc = WordprocessingDocument.Open(destinationFile, true))
+            using (var doc = WordprocessingDocument.Open(_destinationFile, true))
             {
                 var mainPart = doc.MainDocumentPart;
                 // Find the table bookmark from the document
@@ -167,31 +186,49 @@ namespace CECBTIMS.Controllers
                 var bookmark = res.SingleOrDefault();
                 if (bookmark != null)
                 {
-                    var parent = bookmark.Parent;   // bookmark's parent element
+                    var parent = bookmark.Parent; // bookmark's parent element
                     // insert after bookmark parent
-                    parent.InsertAfterSelf(GetTable());
+                    parent.InsertAfterSelf(CreateTable(new[] {"Name", "Age", "Birth"}));
                 }
 
                 // close saves all parts and closes the document
                 doc.Close();
             }
         }
-        private Table GetTable()
+
+        /**
+         * Create Data table
+         */
+        private Table CreateTable(string[] columnNames)
         {
             /**
-             * Create the table
-             */
+           * Create the table
+           */
             var table = new Table();
             var row = new TableRow();
-            
-            SetTableStyle(table);
 
-            //add first row with title            
-            row.Append(CreateCell("Column A"));
-            row.Append(CreateCell("Column B"));
-            row.Append(CreateCell("Column C"));
+            /**
+             * Add styles to the table
+             */
+            this.SetTableStyle(table);
+
+            //add first row with title  
+
+//            Column names and function names should be same in order to fill the table
+            /**
+             * Add the column names
+             */
+            foreach (var col in columnNames)
+            {
+                row.Append(CreateCell(col));
+            }
 
             table.Append(row);
+
+
+            // get employees for a sample data
+            var employees = _db2.cmn_EmployeeVersion.ToList();
+
 
             //add content rows
             for (int rowNumber = 1; rowNumber <= 5; rowNumber++)
@@ -213,24 +250,24 @@ namespace CECBTIMS.Controllers
             return new TableCell(new Paragraph(new Run(new Text(text))));
         }
 
-        private static void SetTableStyle(OpenXmlElement table)
+        private void SetTableStyle(OpenXmlElement table)
         {
             var properties = new TableProperties();
 
             //table borders
             var borders = new TableBorders();
 
-            borders.TopBorder = new TopBorder() { Val = new EnumValue<BorderValues>(BorderValues.Single) };
-            borders.BottomBorder = new BottomBorder() { Val = new EnumValue<BorderValues>(BorderValues.Single) };
-            borders.LeftBorder = new LeftBorder() { Val = new EnumValue<BorderValues>(BorderValues.Single) };
-            borders.RightBorder = new RightBorder() { Val = new EnumValue<BorderValues>(BorderValues.Single) };
-            borders.InsideHorizontalBorder = new InsideHorizontalBorder() { Val = BorderValues.Single };
-            borders.InsideVerticalBorder = new InsideVerticalBorder() { Val = BorderValues.Single };
+            borders.TopBorder = new TopBorder() {Val = new EnumValue<BorderValues>(BorderValues.Single)};
+            borders.BottomBorder = new BottomBorder() {Val = new EnumValue<BorderValues>(BorderValues.Single)};
+            borders.LeftBorder = new LeftBorder() {Val = new EnumValue<BorderValues>(BorderValues.Single)};
+            borders.RightBorder = new RightBorder() {Val = new EnumValue<BorderValues>(BorderValues.Single)};
+            borders.InsideHorizontalBorder = new InsideHorizontalBorder() {Val = BorderValues.Single};
+            borders.InsideVerticalBorder = new InsideVerticalBorder() {Val = BorderValues.Single};
 
             properties.Append(borders);
 
             //set the table width to page width
-            TableWidth tableWidth = new TableWidth() { Width = "5000", Type = TableWidthUnitValues.Pct };
+            TableWidth tableWidth = new TableWidth() {Width = "5000", Type = TableWidthUnitValues.Pct};
             properties.Append(tableWidth);
 
             //add properties to table
@@ -239,7 +276,7 @@ namespace CECBTIMS.Controllers
 
 
         // save generated file in th database
-        private bool Save(string title, string details, string newFileName, int programId)
+        private bool Save(string title, string details, int programId)
         {
             //create new file object
             var newFile = new TimsFile
@@ -247,15 +284,15 @@ namespace CECBTIMS.Controllers
                 Id = Guid.NewGuid(),
                 Title = title,
                 Details = details,
-                FileName = newFileName,
-                OriginalFileName = newFileName,
+                FileName = _destinationFileName,
+                OriginalFileName = _destinationFileName,
                 FileType = (FileType) Enum.Parse(typeof(FileType), "DOCX" ?? throw new InvalidOperationException()),
                 FileMethod = FileMethod.Generate, // generate
                 ProgramId = programId,
             };
             // file path name
             var path = Path.Combine(Server.MapPath("~/Storage/gen"),
-                Path.GetFileName(newFileName) ?? throw new InvalidOperationException());
+                Path.GetFileName(_destinationFileName) ?? throw new InvalidOperationException());
 
             try
             {
@@ -275,9 +312,9 @@ namespace CECBTIMS.Controllers
             return false;
         }
 
-        private FileResult Download(string path, string fileName)
+        private FileResult Download()
         {
-            return File(path, MimeMapping.GetMimeMapping(path), fileName);
+            return File(_destinationFile, MimeMapping.GetMimeMapping(_destinationFile), _destinationFileName);
         }
     }
 }
