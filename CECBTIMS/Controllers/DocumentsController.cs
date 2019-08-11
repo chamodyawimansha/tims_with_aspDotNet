@@ -192,7 +192,7 @@ namespace CECBTIMS.Controllers
                 {
                     var parent = bookmark.Parent; // bookmark's parent element
                     // insert after bookmark parent
-                    parent.InsertAfterSelf(CreateTable(new[] {"Name", "Age", "Birth"}));
+                    parent.InsertAfterSelf(CreateTable(new[] {"Full Name", "Employee Recruitment Type", "Date Of Appointment" }));
                 }
 
                 // close saves all parts and closes the document
@@ -242,25 +242,22 @@ namespace CECBTIMS.Controllers
             foreach (var item in traineeList)
             {
                 row = new TableRow();
+                
+                foreach (var m in columnNames)
+                {
+                    var methodName = _helperClass.GetMethod(DocumentHelper.ToFunctionName(m));
+                    if (methodName != null)
+                    {
+                        row.Append(CreateCell((string) methodName.Invoke(_classInstance, new object[] {item})));
+                    }
+                    else
+                    {
+                        row.Append(CreateCell("Null"));
+                    }
 
-                row.Append(CreateCell(item.NameWithInitial));
-                row.Append(CreateCell(item.NIC));
-                row.Append(CreateCell(item.DesignationName));
-
+                }
                 table.Append(row);
             }
-
-            //add content rows
-//            for (var rowNumber = 1; rowNumber <= 5; rowNumber++)
-//            {
-//                row = new TableRow();
-//
-//                row.Append(CreateCell("A" + rowNumber.ToString()));
-//                row.Append(CreateCell("B" + rowNumber.ToString()));
-//                row.Append(CreateCell("C" + rowNumber.ToString()));
-//
-//                table.Append(row);
-//            }
 
             return table;
         }

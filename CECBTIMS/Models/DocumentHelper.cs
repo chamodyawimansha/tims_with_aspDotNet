@@ -32,6 +32,14 @@ namespace CECBTIMS.Models
             return db.Programs.Find(programId);
         }
 
+
+        public static string ToFunctionName(string name)
+        {
+            var nameParts = name.Split(null);
+
+            return nameParts.Aggregate("Get", (current, item) => current + (item.First().ToString().ToUpper() + item.Substring(1)));
+        }
+
         /**
          * Get the current program's trainee list
          */
@@ -125,7 +133,7 @@ namespace CECBTIMS.Models
         {
             return employee.Title.ToString();
         }
-        public string GetName(Employee employee)
+        public object GetFullName(Employee employee)
         {
             return employee.FullName;
         }
@@ -144,9 +152,6 @@ namespace CECBTIMS.Models
 
 
 
-
-
-
         public string GetWorkSpaceName(Employee employee)
         {
             return employee.FullName;
@@ -157,7 +162,7 @@ namespace CECBTIMS.Models
             return employee.FullName;
         }
 
-        public string GetEmployeeRecruitmentType(Employee employee)
+        public object GetEmployeeRecruitmentType(Employee employee)
         {
             return employee.FullName;
         }
@@ -165,7 +170,7 @@ namespace CECBTIMS.Models
         {
             return employee.FullName;
         }
-        public string GetDateOfAppointment(Employee employee)
+        public object GetDateOfAppointment(Employee employee)
         {
             return employee.FullName;
         }
