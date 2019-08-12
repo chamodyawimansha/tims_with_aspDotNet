@@ -1,12 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Data.Entity.Core.Common.EntitySql;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using System.Web;
 using CECBTIMS.Controllers;
 using CECBTIMS.DAL;
 using CECBTIMS.Models.Enums;
+using DocumentFormat.OpenXml.Bibliography;
 
 namespace CECBTIMS.Models
 {
@@ -14,9 +17,6 @@ namespace CECBTIMS.Models
     {
         private readonly Program _program;
         private readonly List<Employee> _traineeList;
-
-        private ApplicationDbContext db = new ApplicationDbContext();
-        private CECB_ERPEntities cecb_db = new CECB_ERPEntities();
 
         public DocumentHelper(int programId)
         {
@@ -27,14 +27,15 @@ namespace CECBTIMS.Models
         /**
          * get the current program
          */
-        private Program GetProgram(int programId)
+        private static Program GetProgram(int programId)
         {
-            return db.Programs.Find(programId);
+            return ProgramsController.FindProgram(programId);
         }
 
 
         public static string ToFunctionName(string name)
         {
+            name = name.ToLower();
             var nameParts = name.Split(null);
 
             return nameParts.Aggregate("Get", (current, item) => current + (item.First().ToString().ToUpper() + item.Substring(1)));
@@ -47,8 +48,6 @@ namespace CECBTIMS.Models
         {
             var programAssignments = _program.ProgramAssignments;
             var traineeList = new List<Employee>();
-
-//            if (programAssignments == null) return traineeList = null;
 
             foreach (var item in programAssignments)
             {
@@ -63,7 +62,7 @@ namespace CECBTIMS.Models
         }
 
         // return the file number
-        public string GetFilenumber()
+        public string GetFileNumber()
         {
             return "";
         }
@@ -78,54 +77,172 @@ namespace CECBTIMS.Models
             return DateTime.Now.ToString("yyyy.MM.dd");
         }
         //returns the program title
-        public string GetProgramtitle()
+        public string GetProgramTitle()
         {
             return _program.Title;
         }
-        // get organisers of the program
-        public string GetOrganisedby()
-        {
-            return _program.ProgramArrangements.Aggregate("", (current, item) => current == "" ? item.Organizer.Name : current + ", " + item.Organizer.Name);
-        }
         //returns program start date
-        public string GetStartdate()
+        public string GetStartDate()
         {
             return _program.StartDate.ToString("yyyy.MM.dd");
+        }
+        public string GetApplicationClosingDate()
+        {
+            return _program.ApplicationClosingDate.ToString("yyyy.MM.dd");
+        }
+        public string GetApplicationClosingTime()
+        {
+            return _program.ApplicationClosingDate.ToString("HH:mm");
         }
         //returns venue of the program
         public string GetVenue()
         {
             return _program.Venue;
         }
-        // retuns member fee
-        public string GetMemberfee()
+
+        public string GetEndDate()
+        {
+            return _program.EndDate?.ToString("yyyy.MM.dd");
+        }
+
+        public string GetNotifiedBy()
+        {
+            return _program.NotifiedBy;
+        }
+
+        public string GetNotifiedOn()
+        {
+            return _program.NotifiedOn?.ToString("HH:mm");
+        }
+
+        public string GetProgramHours()
+        {
+            return _program.ProgramHours.ToString();
+        }
+
+        public string GetDurationInDays()
+        {
+            return _program.DurationInDays.ToString();
+        }
+
+        public string GetDurationInMonths()
+        {
+            return _program.DurationInMonths.ToString();
+        }
+        public string Department()
+        {
+            return _program.Department.ToString();
+        }
+        public string Currency()
+        {
+            return _program.Currency.ToString();
+        }
+        public string ProgramFee()
+        {
+            return _program.ProgramFee.ToString();
+        }
+        public string RegistrationFee()
+        {
+            return _program.RegistrationFee.ToString();
+        }
+        public string PerPersonFee()
+        {
+            return _program.PerPersonFee.ToString();
+        }
+        public string NoShowFee()
+        {
+            return _program.NoShowFee.ToString();
+        }
+        public string MemberFee()
         {
             return _program.MemberFee.ToString();
         }
-        // returns non member fee
-        public string GetNonmemberfee()
+        public string NonMemberFee()
         {
             return _program.NonMemberFee.ToString();
         }
-        // retuns student fee
-        public string GetStudentfee()
+        public string StudentFee()
         {
             return _program.StudentFee.ToString();
         }
 
-        public List<Employee> GetEmployess()
+        // returns agenda titles : title1, title2, title3
+        public string GetAgendaTitle()
         {
-            return this._traineeList;
+            var agenda = "";
+            return _program.Agendas == null ? agenda : _program.Agendas.Aggregate(agenda, (current, item) => current + (current != "" ? ", " + item.Name : item.Name));
         }
+
+        public string[] GetAgendaTitleList()
+        {
+            var agendaTitles = new string[]{};
+            if (_program.Agendas == null) return agendaTitles;
+            var i = 0;
+            foreach (var item in _program.Agendas)
+            {
+                agendaTitles[i] = item.Name;
+                i++;
+            }
+
+            return agendaTitles;
+
+        }
+
+        public List<Agenda> GetAgendaTable()
+        {
+            return _program.Agendas.ToList();
+        }
+        
+        public List<ResourcePerson> GetResourcePersonsTable()
+        {
+            return _program.ResourcePersons.ToList();
+        }
+
+        Costs
+            costs List<>
+
+            Requirements
+        Requirements list
+
+        EmploymentCategories
+
+            EmploymentNatures
+
+
+
+        // get organisers of the program
+        public string GetOrganisedBy()
+        {
+            return _program.ProgramArrangements.Aggregate("", (current, item) => current == "" ? item.Organizer.Name : current + ", " + item.Organizer.Name);
+        }
+
+
+        // retuns member fee
+        public string GetMemberFee()
+        {
+            return _program.MemberFee.ToString();
+        }
+        // returns non member fee
+        public string GetNonmemberFee()
+        {
+            return _program.NonMemberFee.ToString();
+        }
+        // retuns student fee
+        public string GetStudentFee()
+        {
+            return _program.StudentFee.ToString();
+        }
+
+
+
         /**
          * function to get trainee data
-         */    
-
+         */
         public string GetEmployeeId(Employee employee)
         {
             return employee.EmployeeId.ToString();
         }
-        public string GetEPFNo(Employee employee)
+        public string GetEpfNo(Employee employee)
         {
             return employee.EPFNo;
         }
@@ -133,7 +250,7 @@ namespace CECBTIMS.Models
         {
             return employee.Title.ToString();
         }
-        public object GetFullName(Employee employee)
+        public string GetFullName(Employee employee)
         {
             return employee.FullName;
         }
@@ -145,54 +262,46 @@ namespace CECBTIMS.Models
         {
             return employee.Title + ". " +employee.NameWithInitial;
         }
-        public string GetNIC(Employee employee)
+        public string GetNic(Employee employee)
         {
             return employee.NIC;
         }
-
-
-
         public string GetWorkSpaceName(Employee employee)
         {
-            return employee.FullName;
+            return employee.WorkSpaceName;
         }
-
         public string GetDesignationName(Employee employee)
         {
-            return employee.FullName;
+            return employee.DesignationName;
         }
-
-        public object GetEmployeeRecruitmentType(Employee employee)
+        public string GetEmployeeRecruitmentType(Employee employee)
         {
-            return employee.FullName;
+            return employee.EmployeeRecruitmentType.ToString();
         }
         public string GetEmpStatus(Employee employee)
         {
-            return employee.FullName;
+            return employee.EmpStatus.ToString();
         }
-        public object GetDateOfAppointment(Employee employee)
+        public string GetDateOfAppointment(Employee employee)
         {
-            return employee.FullName;
+            return employee.DateOfAppointment.ToString();
         }
         public string GetTypeOfContract(Employee employee)
         {
-            return employee.FullName;
+            return employee.TypeOfContract;
         }
         public string GetOfficeEmail(Employee employee)
         {
-            return employee.FullName;
+            return employee.OfficeEmail;
         }
-
         public string GetMobileNumber(Employee employee)
         {
-            return employee.FullName;
+            return employee.MobileNumber;
         }
-
         public string GetPrivateEmail(Employee employee)
         {
-            return employee.FullName;
+            return employee.PrivateEmail;
         }
-
 
     }
 }

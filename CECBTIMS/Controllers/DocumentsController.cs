@@ -56,6 +56,14 @@ namespace CECBTIMS.Controllers
             "STUDENTFEE",
         };
 
+        private readonly string[] _bookMarkList =
+        {
+            "AgendaList" /*numbered list of names*/,
+            "AgendaDetailsTable"/*A table with details*/,
+            "TraineeDetailsTable"/*A table with details*/,
+            "ResourcePersonsList"/*numbered list of names*/,
+            "ResourcePersonsDetailsTable"/*A table with details*/,
+        };
         private string _destinationFileName;
         private string _destinationFile;
         private Type _helperClass;
@@ -108,7 +116,7 @@ namespace CECBTIMS.Controllers
             /**
              * Process the table
              */
-            this.ProcessTable();
+            this.ProcessTables();
             /**
              * if download true download the file and return to the page, otherwise return
              */
@@ -174,7 +182,7 @@ namespace CECBTIMS.Controllers
         /**
          * Insert the data tables after the DataTableBookMark
          */
-        private void ProcessTable()
+        private void ProcessTables()
         {
             /**
             * Add the table after the bookmark
@@ -185,14 +193,19 @@ namespace CECBTIMS.Controllers
                 // Find the table bookmark from the document
                 var res = from bm in mainPart.Document.Body.Descendants<BookmarkStart>()
                     where bm.Name == "DataTableBookMark"
-                    select bm;
+
+                    /**
+                     * Get all the available bookmarks in the document and insert details after the bookmark
+                     */
+                           
+                          select bm;
 
                 var bookmark = res.SingleOrDefault();
                 if (bookmark != null)
                 {
                     var parent = bookmark.Parent; // bookmark's parent element
                     // insert after bookmark parent
-                    parent.InsertAfterSelf(CreateTable(new[] {"Full Name", "Employee Recruitment Type", "Date Of Appointment" }));
+                    parent.InsertAfterSelf(CreateTable(new[] {"Full Name", "Employee Recruitment Type", "NIC" }));
                 }
 
                 // close saves all parts and closes the document
@@ -216,9 +229,6 @@ namespace CECBTIMS.Controllers
              */
             this.SetTableStyle(table);
 
-            //add first row with title  
-
-//            Column names and function names should be same in order to fill the table
             /**
              * Add the column names
              */
