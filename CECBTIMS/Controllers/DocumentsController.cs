@@ -39,9 +39,6 @@ namespace CECBTIMS.Controllers
     {
         private readonly ApplicationDbContext _db = new ApplicationDbContext();
 
-        //only for development
-        private readonly CECB_ERPEntities _db2 = new CECB_ERPEntities();
-
 
         private readonly string[] _varList =
         {
@@ -70,6 +67,39 @@ namespace CECBTIMS.Controllers
         private Type _helperClass;
 
         private object _classInstance;
+
+
+
+
+
+
+        /**
+         * Show the index page with documents related to a program
+         */
+        public async Task<ActionResult> Index(int? programId)
+        {
+            if (programId == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+
+            List<TimsFile> documents = new List<TimsFile>();
+            // get the program
+            var program = await _db.Programs.FindAsync(programId);
+
+            if (program == null) return View(documents);
+
+            var docs = program.Files;
+
+            documents.AddRange(docs.Where(item => item.FileMethod == FileMethod.Generate));
+
+            return View(documents);
+        }
+
+
+
+
+
+
+
+
 
         /**
          * Copy the word template to a new file
@@ -194,10 +224,21 @@ namespace CECBTIMS.Controllers
             {
                 var mainPart = doc.MainDocumentPart;
 
+
+
+
                 /**
-                 * Add agenda table to the document
+                 * Trainee details table
                  */
-                var agendaBookmark = FindBookMark(mainPart, "AgendaListBookMark");
+//                TraineeDetailsTableBookMark
+
+
+
+
+               /**
+                * Add agenda table to the document
+                */
+               var agendaBookmark = FindBookMark(mainPart, "AgendaListBookMark");
 
                 if (agendaBookmark != null)
                 {
@@ -206,6 +247,7 @@ namespace CECBTIMS.Controllers
                     parent.InsertAfterSelf(ProcessAgendaDetailsTable());
 
                     //rename the bookmark text value
+//                    AgendaListBookMark
                 }
 
                 doc.Close();

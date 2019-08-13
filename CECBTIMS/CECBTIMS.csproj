@@ -266,6 +266,10 @@
     <Compile Include="Migrations\201908090724555_tableColumnModelAdded.Designer.cs">
       <DependentUpon>201908090724555_tableColumnModelAdded.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201908131234152_programTypeaddedToFiles.cs" />
+    <Compile Include="Migrations\201908131234152_programTypeaddedToFiles.Designer.cs">
+      <DependentUpon>201908131234152_programTypeaddedToFiles.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Agenda.cs" />
     <Compile Include="Models\BaseCols.cs" />
@@ -518,11 +522,11 @@
     <Content Include="Views\Natures\Create.cshtml" />
     <Content Include="Views\Files\Index.cshtml" />
     <None Include="Storage\.gitignore" />
+    <Content Include="Views\Documents\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Views\Categories\" />
-    <Folder Include="Views\Document\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -569,6 +573,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201908090724555_tableColumnModelAdded.resx">
       <DependentUpon>201908090724555_tableColumnModelAdded.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201908131234152_programTypeaddedToFiles.resx">
+      <DependentUpon>201908131234152_programTypeaddedToFiles.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

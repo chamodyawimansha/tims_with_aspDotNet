@@ -177,7 +177,7 @@ namespace CECBTIMS.Controllers
 
         [HttpPost, ActionName("Upload")]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> UploadFile(HttpPostedFileBase file,string title,string details,int? programId)
+        public async Task<ActionResult> UploadFile(HttpPostedFileBase file,string title,string details,int? programId, ProgramType? programType)
         {
 
             if (file == null || file.ContentLength <= 0 ) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -217,13 +217,18 @@ namespace CECBTIMS.Controllers
                 Details = details,
                 FileName = newFileName,
                 OriginalFileName = file.FileName,
+                ProgramType = programType,
                 FileType = (FileType) Enum.Parse(typeof(FileType), fileExtension ?? throw new InvalidOperationException()),
                 FileMethod = (FileMethod) 1, // upload
                 ProgramId = programId,
             };
             // file path name
-            var path = Path.Combine(Server.MapPath("~/Storage"), Path.GetFileName(newFileName) ?? throw new InvalidOperationException());
-
+            var path = Path.Combine(Server.MapPath("~/Storage/gen"), Path.GetFileName(newFileName) ?? throw new InvalidOperationException());
+            if (newFile.FileMethod == FileMethod.Upload)
+            {
+                path = Path.Combine(Server.MapPath("~/Storage/up"), Path.GetFileName(newFileName) ?? throw new InvalidOperationException());
+            }
+            
             try
             {
                 // save file in the storage

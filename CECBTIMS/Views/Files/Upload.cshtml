@@ -1,4 +1,5 @@
-﻿@model CECBTIMS.Models.TimsFile
+﻿@using CECBTIMS.Models.Enums
+@model CECBTIMS.Models.TimsFile
 
 @{
     ViewBag.Title = "Upload";
@@ -33,7 +34,14 @@
                         @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
                     </div>
 
-
+                     if (ViewBag.ProgramId == null)
+                     {
+                         <div class="form-group">
+                             <label for="">Program Type</label>
+                             @Html.DropDownList("programType", EnumHelper.GetSelectList(typeof(ProgramType)), "Select a Program Type", new { @class = "custom-select" })
+                             @Html.ValidationMessageFor(model => model.ProgramType, "", new { @class = "text-danger" })
+                         </div>
+                     }
                     <input type="hidden" id="details" name="details" value="@(ViewBag.Details)">
 
                     <div class="form-group">

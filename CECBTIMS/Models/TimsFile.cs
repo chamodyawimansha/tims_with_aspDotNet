@@ -14,6 +14,7 @@ namespace CECBTIMS.Models
         public string Title { get; set; }
         [StringLength(255)]
         public string Details { get; set; }
+        public ProgramType? ProgramType { get; set; }
         [StringLength(255)]
         public string FileName { get; set; }
         [StringLength(255)]

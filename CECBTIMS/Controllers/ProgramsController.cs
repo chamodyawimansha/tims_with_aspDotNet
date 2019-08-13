@@ -17,7 +17,8 @@ namespace CECBTIMS.Controllers
 {
     public class ProgramsController : Controller
     {
-        private static ApplicationDbContext db = new ApplicationDbContext();
+        private ApplicationDbContext db = new ApplicationDbContext();
+        private static ApplicationDbContext dbs = new ApplicationDbContext();
 
         // GET: Programs
         public async Task<ActionResult> Index(string sortOrder, int? countPerPage, string currentFilter, string searchString, int? page)
@@ -306,7 +307,7 @@ namespace CECBTIMS.Controllers
 
         internal static Program FindProgram(int id)
         {
-            var program =  db.Programs.Find(id);
+            var program =  dbs.Programs.Find(id);
 
             return program ?? new Program();
         }
