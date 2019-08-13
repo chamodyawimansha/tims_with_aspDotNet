@@ -58,16 +58,19 @@ namespace CECBTIMS.Controllers
 
         private readonly string[] _bookMarkList =
         {
-            "AgendaList" /*numbered list of names*/,
-            "AgendaDetailsTable"/*A table with details*/,
-            "TraineeDetailsTable"/*A table with details*/,
-            "ResourcePersonsList"/*numbered list of names*/,
-            "ResourcePersonsDetailsTable"/*A table with details*/,
+            "AgendaListBookMark" /*numbered list of names*/,
+            "AgendaDetailsTableBookMark" /*A table with details*/,
+            "TraineeDetailsTableBookMark" /*A table with details*/,
+            "ResourcePersonsListBookMark" /*numbered list of names*/,
+            "ResourcePersonsDetailsTableBookMark" /*A table with details*/,
         };
+
         private string _destinationFileName;
         private string _destinationFile;
         private Type _helperClass;
+
         private object _classInstance;
+
         /**
          * Copy the word template to a new file
          */
@@ -88,7 +91,6 @@ namespace CECBTIMS.Controllers
              */
             System.IO.File.Copy(template, _destinationFile, false);
         }
-
 
         public async Task<ActionResult> Generate(Guid? id, int programId, int? employeeId, string title, string details,
             bool download, string[] columnNames)
@@ -152,6 +154,7 @@ namespace CECBTIMS.Controllers
                 {
                     docText = sr.ReadToEnd();
                 }
+
                 /**
                  * Instantiate the document helper class with parameters
                  */
@@ -190,27 +193,123 @@ namespace CECBTIMS.Controllers
             using (var doc = WordprocessingDocument.Open(_destinationFile, true))
             {
                 var mainPart = doc.MainDocumentPart;
-                // Find the table bookmark from the document
-                var res = from bm in mainPart.Document.Body.Descendants<BookmarkStart>()
-                    where bm.Name == "DataTableBookMark"
 
-                    /**
-                     * Get all the available bookmarks in the document and insert details after the bookmark
-                     */
-                           
-                          select bm;
+                /**
+                 * Add agenda table to the document
+                 */
+                var agendaBookmark = FindBookMark(mainPart, "AgendaListBookMark");
 
-                var bookmark = res.SingleOrDefault();
-                if (bookmark != null)
+                if (agendaBookmark != null)
                 {
-                    var parent = bookmark.Parent; // bookmark's parent element
+                    var parent = agendaBookmark.Parent; // bookmark's parent element
                     // insert after bookmark parent
-                    parent.InsertAfterSelf(CreateTable(new[] {"Full Name", "Employee Recruitment Type", "NIC" }));
+                    parent.InsertAfterSelf(ProcessAgendaDetailsTable());
+
+                    //rename the bookmark text value
                 }
 
-                // close saves all parts and closes the document
                 doc.Close();
             }
+        }
+
+        private Table ProcessAgendaDetailsTable()
+        {
+
+            var table = new Table();
+            /**
+             * Add styles to the table
+             */
+            this.SetTableStyle(table);
+            /**
+             * add column names to the table
+             */
+            table.Append(AddTitleRow(new[] { "No", "Topic", "Duration" }));
+            /**
+             * Get the list of agendas
+             */
+            var method = _helperClass.GetMethod("GetAgendaTable");
+            var agendas = (List<Agenda>)method.Invoke(_classInstance, null);
+            /**
+             * Add agenda data to the table
+             */
+            var i = 1;
+            foreach (var item in agendas)
+            {
+                var row = new TableRow();
+                row.Append(CreateCell(i.ToString()));
+                row.Append(CreateCell(item.Name));
+                row.Append(CreateCell(item.From+" hrs - "+item.To+" hrs"));
+                i++;
+                table.Append(row);
+            }
+
+            return table;
+        }
+
+
+        //        private 
+
+        private Table ProcessAgendaList()
+        {
+            return new Table();
+        }
+
+        /**
+         * find a given bookmark from the document
+         */
+        private BookmarkStart FindBookMark(MainDocumentPart mainPart, string bookmarkName)
+        {
+            var bookmark = from d in mainPart.Document.Body.Descendants<BookmarkStart>()
+                where d.Name == bookmarkName
+                select d;
+
+            var bmk = bookmark.SingleOrDefault();
+
+            return bmk ?? null;
+        }
+        /**
+         * Add column header to a table
+         */
+        private TableRow AddTitleRow(string[] columnNames)
+        {
+            if (columnNames == null) throw new ArgumentNullException(nameof(columnNames));
+
+            var row = new TableRow();
+
+            foreach (var col in columnNames)
+            {
+                row.Append(CreateCell(col));
+            }
+
+            return row;
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        private Table ProcessTraineeDetailsTable()
+        {
+            return new Table();
+        }
+
+        private Table ProcessResourcePersonsList()
+        {
+            return new Table();
+        }
+
+        private Table ProcessResourcePersonsDetailsTable()
+        {
+            return new Table();
         }
 
         /**
@@ -246,12 +345,11 @@ namespace CECBTIMS.Controllers
             var method = _helperClass.GetMethod("GetEmployess");
             var traineeList = (List<Employee>) method.Invoke(_classInstance, null);
 
-                // convert tl to object list
-
+            // convert tl to object list
             foreach (var item in traineeList)
             {
                 row = new TableRow();
-                
+
                 foreach (var m in columnNames)
                 {
                     var methodName = _helperClass.GetMethod(DocumentHelper.ToFunctionName(m));
@@ -263,8 +361,8 @@ namespace CECBTIMS.Controllers
                     {
                         row.Append(CreateCell("Null"));
                     }
-
                 }
+
                 table.Append(row);
             }
 

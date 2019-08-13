@@ -10,6 +10,7 @@ using CECBTIMS.Controllers;
 using CECBTIMS.DAL;
 using CECBTIMS.Models.Enums;
 using DocumentFormat.OpenXml.Bibliography;
+using Microsoft.Ajax.Utilities;
 
 namespace CECBTIMS.Models
 {
@@ -59,6 +60,11 @@ namespace CECBTIMS.Models
             }
             
             return traineeList;
+        }
+
+        public List<Employee> GetEmployess()
+        {
+            return this._traineeList;
         }
 
         // return the file number
@@ -197,16 +203,16 @@ namespace CECBTIMS.Models
         {
             return _program.ResourcePersons.ToList();
         }
-
-        Costs
-            costs List<>
-
-            Requirements
-        Requirements list
-
-        EmploymentCategories
-
-            EmploymentNatures
+//
+//        Costs
+//            costs List<>
+//
+//            Requirements
+//        Requirements list
+//
+//        EmploymentCategories
+//
+//            EmploymentNatures
 
 
 
