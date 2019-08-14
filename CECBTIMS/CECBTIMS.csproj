@@ -535,11 +535,6 @@
     <None Include="Storage\.gitignore" />
     <Content Include="Views\Documents\Index.cshtml" />
     <Content Include="Views\Documents\ColumnSelect.cshtml" />
-    <Content Include="Views\DefaultColumns\Create.cshtml" />
-    <Content Include="Views\DefaultColumns\Delete.cshtml" />
-    <Content Include="Views\DefaultColumns\Details.cshtml" />
-    <Content Include="Views\DefaultColumns\Edit.cshtml" />
-    <Content Include="Views\DefaultColumns\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
