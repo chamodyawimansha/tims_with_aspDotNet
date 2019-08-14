@@ -1,16 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Data.Entity.Core.Common.EntitySql;
 using System.Linq;
-using System.Runtime.InteropServices;
-using System.Threading.Tasks;
-using System.Web;
 using CECBTIMS.Controllers;
-using CECBTIMS.DAL;
-using CECBTIMS.Models.Enums;
-using DocumentFormat.OpenXml.Bibliography;
-using Microsoft.Ajax.Utilities;
+
 
 namespace CECBTIMS.Models
 {
@@ -40,6 +32,13 @@ namespace CECBTIMS.Models
             var nameParts = name.Split(null);
 
             return nameParts.Aggregate("Get", (current, item) => current + (item.First().ToString().ToUpper() + item.Substring(1)));
+        }
+
+        public static string RemoveSpace(string name)
+        {
+            var nameParts = name.Split(null);
+
+            return nameParts.Aggregate("",(current, item) => current + item);
         }
 
         /**

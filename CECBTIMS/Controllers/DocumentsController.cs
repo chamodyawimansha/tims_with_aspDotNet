@@ -39,6 +39,36 @@ namespace CECBTIMS.Controllers
     public class DocumentsController : Controller
     {
         private readonly ApplicationDbContext _db = new ApplicationDbContext();
+        public static readonly string[] TraineeTableColumns = new[]
+        {
+            "Title",
+            "Name With Title",
+            "Full Name",
+            "Name Short",
+            "Employee Id",
+            "Epf No",
+            "Nic",
+            "Work Space Name",
+            "Designation Name",
+            "Employee Recruitment Type",
+            "Employment Status",
+            "Date Of Appointment",
+            "Date Of Joint",
+            "Date Of Confrimation",
+            "Experience in CECB",
+            "Member / Non-Member",
+            "Details of Foreign Training Participated",
+            "Details of Foreign Field Vists Participated",
+            "Remarks of Foreign Training Participated",
+            "Nature Of Appointment",
+            "Recommendation",
+            "Name,Designation and grade",
+            "Type Of Contract",
+            "Office Email",
+            "Mobile Number",
+            "Private Email"
+
+        };
 
         private readonly string[] _varList =
         {
@@ -102,11 +132,13 @@ namespace CECBTIMS.Controllers
             //get the selected template
             var templateFile = await _db.Files.FindAsync(templateId);
             if (templateFile == null) return HttpNotFound();
+            var program = await _db.Programs.FindAsync(programId);
+            if (program == null) return HttpNotFound();
             // check if the template has trainee information table
 
-            ViewBag.Title = "Generated "+templateFile.Title;
+            ViewBag.DocTitle = "Generated "+templateFile.Title;
             ViewBag.Details = "GeneratedDocument";
-            ViewBag.Program = await _db.Programs.FindAsync(programId);
+            ViewBag.Program = program;
 
             return View("ColumnSelect", templateFile);
         }

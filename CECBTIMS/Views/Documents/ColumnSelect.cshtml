@@ -1,20 +1,12 @@
-﻿@using CECBTIMS.Models
+﻿@using CECBTIMS.Controllers
+@using CECBTIMS.Models
+@using CECBTIMS.Models.Enums
 @model CECBTIMS.Models.TimsFile
 
 @{
     ViewBag.Title = "ColumnSelect";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
-<h2>ColumnSelect</h2>
-
-
-first time selected columns save as default
-
-
-use default button
-skip
-
 
 <div class="col-8 mx-auto mb-lg-5">
     <div class="card border-primary mb-3">
@@ -26,33 +18,88 @@ skip
                 @using (Html.BeginForm($"Generate", $"Documents", null, FormMethod.Post, new { }))
                 {
                     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-
-
-
-
-
-                    //                    Guid? id, int programId, int? employeeId, string title, string details,
-                    //                    bool download, string[] columnNames
-
-
-
-
-
-                    //column checkboxes here
-
-
-                    <input type="hidden" name="title" value="@(ViewBag.Title)" />
-                    <input type="hidden" name="details" value="@(ViewBag.Details)" />
-                    <input type="hidden" name="ProgramType" value="@(ViewBag.program.ProgramType)" />
+                    @Html.AntiForgeryToken()
 
                     <div class="form-group">
-                        <input type="submit" value="Generate and Save" name="" class="btn btn-primary" />
+                        <label>Program Title</label>
+                        <input class="form-control" type="text" name="Program Title" value="@(ViewBag.program.Title)" readonly="readonly" />
+                    </div>
+                    <div class="form-group">
+                        <label>Program Title</label>
+                        <input class="form-control" type="text" name="ProgramType" value="@(ViewBag.program.ProgramType)" readonly="readonly" />
+                    </div>
+                    <div class="form-group">
+                        <label>Template Id</label>
+                        <input class="form-control" type="text" name="id" value="@(Model.Id)" readonly="readonly" />
+                    </div>
+                    <div class="form-group">
+                        <label>Document Title</label>
+                        <input class="form-control" type="text" name="title" value="@(ViewBag.DocTitle)" />
+                    </div>
+                    <div class="form-group">
+                        <label>Document Details</label>
+                        <input class="form-control" type="text" name="details" value="@(ViewBag.Details)" readonly="readonly" />
+                    </div>
 
-                        <input type="submit" value="Generate and Download" class="btn btn-primary" />
 
-                        <input type="submit" value="Use Defaults and Generate" class="btn btn-primary" />
+                    if (Model.HasTraineeTable)
+                    {
+                        <div class="mt-4">
+                            <p class="text-primary">The selected template has a Trainee information Table. which has a configurable table columns.</p>
+                        </div>
+                        <div class="row mt-4">
+                            @foreach (var col in DocumentsController.TraineeTableColumns)
+                            {
 
-                        <input type="submit" value="Use Defaults and Download" class="btn btn-primary" />
+                            <div class="form-group col-md-4">
+                                <div class="">
+                                    <div class="custom-control custom-checkbox">
+                                        <input type="checkbox" class="custom-control-input" id="@(DocumentHelper.RemoveSpace(col))" name="@(DocumentHelper.RemoveSpace(col))">
+                                        <label class="custom-control-label" for="@(DocumentHelper.RemoveSpace(col))">@col</label>
+                                    </div>
+                                </div>
+
+                                
+                                select checkboxes in the database
+
+
+
+                            </div>
+                            }
+                        </div>
+                    }
+
+
+
+
+
+
+                    //enum check boxes with
+
+                    //check default ones
+
+                    //                    foreach (var item in Model.DefaultColumns)
+                    //                    {
+                    //
+                    //                    }
+                    //
+                    //                    foreach (var VARIABLE in TableColumnName)
+                    //                    {
+                    //
+                    //                    }
+
+
+                    @*                     for (int i = 0; i < Model.CheckBoxItems.Count; i++) *@
+                    @*                     { *@
+                    @*                         @Html.LabelFor(m => m.CheckBoxItems[i].BloodGroup); *@
+                    @*                         @Html.CheckBoxFor(m => m.CheckBoxItems[i].IsSelected); *@
+                    @*                         @Html.HiddenFor(m => m.CheckBoxItems[i].BloodGroup); *@
+                    @*                     } *@
+
+
+                    <div class="form-group float-right">
+                        <input type="submit" value="Generate" name="" class="btn btn-primary" />
+                        <input type="submit" value="Download" class="btn btn-primary" />
                     </div>
                 }
 
