@@ -1,4 +1,6 @@
-﻿
+﻿@using CECBTIMS.Models
+@model CECBTIMS.Models.TimsFile
+
 @{
     ViewBag.Title = "ColumnSelect";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -12,3 +14,50 @@ first time selected columns save as default
 
 use default button
 skip
+
+
+<div class="col-8 mx-auto mb-lg-5">
+    <div class="card border-primary mb-3">
+        <div class="card-header">
+            Document Generation Conformation
+        </div>
+        <div class="card-body">
+            <div class="container pt-4 pb-4">
+                @using (Html.BeginForm($"Generate", $"Documents", null, FormMethod.Post, new { }))
+                {
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+
+
+
+
+                    //                    Guid? id, int programId, int? employeeId, string title, string details,
+                    //                    bool download, string[] columnNames
+
+
+
+
+
+                    //column checkboxes here
+
+
+                    <input type="hidden" name="title" value="@(ViewBag.Title)" />
+                    <input type="hidden" name="details" value="@(ViewBag.Details)" />
+                    <input type="hidden" name="ProgramType" value="@(ViewBag.program.ProgramType)" />
+
+                    <div class="form-group">
+                        <input type="submit" value="Generate and Save" name="" class="btn btn-primary" />
+
+                        <input type="submit" value="Generate and Download" class="btn btn-primary" />
+
+                        <input type="submit" value="Use Defaults and Generate" class="btn btn-primary" />
+
+                        <input type="submit" value="Use Defaults and Download" class="btn btn-primary" />
+                    </div>
+                }
+
+                @ViewBag.Message
+            </div>
+        </div>
+    </div>
+</div>

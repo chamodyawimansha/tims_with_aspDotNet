@@ -40,7 +40,6 @@ namespace CECBTIMS.Controllers
     {
         private readonly ApplicationDbContext _db = new ApplicationDbContext();
 
-
         private readonly string[] _varList =
         {
             "YEAR",
@@ -67,12 +66,7 @@ namespace CECBTIMS.Controllers
         private string _destinationFile;
         private Type _helperClass;
         private object _classInstance;
-
-
-
-
-
-
+        
         /**
          * Show the index page with documents related to a program
          */
@@ -101,10 +95,20 @@ namespace CECBTIMS.Controllers
         }
 
         //redirect to column select
-        public async Task<ActionResult> Generate(Guid? templateId, int? programId,string title, string details)
+        public async Task<ActionResult> Generate(Guid? templateId, int? programId, string details, ProgramType ProgramType)
         {
-            return Content("Hello");
-            return View("ColumnSelect");
+            // validate request
+            if (templateId == null || programId == null || string.IsNullOrWhiteSpace(details)) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            //get the selected template
+            var templateFile = await _db.Files.FindAsync(templateId);
+            if (templateFile == null) return HttpNotFound();
+            // check if the template has trainee information table
+
+            ViewBag.Title = "Generated "+templateFile.Title;
+            ViewBag.Details = "GeneratedDocument";
+            ViewBag.Program = await _db.Programs.FindAsync(programId);
+
+            return View("ColumnSelect", templateFile);
         }
         
 

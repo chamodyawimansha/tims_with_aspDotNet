@@ -13,7 +13,8 @@ namespace CECBTIMS.Controllers
 {
     public class EmployeesController : Controller
     {
-        private static CECB_ERPEntities db = new CECB_ERPEntities();
+        private CECB_ERPEntities db = new CECB_ERPEntities();
+        private static CECB_ERPEntities sdb = new CECB_ERPEntities();
         private ApplicationDbContext default_db = new ApplicationDbContext();
 
         public async Task<ActionResult> Index(int? programId)
@@ -128,7 +129,7 @@ namespace CECBTIMS.Controllers
          */
         internal static Employee FindEmployee(Guid id)
         {
-            var employee = db.cmn_EmployeeVersion.First(vid => vid.EmployeeVersionId == id);
+            var employee = sdb.cmn_EmployeeVersion.First(vid => vid.EmployeeVersionId == id);
             if (employee == null) return new Employee();
             return new Employee()
                 {
