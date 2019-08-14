@@ -194,6 +194,7 @@
     <Compile Include="Controllers\AgendaController.cs" />
     <Compile Include="Controllers\CategoriesController.cs" />
     <Compile Include="Controllers\DocumentsController.cs" />
+    <Compile Include="Controllers\DocumentsController1.cs" />
     <Compile Include="Controllers\EmployeesController.cs" />
     <Compile Include="Controllers\CostsController.cs" />
     <Compile Include="Controllers\FilesController.cs" />
