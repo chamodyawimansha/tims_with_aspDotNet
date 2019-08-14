@@ -22,7 +22,7 @@ namespace CECBTIMS.Models
         public FileType FileType { get; set; }
         public FileMethod FileMethod { get; set; }
         public int? ProgramId { get; set; }
-        public bool? HasTraineeTable { get; set; } = false;
+        public bool HasTraineeTable { get; set; } = false;
         public virtual Program Program { get; set; }
         public virtual ICollection<DefaultColumn> DefaultColumns { get; set; }
 

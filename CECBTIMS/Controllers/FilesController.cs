@@ -177,7 +177,7 @@ namespace CECBTIMS.Controllers
 
         [HttpPost, ActionName("Upload")]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> UploadFile(HttpPostedFileBase file,string title,string details,int? programId, ProgramType? programType)
+        public async Task<ActionResult> UploadFile(HttpPostedFileBase file,string title,string details,int? programId, ProgramType? programType, bool? HasTraineeTable)
         {
 
             if (file == null || file.ContentLength <= 0 ) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -220,6 +220,7 @@ namespace CECBTIMS.Controllers
                 ProgramType = programType,
                 FileType = (FileType) Enum.Parse(typeof(FileType), fileExtension ?? throw new InvalidOperationException()),
                 FileMethod = (FileMethod) 1, // upload
+                HasTraineeTable = HasTraineeTable ?? false,
                 ProgramId = programId,
             };
             // file path name
@@ -292,7 +293,7 @@ namespace CECBTIMS.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost, ActionName("Edit")]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> EditFile(Guid id, HttpPostedFileBase file, string title, byte[] rowVersion)
+        public async Task<ActionResult> EditFile(Guid id, HttpPostedFileBase file, string title, ProgramType? programType, bool? HasTraineeTable, byte[] rowVersion)
         {
 
             // get the to be update file object from the database
@@ -360,6 +361,8 @@ namespace CECBTIMS.Controllers
                 ? fileInDb.FileType
                 : (FileType)Enum.Parse(typeof(FileType), newFileExtension ?? throw new InvalidOperationException()); ;
             fileInDb.UpdatedAt = DateTime.Now;
+            fileInDb.ProgramType = programType;
+            fileInDb.HasTraineeTable = HasTraineeTable ?? false;
             fileInDb.RowVersion = rowVersion;
 
             if (TryUpdateModel(fileInDb))

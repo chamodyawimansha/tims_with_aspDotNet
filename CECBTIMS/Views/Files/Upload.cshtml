@@ -10,7 +10,6 @@
     <div class="card border-primary mb-3">
         <div class="card-header">
             File Upload -
-
             @if (ViewBag.ProgramId == null)
             {
                 <span>Document Template</span>
@@ -19,14 +18,13 @@
             {
                 <span>Program Brochure</span>
             }
-
         </div>
         <div class="card-body">
             <div class="container pt-4 pb-4">
-                @using (Html.BeginForm($"Upload", $"Files", null, FormMethod.Post, new {enctype = "multipart/form-data"}))
+                @using (Html.BeginForm($"Upload", $"Files", null, FormMethod.Post, new { enctype = "multipart/form-data" }))
                 {
                     @Html.AntiForgeryToken()
-                    @Html.ValidationSummary(true, "", new {@class = "text-danger"})
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                     <input type="hidden" id="programId" name="programId" value="@(ViewBag.ProgramId)">
                     <div class="form-group">
                         <label for="title">File Title</label>
@@ -34,14 +32,27 @@
                         @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
                     </div>
 
-                     if (ViewBag.ProgramId == null)
-                     {
-                         <div class="form-group">
-                             <label for="">Program Type</label>
-                             @Html.DropDownList("programType", EnumHelper.GetSelectList(typeof(ProgramType)), "Select a Program Type", new { @class = "custom-select" })
-                             @Html.ValidationMessageFor(model => model.ProgramType, "", new { @class = "text-danger" })
-                         </div>
-                     }
+                    if (ViewBag.ProgramId == null)
+                    {
+                        <div class="form-group">
+                            <label for="">Program Type</label>
+                            @Html.DropDownList("programType", EnumHelper.GetSelectList(typeof(ProgramType)), "Select a Program Type", new { @class = "custom-select" })
+                            @Html.ValidationMessageFor(model => model.ProgramType, "", new { @class = "text-danger" })
+                        </div>
+                    }
+
+                    if (ViewBag.ProgramId == null)
+                    {
+                    @* HasTraineeTable *@
+                        <div class="form-group">
+                            <label for="title">Has Trainee Details Table</label>
+                            @Html.CheckBoxFor(model => model.HasTraineeTable)
+                        </div>
+                    }
+
+
+
+
                     <input type="hidden" id="details" name="details" value="@(ViewBag.Details)">
 
                     <div class="form-group">
@@ -49,14 +60,15 @@
                         <input type="file" class="form-control-file" id="FileInput" name="file" aria-describedby="fileHelp">
                         <small id="fileHelp" class="form-text text-muted">Only Pdf, Docx, Doc, PNG, JPG and JPEG are allowed</small>
                     </div>
-                    
+
                     <div class="form-group">
-                        <input type="submit" value="Upload" class="btn btn-primary"/>
+                        <input type="submit" value="Upload" class="btn btn-primary" />
                     </div>
                 }
-                
+
                 @ViewBag.Message
             </div>
         </div>
     </div>
+
 </div>

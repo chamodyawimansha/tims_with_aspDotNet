@@ -274,6 +274,10 @@
     <Compile Include="Migrations\201908140154138_defaultColumns.Designer.cs">
       <DependentUpon>201908140154138_defaultColumns.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201908140213005_FilesHasTableREquired.cs" />
+    <Compile Include="Migrations\201908140213005_FilesHasTableREquired.Designer.cs">
+      <DependentUpon>201908140213005_FilesHasTableREquired.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Agenda.cs" />
     <Compile Include="Models\BaseCols.cs" />
@@ -586,6 +590,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201908140154138_defaultColumns.resx">
       <DependentUpon>201908140154138_defaultColumns.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201908140213005_FilesHasTableREquired.resx">
+      <DependentUpon>201908140213005_FilesHasTableREquired.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

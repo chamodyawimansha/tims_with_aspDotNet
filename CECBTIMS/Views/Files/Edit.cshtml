@@ -1,4 +1,5 @@
-﻿@model CECBTIMS.Models.TimsFile
+﻿@using CECBTIMS.Models.Enums
+@model CECBTIMS.Models.TimsFile
 
 @{
     ViewBag.Title = "Edit File";
@@ -28,6 +29,24 @@
                         <input type="text" value="@(Model.OriginalFileName)" class="form-control" readonly="readonly"/>
                         @Html.ValidationMessageFor(model => model.OriginalFileName, "", new { @class = "text-danger" })
                     </div>
+
+                    if (ViewBag.ProgramId == null)
+                    {
+                        <div class="form-group">
+                            <label for="">Program Type</label>
+                            @Html.DropDownList("programType", EnumHelper.GetSelectList(typeof(ProgramType)), "Select a Program Type", new { @class = "custom-select" })
+                            @Html.ValidationMessageFor(model => model.ProgramType, "", new { @class = "text-danger" })
+                        </div>
+                    }
+
+                    if (ViewBag.ProgramId == null)
+                    {
+                    @* HasTraineeTable *@
+                        <div class="form-group">
+                            <label for="title">Has Trainee Details Table</label>
+                            @Html.CheckBoxFor(model => model.HasTraineeTable)
+                        </div>
+                    }
 
                     <div class="form-group">
                         <label for="FileInput">Select a File</label>
