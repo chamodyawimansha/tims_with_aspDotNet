@@ -64,8 +64,7 @@
                         <th>Type</th>
                         <th>Created Method</th>
                         <th>Created On</th>
-                        <th>Created By</th>
-                        <th style="width: 7%"></th>
+                        <th style="width: 10%"></th>
                     </tr>
                     @foreach (var item in Model)
                     {
@@ -90,13 +89,16 @@
                                 @Html.DisplayFor(modelItem => item.CreatedAt)
                             </td>
                             <td>
-                                @Html.DisplayFor(modelItem => item.CreatedBy)
-                            </td>
-                            <td>
-                                <a href="@Url.Action($"Download", $"Files", new {id = item.Id})" class="text-primary mr-sm-2">
+                                @if (item.HasTraineeTable)
+                                {
+                                    <a href="@Url.Action($"Index", $"DefaultColumns", new {id = item.Id})" class="text-primary mr-sm-2" title="Has Default Columns">
+                                        <span class="fa fa-window-maximize" aria-hidden="true"></span>
+                                    </a>
+                                }
+                                <a href="@Url.Action($"Download", $"Files", new {id = item.Id})" class="text-primary mr-sm-2" title="Download">
                                     <span class="fa fa-download" aria-hidden="true"></span>
                                 </a>
-                                <a href="@Url.Action($"Delete", $"Files", new {id = item.Id})" class="text-danger">
+                                <a href="@Url.Action($"Delete", $"Files", new {id = item.Id})" class="text-danger" title="Remove">
                                     <span class="fa fa-trash " aria-hidden="true"></span>
                                 </a>
                             </td>

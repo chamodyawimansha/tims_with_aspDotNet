@@ -57,5 +57,7 @@ namespace CECBTIMS.DAL
         public System.Data.Entity.DbSet<CECBTIMS.Models.EmploymentCategory> EmploymentCategories { get; set; }
 
         public System.Data.Entity.DbSet<CECBTIMS.Models.EmploymentNature> EmploymentNatures { get; set; }
+
+        public System.Data.Entity.DbSet<CECBTIMS.Models.DefaultColumn> DefaultColumns { get; set; }
     }
 }

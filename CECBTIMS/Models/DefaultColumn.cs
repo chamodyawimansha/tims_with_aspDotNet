@@ -15,13 +15,3 @@ namespace CECBTIMS.Models
         public virtual TimsFile TimsFile { get; set; }
     }
 }
-
-
-/**
- *
- * if file id don't have in default column save default columns for first time
- * edit default columns
- *      
- *
- *
- * /
