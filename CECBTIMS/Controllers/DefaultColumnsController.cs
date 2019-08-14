@@ -17,9 +17,15 @@ namespace CECBTIMS.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: DefaultColumns
-        public async Task<ActionResult> Index()
+        public async Task<ActionResult> Index(Guid? id)
         {
-            return View(await db.DefaultColumns.ToListAsync());
+            if(id == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            //get the template
+            var template = await db.Files.FindAsync(id);
+            if (template == null) return HttpNotFound();
+            //return default column
+            
+            return View(template);
         }
 
         // GET: DefaultColumns/Details/5
