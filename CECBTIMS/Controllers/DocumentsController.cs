@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.Entity;
 using System.Globalization;
 using System.Net;
 using System.Threading.Tasks;
@@ -65,7 +66,6 @@ namespace CECBTIMS.Controllers
         private string _destinationFileName;
         private string _destinationFile;
         private Type _helperClass;
-
         private object _classInstance;
 
 
@@ -80,26 +80,33 @@ namespace CECBTIMS.Controllers
         {
             if (programId == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 
-            List<TimsFile> documents = new List<TimsFile>();
+            var documents = new List<TimsFile>();
             // get the program
             var program = await _db.Programs.FindAsync(programId);
-
             if (program == null) return View(documents);
 
+            // get the generated documents equal to the selected program
             var docs = program.Files;
-
             documents.AddRange(docs.Where(item => item.FileMethod == FileMethod.Generate));
+
+            //get list of templates equal to the selected program type
+            var templateList = new List<TimsFile>();
+            var fileList = await _db.Files.ToListAsync();
+            templateList.AddRange(fileList.Where(item => item.ProgramType == program.ProgramType));
+            // assign the template list to a view bag variable
+            ViewBag.TemplateList = templateList;
+            ViewBag.Program = program;
 
             return View(documents);
         }
 
-
-
-
-
-
-
-
+        //redirect to column select
+        public async Task<ActionResult> Generate(Guid? templateId, int? programId,string title, string details)
+        {
+            return Content("Hello");
+            return View("ColumnSelect");
+        }
+        
 
         /**
          * Copy the word template to a new file
@@ -122,7 +129,9 @@ namespace CECBTIMS.Controllers
             System.IO.File.Copy(template, _destinationFile, false);
         }
 
-        public async Task<ActionResult> Generate(Guid? id, int programId, int? employeeId, string title, string details,
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> GenerateFile(Guid? id, int programId, int? employeeId, string title, string details,
             bool download, string[] columnNames)
         {
             /**

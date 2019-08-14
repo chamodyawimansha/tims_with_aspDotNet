@@ -1,4 +1,7 @@
-﻿@model IEnumerable<CECBTIMS.Models.TimsFile>
+﻿@using System.Web.UI.WebControls
+@using CECBTIMS.Models
+@using DocumentFormat.OpenXml.Office2013.Excel
+@model IEnumerable<CECBTIMS.Models.TimsFile>
 
 @{
     ViewBag.Title = "Documents";
@@ -10,10 +13,42 @@
 
 
 
-New file gen form
+<div class="col-8 mx-auto mb-lg-5">
+    <div class="card border-primary mb-3">
+        <div class="card-header">
+            Select a Template To Generate a Document
+        </div>
+        <div class="card-body">
+            <div class="container pt-4 pb-4">
+                @using (Html.BeginForm($"Generate", $"Documents", null, FormMethod.Get, new {}))
+                {
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
+                    <div class="form-group">
+                        <select class="custom-select" name="templateId">
+                            
+                            @foreach (TimsFile item in ViewBag.TemplateList)
+                            {
+                                <option value="@(item.Id)">@(item.Title)</option>
+                            }
 
+                        </select>
+                    </div>
+                    //this adds in the column select
+                    <input type="hidden" name="title" value=""/>
+                    <input type="hidden" name="details" value="GeneratedDocument"/>
+                    <input type="hidden" name="ProgramType" value="@(ViewBag.program.ProgramType)"/>
+                                                                                                  
+                    <div class="form-group">
+                        <input type="submit" value="Generate" class="btn btn-primary" />
+                    </div>
+                }
 
+                @ViewBag.Message
+            </div>
+        </div>
+    </div>
+</div>
 
 
 

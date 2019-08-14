@@ -523,6 +523,7 @@
     <Content Include="Views\Files\Index.cshtml" />
     <None Include="Storage\.gitignore" />
     <Content Include="Views\Documents\Index.cshtml" />
+    <Content Include="Views\Documents\ColumnSelect.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
