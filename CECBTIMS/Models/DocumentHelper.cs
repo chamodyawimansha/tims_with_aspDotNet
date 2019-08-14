@@ -308,6 +308,5 @@ namespace CECBTIMS.Models
         {
             return employee.PrivateEmail;
         }
-
     }
 }

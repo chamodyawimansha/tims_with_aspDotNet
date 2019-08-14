@@ -270,6 +270,10 @@
     <Compile Include="Migrations\201908131234152_programTypeaddedToFiles.Designer.cs">
       <DependentUpon>201908131234152_programTypeaddedToFiles.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201908140154138_defaultColumns.cs" />
+    <Compile Include="Migrations\201908140154138_defaultColumns.Designer.cs">
+      <DependentUpon>201908140154138_defaultColumns.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Agenda.cs" />
     <Compile Include="Models\BaseCols.cs" />
@@ -303,6 +307,7 @@
     <Compile Include="Models\cmn_WorkSpaceType.cs">
       <DependentUpon>CECBERP.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\DefaultColumn.cs" />
     <Compile Include="Models\DocumentHelper.cs" />
     <Compile Include="Models\Helpers.cs" />
     <Compile Include="Models\Employee.cs" />
@@ -312,6 +317,7 @@
     <Compile Include="Models\Enums\FileMethod.cs" />
     <Compile Include="Models\Enums\FileType.cs" />
     <Compile Include="Models\TableColumn.cs" />
+    <Compile Include="Models\Enums\TableColumnName.cs" />
     <Compile Include="Models\TimsFile.cs" />
     <Compile Include="Models\hrm_Designation.cs">
       <DependentUpon>CECBERP.tt</DependentUpon>
@@ -577,6 +583,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201908131234152_programTypeaddedToFiles.resx">
       <DependentUpon>201908131234152_programTypeaddedToFiles.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201908140154138_defaultColumns.resx">
+      <DependentUpon>201908140154138_defaultColumns.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

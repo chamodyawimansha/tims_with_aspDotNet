@@ -6,8 +6,7 @@ using CECBTIMS.Models.Enums;
 
 namespace CECBTIMS.Models
 {
-
-    public class TableColumn : BaseCols
+    public class DefaultColumn
     {
         public int Id { get; set; }
         public int TimsFileId { get; set; }
@@ -16,6 +15,3 @@ namespace CECBTIMS.Models
         public virtual TimsFile TimsFile { get; set; }
     }
 }
-
-
-//table column enums
