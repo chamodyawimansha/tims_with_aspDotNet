@@ -113,7 +113,7 @@ namespace CECBTIMS.Controllers
             /**
             * get the document template from the storage
             */
-            var template = System.IO.Path.Combine(Server.MapPath("~/Storage/test.docx"));
+            var template = Path.Combine(Server.MapPath("~/Storage/test.docx"));
                 /**
                  * Generate a new file name and select a path for the new document
                  */

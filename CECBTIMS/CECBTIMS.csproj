@@ -314,6 +314,8 @@
     </Compile>
     <Compile Include="Models\DefaultColumn.cs" />
     <Compile Include="Models\DocumentHelper.cs" />
+    <Compile Include="Models\Document\ApprovalLetter.cs" />
+    <Compile Include="Models\Document\LocalCirculate.cs" />
     <Compile Include="Models\Helpers.cs" />
     <Compile Include="Models\Employee.cs" />
     <Compile Include="Models\EmploymentCategory.cs" />
@@ -532,9 +534,10 @@
     <Content Include="Views\Files\Delete.cshtml" />
     <Content Include="Views\Natures\Create.cshtml" />
     <Content Include="Views\Files\Index.cshtml" />
-    <None Include="Storage\.gitignore" />
+    <None Include="Storage\gen\.gitignore" />
     <Content Include="Views\Documents\Index.cshtml" />
     <Content Include="Views\Documents\ColumnSelect.cshtml" />
+    <Content Include="Storage\up\.gitignore" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
