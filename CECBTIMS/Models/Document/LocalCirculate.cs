@@ -17,6 +17,21 @@ namespace CECBTIMS.Models.Document
     {
         private const string FontFamily = "Times New Roman";
 
+        // 0 = organizer, 1 = date(14th august 2018), 2 = Venue, 
+        private const string FirstParagraph =
+            "{0} has announced the Annual Sessions which will be held on {1} at {2}. Please circulate the attached details of the programme among the officers (from permanent cadre) in your Project/Sites.";
+
+        //after first paragraph target group
+        // 0 = Application closing Time, 1 = Application closing date(09th August 2018)
+        private const string SecondParagraph =
+            "Those who are willing to attend should send or email (cecb.training@gmail.com) duly filled Training Request Form together with your recommendation on or before {0} on {1} to reach the Training Unit.";
+
+        // 0 = member fee, 1 = non - member fee, 2 = student fee
+        private const string ThirdParagraph =
+            "Please note that the registration fee of Rs.{0}/- (per member), Rs.{1}/- (per non-member), Rs.{2}/- (per Student Members) per Participant should be paid by the respective AGM sections.";
+
+        private const string ForthParagraph = "Late requests will not be accepted";
+
         private readonly string[] RecipientList = new[]
         {
             "Corp. AGM (Con)",
@@ -68,6 +83,7 @@ namespace CECBTIMS.Models.Document
         {
             this.program = program;
         }
+
         public LocalCirculate(Program program, List<Employee> traineeList)
         {
             this.program = program;
@@ -134,11 +150,15 @@ namespace CECBTIMS.Models.Document
 
 
                 var body = mainPart.Document.AppendChild(new Body());
-                
-                
+
+
                 body.Append(HeaderParagraph());
                 body.Append(SetRecipientParagraph());
                 body.Append(SetProgramTitleParagraph());
+                body.Append(SetFirstParagraph());
+                body.Append(SetTargetGroupParagraph());
+                body.Append(SetSecondParagraph());
+                body.Append(SetThirdParagraph());
 
 
             }
@@ -165,7 +185,7 @@ namespace CECBTIMS.Models.Document
             var rPr = new RunProperties(
                 new RunFonts()
                 {
-                    
+
                     Ascii = FontFamily
                 });
 
@@ -187,16 +207,17 @@ namespace CECBTIMS.Models.Document
             return new Text()
             {
 
-                Text = "CB/TRU/LOC/"+DateTime.Today.ToString("yyyy")+" - 00                                                                                                      ",//unique number for this year
+                Text = "CB/TRU/LOC/" + DateTime.Today.ToString("yyyy") +
+                       " - 00                                                                                                      ", //unique number for this year
                 Space = SpaceProcessingModeValues.Preserve
             };
         }
 
-        private Text SetCurrentDate() 
+        private Text SetCurrentDate()
         {
             return new Text()
             {
-                Text = "Date: "+DateTime.Now.ToString("yyyy.MM.dd"),
+                Text = "Date: " + DateTime.Now.ToString("yyyy.MM.dd"),
             };
         }
 
@@ -206,7 +227,7 @@ namespace CECBTIMS.Models.Document
 
             var pp = new ParagraphProperties
             {
-                Justification = new Justification() { Val = JustificationValues.Left }
+                Justification = new Justification() {Val = JustificationValues.Left}
             };
             p.Append(pp);
             var r = new Run();
@@ -236,7 +257,7 @@ namespace CECBTIMS.Models.Document
 
             var pp = new ParagraphProperties
             {
-                Justification = new Justification() { Val = JustificationValues.Both }
+                Justification = new Justification() {Val = JustificationValues.Both}
             };
             p.Append(pp);
 
@@ -269,6 +290,114 @@ namespace CECBTIMS.Models.Document
             return p;
         }
 
+        private Paragraph SetFirstParagraph()
+        {
+            var p = new Paragraph();
+            var pp = new ParagraphProperties
+            {
+                Justification = new Justification() { Val = JustificationValues.Both }
+            };
+            p.Append(pp);
+
+            var r = new Run();
+            var rPr = new RunProperties(
+                new RunFonts()
+                {
+                    Ascii = FontFamily,
+                });
+            r.Append(rPr);
+            r.Append(new Text()
+            {
+                Text = string.Format(FirstParagraph, DocumentHelper.GetOrganisedBy(program), program.StartDate.ToString("D"), program.Venue)
+            });
+
+            p.Append(r);
+
+            return p;
+        }
+
+        private Paragraph SetTargetGroupParagraph()
+        {
+            var p = new Paragraph();
+            var pp = new ParagraphProperties
+            {
+                Justification = new Justification() { Val = JustificationValues.Both }
+            };
+            p.Append(pp);
+
+            var r = new Run();
+            var rPr = new RunProperties(
+                new RunFonts()
+                {
+                    Ascii = FontFamily,
+                });
+            // set text to bold
+            rPr.Append(new Bold()
+            {
+                Val = OnOffValue.FromBoolean(true),
+            });
+            r.Append(rPr);
+            r.Append(new Text()
+            {
+                Text = string.Format("Target Group: " + DocumentHelper.GetTargetGroup(program))
+            });
+
+            p.Append(r);
+
+            return p;
+        }
+
+        private Paragraph SetSecondParagraph()
+        {
+            var p = new Paragraph();
+            var pp = new ParagraphProperties
+            {
+                Justification = new Justification() { Val = JustificationValues.Both }
+            };
+            p.Append(pp);
+
+            var r = new Run();
+            var rPr = new RunProperties(
+                new RunFonts()
+                {
+                    Ascii = FontFamily,
+                });
+            r.Append(rPr);
+            r.Append(new Text()
+            {
+                Text = string.Format(SecondParagraph, program.ApplicationClosingTime.ToString("h:mm tt"), program.ApplicationClosingDate.ToString("D"))
+            });
+
+            p.Append(r);
+
+            return p;
+        }
+
+        private Paragraph SetThirdParagraph()
+        {
+            var p = new Paragraph();
+            var pp = new ParagraphProperties
+            {
+                Justification = new Justification() { Val = JustificationValues.Both }
+            };
+            p.Append(pp);
+
+            var r = new Run();
+            var rPr = new RunProperties(
+                new RunFonts()
+                {
+                    Ascii = FontFamily,
+                });
+            r.Append(rPr);
+            r.Append(new Text()
+            {
+                Text = string.Format(ThirdParagraph, program.MemberFee.ToString(), program.NonMemberFee.ToString(), program.StudentFee.ToString())
+            });
+
+            p.Append(r);
+
+            return p;
+        }
 
     }
 }
