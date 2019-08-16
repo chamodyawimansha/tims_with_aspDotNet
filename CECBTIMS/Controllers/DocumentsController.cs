@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using System.Web.Mvc;
+using CECBTIMS.DAL;
 using CECBTIMS.Models.Document;
 
 
@@ -7,6 +8,7 @@ namespace CECBTIMS.Controllers
 {
     public class DocumentsController : Controller
     {
+        private ApplicationDbContext db = new ApplicationDbContext();
 
         // variable names in the document will be like this get_today, get_program_title, get_program_end_date, get_program_start_date
 
@@ -30,7 +32,8 @@ namespace CECBTIMS.Controllers
 
         public async Task<ActionResult> Generate()
         {
-            LocalCirculate.Create();
+            var lc = new LocalCirculate(await db.Programs.FindAsync(1));
+            lc.Create();
 
             return Content("Hello");
         }
