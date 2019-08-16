@@ -9,13 +9,14 @@ using DocumentFormat.OpenXml.Wordprocessing;
 
 namespace CECBTIMS.Models.Document
 {
-
     /**
      * The class for Local Program circulation document
      */
     public class LocalCirculate
     {
         private const string FontFamily = "Times New Roman";
+        private const string ParagraphFontSize = "24";
+        private const string TitleFontSize = "24";
 
         // 0 = organizer, 1 = date(14th august 2018), 2 = Venue, 
         private const string FirstParagraph =
@@ -117,11 +118,10 @@ namespace CECBTIMS.Models.Document
 
             using (var doc = WordprocessingDocument.Open(path, true))
             {
-
                 var runProp = new RunProperties();
 
-                var defaultFont = new RunFonts {Ascii = "Arial"};
-                var defaultFontSize = new FontSize {Val = new StringValue("11")};
+                var defaultFont = new RunFonts {Ascii = FontFamily};
+                var defaultFontSize = new FontSize {Val = new StringValue("12")};
                 runProp.Append(defaultFont);
                 runProp.Append(defaultFontSize);
 
@@ -131,7 +131,6 @@ namespace CECBTIMS.Models.Document
             }
 
             return path;
-
         }
 
         public void Create()
@@ -159,8 +158,8 @@ namespace CECBTIMS.Models.Document
                 body.Append(SetTargetGroupParagraph());
                 body.Append(SetSecondParagraph());
                 body.Append(SetThirdParagraph());
-
-
+                body.Append(new Paragraph());
+                body.Append(SetNameParagraph());
             }
         }
 
@@ -185,9 +184,14 @@ namespace CECBTIMS.Models.Document
             var rPr = new RunProperties(
                 new RunFonts()
                 {
-
                     Ascii = FontFamily
                 });
+            //set font size to 12
+            rPr.Append(new FontSize()
+            {
+                Val = ParagraphFontSize,
+            });
+
 
             r.Append(rPr);
 
@@ -196,7 +200,6 @@ namespace CECBTIMS.Models.Document
 
             p.Append(r);
             return p;
-
         }
 
         /**
@@ -206,9 +209,8 @@ namespace CECBTIMS.Models.Document
         {
             return new Text()
             {
-
                 Text = "CB/TRU/LOC/" + DateTime.Today.ToString("yyyy") +
-                       " - 00                                                                                                      ", //unique number for this year
+                       " - 00                                                                                        ", //unique number for this year
                 Space = SpaceProcessingModeValues.Preserve
             };
         }
@@ -235,9 +237,14 @@ namespace CECBTIMS.Models.Document
             var rPr = new RunProperties(
                 new RunFonts()
                 {
-
                     Ascii = FontFamily
                 });
+            //set font size to 12
+            rPr.Append(new FontSize()
+            {
+                Val = ParagraphFontSize,
+            });
+
 
             r.Append(rPr);
 
@@ -276,7 +283,7 @@ namespace CECBTIMS.Models.Document
             //set font size to 12
             rPr.Append(new FontSize()
             {
-                Val = "24",
+                Val = TitleFontSize,
             });
 
             r.Append(rPr);
@@ -295,7 +302,7 @@ namespace CECBTIMS.Models.Document
             var p = new Paragraph();
             var pp = new ParagraphProperties
             {
-                Justification = new Justification() { Val = JustificationValues.Both }
+                Justification = new Justification() {Val = JustificationValues.Both}
             };
             p.Append(pp);
 
@@ -305,10 +312,16 @@ namespace CECBTIMS.Models.Document
                 {
                     Ascii = FontFamily,
                 });
+            //set font size to 12
+            rPr.Append(new FontSize()
+            {
+                Val = ParagraphFontSize,
+            });
             r.Append(rPr);
             r.Append(new Text()
             {
-                Text = string.Format(FirstParagraph, DocumentHelper.GetOrganisedBy(program), program.StartDate.ToString("D"), program.Venue)
+                Text = string.Format(FirstParagraph, DocumentHelper.GetOrganisedBy(program),
+                    program.StartDate.ToString("D"), program.Venue)
             });
 
             p.Append(r);
@@ -321,7 +334,7 @@ namespace CECBTIMS.Models.Document
             var p = new Paragraph();
             var pp = new ParagraphProperties
             {
-                Justification = new Justification() { Val = JustificationValues.Both }
+                Justification = new Justification() {Val = JustificationValues.Both}
             };
             p.Append(pp);
 
@@ -331,6 +344,11 @@ namespace CECBTIMS.Models.Document
                 {
                     Ascii = FontFamily,
                 });
+            //set font size to 12
+            rPr.Append(new FontSize()
+            {
+                Val = ParagraphFontSize,
+            });
             // set text to bold
             rPr.Append(new Bold()
             {
@@ -352,7 +370,7 @@ namespace CECBTIMS.Models.Document
             var p = new Paragraph();
             var pp = new ParagraphProperties
             {
-                Justification = new Justification() { Val = JustificationValues.Both }
+                Justification = new Justification() {Val = JustificationValues.Both}
             };
             p.Append(pp);
 
@@ -362,10 +380,16 @@ namespace CECBTIMS.Models.Document
                 {
                     Ascii = FontFamily,
                 });
+            //set font size to 12
+            rPr.Append(new FontSize()
+            {
+                Val = ParagraphFontSize,
+            });
             r.Append(rPr);
             r.Append(new Text()
             {
-                Text = string.Format(SecondParagraph, program.ApplicationClosingTime.ToString("h:mm tt"), program.ApplicationClosingDate.ToString("D"))
+                Text = string.Format(SecondParagraph, program.ApplicationClosingTime.ToString("h:mm tt"),
+                    program.ApplicationClosingDate.ToString("D"))
             });
 
             p.Append(r);
@@ -378,7 +402,7 @@ namespace CECBTIMS.Models.Document
             var p = new Paragraph();
             var pp = new ParagraphProperties
             {
-                Justification = new Justification() { Val = JustificationValues.Both }
+                Justification = new Justification() {Val = JustificationValues.Both}
             };
             p.Append(pp);
 
@@ -388,10 +412,16 @@ namespace CECBTIMS.Models.Document
                 {
                     Ascii = FontFamily,
                 });
+            //set font size to 12
+            rPr.Append(new FontSize()
+            {
+                Val = ParagraphFontSize,
+            });
             r.Append(rPr);
             r.Append(new Text()
             {
-                Text = string.Format(ThirdParagraph, program.MemberFee.ToString(), program.NonMemberFee.ToString(), program.StudentFee.ToString())
+                Text = string.Format(ThirdParagraph, program.MemberFee.ToString(), program.NonMemberFee.ToString(),
+                    program.StudentFee.ToString())
             });
 
             p.Append(r);
@@ -399,5 +429,47 @@ namespace CECBTIMS.Models.Document
             return p;
         }
 
+        private Paragraph SetNameParagraph()
+        {
+            var p = new Paragraph();
+            var pp = new ParagraphProperties
+            {
+                Justification = new Justification() {Val = JustificationValues.Left}
+            };
+            p.Append(pp);
+
+            var r = new Run();
+            var rPr = new RunProperties(
+                new RunFonts()
+                {
+                    Ascii = FontFamily,
+                });
+            //set font size to 12
+            rPr.Append(new FontSize()
+            {
+                Val = ParagraphFontSize,
+            });
+            r.Append(rPr);
+            r.AppendChild(new Text()
+            {
+                Text = "........................................."
+            });
+            r.AppendChild(new Break());
+            r.AppendChild(new Text()
+            {
+                Text = DocumentHelper.GetTraineeManagerName()
+            });
+
+            r.AppendChild(new Break());
+
+            r.AppendChild(new Text()
+            {
+                Text = "Training Manager"
+            });
+
+            p.Append(r);
+
+            return p;
+        }
     }
 }

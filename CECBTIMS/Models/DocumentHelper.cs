@@ -24,5 +24,10 @@ namespace CECBTIMS.Models
             return program.TargetGroups.Aggregate("", (current, item) => current == "" ? item.Name : current + ", " + item.Name);
         }
 
+        public static string GetTraineeManagerName()
+        {
+            return "Eng.L C K Karunaratne";
+        }
+
     }
 }
