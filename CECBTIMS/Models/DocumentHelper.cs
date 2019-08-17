@@ -82,6 +82,12 @@ namespace CECBTIMS.Models
             return trainee.WorkSpaceType;
         }
 
+        public static string GetNo(int? prev)
+        {
+            const int num = 1;
+            return prev == null ? num.ToString() : (prev + 1).ToString();
+        }
+
 
     }
 }

@@ -95,6 +95,8 @@ namespace CECBTIMS.Models.Document
                 body.Append(TraineeInformationTable(new[] {"No", "Name", "Designation", "Nature of Appointment", "Recommendation" }));
                 body.Append(new Paragraph());
                 body.Append(SetThirdParagraph());
+                body.Append(new Paragraph());
+                body.Append(SetNameParagraph());
 
             }
         }
@@ -299,6 +301,7 @@ namespace CECBTIMS.Models.Document
             }
 
             table.Append(titleRow);
+            var i = 1;
             // Add table data
             foreach (var trainee in TraineeList)
             {
@@ -306,6 +309,28 @@ namespace CECBTIMS.Models.Document
 
                 foreach (var columnName in columnNames)
                 {
+
+                    if (columnName == "No")
+                    {
+                        var tc = new TableCell();
+                        var tcpParagraph = new Paragraph();
+                        tcpParagraph.Append(new ParagraphProperties { Justification = new Justification() { Val = JustificationValues.Center } });
+                        tc.Append(new TableCellProperties(new TableCellVerticalAlignment() { Val = TableVerticalAlignmentValues.Center }));
+                        var run = new Run();
+                        run.Append(
+                            new RunProperties(
+                                new FontSize() { Val = "24" },
+                                new RunFonts() { Ascii = FontFamily }
+                            )
+                        );
+                        run.Append(new Text(i + "."));
+                        tcpParagraph.Append(run);
+                        tc.Append(tcpParagraph);
+                        dataRow.Append(tc);
+                        i++;
+                        continue;
+                    }
+
                     var helperClass = typeof(DocumentHelper);
                     var method = helperClass.GetMethod(DocumentHelper.ToFunctionName(columnName));
 
@@ -379,6 +404,49 @@ namespace CECBTIMS.Models.Document
             {
                 Text = string.Format(ThirdParagraph, program.MemberFee.ToString(), program.NonMemberFee.ToString(),
                     program.StudentFee.ToString())
+            });
+
+            p.Append(r);
+
+            return p;
+        }
+
+        private Paragraph SetNameParagraph()
+        {
+            var p = new Paragraph();
+            var pp = new ParagraphProperties
+            {
+                Justification = new Justification() { Val = JustificationValues.Left }
+            };
+            p.Append(pp);
+
+            var r = new Run();
+            var rPr = new RunProperties(
+                new RunFonts()
+                {
+                    Ascii = FontFamily,
+                });
+            //set font size to 12
+            rPr.Append(new FontSize()
+            {
+                Val = ParagraphFontSize,
+            });
+            r.Append(rPr);
+            r.AppendChild(new Text()
+            {
+                Text = "........................................."
+            });
+            r.AppendChild(new Break());
+            r.AppendChild(new Text()
+            {
+                Text = DocumentHelper.GetTraineeManagerName()
+            });
+
+            r.AppendChild(new Break());
+
+            r.AppendChild(new Text()
+            {
+                Text = "Training Manager"
             });
 
             p.Append(r);
