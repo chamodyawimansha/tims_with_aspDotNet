@@ -8,7 +8,7 @@ using DocumentFormat.OpenXml.Packaging;
 using DocumentFormat.OpenXml.Wordprocessing;
 
 namespace CECBTIMS.Models.Document
-{
+{                                                                                                                                                                                                                      
     /**
      * The class for Local Program circulation document
      */
@@ -31,9 +31,9 @@ namespace CECBTIMS.Models.Document
         private const string ThirdParagraph =
             "Please note that the registration fee of Rs.{0}/- (per member), Rs.{1}/- (per non-member), Rs.{2}/- (per Student Members) per Participant should be paid by the respective AGM sections.";
 
-        private const string ForthParagraph = "Late requests will not be accepted";
+        private const string ForthParagraph = "Late requests will not be accepted.";
 
-        private readonly string[] RecipientList = new[]
+        private readonly string[] RecipientList = 
         {
             "Corp. AGM (Con)",
             "Corp.AGM (EPC) /AGM (SP-2)",
@@ -158,6 +158,8 @@ namespace CECBTIMS.Models.Document
                 body.Append(SetTargetGroupParagraph());
                 body.Append(SetSecondParagraph());
                 body.Append(SetThirdParagraph());
+                body.Append(new Paragraph());
+                body.Append(SetFourthParagraph());
                 body.Append(new Paragraph());
                 body.Append(SetNameParagraph());
             }
@@ -422,6 +424,30 @@ namespace CECBTIMS.Models.Document
             {
                 Text = string.Format(ThirdParagraph, program.MemberFee.ToString(), program.NonMemberFee.ToString(),
                     program.StudentFee.ToString())
+            });
+
+            p.Append(r);
+
+            return p;
+        }
+
+        private Paragraph SetFourthParagraph()
+        {
+            var p = new Paragraph();
+            var pp = new ParagraphProperties { Justification = new Justification() { Val = JustificationValues.Both } };
+            p.Append(pp);
+
+            var r = new Run();
+
+            var rPr = new RunProperties( new RunFonts() { Ascii = FontFamily });
+            rPr.Append(new FontSize() { Val = ParagraphFontSize });
+            rPr.Append(new Bold() { Val = OnOffValue.FromBoolean(true) });
+
+            r.Append(rPr);
+
+            r.Append(new Text()
+            {
+                Text = ForthParagraph
             });
 
             p.Append(r);

@@ -314,7 +314,7 @@
     </Compile>
     <Compile Include="Models\DefaultColumn.cs" />
     <Compile Include="Models\DocumentHelper.cs" />
-    <Compile Include="Models\Document\ApprovalLetter.cs" />
+    <Compile Include="Models\Document\LocalApprovalLetter.cs" />
     <Compile Include="Models\Document\LocalCirculate.cs" />
     <Compile Include="Models\Helpers.cs" />
     <Compile Include="Models\Employee.cs" />
