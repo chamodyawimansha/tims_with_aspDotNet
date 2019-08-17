@@ -32,7 +32,15 @@ namespace CECBTIMS.Controllers
 
         public async Task<ActionResult> Generate()
         {
-            var lc = new LocalApprovalLetter(await db.Programs.FindAsync(1));
+//            var lc = new LocalApprovalLetter(await db.Programs.FindAsync(1));
+            var program = await db.Programs.FindAsync(1);
+
+            var tc = new EmployeesController();
+
+            if (program == null) return Content("Hello");
+
+
+            var lc = new LocalApprovalLetter(program, tc.GetTrainees(program.Id));
             lc.Create();
 
             return Content("Hello");

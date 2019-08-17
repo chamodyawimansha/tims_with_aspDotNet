@@ -24,6 +24,9 @@ namespace CECBTIMS.Models.Document
 
         private const string SecondParagraph =
             "The following officers have applied to attend with the recommendation of respective AGMs.";
+        // 0 = member fee, 1 = non member fee, 2 = student fee
+       private const string ThirdParagraph =
+           "Your approval is sought for the above nomination and programme Rs. {0}/- (per member), Rs. {1}/- (per non-member), Rs. {2}/- (per student members). Participants should be paid by the respective AGM section.";
 
         private const string FontFamily = "Times New Roman";
         private const string ParagraphFontSize = "24";
@@ -88,7 +91,11 @@ namespace CECBTIMS.Models.Document
                 body.Append(SetFirstParagraph());
                 body.Append(new Paragraph());
                 body.Append(SetSecondParagraph());
-                body.Append(TraineeInformationTable(new[] {"Hello","second Col", "Third Col"}));
+                body.Append(new Paragraph());
+                body.Append(TraineeInformationTable(new[] {"No", "Name", "Designation", "Nature of Appointment", "Recommendation" }));
+                body.Append(new Paragraph());
+                body.Append(SetThirdParagraph());
+
             }
         }
 
@@ -262,6 +269,7 @@ namespace CECBTIMS.Models.Document
             var table = new Table();
             var titleRow = new TableRow();
             this.SetTableStyle(table);
+
             //add table columns
             foreach (var col in columnNames)
             {
@@ -291,16 +299,91 @@ namespace CECBTIMS.Models.Document
             }
 
             table.Append(titleRow);
+            // Add table data
+            foreach (var trainee in TraineeList)
+            {
+                var dataRow = new TableRow();
 
-            var dataRow = new TableRow();
+                foreach (var columnName in columnNames)
+                {
+                    var helperClass = typeof(DocumentHelper);
+                    var method = helperClass.GetMethod(DocumentHelper.ToFunctionName(columnName));
+
+                    if (method != null)
+                    {
+                        var tc = new TableCell();
+                        var tcpParagraph = new Paragraph();
+
+                        if (columnName != "Name")
+                        {
+                            tcpParagraph.Append(new ParagraphProperties { Justification = new Justification() { Val = JustificationValues.Center } });
+                        }
+
+                        // Vertical align center
+                        tc.Append(new TableCellProperties(new TableCellVerticalAlignment() { Val = TableVerticalAlignmentValues.Center }));
+                        var run = new Run();
+
+                        run.Append(
+                            new RunProperties(
+                                new FontSize() { Val = "24" },
+                                new RunFonts() { Ascii = FontFamily }
+                            )
+                        );
+
+                        run.Append(new Text((string)method.Invoke(new DocumentHelper(), new object[] { trainee })));
+
+                        tcpParagraph.Append(run);
+                        tc.Append(tcpParagraph);
+
+                        dataRow.Append(tc);
+
+                    }
+                    else
+                    {
+                        dataRow.Append(CreateCell("Null"));
+                    }
+
+                }
+
+                table.Append(dataRow);
+            }
 
 
-            dataRow.Append(CreateCell("Test"));
 
-
-            table.Append(dataRow);
 
             return table;
+        }
+
+        private Paragraph SetThirdParagraph()
+        {
+            var p = new Paragraph();
+            var pp = new ParagraphProperties
+            {
+                Justification = new Justification() { Val = JustificationValues.Both }
+            };
+            p.Append(pp);
+
+            var r = new Run();
+            var rPr = new RunProperties(
+                new RunFonts()
+                {
+                    Ascii = FontFamily,
+                });
+            //set font size to 12
+            rPr.Append(new FontSize()
+            {
+                Val = ParagraphFontSize,
+            });
+            r.Append(rPr);
+            r.Append(new Text()
+            {
+                Text = string.Format(ThirdParagraph, program.MemberFee.ToString(), program.NonMemberFee.ToString(),
+                    program.StudentFee.ToString())
+            });
+
+            p.Append(r);
+
+            return p;
         }
 
         private static TableCell CreateCell(string text)

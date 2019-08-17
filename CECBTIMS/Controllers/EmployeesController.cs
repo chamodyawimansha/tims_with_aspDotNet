@@ -14,7 +14,6 @@ namespace CECBTIMS.Controllers
     public class EmployeesController : Controller
     {
         private CECB_ERPEntities db = new CECB_ERPEntities();
-        private static CECB_ERPEntities sdb = new CECB_ERPEntities();
         private ApplicationDbContext default_db = new ApplicationDbContext();
 
         public async Task<ActionResult> Index(int? programId)
@@ -124,12 +123,28 @@ namespace CECBTIMS.Controllers
 
         }
 
+        internal List<Employee> GetTrainees(int programId)
+        {
+            // get program assignments
+            var programAssignments =  default_db.ProgramAssignments.Where(p => p.ProgramId == programId).ToList();
+
+            var trainees = new List<Employee>();
+
+            foreach (var item in programAssignments)
+            {
+                // get trainee data from the cecb database
+                trainees.Add(FindEmployee(item.EmployeeVersionId));
+            }
+
+            return trainees;
+        }
+
         /**
          * Need employee version id and return converted Employee
          */
-        internal static Employee FindEmployee(Guid id)
+        internal Employee FindEmployee(Guid id)
         {
-            var employee = sdb.cmn_EmployeeVersion.First(vid => vid.EmployeeVersionId == id);
+            var employee = db.cmn_EmployeeVersion.First(vid => vid.EmployeeVersionId == id);
             if (employee == null) return new Employee();
             return new Employee()
                 {
@@ -140,12 +155,14 @@ namespace CECBTIMS.Controllers
                     FullName = employee.FullName,
                     NIC = employee.NIC,
                     WorkSpaceName = employee.cmn_WorkSpace != null ? employee.cmn_WorkSpace.WorkSpaceName : "Null",
+                    WorkSpaceType = employee.cmn_WorkSpace != null ? employee.cmn_WorkSpace.cmn_WorkSpaceType.WorkSpaceTypeName : "Null",
                     DesignationName = employee.hrm_Designation != null ? employee.hrm_Designation.DesignationName : "Null",
                     EmployeeRecruitmentType = int.TryParse(employee.EmployeeRecruitmentType, out var rt)
                         ? (RecruitmentType) rt
                         : RecruitmentType.Null,
                     EmpStatus = (EmployeeStatus) employee.EmpStatus,
                     DateOfAppointment = employee.DateOfAppointment,
+                    NatureOfAppointment = "null",
                     TypeOfContract = employee.TypeOfContract,
                     OfficeEmail = employee.OfficeEmail,
                     MobileNumber = employee.MobileNumber,

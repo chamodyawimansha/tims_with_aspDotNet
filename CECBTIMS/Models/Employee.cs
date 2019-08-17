@@ -15,10 +15,12 @@ namespace CECBTIMS.Models
         public string FullName { get; set; }
         public string NIC { get; set; }
         public string WorkSpaceName { get; set; }
+        public string WorkSpaceType { get; set; }
         public string DesignationName { get; set; }
         public RecruitmentType? EmployeeRecruitmentType { get; set; }
         public EmployeeStatus? EmpStatus { get; set; }
         public DateTime? DateOfAppointment { get; set; }
+        public string NatureOfAppointment { get; set; }
         public string TypeOfContract { get; set; }
         public string OfficeEmail { get; set; }
         public string MobileNumber { get; set; }
