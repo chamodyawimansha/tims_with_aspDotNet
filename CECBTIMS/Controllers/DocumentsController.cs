@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Linq;
+using System.Threading.Tasks;
 using System.Web.Mvc;
 using CECBTIMS.DAL;
 using CECBTIMS.Models.Document;
@@ -40,7 +41,7 @@ namespace CECBTIMS.Controllers
             if (program == null) return Content("Hello");
 
 
-            var lc = new LocalApprovalLetter(program, tc.GetTrainees(program.Id));
+            var lc = new LocalLongApprovalLetterPOne(program, (tc.GetTrainees(program.Id)).First());
             lc.Create();
 
             return Content("Hello");

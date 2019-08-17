@@ -82,10 +82,14 @@ namespace CECBTIMS.Models
             return trainee.WorkSpaceType;
         }
 
-        public static string GetNo(int? prev)
+        public static string GetDurationOfTheCourse(Program program)
         {
-            const int num = 1;
-            return prev == null ? num.ToString() : (prev + 1).ToString();
+            return program.DurationInMonths.ToString();
+        }
+
+        public static string GetCourseFee(Program program)
+        {
+            return program.ProgramFee.ToString();
         }
 
 

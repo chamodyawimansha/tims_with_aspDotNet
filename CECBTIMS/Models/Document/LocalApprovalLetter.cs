@@ -21,7 +21,7 @@ namespace CECBTIMS.Models.Document
 
         // 0 = organised_by, 1 = start_date, 2 = venue
         private const string FirstParagraph = "{0} has announced the Annual Sessions which will be held on {1} at {2}.";
-
+         
         private const string SecondParagraph =
             "The following officers have applied to attend with the recommendation of respective AGMs.";
         // 0 = member fee, 1 = non member fee, 2 = student fee
