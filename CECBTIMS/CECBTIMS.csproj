@@ -197,7 +197,6 @@
     <Compile Include="Controllers\DocumentsController1.cs" />
     <Compile Include="Controllers\EmployeesController.cs" />
     <Compile Include="Controllers\CostsController.cs" />
-    <Compile Include="Controllers\FilesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\NaturesController.cs" />
@@ -313,6 +312,7 @@
       <DependentUpon>CECBERP.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\DefaultColumn.cs" />
+    <Compile Include="Models\Document.cs" />
     <Compile Include="Models\DocumentHelper.cs" />
     <Compile Include="Models\Document\LocalApprovalLetter.cs" />
     <Compile Include="Models\Document\LocalCirculate.cs" />
