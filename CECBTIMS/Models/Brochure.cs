@@ -20,7 +20,7 @@ namespace CECBTIMS.Models
         public string OriginalFileName { get; set; }
         public FileType FileType { get; set; }
         public FileMethod FileMethod { get; set; } = FileMethod.Upload;
-        public int? ProgramId { get; set; }
+        public int ProgramId { get; set; }
 
 
         public virtual Program Program { get; set; }

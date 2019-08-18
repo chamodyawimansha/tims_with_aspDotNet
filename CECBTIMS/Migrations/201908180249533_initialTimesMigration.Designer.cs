@@ -7,13 +7,13 @@ namespace CECBTIMS.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.2.0-61023")]
-    public sealed partial class tableColumnModelAdded : IMigrationMetadata
+    public sealed partial class initialTimesMigration : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(tableColumnModelAdded));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(initialTimesMigration));
         
         string IMigrationMetadata.Id
         {
-            get { return "201908090724555_tableColumnModelAdded"; }
+            get { return "201908180249533_initialTimesMigration"; }
         }
         
         string IMigrationMetadata.Source

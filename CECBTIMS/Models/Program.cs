@@ -33,7 +33,6 @@ namespace CECBTIMS.Models
         [DataType(DataType.Time)]
         [Display(Name = "Application Closing Time")]
         public DateTime ApplicationClosingTime { get; set; }
-        public string Brochure { get; set; } // TimsFile upload: TimsFile Name
         [StringLength(255)]
         public string Venue { get; set; } // Not For PostGrad
         [DataType(DataType.Date)]
@@ -70,6 +69,9 @@ namespace CECBTIMS.Models
         [Display(Name = "Student Fee")]
         public float? StudentFee { get; set; }
 
+
+        public virtual ICollection<Brochure> Brochure { get; set; }
+
         public virtual ICollection<ProgramArrangement> ProgramArrangements { get; set; }
         public virtual ICollection<ProgramAssignment> ProgramAssignments { get; set; }
         public virtual ICollection<Agenda> Agendas { get; set; }
@@ -77,7 +79,6 @@ namespace CECBTIMS.Models
         public virtual ICollection<ResourcePerson> ResourcePersons { get; set; }
         public virtual ICollection<Cost> Costs { get; set; }
         public virtual ICollection<Requirement> Requirements { get; set; }
-        public virtual ICollection<Brochure> Files { get; set; }
         public virtual ICollection<Document> Documents { get; set; }
         public virtual ICollection<EmploymentCategory> EmploymentCategories { get; set; }
         public virtual ICollection<EmploymentNature> EmploymentNatures { get; set; }

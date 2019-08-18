@@ -214,69 +214,9 @@
     <Compile Include="Migrations\201907101403094_initialMigration.Designer.cs">
       <DependentUpon>201907101403094_initialMigration.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201907160253307_initialTimsMigration.cs" />
-    <Compile Include="Migrations\201907160253307_initialTimsMigration.Designer.cs">
-      <DependentUpon>201907160253307_initialTimsMigration.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201907220144192_ProAssAndEmp.cs" />
-    <Compile Include="Migrations\201907220144192_ProAssAndEmp.Designer.cs">
-      <DependentUpon>201907220144192_ProAssAndEmp.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201907220202522_programAssignmentModel.cs" />
-    <Compile Include="Migrations\201907220202522_programAssignmentModel.Designer.cs">
-      <DependentUpon>201907220202522_programAssignmentModel.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201907220529327_programAssignmentModelChanged.cs" />
-    <Compile Include="Migrations\201907220529327_programAssignmentModelChanged.Designer.cs">
-      <DependentUpon>201907220529327_programAssignmentModelChanged.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201907220821564_programAssignmentModelChanged1.cs" />
-    <Compile Include="Migrations\201907220821564_programAssignmentModelChanged1.Designer.cs">
-      <DependentUpon>201907220821564_programAssignmentModelChanged1.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201907230146466_programAssignmentForeignKey.cs" />
-    <Compile Include="Migrations\201907230146466_programAssignmentForeignKey.Designer.cs">
-      <DependentUpon>201907230146466_programAssignmentForeignKey.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201907230942496_FileModel.cs" />
-    <Compile Include="Migrations\201907230942496_FileModel.Designer.cs">
-      <DependentUpon>201907230942496_FileModel.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201907240137060_fileAndPrograRelationship.cs" />
-    <Compile Include="Migrations\201907240137060_fileAndPrograRelationship.Designer.cs">
-      <DependentUpon>201907240137060_fileAndPrograRelationship.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201908031326075_FileClassChanged.cs" />
-    <Compile Include="Migrations\201908031326075_FileClassChanged.Designer.cs">
-      <DependentUpon>201908031326075_FileClassChanged.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201908051401364_EmpCatAndEmpNat.cs" />
-    <Compile Include="Migrations\201908051401364_EmpCatAndEmpNat.Designer.cs">
-      <DependentUpon>201908051401364_EmpCatAndEmpNat.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201908051412410_empNatureModelChange.cs" />
-    <Compile Include="Migrations\201908051412410_empNatureModelChange.Designer.cs">
-      <DependentUpon>201908051412410_empNatureModelChange.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201908080546273_programOrgs.cs" />
-    <Compile Include="Migrations\201908080546273_programOrgs.Designer.cs">
-      <DependentUpon>201908080546273_programOrgs.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201908090724555_tableColumnModelAdded.cs" />
-    <Compile Include="Migrations\201908090724555_tableColumnModelAdded.Designer.cs">
-      <DependentUpon>201908090724555_tableColumnModelAdded.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201908131234152_programTypeaddedToFiles.cs" />
-    <Compile Include="Migrations\201908131234152_programTypeaddedToFiles.Designer.cs">
-      <DependentUpon>201908131234152_programTypeaddedToFiles.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201908140154138_defaultColumns.cs" />
-    <Compile Include="Migrations\201908140154138_defaultColumns.Designer.cs">
-      <DependentUpon>201908140154138_defaultColumns.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201908140213005_FilesHasTableREquired.cs" />
-    <Compile Include="Migrations\201908140213005_FilesHasTableREquired.Designer.cs">
-      <DependentUpon>201908140213005_FilesHasTableREquired.cs</DependentUpon>
+    <Compile Include="Migrations\201908180249533_initialTimesMigration.cs" />
+    <Compile Include="Migrations\201908180249533_initialTimesMigration.Designer.cs">
+      <DependentUpon>201908180249533_initialTimesMigration.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Agenda.cs" />
@@ -324,7 +264,6 @@
     <Compile Include="Models\Enums\EcebEnums.cs" />
     <Compile Include="Models\Enums\FileMethod.cs" />
     <Compile Include="Models\Enums\FileType.cs" />
-    <Compile Include="Models\TableColumn.cs" />
     <Compile Include="Models\Enums\TableColumnName.cs" />
     <Compile Include="Models\Template.cs" />
     <Compile Include="Models\Brochure.cs" />
@@ -552,53 +491,8 @@
     <EmbeddedResource Include="Migrations\201907101403094_initialMigration.resx">
       <DependentUpon>201907101403094_initialMigration.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201907160253307_initialTimsMigration.resx">
-      <DependentUpon>201907160253307_initialTimsMigration.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201907220144192_ProAssAndEmp.resx">
-      <DependentUpon>201907220144192_ProAssAndEmp.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201907220202522_programAssignmentModel.resx">
-      <DependentUpon>201907220202522_programAssignmentModel.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201907220529327_programAssignmentModelChanged.resx">
-      <DependentUpon>201907220529327_programAssignmentModelChanged.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201907220821564_programAssignmentModelChanged1.resx">
-      <DependentUpon>201907220821564_programAssignmentModelChanged1.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201907230146466_programAssignmentForeignKey.resx">
-      <DependentUpon>201907230146466_programAssignmentForeignKey.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201907230942496_FileModel.resx">
-      <DependentUpon>201907230942496_FileModel.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201907240137060_fileAndPrograRelationship.resx">
-      <DependentUpon>201907240137060_fileAndPrograRelationship.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201908031326075_FileClassChanged.resx">
-      <DependentUpon>201908031326075_FileClassChanged.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201908051401364_EmpCatAndEmpNat.resx">
-      <DependentUpon>201908051401364_EmpCatAndEmpNat.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201908051412410_empNatureModelChange.resx">
-      <DependentUpon>201908051412410_empNatureModelChange.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201908080546273_programOrgs.resx">
-      <DependentUpon>201908080546273_programOrgs.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201908090724555_tableColumnModelAdded.resx">
-      <DependentUpon>201908090724555_tableColumnModelAdded.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201908131234152_programTypeaddedToFiles.resx">
-      <DependentUpon>201908131234152_programTypeaddedToFiles.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201908140154138_defaultColumns.resx">
-      <DependentUpon>201908140154138_defaultColumns.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201908140213005_FilesHasTableREquired.resx">
-      <DependentUpon>201908140213005_FilesHasTableREquired.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201908180249533_initialTimesMigration.resx">
+      <DependentUpon>201908180249533_initialTimesMigration.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

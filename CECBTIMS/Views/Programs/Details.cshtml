@@ -522,29 +522,29 @@
     <td colspan="3">@Html.DisplayFor(model => model.UpdatedBy)</td>
 </tr>
 <tr>
-    <th colspan="2">Program Brochure</th>
-    <td colspan="8">
-
-        @foreach (var item in Model.Files)
-        {
-            if (item.Details == "Program Brochure")
-            {
-                <p>@item.OriginalFileName</p>
-
-                @Html.ActionLink("View", $"Download", $"Files", new {id = item.Id}, new {@class = "btn btn-sm btn-primary mr-sm-1"})
-
-                @Html.ActionLink("Edit", $"Edit", $"Files", new {id = item.Id}, new {@class = "btn btn-sm btn-primary mr-sm-1"})
-
-                @Html.ActionLink("Remove", $"Delete", $"Files", new {id = item.Id}, new {@class = "btn btn-sm btn-primary mr-sm-1"})
-            }
-        }
-
-        @if (Model.Files.Count == 0)
-        {
-            @Html.ActionLink("Upload", $"Upload", $"Files", new {programId = Model.Id, details = "Program Brochure"}, new {@class = "btn btn-sm btn-outline-primary"})
-        }
-
-    </td>
+@*     <th colspan="2">Program Brochure</th> *@
+@*     <td colspan="8"> *@
+@* *@
+@*         @foreach (var item in Model.Files) *@
+@*         { *@
+@*             if (item.Details == "Program Brochure") *@
+@*             { *@
+@*                 <p>@item.OriginalFileName</p> *@
+@* *@
+@*                 @Html.ActionLink("View", $"Download", $"Files", new {id = item.Id}, new {@class = "btn btn-sm btn-primary mr-sm-1"}) *@
+@* *@
+@*                 @Html.ActionLink("Edit", $"Edit", $"Files", new {id = item.Id}, new {@class = "btn btn-sm btn-primary mr-sm-1"}) *@
+@* *@
+@*                 @Html.ActionLink("Remove", $"Delete", $"Files", new {id = item.Id}, new {@class = "btn btn-sm btn-primary mr-sm-1"}) *@
+@*             } *@
+@*         } *@
+@* *@
+@*         @if (Model.Files.Count == 0) *@
+@*         { *@
+@*             @Html.ActionLink("Upload", $"Upload", $"Files", new {programId = Model.Id, details = "Program Brochure"}, new {@class = "btn btn-sm btn-outline-primary"}) *@
+@*         } *@
+@* *@
+@*     </td> *@
 </tr>
 </table>
 </div>
