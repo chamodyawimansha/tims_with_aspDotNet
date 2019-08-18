@@ -8,89 +8,141 @@ namespace CECBTIMS.Models
 {
     public class DocumentHelper
     {
-        // get organisers of the program
-        public static string GetOrganisedBy(Program program)
+        // training program
+        private Program program;
+        //list of trainees
+        private List<Employee> employees;
+        private Employee employee;
+
+        public DocumentHelper(int programId)
         {
-            return program.ProgramArrangements.Aggregate("", (current, item) => current == "" ? item.Organizer.Name : current + ", " + item.Organizer.Name);
+            var ec = new EmployeesController();
+
+            this.program = ProgramsController.FindProgram(programId);
+            this.employees = ec.GetTrainees(programId);
         }
 
-        public static string GetTargetGroup(Program program)
+        public DocumentHelper(int programId, Guid EmployeeId)
         {
-            return program.TargetGroups.Aggregate("", (current, item) => current == "" ? item.Name : current + ", " + item.Name);
+
         }
 
-        public static string GetTargetGroupList(Program program)
-        {
-            return program.TargetGroups.Aggregate("", (current, item) => current == "" ? item.Name : current + ", " + item.Name);
-        }
 
-        public static string GetTraineeManagerName()
-        {
-            return "Eng.L C K Karunaratne";
-        }
 
-        public static string ToFunctionName(string name)
-        {
-            name = name.ToLower();
-            var nameParts = name.Split(null);
-            return nameParts.Aggregate("Get", (current, item) => current + (item.First().ToString().ToUpper() + item.Substring(1)));
-        }
 
-        private static string ToUpperFirstLetter(string source)
-        {
-            if (string.IsNullOrEmpty(source))
-                return string.Empty;
-            var letters = source.ToCharArray();
-            letters[0] = char.ToUpper(letters[0]);
 
-            return new string(letters);
-        }
 
-        private static string ToProperName(string name)
-        {
-            var nameParts = name.Split(null);
-            var newName = "";
 
-            for (var i = 1; i < nameParts.Length; i++)
-            {
-                if (!nameParts[i].Equals("."))
-                {
-                    newName += nameParts[i] + $" ";
-                }
-            }
 
-            return newName += ToUpperFirstLetter(nameParts[0].ToLower());
-        }
 
-        public static string GetName(Employee trainee)
-        {
-            return trainee.Title != null  ? trainee.Title+". "+ToProperName(trainee.NameWithInitial) : ToProperName(trainee.NameWithInitial);
-        }
 
-        public static string GetDesignation(Employee trainee)
-        {
-            return trainee.DesignationName;
-        }
 
-        public static string GetNatureOfAppointment(Employee trainee)
-        {
-            return trainee.EmployeeRecruitmentType.ToString();
-        }
 
-        public static string GetRecommendation(Employee trainee)
-        {
-            return trainee.WorkSpaceType;
-        }
 
-        public static string GetDurationOfTheCourse(Program program)
-        {
-            return program.DurationInMonths.ToString();
-        }
 
-        public static string GetCourseFee(Program program)
-        {
-            return program.ProgramFee.ToString();
-        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//        // get organisers of the program
+//        public static string GetOrganisedBy(Program program)
+//        {
+//            return program.ProgramArrangements.Aggregate("", (current, item) => current == "" ? item.Organizer.Name : current + ", " + item.Organizer.Name);
+//        }
+//
+//        public static string GetTargetGroup(Program program)
+//        {
+//            return program.TargetGroups.Aggregate("", (current, item) => current == "" ? item.Name : current + ", " + item.Name);
+//        }
+//
+//        public static string GetTargetGroupList(Program program)
+//        {
+//            return program.TargetGroups.Aggregate("", (current, item) => current == "" ? item.Name : current + ", " + item.Name);
+//        }
+//
+//        public static string GetTraineeManagerName()
+//        {
+//            return "Eng.L C K Karunaratne";
+//        }
+//
+//        public static string ToFunctionName(string name)
+//        {
+//            name = name.ToLower();
+//            var nameParts = name.Split(null);
+//            return nameParts.Aggregate("Get", (current, item) => current + (item.First().ToString().ToUpper() + item.Substring(1)));
+//        }
+//
+//        private static string ToUpperFirstLetter(string source)
+//        {
+//            if (string.IsNullOrEmpty(source))
+//                return string.Empty;
+//            var letters = source.ToCharArray();
+//            letters[0] = char.ToUpper(letters[0]);
+//
+//            return new string(letters);
+//        }
+//
+//        private static string ToProperName(string name)
+//        {
+//            var nameParts = name.Split(null);
+//            var newName = "";
+//
+//            for (var i = 1; i < nameParts.Length; i++)
+//            {
+//                if (!nameParts[i].Equals("."))
+//                {
+//                    newName += nameParts[i] + $" ";
+//                }
+//            }
+//
+//            return newName += ToUpperFirstLetter(nameParts[0].ToLower());
+//        }
+//
+//        public static string GetName(Employee trainee)
+//        {
+//            return trainee.Title != null  ? trainee.Title+". "+ToProperName(trainee.NameWithInitial) : ToProperName(trainee.NameWithInitial);
+//        }
+//
+//        public static string GetDesignation(Employee trainee)
+//        {
+//            return trainee.DesignationName;
+//        }
+//
+//        public static string GetNatureOfAppointment(Employee trainee)
+//        {
+//            return trainee.EmployeeRecruitmentType.ToString();
+//        }
+//
+//        public static string GetRecommendation(Employee trainee)
+//        {
+//            return trainee.WorkSpaceType;
+//        }
+//
+//        public static string GetDurationOfTheCourse(Program program)
+//        {
+//            return program.DurationInMonths.ToString();
+//        }
+//
+//        public static string GetCourseFee(Program program)
+//        {
+//            return program.ProgramFee.ToString();
+//        }
 
 
     }
