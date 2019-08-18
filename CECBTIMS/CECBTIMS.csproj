@@ -207,6 +207,7 @@
     <Compile Include="Controllers\RequirementsController.cs" />
     <Compile Include="Controllers\ResourcePersonsController.cs" />
     <Compile Include="Controllers\TargetGroupsController.cs" />
+    <Compile Include="Controllers\TemplatesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -479,6 +480,11 @@
     <Content Include="Views\Documents\Index.cshtml" />
     <Content Include="Views\Documents\ColumnSelect.cshtml" />
     <Content Include="Storage\up\.gitignore" />
+    <Content Include="Views\Templates\Create.cshtml" />
+    <Content Include="Views\Templates\Delete.cshtml" />
+    <Content Include="Views\Templates\Details.cshtml" />
+    <Content Include="Views\Templates\Edit.cshtml" />
+    <Content Include="Views\Templates\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
