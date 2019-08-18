@@ -230,9 +230,27 @@ namespace CECBTIMS.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteConfirmed(int id)
         {
-            Template template = await db.Templates.FindAsync(id);
+            var template = await db.Templates.FindAsync(id);
+
+            var fileToBeDeleted = Path.Combine(Server.MapPath("~/Storage/templates/"), Path.GetFileName(template.FileName + "." + template.FileType));
+
+            try
+            {
+                if (System.IO.File.Exists(fileToBeDeleted))
+                {
+                    System.IO.File.Delete(fileToBeDeleted);
+                }
+            }
+            catch (Exception e)
+            {
+                ModelState.AddModelError("", @"Could not delete the template file from the storage. - " + e);
+                return View(template);
+            }
+
+
             db.Templates.Remove(template);
             await db.SaveChangesAsync();
+
             return RedirectToAction("Index");
         }
 
