@@ -77,7 +77,7 @@ namespace CECBTIMS.Models
         public virtual ICollection<ResourcePerson> ResourcePersons { get; set; }
         public virtual ICollection<Cost> Costs { get; set; }
         public virtual ICollection<Requirement> Requirements { get; set; }
-        public virtual ICollection<TimsFile> Files { get; set; }
+        public virtual ICollection<Brochure> Files { get; set; }
         public virtual ICollection<EmploymentCategory> EmploymentCategories { get; set; }
         public virtual ICollection<EmploymentNature> EmploymentNatures { get; set; }
     }

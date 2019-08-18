@@ -210,7 +210,7 @@ namespace CECBTIMS.Controllers
             // generate a new file name
             var newFileName = id + "_" + file.FileName;
             //create new file object
-            var newFile = new TimsFile
+            var newFile = new Brochure
             {
                 Id = id,
                 Title = title,
@@ -302,7 +302,7 @@ namespace CECBTIMS.Controllers
             // check the file is not empty
             if (fileInDb == null)
             {
-                var deletedFile = new TimsFile();
+                var deletedFile = new Brochure();
                 TryUpdateModel(deletedFile);
                 ModelState.AddModelError(string.Empty, "Unable to save changes. The File was deleted by another user.");
 
@@ -378,7 +378,7 @@ namespace CECBTIMS.Controllers
                 catch (DbUpdateConcurrencyException ex)
                 {
                     var entry = ex.Entries.Single();
-                    var clientValues = (TimsFile) entry.Entity;
+                    var clientValues = (Brochure) entry.Entity;
                     var databaseEntry = entry.GetDatabaseValues();
 
                     if (databaseEntry == null)
@@ -388,7 +388,7 @@ namespace CECBTIMS.Controllers
                     }
                     else
                     {
-                        var databaseValues = (TimsFile) databaseEntry.ToObject();
+                        var databaseValues = (Brochure) databaseEntry.ToObject();
                         
                         if (databaseValues.Title != clientValues.Title)
                         {
@@ -476,7 +476,7 @@ namespace CECBTIMS.Controllers
             await db.SaveChangesAsync();
 
             ViewBag.Message = "File deleted";
-            return View($"Delete", new TimsFile());
+            return View($"Delete", new Brochure());
         }
 
         protected override void Dispose(bool disposing)

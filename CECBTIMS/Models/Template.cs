@@ -14,6 +14,7 @@ namespace CECBTIMS.Models
         public string FileName { get; set; }
         public ProgramType ProgramType { get; set; }
         public FileType FileType { get; set; }
+        public FileMethod FileMethod { get; set; } = FileMethod.Upload;
         public string OriginalFileName { get; set; }
         public bool HasConfigurableTable { get; set; } = false;
 

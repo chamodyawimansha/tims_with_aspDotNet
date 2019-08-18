@@ -7,24 +7,23 @@ using CECBTIMS.Models.Enums;
 
 namespace CECBTIMS.Models
 {
-    public class TimsFile : BaseCols
+    public class Brochure : BaseCols
     {
-        public Guid Id { get; set; }
+        public int Id { get; set; }
         [StringLength(255)]
         public string Title { get; set; }
         [StringLength(255)]
         public string Details { get; set; }
-        public ProgramType? ProgramType { get; set; }
         [StringLength(255)]
         public string FileName { get; set; }
         [StringLength(255)]
         public string OriginalFileName { get; set; }
         public FileType FileType { get; set; }
-        public FileMethod FileMethod { get; set; }
+        public FileMethod FileMethod { get; set; } = FileMethod.Upload;
         public int? ProgramId { get; set; }
-        public bool HasTraineeTable { get; set; } = false;
+
+
         public virtual Program Program { get; set; }
-        public virtual ICollection<DefaultColumn> DefaultColumns { get; set; }
 
 
     }

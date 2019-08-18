@@ -12,6 +12,6 @@ namespace CECBTIMS.Models
         public int TimsFileId { get; set; }
         public TableColumnName ColumnName { get; set; }
 
-        public virtual TimsFile TimsFile { get; set; }
+        public virtual Brochure TimsFile { get; set; }
     }
 }
