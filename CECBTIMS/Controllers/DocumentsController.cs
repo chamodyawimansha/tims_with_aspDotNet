@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using System.Web.Mvc;
 using CECBTIMS.DAL;
 using CECBTIMS.Models;
-using CECBTIMS.Models.Document;
 using DocumentFormat.OpenXml.Packaging;
 using DocumentFormat.OpenXml.Wordprocessing;
 using Microsoft.Ajax.Utilities;
@@ -17,12 +16,17 @@ namespace CECBTIMS.Controllers
     public class DocumentsController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
+
         private Type _helperClass;
         private object _classInstance;
 
-        private void InstantiateHelperClass()
+        private void InstantiateHelperClass(int? programId, Guid? empGuid)
         {
+            _helperClass = typeof(DocumentHelper);
 
+            if (empGuid != null) _classInstance = Activator.CreateInstance(_helperClass, programId, empGuid);
+
+            _classInstance = Activator.CreateInstance(_helperClass, programId);
         }
 
 
@@ -30,7 +34,7 @@ namespace CECBTIMS.Controllers
         {
             if (option.Equals("ProgramDocument"))
             {
-                await ProcessProgramDocument(programId);
+                await ProcessProgramDocument(programId, employeeId);
 
             }else if (option.Equals("EmployeeDocument"))
             {
@@ -40,14 +44,20 @@ namespace CECBTIMS.Controllers
             return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
         }
 
-        private async Task<ActionResult> ProcessProgramDocument(int? programId)
+        private async Task<ActionResult> ProcessProgramDocument(int? programId, Guid? employeeId)
         {
-            var path = ProcessTemplate();
 
-            IDictionary<string, BookmarkStart> bookmarkMap = new Dictionary<string, BookmarkStart>();
+            InstantiateHelperClass(programId, employeeId);
+
+            var path = ProcessTemplate(); // file id here
+
+
+            //open the document
 
             using (var wordDoc = WordprocessingDocument.Open(path, true))
-            {   
+            {
+                IDictionary<string, BookmarkStart> bookmarkMap = new Dictionary<string, BookmarkStart>();
+
                 // get all the bookmarks from the document
                 foreach (var bookmarkStart in wordDoc.MainDocumentPart.RootElement.Descendants<BookmarkStart>())
                 {
@@ -56,6 +66,7 @@ namespace CECBTIMS.Controllers
                 // loop the bookmarks
                 foreach (var bookmarkStart in bookmarkMap.Values)
                 {
+
 
 
                     // process variable bookmarks 

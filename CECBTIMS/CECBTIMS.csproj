@@ -326,6 +326,7 @@
     <Compile Include="Models\Enums\FileType.cs" />
     <Compile Include="Models\TableColumn.cs" />
     <Compile Include="Models\Enums\TableColumnName.cs" />
+    <Compile Include="Models\Template.cs" />
     <Compile Include="Models\TimsFile.cs" />
     <Compile Include="Models\hrm_Designation.cs">
       <DependentUpon>CECBERP.tt</DependentUpon>
