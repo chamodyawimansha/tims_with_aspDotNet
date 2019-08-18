@@ -5,132 +5,67 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Edit</h2>
-
-@using (Html.BeginForm())
-{
-    @Html.AntiForgeryToken()
-    
-    <div class="form-horizontal">
-        <h4>Template</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @Html.HiddenFor(model => model.Id)
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
+<div class="col-8 mx-auto mb-lg-5">
+    <div class="card border-primary mb-3">
+        <div class="card-header">
+            <div class="float-left">
+                <h5>Document Template Manager - Edit</h5>
+            </div>
+            <div class="float-right">
+                @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-secondary" })
             </div>
         </div>
+        <div class="card-body">
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Details, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Details, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Details, "", new { @class = "text-danger" })
-            </div>
-        </div>
+            Id,Title,Details,FileName,ProgramType,FileType,FileMethod,OriginalFileName,HasConfigurableTable,RowVersion
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.FileName, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.FileName, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.FileName, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.ProgramType, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EnumDropDownListFor(model => model.ProgramType, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.ProgramType, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.FileType, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EnumDropDownListFor(model => model.FileType, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.FileType, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.FileMethod, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EnumDropDownListFor(model => model.FileMethod, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.FileMethod, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.OriginalFileName, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.OriginalFileName, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.OriginalFileName, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.HasConfigurableTable, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                <div class="checkbox">
-                    @Html.EditorFor(model => model.HasConfigurableTable)
-                    @Html.ValidationMessageFor(model => model.HasConfigurableTable, "", new { @class = "text-danger" })
+            @using (Html.BeginForm($"Edit", $"Templates", null, FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                @Html.HiddenFor(model => model.Id)
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label" })
+                    @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
                 </div>
-            </div>
-        </div>
+                @Html.HiddenFor(model => model.Details)
+                @Html.HiddenFor(model => model.FileName)
+                @Html.HiddenFor(model => model.FileType)
+                @Html.HiddenFor(model => model.FileMethod)
+                <div class="form-group">
+                    <div class="custom-control custom-checkbox">
+                        @Html.EditorFor(model => model.HasConfigurableTable, new { htmlAttributes = new { @class = "custom-control-input" } })
+                        @Html.LabelFor(model => model.HasConfigurableTable, "Has Configurable Table", htmlAttributes: new { @class = "custom-control-label" })
+                    </div>
+                    @Html.ValidationMessageFor(model => model.HasConfigurableTable, "", new { @class = "text-danger" })
+                    <small id="HasConfigurableTableHelp" class="form-text text-muted">Check this if the selected template have a Employee information Table</small>
+                </div>
+                @Html.HiddenFor(model => model.RowVersion)
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.CreatedAt, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.CreatedAt, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.CreatedAt, "", new { @class = "text-danger" })
-            </div>
-        </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.ProgramType, "Program Type", htmlAttributes: new { @class = "control-label" })
+                    @Html.EnumDropDownListFor(model => model.ProgramType, htmlAttributes: new { @class = "custom-select" })
+                    @Html.ValidationMessageFor(model => model.ProgramType, "", new { @class = "text-danger" })
+                </div>
+                
+                <div class="form-group">
+                    @Html.LabelFor(model => model.OriginalFileName, "Current File's Original Name", htmlAttributes: new { @class = "control-label" })
+                    @Html.EditorFor(model => model.OriginalFileName, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                    @Html.ValidationMessageFor(model => model.OriginalFileName, "", new { @class = "text-danger" })
+                </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.UpdatedAt, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.UpdatedAt, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.UpdatedAt, "", new { @class = "text-danger" })
-            </div>
-        </div>
+                <div class="form-group">
+                    <label for="FileInput">Select a New Template</label>
+                    <input type="file" class="form-control-file" id="FileInput" name="file" aria-describedby="fileHelp">
+                    <small id="fileHelp" class="form-text text-muted">Only Pdf, Docx, Doc, PNG, JPG and JPEG are allowed</small>
+                </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.CreatedBy, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.CreatedBy, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.CreatedBy, "", new { @class = "text-danger" })
-            </div>
-        </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.UpdatedBy, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.UpdatedBy, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.UpdatedBy, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.RowVersion, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.RowVersion, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.RowVersion, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
-            </div>
+                <div class="form-group float-right">
+                    <input type="submit" value="Update" class="btn btn-warning" />
+                </div>
+            }
         </div>
     </div>
-}
-
-<div>
-    @Html.ActionLink("Back to List", "Index")
 </div>

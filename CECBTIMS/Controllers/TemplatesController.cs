@@ -129,7 +129,7 @@ namespace CECBTIMS.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Template template = await db.Templates.FindAsync(id);
+            var template = await db.Templates.FindAsync(id);
             if (template == null)
             {
                 return HttpNotFound();
@@ -142,15 +142,72 @@ namespace CECBTIMS.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "Id,Title,Details,FileName,ProgramType,FileType,FileMethod,OriginalFileName,HasConfigurableTable,CreatedAt,UpdatedAt,CreatedBy,UpdatedBy,RowVersion")] Template template)
+        public async Task<ActionResult> Edit([Bind(Include = "Id,Title,Details,FileName,ProgramType,FileType,FileMethod,OriginalFileName,HasConfigurableTable,RowVersion")] Template template, HttpPostedFileBase file)
         {
-            if (ModelState.IsValid)
+            var fileTobeDeleted = "";
+
+            // check if the template file is present
+            if (file != null)
             {
-                db.Entry(template).State = EntityState.Modified;
-                await db.SaveChangesAsync();
-                return RedirectToAction("Index");
+                //get the new file ext
+                var newFileExtension = Path.GetExtension(file.FileName.ToUpper())?.Replace(".", string.Empty);
+                //check the new file ext is right
+                if (!Enum.GetNames(typeof(FileType)).Contains(newFileExtension))
+                {
+                    ModelState.AddModelError("", @"Selected Template file type is not supported.");
+                    return View(template);
+                }
+
+                //get the current files path
+                fileTobeDeleted = Path.Combine(Server.MapPath("~/Storage/templates/"), Path.GetFileName(template.FileName+"."+ template.FileType));
+
+                //generate a new file name for the new template
+                var fileName = Guid.NewGuid().ToString();
+                var newpath = Path.Combine(Server.MapPath("~/Storage/templates/"), Path.GetFileName(fileName + "." + newFileExtension));
+                try
+                {
+                    // save file in the storage
+                    file.SaveAs(newpath);
+
+                    template.FileName = fileName;
+                    template.OriginalFileName = file.FileName;
+                    template.FileType = (FileType)Enum.Parse(typeof(FileType), newFileExtension);
+
+                }
+                catch (Exception ex)
+                {
+                    ModelState.AddModelError("", @"File upload Failed:" + ex.Message);
+                    return View(template);
+                }
+
+
             }
-            return View(template);
+            // set updated at
+            template.UpdatedAt = DateTime.Now;
+
+            if (!ModelState.IsValid) return View(template);
+
+
+            db.Entry(template).State = EntityState.Modified;
+            await db.SaveChangesAsync();
+
+            //delete the old file from the storage
+            try
+            {
+                if (System.IO.File.Exists(fileTobeDeleted))
+                {
+                    System.IO.File.Delete(fileTobeDeleted);
+                }
+            }
+            catch (Exception e)
+            {
+                ModelState.AddModelError("", @"New Template Saved. Old template file remove from the database failed. - "+e);
+                return View(template);
+            }
+
+
+            return RedirectToAction($"Index");
+
         }
 
         // GET: Templates/Delete/5
@@ -177,6 +234,14 @@ namespace CECBTIMS.Controllers
             db.Templates.Remove(template);
             await db.SaveChangesAsync();
             return RedirectToAction("Index");
+        }
+
+        private void DeleteTemplate(string path)
+        {
+            if (System.IO.File.Exists(path))
+            {
+                System.IO.File.Delete(path);
+            }
         }
 
         protected override void Dispose(bool disposing)
