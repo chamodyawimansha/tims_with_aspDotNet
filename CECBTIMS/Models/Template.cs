@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 using CECBTIMS.Models.Enums;
@@ -9,9 +10,11 @@ namespace CECBTIMS.Models
     public class Template : BaseCols
     {
         public int Id { get; set; }
+        [Required]
         public string Title { get; set; }
         public string Details { get; set; }
         public string FileName { get; set; }
+        [Required]
         public ProgramType ProgramType { get; set; }
         public FileType FileType { get; set; }
         public FileMethod FileMethod { get; set; } = FileMethod.Upload;

@@ -219,6 +219,10 @@
     <Compile Include="Migrations\201908180249533_initialTimesMigration.Designer.cs">
       <DependentUpon>201908180249533_initialTimesMigration.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201908180541155_templateSomeReuired.cs" />
+    <Compile Include="Migrations\201908180541155_templateSomeReuired.Designer.cs">
+      <DependentUpon>201908180541155_templateSomeReuired.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Agenda.cs" />
     <Compile Include="Models\BaseCols.cs" />
@@ -499,6 +503,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201908180249533_initialTimesMigration.resx">
       <DependentUpon>201908180249533_initialTimesMigration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201908180541155_templateSomeReuired.resx">
+      <DependentUpon>201908180541155_templateSomeReuired.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

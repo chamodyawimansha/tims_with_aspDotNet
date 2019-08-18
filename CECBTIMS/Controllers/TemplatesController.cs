@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Net;
@@ -9,6 +10,8 @@ using System.Web;
 using System.Web.Mvc;
 using CECBTIMS.DAL;
 using CECBTIMS.Models;
+using CECBTIMS.Models.Enums;
+using Microsoft.Ajax.Utilities;
 
 namespace CECBTIMS.Controllers
 {
@@ -48,16 +51,75 @@ namespace CECBTIMS.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "Id,Title,Details,FileName,ProgramType,FileType,FileMethod,OriginalFileName,HasConfigurableTable,CreatedAt,UpdatedAt,CreatedBy,UpdatedBy,RowVersion")] Template template)
+        public async Task<ActionResult> Create([Bind(Include = "Title,ProgramType,HasConfigurableTable")] Template template, HttpPostedFileBase file)
         {
-            if (ModelState.IsValid)
+            // check if the select program type is a right one
+            if (!Enum.GetNames(typeof(ProgramType)).Contains(template.ProgramType.ToString()))
+            {
+                ModelState.AddModelError("", @"Please select a Program Type for the Template");
+                return View(template);
+            }
+            // check if the template file is present
+            if (file == null || file.ContentLength <= 0)
+            {
+                ModelState.AddModelError("", @"Please select a template to upload");
+                return View(template);
+            }
+            //get the file extension
+            var fileExtension = Path.GetExtension(file.FileName.ToUpper())?.Replace(".", string.Empty);
+            //check if the file type is supported
+            if (!Enum.GetNames(typeof(FileType)).Contains(fileExtension))
+            {
+                ModelState.AddModelError("", @"Selected Template file type is not supported.");
+                return View(template);
+            }
+
+            // Generate a new File name
+            var fileName = Guid.NewGuid().ToString();
+            //create the file path
+            var path = Path.Combine(Server.MapPath("~/Storage/templates/"), Path.GetFileName(fileName+"."+fileExtension));
+            try
+            {
+                // save file in the storage
+                file.SaveAs(path);
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError("",@"File upload Failed:" + ex.Message);
+                return View(template);
+            }
+
+            if (!ModelState.IsValid) return View(template);
+
+            if (!System.IO.File.Exists(path))
+            {
+                ModelState.AddModelError("", @"File Upload Failed. Try again.");
+                return View(template);
+            }
+
+            template.Details = "DocumentTemplate";
+            template.FileMethod = FileMethod.Upload;
+            template.FileType = (FileType)Enum.Parse(typeof(FileType), fileExtension);
+            template.OriginalFileName = file.FileName;
+            template.FileName = fileName;
+            //save the template details in the database
+
+            try
             {
                 db.Templates.Add(template);
                 await db.SaveChangesAsync();
-                return RedirectToAction("Index");
+            }
+            catch (Exception e)
+            {
+                /***
+                 *
+                 * Delete the file from storage here
+                 * and return with message
+                 */
             }
 
-            return View(template);
+            return RedirectToAction($"Index");
+
         }
 
         // GET: Templates/Edit/5
