@@ -193,6 +193,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AgendaController.cs" />
     <Compile Include="Controllers\CategoriesController.cs" />
+    <Compile Include="Controllers\DefaultColumnsController.cs" />
     <Compile Include="Controllers\Documents1Controller.cs" />
     <Compile Include="Controllers\DocumentsController.cs" />
     <Compile Include="Controllers\DocumentsController1.cs" />
@@ -495,6 +496,11 @@
     <Content Include="Views\Documents1\Details.cshtml" />
     <Content Include="Views\Documents1\Edit.cshtml" />
     <Content Include="Views\Documents1\Index.cshtml" />
+    <Content Include="Views\DefaultColumns\Create.cshtml" />
+    <Content Include="Views\DefaultColumns\Delete.cshtml" />
+    <Content Include="Views\DefaultColumns\Details.cshtml" />
+    <Content Include="Views\DefaultColumns\Edit.cshtml" />
+    <Content Include="Views\DefaultColumns\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
