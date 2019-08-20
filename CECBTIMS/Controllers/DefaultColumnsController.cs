@@ -25,24 +25,11 @@ namespace CECBTIMS.Controllers
 
             if(template == null) return HttpNotFound();
 
+            ViewBag.Template = template;
+
             return View(template.DefaultColumns);
         }
-
-        // GET: DefaultColumns/Details/5
-        public async Task<ActionResult> Details(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            var defaultColumn = await db.DefaultColumns.FindAsync(id);
-            if (defaultColumn == null)
-            {
-                return HttpNotFound();
-            }
-            return View(defaultColumn);
-        }
-
+        
         // GET: DefaultColumns/Create
         public async Task<ActionResult> Create(int? templateId)
         {
@@ -75,63 +62,17 @@ namespace CECBTIMS.Controllers
             return View(defaultColumn);
         }
 
-        // GET: DefaultColumns/Edit/5
-        public async Task<ActionResult> Edit(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            DefaultColumn defaultColumn = await db.DefaultColumns.FindAsync(id);
-            if (defaultColumn == null)
-            {
-                return HttpNotFound();
-            }
-            ViewBag.TemplateId = new SelectList(db.Templates, "Id", "Title", defaultColumn.TemplateId);
-            return View(defaultColumn);
-        }
-
-        // POST: DefaultColumns/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        // POST: DefaultColumns/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "Id,ColumnName,TemplateId,CreatedAt,UpdatedAt,CreatedBy,UpdatedBy,RowVersion")] DefaultColumn defaultColumn, string returnValue)
+        public async Task<ActionResult> Delete(int id)
         {
-            if (ModelState.IsValid)
-            {
-                db.Entry(defaultColumn).State = EntityState.Modified;
-                await db.SaveChangesAsync();
-                return RedirectToAction("Index");
-            }
-            ViewBag.TemplateId = new SelectList(db.Templates, "Id", "Title", defaultColumn.TemplateId);
-            return View(defaultColumn);
-        }
+            var defaultColumn = await db.DefaultColumns.FindAsync(id);
 
-        // GET: DefaultColumns/Delete/5
-        public async Task<ActionResult> Delete(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            DefaultColumn defaultColumn = await db.DefaultColumns.FindAsync(id);
-            if (defaultColumn == null)
-            {
-                return HttpNotFound();
-            }
-            return View(defaultColumn);
-        }
-
-        // POST: DefaultColumns/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> DeleteConfirmed(int id)
-        {
-            DefaultColumn defaultColumn = await db.DefaultColumns.FindAsync(id);
             db.DefaultColumns.Remove(defaultColumn);
             await db.SaveChangesAsync();
-            return RedirectToAction("Index");
+
+            return RedirectToAction("Index", new{templateId = defaultColumn.TemplateId});
         }
 
         protected override void Dispose(bool disposing)

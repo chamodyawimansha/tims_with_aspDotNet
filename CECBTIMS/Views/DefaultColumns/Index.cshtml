@@ -5,66 +5,50 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Index</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Template.Title)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ColumnName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.CreatedAt)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.UpdatedAt)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.CreatedBy)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.UpdatedBy)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.RowVersion)
-        </th>
-        <th></th>
-    </tr>
-
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Template.Title)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ColumnName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.CreatedAt)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.UpdatedAt)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.CreatedBy)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.UpdatedBy)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.RowVersion)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
-        </td>
-    </tr>
-}
-
-</table>
+<div class="col-8 mx-auto mb-lg-5">
+    <div class="card border-primary mb-3">
+        <div class="card-header">
+            <div class="float-left">
+                <p>Default columns for <b>@(ViewBag.Template.Title)</b> template's trainee information table</p>
+            </div>
+            <div class="float-right">
+                @Html.ActionLink("Back", $"Details",$"Templates",new{id = ViewBag.Template.Id }, new {@class = "btn btn-secondary"})
+                @Html.ActionLink("Add", $"Create", new {templateId = ViewBag.Template.Id }, new{ @class = "btn btn-primary" })
+            </div>
+        </div>
+        <div class="card-body">
+            <table class="table table-bordered">
+                <tr>
+                    <th>Column Name</th>
+                    <th>Created At</th>
+                    <th>Created By</th>
+                    <th></th>
+                </tr>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ColumnName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.CreatedAt)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.CreatedBy)
+                        </td>
+                        <td>
+                            @using (Html.BeginForm($"Delete", $"DefaultColumns", null,
+                                FormMethod.Post, new {@class = "d-inline-block"}))
+                            {
+                                @Html.AntiForgeryToken()
+                                <input type="hidden" name="id" value="@item.Id"/>
+                                <input type="submit" value="Remove" class="btn btn-danger btn-sm d-inline-block"/>
+                            }
+                        </td>
+                    </tr>
+                }
+            </table>
+        </div>
+    </div>
+</div>
