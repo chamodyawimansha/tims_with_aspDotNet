@@ -17,10 +17,15 @@ namespace CECBTIMS.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: DefaultColumns
-        public async Task<ActionResult> Index()
+        public async Task<ActionResult> Index(int? templateId)
         {
-            var defaultColumns = db.DefaultColumns.Include(d => d.Template);
-            return View(await defaultColumns.ToListAsync());
+            if (templateId == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+
+            var template = await db.Templates.FindAsync(templateId);
+
+            if(template == null) return HttpNotFound();
+
+            return View(template.DefaultColumns);
         }
 
         // GET: DefaultColumns/Details/5
@@ -30,7 +35,7 @@ namespace CECBTIMS.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            DefaultColumn defaultColumn = await db.DefaultColumns.FindAsync(id);
+            var defaultColumn = await db.DefaultColumns.FindAsync(id);
             if (defaultColumn == null)
             {
                 return HttpNotFound();
@@ -39,9 +44,15 @@ namespace CECBTIMS.Controllers
         }
 
         // GET: DefaultColumns/Create
-        public ActionResult Create()
+        public async Task<ActionResult> Create(int? templateId)
         {
-            ViewBag.TemplateId = new SelectList(db.Templates, "Id", "Title");
+            if(templateId == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+
+            var template = await db.Templates.FindAsync(templateId);
+
+            if(template == null) return HttpNotFound();
+
+            ViewBag.TemplateId = templateId;
             return View();
         }
 
@@ -50,16 +61,17 @@ namespace CECBTIMS.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "Id,ColumnName,TemplateId,CreatedAt,UpdatedAt,CreatedBy,UpdatedBy,RowVersion")] DefaultColumn defaultColumn)
+        public async Task<ActionResult> Create([Bind(Include = "ColumnName,TemplateId")] DefaultColumn defaultColumn)
         {
+
             if (ModelState.IsValid)
             {
                 db.DefaultColumns.Add(defaultColumn);
                 await db.SaveChangesAsync();
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", new { templateId = defaultColumn.TemplateId});
             }
 
-            ViewBag.TemplateId = new SelectList(db.Templates, "Id", "Title", defaultColumn.TemplateId);
+            ViewBag.TemplateId = defaultColumn.TemplateId;
             return View(defaultColumn);
         }
 
@@ -84,7 +96,7 @@ namespace CECBTIMS.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "Id,ColumnName,TemplateId,CreatedAt,UpdatedAt,CreatedBy,UpdatedBy,RowVersion")] DefaultColumn defaultColumn)
+        public async Task<ActionResult> Edit([Bind(Include = "Id,ColumnName,TemplateId,CreatedAt,UpdatedAt,CreatedBy,UpdatedBy,RowVersion")] DefaultColumn defaultColumn, string returnValue)
         {
             if (ModelState.IsValid)
             {

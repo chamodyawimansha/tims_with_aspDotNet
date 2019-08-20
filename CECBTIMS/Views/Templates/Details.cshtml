@@ -52,11 +52,11 @@
                             if (Model.DefaultColumns.Count > 0)
                             {
                                 
-                                @Html.ActionLink("View Default Columns", "Index", "DefaultColumns", new {id = Model.Id}, new {@class = "btn btn-warning"})
+                                @Html.ActionLink("View Default Columns", "Index", "DefaultColumns", new { templateId = Model.Id}, new {@class = "btn btn-warning"})
                             }
                             else
                             {
-                                @Html.ActionLink("Add Default Columns", "Create", "DefaultColumns", new {id = Model.Id}, new {@class = "btn btn-link"})
+                                @Html.ActionLink("Add Default Columns", "Create", "DefaultColumns", new { templateId = Model.Id}, new {@class = "btn btn-link"})
                             }
                         }
 
