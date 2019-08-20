@@ -1,15 +1,64 @@
-﻿@model IEnumerable<CECBTIMS.Models.Document>
+﻿@using System.Web.UI.WebControls
+@using CECBTIMS.Models
+@using DocumentFormat.OpenXml.Office2013.Excel
+@model IEnumerable<CECBTIMS.Models.TimsFile>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Documents";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Index</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
+<div class="col-8 mx-auto mb-lg-5">
+    <div class="card border-primary mb-3">
+        <div class="card-header">
+            Select a Template To Generate a Document
+        </div>
+        <div class="card-body">
+            <div class="container pt-4 pb-4">
+                @using (Html.BeginForm($"Generate", $"Documents", null, FormMethod.Get, new {}))
+                {
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                    <div class="form-group">
+                        <select class="custom-select" name="templateId">
+                            
+                            @foreach (TimsFile item in ViewBag.TemplateList)
+                            {
+                                <option value="@(item.Id)">@(item.Title)</option>
+                            }
+
+                        </select>
+                    </div>
+                    <input type="hidden" name="ProgramId" value="@ViewBag.Program.Id"/>
+                    <input type="hidden" name="details" value="GeneratedDocument"/>
+                    <input type="hidden" name="ProgramType" value="@(ViewBag.program.ProgramType)"/>
+                                                                                                  
+                    <div class="form-group">
+                        <input type="submit" value="Generate" class="btn btn-primary" />
+                    </div>
+                }
+
+                @ViewBag.Message
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+select columns here if hasTraee table true
+
+
+
+
+
+
+
+<h2>View List</h2>
+
+
 <table class="table">
     <tr>
         <th>
@@ -22,10 +71,13 @@
             @Html.DisplayNameFor(model => model.Details)
         </th>
         <th>
+            @Html.DisplayNameFor(model => model.ProgramType)
+        </th>
+        <th>
             @Html.DisplayNameFor(model => model.FileName)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.ProgramType)
+            @Html.DisplayNameFor(model => model.OriginalFileName)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.FileType)
@@ -63,10 +115,13 @@
             @Html.DisplayFor(modelItem => item.Details)
         </td>
         <td>
+            @Html.DisplayFor(modelItem => item.ProgramType)
+        </td>
+        <td>
             @Html.DisplayFor(modelItem => item.FileName)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.ProgramType)
+            @Html.DisplayFor(modelItem => item.OriginalFileName)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.FileType)
@@ -89,11 +144,8 @@
         <td>
             @Html.DisplayFor(modelItem => item.RowVersion)
         </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
-        </td>
+
+        
     </tr>
 }
 

@@ -1,0 +1,39 @@
+﻿@model IEnumerable<CECBTIMS.Models.Template>
+
+@{
+    ViewBag.Title = "TemplateSelect";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="col-8 mx-auto mb-lg-5">
+    <div class="card border-primary mb-3">
+        <div class="card-header">
+            <div class="float-left">
+                <h5>Select The Template</h5>
+            </div>
+            <div class="float-right">
+                @Html.ActionLink("New Document", $"Select", null, new {@class = "btn btn-primary"})
+                @Html.ActionLink("Go Back", $"Create", null, new {@class = "btn btn-primary"})
+            </div>
+        </div>
+        <div class="card-body">
+
+            @using (Html.BeginForm($"ColumnSelect", $"Documents", null,
+                FormMethod.Get, new {@class = ""}))
+            {
+                <div class="form-group">
+                    <label>Select the Document Template</label>
+                    <select class="custom-select" name="templateId">
+                        @foreach (var item in Model)
+                        {
+                            <option value="@item.Id">@item.Title</option>
+                        }
+                    </select>
+                </div>
+                <div class="form-group float-right">
+                    <input type="submit" value="Select" class="btn btn-primary"/>
+                </div>
+            }
+        </div>
+    </div>
+</div>

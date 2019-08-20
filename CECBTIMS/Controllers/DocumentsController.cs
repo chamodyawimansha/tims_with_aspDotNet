@@ -1,15 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Data.Entity;
 using System.Linq;
-using System.Net;
 using System.Threading.Tasks;
+using System.Net;
+using System.Web;
 using System.Web.Mvc;
 using CECBTIMS.DAL;
 using CECBTIMS.Models;
-using DocumentFormat.OpenXml.Packaging;
-using DocumentFormat.OpenXml.Wordprocessing;
-using Microsoft.Ajax.Utilities;
-
+using CECBTIMS.Models.Enums;
 
 namespace CECBTIMS.Controllers
 {
@@ -17,110 +17,166 @@ namespace CECBTIMS.Controllers
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
-        private Type _helperClass;
-        private object _classInstance;
-
-        private void InstantiateHelperClass(int? programId, Guid? empGuid)
+        // GET: Documents
+        public async Task<ActionResult> Index(int? programId)
         {
-            _helperClass = typeof(DocumentHelper);
+            if(programId == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 
-            if (empGuid != null) _classInstance = Activator.CreateInstance(_helperClass, programId, empGuid);
+            var program = await db.Programs.FindAsync(programId);
 
-            _classInstance = Activator.CreateInstance(_helperClass, programId);
+            if(program == null) return new HttpNotFoundResult();
+
+            ViewBag.Program = program;
+
+            return View(program.Documents);
+        }
+
+        public async Task<ActionResult> Select(int? programId)
+        {
+            if (programId == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            var program = await db.Programs.FindAsync(programId);
+            if (program == null) return HttpNotFound();
+
+            var templates = from t in db.Templates
+                select t;
+            // get the templates matches program type to selected program type
+            templates = templates.Where(t => (t.ProgramType == program.ProgramType));
+
+
+            return View(await templates.ToListAsync());
+        }
+
+        public async Task<ActionResult> ColumnSelect(int templateId)
+        {
+            var template = await db.Templates.FindAsync(templateId);
+            if (template == null) return HttpNotFound();
+
+            return View(template);
+        }
+
+        // GET: Documents/Details/5
+        public async Task<ActionResult> Details(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            var document = await db.Documents.FindAsync(id);
+            if (document == null)
+            {
+                return HttpNotFound();
+            }
+            return View(document);
         }
 
 
-        public async Task<ActionResult> Process(string option, int programId, Guid? employeeId)
-        {
-            if (option.Equals("ProgramDocument"))
-            {
-                await ProcessProgramDocument(programId, employeeId);
+        
 
-            }else if (option.Equals("EmployeeDocument"))
+        // GET: Documents1/Create
+        public ActionResult Create(int? programId)
+        {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            ViewBag.ProgramId = new SelectList(db.Programs, "Id", "Title");
+            return View();
+        }
+
+        // POST: Documents1/Create
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> Create([Bind(Include = "Id,Title,Details,FileName,ProgramType,FileType,FileMethod,ProgramId,CreatedAt,UpdatedAt,CreatedBy,UpdatedBy,RowVersion")] Document document)
+        {
+            if (ModelState.IsValid)
             {
-                return Content("Trainee");
+                db.Documents.Add(document);
+                await db.SaveChangesAsync();
+                return RedirectToAction("Index");
             }
 
-            return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            ViewBag.ProgramId = new SelectList(db.Programs, "Id", "Title", document.ProgramId);
+            return View(document);
         }
 
-        private async Task<ActionResult> ProcessProgramDocument(int? programId, Guid? employeeId)
+        // GET: Documents1/Edit/5
+        public async Task<ActionResult> Edit(int? id)
         {
-
-            InstantiateHelperClass(programId, employeeId);
-
-            var path = ProcessTemplate(); // file id here
-
-
-            //open the document
-
-            using (var wordDoc = WordprocessingDocument.Open(path, true))
+            if (id == null)
             {
-                IDictionary<string, BookmarkStart> bookmarkMap = new Dictionary<string, BookmarkStart>();
-
-                // get all the bookmarks from the document
-                foreach (var bookmarkStart in wordDoc.MainDocumentPart.RootElement.Descendants<BookmarkStart>())
-                {
-                    bookmarkMap[bookmarkStart.Name] = bookmarkStart;
-                }
-                // loop the bookmarks
-                foreach (var bookmarkStart in bookmarkMap.Values)
-                {
-
-
-
-                    // process variable bookmarks 
-
-                    // process list bookmarks
-
-                    //process table bookmarks
-
-//
-//                    YearVar
-//                        TraineeTable
-//                            ProgramList
-
-
-                    var bookmarkText = bookmarkStart.NextSibling<Run>();
-
-                    if (bookmarkText != null)
-                    {
-                        bookmarkText.GetFirstChild<Text>().Text = bookmarkText.InnerText;
-                    }
-                }
-
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-
-            return Content("Hello");
+            Document document = await db.Documents.FindAsync(id);
+            if (document == null)
+            {
+                return HttpNotFound();
+            }
+            ViewBag.ProgramId = new SelectList(db.Programs, "Id", "Title", document.ProgramId);
+            return View(document);
         }
 
-        private string ProcessTemplate()
+        // POST: Documents1/Edit/5
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> Edit([Bind(Include = "Id,Title,Details,FileName,ProgramType,FileType,FileMethod,ProgramId,CreatedAt,UpdatedAt,CreatedBy,UpdatedBy,RowVersion")] Document document)
         {
-
-            var template = Server.MapPath("~/Storage/templates/ApprovelLetter.docx");
-            var tPath = Server.MapPath("~/Storage/gen/"+new Guid()+".docx");
-            System.IO.File.Copy(template, tPath, true);
-
-            return tPath;
-
-
-            //            /**
-            //             * get the document template from the storage
-            //             */
-            //            var template = System.IO.Path.Combine(Server.MapPath("~/Storage"),
-            //                System.IO.Path.GetFileName(file.FileName) ?? throw new InvalidOperationException());
-            //            /**
-            //             * Generate a new file name and select a path for the new document
-            //             */
-            //            this._destinationFileName = Guid.NewGuid().ToString("N") + ".docx";
-            //            this._destinationFile = Server.MapPath("~/Storage/gen/" + _destinationFileName);
-            //            /**
-            //             * Copy the template with the new name for processing.
-            //             */
-            //            System.IO.File.Copy(template, _destinationFile, false);
+            if (ModelState.IsValid)
+            {
+                db.Entry(document).State = EntityState.Modified;
+                await db.SaveChangesAsync();
+                return RedirectToAction("Index");
+            }
+            ViewBag.ProgramId = new SelectList(db.Programs, "Id", "Title", document.ProgramId);
+            return View(document);
         }
 
+        // GET: Documents1/Delete/5
+        public async Task<ActionResult> Delete(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Document document = await db.Documents.FindAsync(id);
+            if (document == null)
+            {
+                return HttpNotFound();
+            }
+            return View(document);
+        }
 
+        // POST: Documents1/Delete/5
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> DeleteConfirmed(int id)
+        {
+            Document document = await db.Documents.FindAsync(id);
+            db.Documents.Remove(document);
+            await db.SaveChangesAsync();
+            return RedirectToAction("Index");
+        }
 
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                db.Dispose();
+            }
+            base.Dispose(disposing);
+        }
     }
 }
