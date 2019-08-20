@@ -1,4 +1,4 @@
-﻿@model CECBTIMS.Models.Template
+﻿@model CECBTIMS.Models.Document
 
 @{
     ViewBag.Title = "ColumnSelect";
@@ -12,35 +12,38 @@
     <div class="col-9 mx-auto mb-lg-5">
         <div class="card border-primary mb-3">
             <div class="card-header">
-                Selected Template : @Model.Title
+                Selected Template : @ViewBag.Template.Title
             </div>
             <div class="card-body">
-                <h6 class="card-subtitle text-muted">The selected Template has a configurable Trainee information Table. You can Select the Table columns from the bellow option for proceed with the default columns.</h6>
+                @Html.ValidationSummary(true, "", new {@class = "text-danger"})
+                Id,Title,Details,FileName,ProgramType,FileType,FileMethod,ProgramId,CreatedAt,UpdatedAt,CreatedBy,UpdatedBy,RowVersion
+                @Html.AntiForgeryToken()
+
 
 
             </div>
         </div>
     </div>
 
-    if (Model.HasConfigurableTable)
-     {
-         <div class="col-9 mx-auto mb-lg-5">
-             <div class="card border-primary mb-3">
-                 <div class="card-header">
-                     Column Selector
-                 </div>
-                 <div class="card-body">
-                     <h6 class="card-subtitle text-muted">The selected Template has a configurable Trainee information Table. You can Select the Table columns from the bellow option for proceed with the default columns.</h6>
+    if (ViewBag.Template.HasConfigurableTable)
+    {
+        <div class="col-9 mx-auto mb-lg-5">
+            <div class="card border-primary mb-3">
+                <div class="card-header">
+                    Column Selector
+                </div>
+                <div class="card-body">
+                    <h6 class="card-subtitle text-muted">The selected Template has a configurable Trainee information Table. You can Select the Table columns from the bellow option for proceed with the default columns.</h6>
 
 
-                 </div>
-             </div>
-         </div>
-     }
+                </div>
+            </div>
+        </div>
+    }
 
     <div class="col-9 mx-auto text-center">
-        <div class="form-group w-50">
-            <input type="submit" value="Process" class="btn btn-primary btn-block"/>
+        <div class="form-group align-content-center">
+            <input type="submit" value="Process" class="btn btn-primary"/>
         </div>
     </div>
 }

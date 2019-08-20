@@ -51,7 +51,9 @@ namespace CECBTIMS.Controllers
             var template = await db.Templates.FindAsync(templateId);
             if (template == null) return HttpNotFound();
 
-            return View(template);
+            ViewBag.Template = template;
+
+            return View();
         }
 
         // GET: Documents/Details/5
