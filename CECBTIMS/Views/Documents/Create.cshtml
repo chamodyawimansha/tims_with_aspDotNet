@@ -1,116 +1,535 @@
-﻿@model CECBTIMS.Models.Document
+﻿@using CECBTIMS.Models.Enums
+@model CECBTIMS.ViewModels.SelectConfirmViewModel
 
 @{
-    ViewBag.Title = "Create";
+    ViewBag.Title = "ColumnSelect";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Create</h2>
 
-@using (Html.BeginForm()) 
+
+@using (Html.BeginForm(Html.BeginForm($"Create", $"Documents", "", FormMethod.Post)))
 {
-    @Html.AntiForgeryToken()
-    
-    <div class="form-horizontal">
-        <h4>Document</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="form-group">
-            @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
+    <div class="col-9 mx-auto mb-lg-5">
+        <div class="card border-primary mb-3">
+            <div class="card-header">
+                Selected Template : @Model.Template.Title
             </div>
-        </div>
+            <div class="card-body">
+                @Html.ValidationSummary(true, "", new {@class = "text-danger"})
+                @* Id,Title,Details,FileName,ProgramType,FileType,FileMethod,ProgramId,CreatedAt,UpdatedAt,CreatedBy,UpdatedBy,RowVersion *@
+                @Html.AntiForgeryToken()
+                
+                <div class="form-group">
+                    <label>Document Title</label>
+                    <input type="text" name="Title" value="" class="form-control"/>
+                    
+                    @Html.LabelFor(model => model.Document.Title, htmlAttributes: new { @class = "control-label" })
+                    @Html.EditorFor(model => model.Document.Title, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Document.Title, "", new { @class = "text-danger" })
+                </div>
+                
+                <div class="form-group">
+                    <label>Details</label>
+                    <input type="text" name="Details" value="" class="form-control"/>
+                </div>
+                
+                <div class="form-group">
+                    <label>FileName</label>
+                    <input type="text" name="FileName" value="" class="form-control"/>
+                </div>
+                
+                <div class="form-group">
+                    <label>Program Type</label>
+                    <input type="text" name="ProgramType" value="" class="form-control"/>
+                </div>
+                
+                <div class="form-group">
+                    <label>ProgramId</label>
+                    <input type="text" name="ProgramId" value="" class="form-control"/>
+                </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Details, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Details, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Details, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.FileName, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.FileName, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.FileName, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.ProgramType, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EnumDropDownListFor(model => model.ProgramType, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.ProgramType, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.FileType, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EnumDropDownListFor(model => model.FileType, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.FileType, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.FileMethod, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EnumDropDownListFor(model => model.FileMethod, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.FileMethod, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.ProgramId, "ProgramId", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("ProgramId", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.ProgramId, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.CreatedAt, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.CreatedAt, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.CreatedAt, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.UpdatedAt, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.UpdatedAt, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.UpdatedAt, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.CreatedBy, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.CreatedBy, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.CreatedBy, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.UpdatedBy, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.UpdatedBy, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.UpdatedBy, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
             </div>
         </div>
     </div>
-}
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
+    if (Model.Template.HasConfigurableTable)
+    {
+        <div class="col-9 mx-auto mb-lg-5">
+        <div class="card border-primary mb-3">
+        <div class="card-header">
+            Column Selector
+        </div>
+        <div class="card-body">
+        <h6 class="card-subtitle text-muted mb-4">The selected Template has a configurable Trainee information Table. You can Select the Table columns from the bellow option for proceed with the default columns.</h6>
+
+
+        <div class="row">
+        @* Default column No *@
+        <input type="hidden" name="columns[]" value="@((int) @TableColumnName.No)"/>
+        
+        <div class="col-md-3">
+            <div class="form-group">
+                <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" name="columns[]" value="@((int) @TableColumnName.Name)" id="Name"
+                           @{
+                               foreach (var item in Model.Template.DefaultColumns)
+                               {
+                                   if (item.ColumnName == TableColumnName.Name)
+                                   {
+                                       @("Checked")
+                                   }
+                               }
+                           }>
+                    <label class="custom-control-label" for="Name">@TableColumnName.Name</label>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="form-group">
+                <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" name="columns[]" value="@((int) @TableColumnName.Title)" id="Title"
+                           @{
+                               foreach (var item in Model.Template.DefaultColumns)
+                               {
+                                   if (item.ColumnName == TableColumnName.Title)
+                                   {
+                                       @("Checked")
+                                   }
+                               }
+                           }>
+                    <label class="custom-control-label" for="Title">@TableColumnName.Title</label>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="form-group">
+                <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" name="columns[]" value="@((int) @TableColumnName.Full_Name)" id="Full_Name"
+                           @{
+                               foreach (var item in Model.Template.DefaultColumns)
+                               {
+                                   if (item.ColumnName == TableColumnName.Full_Name)
+                                   {
+                                       @("Checked")
+                                   }
+                               }
+                           }>
+                    <label class="custom-control-label" for="Full_Name">@TableColumnName.Full_Name</label>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="col-md-3">
+            <div class="form-group">
+                <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" name="columns[]" value="@((int) @TableColumnName.Name_With_Title)" id="Name_With_Title"
+                           @{
+                               foreach (var item in Model.Template.DefaultColumns)
+                               {
+                                   if (item.ColumnName == TableColumnName.Name_With_Title)
+                                   {
+                                       @("Checked")
+                                   }
+                               }
+                           }>
+                    <label class="custom-control-label" for="Name_With_Title">@TableColumnName.Name_With_Title</label>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="form-group">
+                <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" name="columns[]" value="@((int) @TableColumnName.Name_Designation_And_Grade)" id="Name_Designation_And_Grade"
+                           @{
+                               foreach (var item in Model.Template.DefaultColumns)
+                               {
+                                   if (item.ColumnName == TableColumnName.Name_Designation_And_Grade)
+                                   {
+                                       @("Checked")
+                                   }
+                               }
+                           }>
+                    <label class="custom-control-label" for="Name_Designation_And_Grade">Name Designation and Grade</label>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="form-group">
+                <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" name="columns[]" value="@((int) @TableColumnName.Nic)" id="Nic"
+                           @{
+                               foreach (var item in Model.Template.DefaultColumns)
+                               {
+                                   if (item.ColumnName == TableColumnName.Nic)
+                                   {
+                                       @("Checked")
+                                   }
+                               }
+                           }>
+                    <label class="custom-control-label" for="Nic">NIC</label>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="form-group">
+                <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" name="columns[]" value="@((int) @TableColumnName.Epf)" id="Epf"
+                           @{
+                               foreach (var item in Model.Template.DefaultColumns)
+                               {
+                                   if (item.ColumnName == TableColumnName.Epf)
+                                   {
+                                       @("Checked")
+                                   }
+                               }
+                           }>
+                    <label class="custom-control-label" for="Epf">EPF</label>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="form-group">
+                <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" name="columns[]" value="@((int) @TableColumnName.Designation)" id="Designation"
+                           @{
+                               foreach (var item in Model.Template.DefaultColumns)
+                               {
+                                   if (item.ColumnName == TableColumnName.Designation)
+                                   {
+                                       @("Checked")
+                                   }
+                               }
+                           }>
+                    <label class="custom-control-label" for="Designation">Designation</label>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="form-group">
+                <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" name="columns[]" value="@((int) @TableColumnName.Workspace_Name)" id="Workspace_Name"
+                           @{
+                               foreach (var item in Model.Template.DefaultColumns)
+                               {
+                                   if (item.ColumnName == TableColumnName.Workspace_Name)
+                                   {
+                                       @("Checked")
+                                   }
+                               }
+                           }>
+                    <label class="custom-control-label" for="Workspace_Name">Workspace Name</label>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="form-group">
+                <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" name="columns[]" value="@((int) @TableColumnName.Nature_Of_Appointment)" id="Nature_Of_Appointment"
+                           @{
+                               foreach (var item in Model.Template.DefaultColumns)
+                               {
+                                   if (item.ColumnName == TableColumnName.Nature_Of_Appointment)
+                                   {
+                                       @("Checked")
+                                   }
+                               }
+                           }>
+                    <label class="custom-control-label" for="Nature_Of_Appointment">Nature Of Appointment</label>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="form-group">
+                <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" name="columns[]" value="@((int) @TableColumnName.Recommendation)" id="DefaultColumns"
+                           @{
+                               foreach (var item in Model.Template.DefaultColumns)
+                               {
+                                   if (item.ColumnName == TableColumnName.Recommendation)
+                                   {
+                                       @("Checked")
+                                   }
+                               }
+                           }>
+                    <label class="custom-control-label" for="DefaultColumns">Recommendation</label>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="form-group">
+                <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" name="columns[]" value="@((int) @TableColumnName.Date_of_Joined)" id="Date_of_Joined"
+                           @{
+                               foreach (var item in Model.Template.DefaultColumns)
+                               {
+                                   if (item.ColumnName == TableColumnName.Date_of_Joined)
+                                   {
+                                       @("Checked")
+                                   }
+                               }
+                           }>
+                    <label class="custom-control-label" for="Date_of_Joined">Date of Joined</label>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="form-group">
+                <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" name="columns[]" value="@((int) @TableColumnName.Date_of_Appointment)" id="Date_of_Appointment"
+                           @{
+                               foreach (var item in Model.Template.DefaultColumns)
+                               {
+                                   if (item.ColumnName == TableColumnName.Date_of_Appointment)
+                                   {
+                                       @("Checked")
+                                   }
+                               }
+                           }>
+                    <label class="custom-control-label" for="Date_of_Appointment">Date of Appointment</label>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="form-group">
+                <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" name="columns[]" value="@((int) @TableColumnName.Experience_In_Cecb)" id="Experience_In_Cecb"
+                           @{
+                               foreach (var item in Model.Template.DefaultColumns)
+                               {
+                                   if (item.ColumnName == TableColumnName.Experience_In_Cecb)
+                                   {
+                                       @("Checked")
+                                   }
+                               }
+                           }>
+                    <label class="custom-control-label" for="Experience_In_Cecb">Experience In CECB</label>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="form-group">
+                <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" name="columns[]" value="@((int) @TableColumnName.Member_Non_Member)" id="Member_Non_Member"
+                           @{
+                               foreach (var item in Model.Template.DefaultColumns)
+                               {
+                                   if (item.ColumnName == TableColumnName.Member_Non_Member)
+                                   {
+                                       @("Checked")
+                                   }
+                               }
+                           }>
+                    <label class="custom-control-label" for="Member_Non_Member">Member / Non-Member</label>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="form-group">
+                <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" name="columns[]" value="@((int) @TableColumnName.Remarks)" id="Remarks"
+                           @{
+                               foreach (var item in Model.Template.DefaultColumns)
+                               {
+                                   if (item.ColumnName == TableColumnName.Remarks)
+                                   {
+                                       @("Checked")
+                                   }
+                               }
+                           }>
+                    <label class="custom-control-label" for="Remarks">Remarks</label>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="form-group">
+                <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" name="columns[]" value="@((int) @TableColumnName.Remarks_On_Relevancy_To_The_Program)" id="Remarks_On_Relevancy_To_The_Program"
+                           @{
+                               foreach (var item in Model.Template.DefaultColumns)
+                               {
+                                   if (item.ColumnName == TableColumnName.Remarks_On_Relevancy_To_The_Program)
+                                   {
+                                       @("Checked")
+                                   }
+                               }
+                           }>
+                    <label class="custom-control-label" for="Remarks_On_Relevancy_To_The_Program">Remarks On Relevancy To The Program</label>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="form-group">
+                <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" name="columns[]" value="@((int) @TableColumnName.Details_Of_Foreign_Training_Participated)" id="Details_Of_Foreign_Training_Participated"
+                           @{
+                               foreach (var item in Model.Template.DefaultColumns)
+                               {
+                                   if (item.ColumnName == TableColumnName.Details_Of_Foreign_Training_Participated)
+                                   {
+                                       @("Checked")
+                                   }
+                               }
+                           }>
+                    <label class="custom-control-label" for="Details_Of_Foreign_Training_Participated">Details Of Foreign Training Participated</label>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="form-group">
+                <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" name="columns[]" value="@((int) @TableColumnName.Details_Of_Foreign_Visits_Participated)" id="Details_Of_Foreign_Visits_Participated"
+                           @{
+                               foreach (var item in Model.Template.DefaultColumns)
+                               {
+                                   if (item.ColumnName == TableColumnName.Details_Of_Foreign_Visits_Participated)
+                                   {
+                                       @("Checked")
+                                   }
+                               }
+                           }>
+                    <label class="custom-control-label" for="Details_Of_Foreign_Visits_Participated">Details Of Foreign Visits Participated</label>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="form-group">
+                <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" name="columns[]" value="@((int) @TableColumnName.Email)" id="Email"
+                           @{
+                               foreach (var item in Model.Template.DefaultColumns)
+                               {
+                                   if (item.ColumnName == TableColumnName.Email)
+                                   {
+                                       @("Checked")
+                                   }
+                               }
+                           }>
+                    <label class="custom-control-label" for="Email">Email</label>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="form-group">
+                <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" name="columns[]" value="@((int) @TableColumnName.Contact_No)" id="Contact_No"
+                           @{
+                               foreach (var item in Model.Template.DefaultColumns)
+                               {
+                                   if (item.ColumnName == TableColumnName.Contact_No)
+                                   {
+                                       @("Checked")
+                                   }
+                               }
+                           }>
+                    <label class="custom-control-label" for="Contact_No">Contact No</label>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="form-group">
+                <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" name="columns[]" value="@((int) @TableColumnName.Passport_No)" id="Passport_No"
+                           @{
+                               foreach (var item in Model.Template.DefaultColumns)
+                               {
+                                   if (item.ColumnName == TableColumnName.Passport_No)
+                                   {
+                                       @("Checked")
+                                   }
+                               }
+                           }>
+                    <label class="custom-control-label" for="Passport_No">Passport No</label>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="form-group">
+                <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" name="columns[]" value="@((int) @TableColumnName.Date_of_Service_Confirmation)" id="Date_of_Service_Confirmation"
+                           @{
+                               foreach (var item in Model.Template.DefaultColumns)
+                               {
+                                   if (item.ColumnName == TableColumnName.Date_of_Service_Confirmation)
+                                   {
+                                       @("Checked")
+                                   }
+                               }
+                           }>
+                    <label class="custom-control-label" for="Date_of_Service_Confirmation">Date of Service Confirmation</label>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="form-group">
+                <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" name="columns[]" value="@((int) @TableColumnName.Incidental_Allowance)" id="Incidental_Allowance"
+                           @{
+                               foreach (var item in Model.Template.DefaultColumns)
+                               {
+                                   if (item.ColumnName == TableColumnName.Incidental_Allowance)
+                                   {
+                                       @("Checked")
+                                   }
+                               }
+                           }>
+                    <label class="custom-control-label" for="Incidental_Allowance">Incidental Allowance</label>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="form-group">
+                <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" name="columns[]" value="@((int) @TableColumnName.Warm_Cloth_Allowance)" id="Warm_Cloth_Allowance"
+                           @{
+                               foreach (var item in Model.Template.DefaultColumns)
+                               {
+                                   if (item.ColumnName == TableColumnName.Warm_Cloth_Allowance)
+                                   {
+                                       @("Checked")
+                                   }
+                               }
+                           }>
+                    <label class="custom-control-label" for="Warm_Cloth_Allowance">Warm Cloth Allowance</label>
+                </div>
+            </div>
+        </div>
+
+        </div>
+
+
+        </div>
+        </div>
+        </div>
+    }
+
+    <div class="col-9 mx-auto text-center">
+        <div class="form-group align-content-center">
+            <input type="submit" value="Process" class="btn btn-primary"/>
+        </div>
+    </div>
+}

@@ -10,6 +10,7 @@ using System.Web.Mvc;
 using CECBTIMS.DAL;
 using CECBTIMS.Models;
 using CECBTIMS.Models.Enums;
+using CECBTIMS.ViewModels;
 
 namespace CECBTIMS.Controllers
 {
@@ -31,6 +32,7 @@ namespace CECBTIMS.Controllers
             return View(program.Documents);
         }
 
+        //Select the template
         public async Task<ActionResult> Select(int? programId)
         {
             if (programId == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -41,19 +43,34 @@ namespace CECBTIMS.Controllers
                 select t;
             // get the templates matches program type to selected program type
             templates = templates.Where(t => (t.ProgramType == program.ProgramType));
-
+            ViewBag.ProgramId = programId;
 
             return View(await templates.ToListAsync());
         }
 
-        public async Task<ActionResult> ColumnSelect(int templateId)
+        // select columns
+        public async Task<ActionResult> Create(int templateId, int programId)
         {
             var template = await db.Templates.FindAsync(templateId);
             if (template == null) return HttpNotFound();
 
-            ViewBag.Template = template;
 
-            return View();
+            //create New Document Name
+            var documentTitle = template.Title+"-"+programId+DateTime.Now.ToString("MMddyyyyhhmmss");
+
+            var viewModel = new SelectConfirmViewModel
+            {
+                Template = template,
+                Document = new Document()
+                {
+                    Title = documentTitle,
+                    ProgramId = programId,
+                }
+            };
+
+
+
+            return View(viewModel);
         }
 
         // GET: Documents/Details/5
@@ -71,37 +88,18 @@ namespace CECBTIMS.Controllers
             return View(document);
         }
 
-
-        
-
-        // GET: Documents1/Create
-        public ActionResult Create(int? programId)
-        {
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-            ViewBag.ProgramId = new SelectList(db.Programs, "Id", "Title");
-            return View();
-        }
-
         // POST: Documents1/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "Id,Title,Details,FileName,ProgramType,FileType,FileMethod,ProgramId,CreatedAt,UpdatedAt,CreatedBy,UpdatedBy,RowVersion")] Document document)
+        public async Task<ActionResult> Create([Bind(Include = "Id,Title,Details,FileName,ProgramType,FileType,FileMethod,ProgramId,CreatedAt,UpdatedAt,CreatedBy,UpdatedBy,RowVersion")] Document document, TableColumnName[] columns)
         {
+
+
+            return Content(columns[1].ToString());
+
+
             if (ModelState.IsValid)
             {
                 db.Documents.Add(document);

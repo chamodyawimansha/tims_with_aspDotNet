@@ -21,37 +21,42 @@
             {
                 @Html.AntiForgeryToken()
                 @Html.ValidationSummary(true, "", new {@class = "text-danger"})
-                
-                <div class="form-group">
-                    @Html.LabelFor(model => model.ColumnName, "Column Name", htmlAttributes: new {@class = "control-label"})
-                    <div class="form-group">
-                        <select class="custom-select" name="ColumnName">
-                            <option value="@((int)TableColumnName.No)">No</option>
-                            <option value="@((int)TableColumnName.Name)">Name</option>
-                            <option value="@((int)TableColumnName.Designation)">designation</option>
-                            <option value="@((int)TableColumnName.Nature_Of_Appointment)">ANature Of Appointment</option>
-                            <option value="@((int)TableColumnName.Recommendation)">Recommendation (section)</option>
-                            <option value="@((int)TableColumnName.Name_Designation_And_Grade)">Name, Designation and Grade</option>
-                            <option value="@((int)TableColumnName.Date_of_joined)">Date of Joined</option>
-                            <option value="@((int)TableColumnName.Nature_Of_Appointment)">Date of appointment</option>
-                            <option value="@((int)TableColumnName.Experience_In_Cecb)">Experience in CECB</option>
-                            <option value="@((int)TableColumnName.Recommendation)">Recommendation</option>
-                            <option value="@((int)TableColumnName.Member_non_member)">Member / Non-Member</option>
-                            <option value="@((int)TableColumnName.Remarks)">Remarks</option>
-                            <option value="@((int)TableColumnName.Name_Designation_And_Grade)">Name,Designation and Grade</option>
-                            <option value="@((int)TableColumnName.Remarks_on_Relevancy_to_the_Program)">Remarks on Relevancy to the Program</option>
-                            <option value="@((int)TableColumnName.Details_of_Foreign_Trainining_Participated)">Details of Foreign Trainings participated</option>
-                            <option value="@((int)TableColumnName.Details_of_Foregin_Visists_Participated)">Details of Foreign Visits Participated</option>
-                            <option value="@((int)TableColumnName.Email)">Email</option>
-                            <option value="@((int)TableColumnName.Contact_No)">Contact No</option>
-                            <option value="@((int)TableColumnName.Passport_No)">Passport No.</option>
-                            <option value="@((int)TableColumnName.Date_of_Service_Confirmation)">Date of service confirmation</option>
-                            <option value="@((int)TableColumnName.Incidental_Allowance)">Incidental Allowance</option>
-                            <option value="@((int)TableColumnName.Warm_Cloth_Allowance)">Warm Cloth Allowance</option>
-                        </select>
-                        @Html.ValidationMessageFor(model => model.ColumnName, "", new { @class = "text-danger" })
-                    </div>
-                </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.ColumnName, "Column Name", htmlAttributes: new { @class = "control-label" })
+
+
+                @Html.DropDownList("EmpNature", EnumHelper.GetSelectList(typeof(TableColumnName)), "", new { @class = "custom-select" })
+
+                @* <select class="custom-select" name="ColumnName"> *@
+                @*     <option value="@((int)TableColumnName.No)">No</option> *@
+                @*     <option value="@((int)TableColumnName.Name)">Name</option> *@
+                @*     <option value="@((int)TableColumnName.Designation)">designation</option> *@
+                @*     <option value="@((int)TableColumnName.Nature_Of_Appointment)">ANature Of Appointment</option> *@
+                @*     <option value="@((int)TableColumnName.Recommendation)">Recommendation (section)</option> *@
+                @*     <option value="@((int)TableColumnName.Name_Designation_And_Grade)">Name, Designation and Grade</option> *@
+                @*     <option value="@((int)TableColumnName.Date_of_joined)">Date of Joined</option> *@
+                @*     <option value="@((int)TableColumnName.Nature_Of_Appointment)">Date of appointment</option> *@
+                @*     <option value="@((int)TableColumnName.Experience_In_Cecb)">Experience in CECB</option> *@
+                @*     <option value="@((int)TableColumnName.Recommendation)">Recommendation</option> *@
+                @*     <option value="@((int)TableColumnName.Member_non_member)">Member / Non-Member</option> *@
+                @*     <option value="@((int)TableColumnName.Remarks)">Remarks</option> *@
+                @*     <option value="@((int)TableColumnName.Name_Designation_And_Grade)">Name,Designation and Grade</option> *@
+                @*     <option value="@((int)TableColumnName.Remarks_on_Relevancy_to_the_Program)">Remarks on Relevancy to the Program</option> *@
+                @*     <option value="@((int)TableColumnName.Details_of_Foreign_Trainining_Participated)">Details of Foreign Trainings participated</option> *@
+                @*     <option value="@((int)TableColumnName.Details_of_Foregin_Visists_Participated)">Details of Foreign Visits Participated</option> *@
+                @*     <option value="@((int)TableColumnName.Email)">Email</option> *@
+                @*     <option value="@((int)TableColumnName.Contact_No)">Contact No</option> *@
+                @*     <option value="@((int)TableColumnName.Passport_No)">Passport No.</option> *@
+                @*     <option value="@((int)TableColumnName.Date_of_Service_Confirmation)">Date of service confirmation</option> *@
+                @*     <option value="@((int)TableColumnName.Incidental_Allowance)">Incidental Allowance</option> *@
+                @*     <option value="@((int)TableColumnName.Warm_Cloth_Allowance)">Warm Cloth Allowance</option> *@
+                @* </select> *@
+
+
+
+                @Html.ValidationMessageFor(model => model.ColumnName, "", new { @class = "text-danger" })
+            </div>
                 <input type="hidden" name="TemplateId" value="@(ViewBag.TemplateId)"/>
 
                 <div class="form-group float-right">
