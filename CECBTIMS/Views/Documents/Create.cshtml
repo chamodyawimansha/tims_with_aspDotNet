@@ -8,7 +8,7 @@
 
 
 
-@using (Html.BeginForm(Html.BeginForm($"Create", $"Documents", "", FormMethod.Post)))
+@using (Html.BeginForm(Html.BeginForm($"Create", $"Documents", null , FormMethod.Post)))
 {
     <div class="col-9 mx-auto mb-lg-5">
         <div class="card border-primary mb-3">
@@ -19,34 +19,38 @@
                 @Html.ValidationSummary(true, "", new {@class = "text-danger"})
                 @* Id,Title,Details,FileName,ProgramType,FileType,FileMethod,ProgramId,CreatedAt,UpdatedAt,CreatedBy,UpdatedBy,RowVersion *@
                 @Html.AntiForgeryToken()
+                <input type="hidden" name="templateId" value="@Model.Template.Id" />
+                <input type="hidden" name="prograId" value="@ViewBag.ProgramId" />
                 
                 <div class="form-group">
-                    <label>Document Title</label>
-                    <input type="text" name="Title" value="" class="form-control"/>
-                    
                     @Html.LabelFor(model => model.Document.Title, htmlAttributes: new { @class = "control-label" })
                     @Html.EditorFor(model => model.Document.Title, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.Document.Title, "", new { @class = "text-danger" })
+                    @Html.ValidationMessageFor(model => model.Document.Title, "", new { @class = "text-danger" })
                 </div>
-                
                 <div class="form-group">
-                    <label>Details</label>
-                    <input type="text" name="Details" value="" class="form-control"/>
+                    @Html.LabelFor(model => model.Document.Details, htmlAttributes: new { @class = "control-label" })
+                    @Html.EditorFor(model => model.Document.Details, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Document.Details, "", new { @class = "text-danger" })
                 </div>
-                
                 <div class="form-group">
-                    <label>FileName</label>
-                    <input type="text" name="FileName" value="" class="form-control"/>
+                    @Html.LabelFor(model => model.Document.FileName, htmlAttributes: new { @class = "control-label" })
+                    @Html.EditorFor(model => model.Document.FileName, new { htmlAttributes = new { @class = "form-control" , @readonly = "readonly" } })
+                    @Html.ValidationMessageFor(model => model.Document.FileName, "", new { @class = "text-danger" })
+                </div>                
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Document.ProgramType, htmlAttributes: new { @class = "control-label" })
+                    @Html.EditorFor(model => model.Document.ProgramType, new { htmlAttributes = new { @class = "form-control" , @readonly = "readonly" }})
+                    @Html.ValidationMessageFor(model => model.Document.ProgramType, "", new { @class = "text-danger" })
+                </div>                
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Document.ProgramId, htmlAttributes: new { @class = "control-label" })
+                    @Html.EditorFor(model => model.Document.ProgramId, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                    @Html.ValidationMessageFor(model => model.Document.ProgramId, "", new { @class = "text-danger" })
                 </div>
-                
                 <div class="form-group">
-                    <label>Program Type</label>
-                    <input type="text" name="ProgramType" value="" class="form-control"/>
-                </div>
-                
-                <div class="form-group">
-                    <label>ProgramId</label>
-                    <input type="text" name="ProgramId" value="" class="form-control"/>
+                    @Html.LabelFor(model => model.Document.DocumentNumber, htmlAttributes: new { @class = "control-label" })
+                    @Html.EditorFor(model => model.Document.DocumentNumber, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                    @Html.ValidationMessageFor(model => model.Document.DocumentNumber, "", new { @class = "text-danger" })
                 </div>
 
             </div>

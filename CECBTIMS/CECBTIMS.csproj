@@ -229,6 +229,10 @@
     <Compile Include="Migrations\201908201526170_EnumAddedToDefaultColumn.Designer.cs">
       <DependentUpon>201908201526170_EnumAddedToDefaultColumn.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201908221525105_documentNumberAddedToDocumentModel.cs" />
+    <Compile Include="Migrations\201908221525105_documentNumberAddedToDocumentModel.Designer.cs">
+      <DependentUpon>201908221525105_documentNumberAddedToDocumentModel.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Agenda.cs" />
     <Compile Include="Models\BaseCols.cs" />
@@ -524,6 +528,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201908201526170_EnumAddedToDefaultColumn.resx">
       <DependentUpon>201908201526170_EnumAddedToDefaultColumn.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201908221525105_documentNumberAddedToDocumentModel.resx">
+      <DependentUpon>201908221525105_documentNumberAddedToDocumentModel.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

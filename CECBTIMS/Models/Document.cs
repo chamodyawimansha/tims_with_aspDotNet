@@ -16,6 +16,7 @@ namespace CECBTIMS.Models
         public FileType FileType { get; set; }
         public FileMethod FileMethod { get; set; } = FileMethod.Generate;
         public int ProgramId { get; set; }
+        public int DocumentNumber { get; set; } // document count in one year
 
         public virtual Program Program { get; set; }
     }

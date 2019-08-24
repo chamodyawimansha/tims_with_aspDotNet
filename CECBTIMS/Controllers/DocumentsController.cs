@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Net;
@@ -11,21 +12,24 @@ using CECBTIMS.DAL;
 using CECBTIMS.Models;
 using CECBTIMS.Models.Enums;
 using CECBTIMS.ViewModels;
+using Microsoft.Ajax.Utilities;
 
 namespace CECBTIMS.Controllers
 {
     public class DocumentsController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
+        private Type _helperClass;
+        private object _classInstance;
 
         // GET: Documents
         public async Task<ActionResult> Index(int? programId)
         {
-            if(programId == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            if (programId == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 
             var program = await db.Programs.FindAsync(programId);
 
-            if(program == null) return new HttpNotFoundResult();
+            if (program == null) return new HttpNotFoundResult();
 
             ViewBag.Program = program;
 
@@ -56,7 +60,10 @@ namespace CECBTIMS.Controllers
 
 
             //create New Document Name
-            var documentTitle = template.Title+"-"+programId+DateTime.Now.ToString("MMddyyyyhhmmss");
+            var documentTitle = template.Title + "-" + programId + "-" + DateTime.Now.ToString("MMddyyyyhhmmss");
+
+            var program = await db.Programs.FindAsync(programId);
+            if (program == null) return HttpNotFound();
 
             var viewModel = new SelectConfirmViewModel
             {
@@ -64,10 +71,17 @@ namespace CECBTIMS.Controllers
                 Document = new Document()
                 {
                     Title = documentTitle,
+                    Details = "Generated Document For " + program.Title + " From " + template.Title + " template",
+                    FileName = Guid.NewGuid() + "." + FileType.DOCX,
+                    ProgramType = program.ProgramType,
+                    FileType = FileType.DOCX,
+                    FileMethod = FileMethod.Generate,
                     ProgramId = programId,
+                    DocumentNumber = 000000000 //get document number here
                 }
             };
 
+            ViewBag.ProgramId = programId;
 
 
             return View(viewModel);
@@ -80,24 +94,56 @@ namespace CECBTIMS.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+
             var document = await db.Documents.FindAsync(id);
             if (document == null)
             {
                 return HttpNotFound();
             }
+
             return View(document);
         }
 
+        private async void InstHelperClass(int programId)
+        {
+            _helperClass = typeof(DocumentHelper);
+            _classInstance = Activator.CreateInstance(_helperClass, await ProgramsController.GetProgram(programId));
+        }
+        
         // POST: Documents1/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "Id,Title,Details,FileName,ProgramType,FileType,FileMethod,ProgramId,CreatedAt,UpdatedAt,CreatedBy,UpdatedBy,RowVersion")] Document document, TableColumnName[] columns)
+        public async Task<ActionResult> Create([Bind(Include = "Id,Title,Details,FileName,ProgramType,FileType,FileMethod,ProgramId,DocumentNumber")] Document document, TableColumnName?[] columns, int templateId, int programId)
         {
 
+            // document path of the newly created document from the template
+            var path = await GetDocumentPath(templateId, document.FileName);
 
-            return Content(columns[1].ToString());
+            //instantiate helper class
+            InstHelperClass(programId);
+            //get document class
+            // replace variables
+
+
+
+            // add tables
+
+
+            return Content(path);
+
+
+
+            return Content(templateId.ToString());
+
+
+
+
+            //generate thw word document
+            //save the document in the storage
+            // save the data in the database
+
 
 
             if (ModelState.IsValid)
@@ -111,6 +157,48 @@ namespace CECBTIMS.Controllers
             return View(document);
         }
 
+
+
+
+
+
+
+
+        private async Task<string> GetDocumentPath(int templateId, string newFileName)
+        {
+            var template = await db.Templates.FindAsync(templateId);
+
+            if (template == null) return null;
+
+            var path = Path.Combine(Server.MapPath("~/Storage/templates/"), Path.GetFileName(template.FileName + "." + template.FileType));
+
+            var templateDestination = Server.MapPath("~/Storage/gen/" + newFileName);
+
+            if (System.IO.File.Exists(path))
+            {
+                if (!System.IO.File.Exists(templateDestination))
+                {
+                    System.IO.File.Copy(path, templateDestination, false);
+                }
+            }
+            
+            return System.IO.File.Exists(templateDestination) ? templateDestination : null;
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         // GET: Documents1/Edit/5
         public async Task<ActionResult> Edit(int? id)
         {
@@ -118,11 +206,13 @@ namespace CECBTIMS.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+
             Document document = await db.Documents.FindAsync(id);
             if (document == null)
             {
                 return HttpNotFound();
             }
+
             ViewBag.ProgramId = new SelectList(db.Programs, "Id", "Title", document.ProgramId);
             return View(document);
         }
@@ -132,7 +222,10 @@ namespace CECBTIMS.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "Id,Title,Details,FileName,ProgramType,FileType,FileMethod,ProgramId,CreatedAt,UpdatedAt,CreatedBy,UpdatedBy,RowVersion")] Document document)
+        public async Task<ActionResult> Edit(
+            [Bind(Include =
+                "Id,Title,Details,FileName,ProgramType,FileType,FileMethod,ProgramId,CreatedAt,UpdatedAt,CreatedBy,UpdatedBy,RowVersion")]
+            Document document)
         {
             if (ModelState.IsValid)
             {
@@ -140,6 +233,7 @@ namespace CECBTIMS.Controllers
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
+
             ViewBag.ProgramId = new SelectList(db.Programs, "Id", "Title", document.ProgramId);
             return View(document);
         }
@@ -151,11 +245,13 @@ namespace CECBTIMS.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+
             Document document = await db.Documents.FindAsync(id);
             if (document == null)
             {
                 return HttpNotFound();
             }
+
             return View(document);
         }
 
@@ -176,6 +272,7 @@ namespace CECBTIMS.Controllers
             {
                 db.Dispose();
             }
+
             base.Dispose(disposing);
         }
     }

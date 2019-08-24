@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using CECBTIMS.Controllers;
 
 
@@ -8,56 +9,11 @@ namespace CECBTIMS.Models
 {
     public class DocumentHelper
     {
-        // training program
-        private Program program;
-        //list of trainees
-        private List<Employee> employees;
-        private Employee employee;
 
-        public DocumentHelper(int programId)
-        {
-            var ec = new EmployeesController();
-
-            this.program = ProgramsController.FindProgram(programId);
-            this.employees = ec.GetTrainees(programId);
-        }
-
-        public DocumentHelper(int programId, Guid EmployeeId)
-        {
-
-        }
+        private Program _program;
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        public DocumentHelper(Program program) => this._program = program;
 
 
 //        // get organisers of the program

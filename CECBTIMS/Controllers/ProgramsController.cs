@@ -305,9 +305,9 @@ namespace CECBTIMS.Controllers
             return View(programToUpdate);
         }
 
-        internal static Program FindProgram(int id)
+        internal static async Task<Program> GetProgram(int id)
         {
-            var program =  dbs.Programs.Find(id);
+            var program =  await dbs.Programs.FindAsync(id);
 
             return program ?? new Program();
         }
