@@ -12,7 +12,10 @@ using CECBTIMS.DAL;
 using CECBTIMS.Models;
 using CECBTIMS.Models.Enums;
 using CECBTIMS.ViewModels;
+using DocumentFormat.OpenXml.Packaging;
+using DocumentFormat.OpenXml.Wordprocessing;
 using Microsoft.Ajax.Utilities;
+using Document = CECBTIMS.Models.Document;
 
 namespace CECBTIMS.Controllers
 {
@@ -104,10 +107,10 @@ namespace CECBTIMS.Controllers
             return View(document);
         }
 
-        private async void InstHelperClass(int programId)
+        private async Task<object> InstHelperClass(int programId)
         {
             _helperClass = typeof(DocumentHelper);
-            _classInstance = Activator.CreateInstance(_helperClass, await ProgramsController.GetProgram(programId));
+            return Activator.CreateInstance(_helperClass, await ProgramsController.GetProgram(programId));
         }
         
         // POST: Documents1/Create
@@ -122,16 +125,19 @@ namespace CECBTIMS.Controllers
             var path = await GetDocumentPath(templateId, document.FileName);
 
             //instantiate helper class
-            InstHelperClass(programId);
+            _classInstance = await InstHelperClass(programId);
+
             //get document class
             // replace variables
+
+            var method = _helperClass.GetMethod("test");
 
 
 
             // add tables
 
 
-            return Content(path);
+            return Content(ProcessBookmarkVariables(path).ToString());
 
 
 
@@ -158,7 +164,23 @@ namespace CECBTIMS.Controllers
         }
 
 
+        private int ProcessBookmarkVariables(string path)
+        {
+            using (var wordDoc = WordprocessingDocument.Open(path, true))
+            {
 
+
+                IDictionary<string, BookmarkStart> bookmarkMap = new Dictionary<string, BookmarkStart>();
+
+
+                foreach (BookmarkStart bookmarkStart in wordDoc.MainDocumentPart.RootElement.Descendants<BookmarkStart>())
+                {
+                    bookmarkMap[bookmarkStart.Name] = bookmarkStart;
+                }
+
+                return bookmarkMap.Count;
+            }
+        }
 
 
 

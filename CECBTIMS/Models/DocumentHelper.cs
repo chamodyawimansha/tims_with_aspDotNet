@@ -16,10 +16,29 @@ namespace CECBTIMS.Models
         public DocumentHelper(Program program) => this._program = program;
 
 
+        public string test()
+        {
+            return _program.Title;
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 //        // get organisers of the program
 //        public static string GetOrganisedBy(Program program)
 //        {
-//            return program.ProgramArrangements.Aggregate("", (current, item) => current == "" ? item.Organizer.Name : current + ", " + item.Organizer.Name);
+//            return program.ProgramArrangements.Aggregate("", (current, item) => current == "" ? item.Organizer.Name : current + ", " + item.Organizer.Na me);
 //        }
 //
 //        public static string GetTargetGroup(Program program)

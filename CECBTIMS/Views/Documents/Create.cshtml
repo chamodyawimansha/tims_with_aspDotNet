@@ -20,7 +20,7 @@
                 @* Id,Title,Details,FileName,ProgramType,FileType,FileMethod,ProgramId,CreatedAt,UpdatedAt,CreatedBy,UpdatedBy,RowVersion *@
                 @Html.AntiForgeryToken()
                 <input type="hidden" name="templateId" value="@Model.Template.Id" />
-                <input type="hidden" name="prograId" value="@ViewBag.ProgramId" />
+                <input type="hidden" name="programId" value="@ViewBag.ProgramId" />
                 
                 <div class="form-group">
                     @Html.LabelFor(model => model.Document.Title, htmlAttributes: new { @class = "control-label" })
