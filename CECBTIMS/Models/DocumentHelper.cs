@@ -126,7 +126,7 @@ namespace CECBTIMS.Models
                         )
                     );
                 
-                run.Append(new Text(col.ToString()));
+                run.Append(new Text(ToColumnName(col.ToString())));
                 
                 tcpParagraph.Append(run);
                 tc.Append(tcpParagraph);
@@ -137,6 +137,21 @@ namespace CECBTIMS.Models
             table.Append(titleRow);
 
             return table;
+        }
+
+
+        private string ToFunctionName(string name)
+        {
+            var nameParts = name.Split('_');
+
+            return nameParts.Aggregate("", (current, item) => current + (item + " "));
+        }
+
+        private string ToColumnName(string name)
+        {
+            var nameParts = name.Split('_');
+
+            return nameParts.Aggregate("", (current, item) => current + (item + " "));
         }
 
         private void SetTableStyle(OpenXmlElement table)
