@@ -3,6 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using CECBTIMS.Controllers;
+using CECBTIMS.Models.Enums;
+using DocumentFormat.OpenXml;
+using DocumentFormat.OpenXml.Packaging;
+using DocumentFormat.OpenXml.Wordprocessing;
 
 
 namespace CECBTIMS.Models
@@ -11,6 +15,8 @@ namespace CECBTIMS.Models
     {
 
         private readonly Program _program;
+
+        private const string FontFamily = "Times New Roman";
 
         public static readonly string[] DocumentVariableList = {
             "GetYear",
@@ -94,9 +100,66 @@ namespace CECBTIMS.Models
             return "Eng. LCK Karunarathna";
         }
 
-        public string GetTraineeInformationTable()
+        public Table GetTraineeInformationTable(TableColumnName[] columnNames)
         {
-            return "null";
+            var table = new Table();
+            var titleRow = new TableRow();
+            this.SetTableStyle(table);
+
+            // add Table Column Names
+            foreach (var col in columnNames)
+            {
+                var tc = new TableCell();
+                var tcpParagraph = new Paragraph();
+                // Vertical align center
+                tc.Append(new TableCellProperties(new TableCellVerticalAlignment() { Val = TableVerticalAlignmentValues.Center }));
+                
+                //text center
+                tcpParagraph.Append(new ParagraphProperties { Justification = new Justification() { Val = JustificationValues.Center } });
+                var run = new Run();
+                
+                run.Append(
+                    new RunProperties(
+                        new FontSize() { Val = "24" }, 
+                        new RunFonts() { Ascii = FontFamily }, 
+                        new Bold() { Val = OnOffValue.FromBoolean(true) }
+                        )
+                    );
+                
+                run.Append(new Text(col.ToString()));
+                
+                tcpParagraph.Append(run);
+                tc.Append(tcpParagraph);
+                
+                titleRow.Append(tc);
+            }
+
+            table.Append(titleRow);
+
+            return table;
+        }
+
+        private void SetTableStyle(OpenXmlElement table)
+        {
+            var properties = new TableProperties();
+        
+            //table borders
+            var borders = new TableBorders
+            {
+                TopBorder = new TopBorder() {Val = new EnumValue<BorderValues>(BorderValues.Single)},
+                BottomBorder = new BottomBorder() {Val = new EnumValue<BorderValues>(BorderValues.Single)},
+                LeftBorder = new LeftBorder() {Val = new EnumValue<BorderValues>(BorderValues.Single)},
+                RightBorder = new RightBorder() {Val = new EnumValue<BorderValues>(BorderValues.Single)},
+                InsideHorizontalBorder = new InsideHorizontalBorder() {Val = BorderValues.Single},
+                InsideVerticalBorder = new InsideVerticalBorder() {Val = BorderValues.Single}
+            };
+        
+            properties.Append(borders);
+            //set the table width to page width
+            var tableWidth = new TableWidth() {Width = "5000", Type = TableWidthUnitValues.Pct};
+            properties.Append(tableWidth);
+            //add properties to table
+            table.Append(properties);
         }
 
 

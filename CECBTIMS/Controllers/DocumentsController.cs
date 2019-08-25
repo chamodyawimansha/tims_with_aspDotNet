@@ -119,7 +119,7 @@ namespace CECBTIMS.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "Id,Title,Details,FileName,ProgramType,FileType,FileMethod,ProgramId,DocumentNumber")] Document document, TableColumnName?[] columns, int templateId, int programId)
+        public async Task<ActionResult> Create([Bind(Include = "Id,Title,Details,FileName,ProgramType,FileType,FileMethod,ProgramId,DocumentNumber")] Document document, TableColumnName[] columns, int templateId, int programId)
         {
 
             // document path of the newly created document from the template
@@ -135,7 +135,7 @@ namespace CECBTIMS.Controllers
 
 
             ProcessVariables(path);
-            return Content(ProcessTables(path));
+            return Content(ProcessTables(path, columns));
             // add tables
 
 
@@ -196,17 +196,37 @@ namespace CECBTIMS.Controllers
 
         }
 
-        private string ProcessTables(string path)
+        private string ProcessTables(string path, TableColumnName[] columnNames)
         {
             using (var wordDoc = WordprocessingDocument.Open(path, true))
             {
                 var mainPart = wordDoc.MainDocumentPart;
 
-                var res = from p in mainPart.Document.Body.Descendants<Paragraph>()
-                    where p.InnerText == "GetTraineeInformationTable"
-                          select p;
 
-                return res.First().InnerText;
+                foreach (var item in DocumentHelper.DocumentTableList)
+                {
+                    //find the paragraphs
+                    var res = from p in mainPart.Document.Body.Descendants<Paragraph>()
+                        where p.InnerText == item
+                        select p;
+
+                    var method = _helperClass.GetMethod(item);
+
+                    if (method != null)
+                    {
+                        var rf = res.First();
+
+                        rf.RemoveAllChildren<Run>();
+                        rf.AppendChild(new Run((Table)method.Invoke(_classInstance, new object[] { columnNames })));
+
+                    }
+     
+
+                }
+
+
+                return null;
+
             }
         }
 
