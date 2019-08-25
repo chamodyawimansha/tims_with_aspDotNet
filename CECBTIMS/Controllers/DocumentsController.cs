@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Net;
+using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.Mvc;
 using CECBTIMS.DAL;
@@ -133,11 +134,12 @@ namespace CECBTIMS.Controllers
             var method = _helperClass.GetMethod("test");
 
 
-
+            ProcessVariables(path);
+            return Content(ProcessTables(path));
             // add tables
 
 
-            return Content(ProcessBookmarkVariables(path).ToString());
+            //            return Content(ProcessBookmarkVariables(path).ToString());
 
 
 
@@ -163,25 +165,86 @@ namespace CECBTIMS.Controllers
             return View(document);
         }
 
-
-        private int ProcessBookmarkVariables(string path)
+        private void ProcessVariables(string path)
         {
             using (var wordDoc = WordprocessingDocument.Open(path, true))
             {
-
-
-                IDictionary<string, BookmarkStart> bookmarkMap = new Dictionary<string, BookmarkStart>();
-
-
-                foreach (BookmarkStart bookmarkStart in wordDoc.MainDocumentPart.RootElement.Descendants<BookmarkStart>())
+                string docText = null;
+                // read the entire document and store the text to a variable
+                using (var sr = new StreamReader(wordDoc.MainDocumentPart.GetStream()))
                 {
-                    bookmarkMap[bookmarkStart.Name] = bookmarkStart;
+                    docText = sr.ReadToEnd();
                 }
 
-                return bookmarkMap.Count;
+                foreach (var item in DocumentHelper.DocumentVariableList)
+                {
+                    if (!docText.Contains(item)) continue;
+                    
+                    var method = _helperClass.GetMethod(item);
+                
+                    docText = method != null
+                        ? new Regex(item).Replace(docText, (string) method.Invoke(_classInstance, null))
+                        : new Regex(item).Replace(docText, "Null");
+                }
+
+                using (var sw = new StreamWriter(wordDoc.MainDocumentPart.GetStream(FileMode.Create)))
+                {
+                    sw.Write(docText);
+                }
+                
+            }
+
+        }
+
+        private string ProcessTables(string path)
+        {
+            using (var wordDoc = WordprocessingDocument.Open(path, true))
+            {
+                var mainPart = wordDoc.MainDocumentPart;
+
+                var res = from p in mainPart.Document.Body.Descendants<Paragraph>()
+                    where p.InnerText == "GetTraineeInformationTable"
+                          select p;
+
+                return res.First().InnerText;
             }
         }
 
+
+        //        private int ProcessBookmarkVariables(string path)
+        //        {
+        //            using (var wordDoc = WordprocessingDocument.Open(path, true))
+        //            {
+        //
+        //                var bookmarks = GetBookMarks(wordDoc);
+        //
+        //
+        //                foreach (BookmarkStart bookmarkStart in bookmarks.Values)
+        //                {
+        //                    var bookmarkText = bookmarkStart.NextSibling<Run>();
+        //                    if (bookmarkText != null)
+        //                    {
+        //                        bookmarkText.GetFirstChild<Text>().Text = "blah";
+        //                    }
+        //                }
+        //
+        //                return bookmarks.Count;
+        //            }
+        //        }
+
+
+        private IDictionary<string, BookmarkStart> GetBookMarks(WordprocessingDocument wordDoc)
+        {
+
+            var bookmarkMap = new Dictionary<string, BookmarkStart>();
+            // get all the bookmarks
+            foreach (var bookmarkStart in wordDoc.MainDocumentPart.RootElement.Descendants<BookmarkStart>())
+            {
+                bookmarkMap[bookmarkStart.Name] = bookmarkStart;
+            }
+
+            return bookmarkMap;
+        }
 
 
 

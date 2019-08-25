@@ -272,6 +272,7 @@
     <Compile Include="Models\Document\LocalApprovalLetter.cs" />
     <Compile Include="Models\Document\LocalCirculate.cs" />
     <Compile Include="Models\Document\LocalLongApprovalLetters.cs" />
+    <Compile Include="Models\Enums\DocumentVariable.cs" />
     <Compile Include="Models\Helpers.cs" />
     <Compile Include="Models\Employee.cs" />
     <Compile Include="Models\EmploymentCategory.cs" />
