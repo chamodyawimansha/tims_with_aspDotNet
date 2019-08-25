@@ -15,6 +15,7 @@ namespace CECBTIMS.Models
     {
 
         private readonly Program _program;
+        private readonly List<Employee> _employees;
 
         private const string FontFamily = "Times New Roman";
 
@@ -37,12 +38,12 @@ namespace CECBTIMS.Models
             "GetTraineeInformationTable"
         };
 
-        private string[] _tableColumns;
-
-
-        public DocumentHelper(Program program) => _program = program;
-
-        public DocumentHelper(Program program, string[] tableColumns) => _tableColumns = tableColumns;
+ 
+        public DocumentHelper(Program program, List<Employee> employees)
+        {
+            _program = program;
+            _employees = employees;
+        }
 
 
         public string GetDocumentNo()
@@ -136,15 +137,49 @@ namespace CECBTIMS.Models
 
             table.Append(titleRow);
 
+            //Add data to the table
+            foreach (var emp in _employees)
+            {
+                var dataRow = new TableRow();
+
+                foreach (var col in columnNames)
+                {
+                    var tc = new TableCell();
+                    var tcpParagraph = new Paragraph();
+                    // Vertical align center
+                    tc.Append(new TableCellProperties(new TableCellVerticalAlignment()
+                        {Val = TableVerticalAlignmentValues.Center}));
+                    var run = new Run();
+
+                    run.Append(
+                        new RunProperties(
+                            new FontSize() {Val = "22"},
+                            new RunFonts() {Ascii = FontFamily},
+                            new Bold() {Val = OnOffValue.FromBoolean(true)}
+                        )
+                    );
+
+                    run.Append(new Text(ToColumnName(col.ToString())));
+
+                    tcpParagraph.Append(run);
+                    tc.Append(tcpParagraph);
+
+                    dataRow.Append(tc);
+                }
+
+                table.Append(dataRow);
+            }
+
+
             return table;
         }
 
 
         private string ToFunctionName(string name)
         {
-            var nameParts = name.Split('_');
-
-            return nameParts.Aggregate("", (current, item) => current + (item + " "));
+            name = name.ToLower();
+            var nameParts = name.Split(null);
+            return nameParts.Aggregate("Get", (current, item) => current + (item.First().ToString().ToUpper() + item.Substring(1)));
         }
 
         private string ToColumnName(string name)

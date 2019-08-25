@@ -111,7 +111,11 @@ namespace CECBTIMS.Controllers
         private async Task<object> InstHelperClass(int programId)
         {
             _helperClass = typeof(DocumentHelper);
-            return Activator.CreateInstance(_helperClass, await ProgramsController.GetProgram(programId));
+            return Activator.CreateInstance(
+                _helperClass, 
+                await ProgramsController.GetProgram(programId),
+                await EmployeesController.GetTrainees(programId)
+                );
         }
         
         // POST: Documents1/Create

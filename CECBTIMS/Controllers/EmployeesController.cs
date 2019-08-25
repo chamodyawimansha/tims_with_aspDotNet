@@ -15,6 +15,8 @@ namespace CECBTIMS.Controllers
     {
         private CECB_ERPEntities db = new CECB_ERPEntities();
         private ApplicationDbContext default_db = new ApplicationDbContext();
+        private static CECB_ERPEntities dbs = new CECB_ERPEntities();
+        private static ApplicationDbContext default_dbs = new ApplicationDbContext();
 
         public async Task<ActionResult> Index(int? programId)
         {
@@ -123,10 +125,10 @@ namespace CECBTIMS.Controllers
 
         }
 
-        internal List<Employee> GetTrainees(int programId)
+        internal static async Task<List<Employee>> GetTrainees(int programId)
         {
             // get program assignments
-            var programAssignments =  default_db.ProgramAssignments.Where(p => p.ProgramId == programId).ToList();
+            var programAssignments = await  default_dbs.ProgramAssignments.Where(p => p.ProgramId == programId).ToListAsync();
 
             var trainees = new List<Employee>();
 
@@ -142,9 +144,9 @@ namespace CECBTIMS.Controllers
         /**
          * Need employee version id and return converted Employee
          */
-        internal Employee FindEmployee(Guid id)
+        internal static Employee FindEmployee(Guid id)
         {
-            var employee = db.cmn_EmployeeVersion.First(vid => vid.EmployeeVersionId == id);
+            var employee = dbs.cmn_EmployeeVersion.First(vid => vid.EmployeeVersionId == id);
             if (employee == null) return new Employee();
             return new Employee()
                 {
