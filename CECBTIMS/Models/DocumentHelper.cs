@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 using CECBTIMS.Controllers;
 using CECBTIMS.Models.Enums;
@@ -101,6 +102,16 @@ namespace CECBTIMS.Models
             return "Eng. LCK Karunarathna";
         }
 
+        public string GetDesignation(Employee emp)
+        {
+            return emp.DesignationName;
+        }
+
+        public string GetNameWithTitle(Employee emp)
+        {
+            return emp.;
+        }
+
         public Table GetTraineeInformationTable(TableColumnName[] columnNames)
         {
             var table = new Table();
@@ -137,6 +148,8 @@ namespace CECBTIMS.Models
 
             table.Append(titleRow);
 
+            var thisType = this.GetType();
+
             //Add data to the table
             foreach (var emp in _employees)
             {
@@ -154,12 +167,25 @@ namespace CECBTIMS.Models
                     run.Append(
                         new RunProperties(
                             new FontSize() {Val = "22"},
-                            new RunFonts() {Ascii = FontFamily},
-                            new Bold() {Val = OnOffValue.FromBoolean(true)}
+                            new RunFonts() {Ascii = FontFamily}
                         )
                     );
 
-                    run.Append(new Text(ToColumnName(col.ToString())));
+                    var theMethod = thisType.GetMethod(ToFunctionName(col.ToString()));
+
+                    if (theMethod != null)
+                    {
+                        run.Append(new Text(
+                            (string)theMethod.Invoke(this, new object[] { emp })
+                        ));
+                    }
+                    else
+                    {
+                        run.Append(new Text(
+                           "Null"
+                        ));
+                    }
+
 
                     tcpParagraph.Append(run);
                     tc.Append(tcpParagraph);
