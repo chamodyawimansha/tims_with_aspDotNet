@@ -233,6 +233,10 @@
     <Compile Include="Migrations\201908221525105_documentNumberAddedToDocumentModel.Designer.cs">
       <DependentUpon>201908221525105_documentNumberAddedToDocumentModel.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201908261431381_ProgramStartAndEndTimeAdded.cs" />
+    <Compile Include="Migrations\201908261431381_ProgramStartAndEndTimeAdded.Designer.cs">
+      <DependentUpon>201908261431381_ProgramStartAndEndTimeAdded.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Agenda.cs" />
     <Compile Include="Models\BaseCols.cs" />
@@ -532,6 +536,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201908221525105_documentNumberAddedToDocumentModel.resx">
       <DependentUpon>201908221525105_documentNumberAddedToDocumentModel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201908261431381_ProgramStartAndEndTimeAdded.resx">
+      <DependentUpon>201908261431381_ProgramStartAndEndTimeAdded.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

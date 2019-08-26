@@ -81,10 +81,26 @@
                 @Html.EditorFor(model => model.StartDate, new {htmlAttributes = new {@class = "form-control"}})
                 @Html.ValidationMessageFor(model => model.StartDate, "", new {@class = "text-danger"})
             </div>
-
         </div>
+        @if (ViewBag.ProgramType == 1 || ViewBag.ProgramType == 3)
+        {
+            <div class="col-md-4">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.StartTime, "Program Starts At", htmlAttributes: new {@class = "control-label"})
+                    @Html.EditorFor(model => model.StartTime, new {htmlAttributes = new {@class = "form-control"}})
+                    @Html.ValidationMessageFor(model => model.StartTime, "", new {@class = "text-danger"})
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.EndTime, "Program Ends At", htmlAttributes: new {@class = "control-label"})
+                    @Html.EditorFor(model => model.EndTime, new {htmlAttributes = new {@class = "form-control"}})
+                    @Html.ValidationMessageFor(model => model.EndTime, "", new {@class = "text-danger"})
+                </div>
+            </div>
+        }
 
-        <div class="col-md-4">
+        <div class="col-md-6">
             <div class="form-group">
                 @Html.LabelFor(model => model.ApplicationClosingDate, "Application Closing On", htmlAttributes: new {@class = "control-label"})
                 @Html.EditorFor(model => model.ApplicationClosingDate, new {htmlAttributes = new {@class = "form-control"}})
@@ -92,7 +108,7 @@
             </div>
         </div>
 
-        <div class="col-md-4">
+        <div class="col-md-6">
             <div class="form-group">
                 @Html.LabelFor(model => model.ApplicationClosingTime, "Application Closing At", htmlAttributes: new {@class = "control-label"})
                 @Html.EditorFor(model => model.ApplicationClosingTime, new {htmlAttributes = new {@class = "form-control"}})
