@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
@@ -21,11 +22,13 @@ namespace CECBTIMS.Models
         private const string FontFamily = "Times New Roman";
 
         public static readonly string[] DocumentVariableList = {
+            "GetDocumentNo",
             "GetYear",
             "GetToday",
             "GetProgramTitle",
             "GetOrganisedBy",
             "GetStartDate",
+            "GetStartEndTime", // start time with am pm To end time 
             "GetVenue",
             "GetMemberFee",
             "GetNonMemberFee",
@@ -165,10 +168,10 @@ namespace CECBTIMS.Models
         {
             if (emp.DateOfJoint != null)
             {
-                return new Text(emp.DateOfJoint.ToString());
+                return new Text(((DateTime)emp.DateOfJoint).ToString("yyyy/MM/dd"));
             }
 
-            return emp.DateOfAppointment != null ? new Text(emp.DateOfAppointment.ToString()) : new Text("null");
+            return emp.DateOfAppointment != null ? new Text(((DateTime)emp.DateOfAppointment).ToString("yyyy/MM/dd")) : new Text("null");
         }
 
         public Text GetExperienceInCecb(Employee emp)
@@ -178,9 +181,14 @@ namespace CECBTIMS.Models
 
             if (startDate == null) return new Text("null");
 
-            var diff = today.Subtract((DateTime) startDate);
+            var diffInDays = (today.Subtract((DateTime) startDate)).Days;
 
-            return new Text(diff.ToString("g"));
+            var months = (diffInDays / 30);
+            var years = (int)months / 12;
+
+            var restMonths = months % 12;
+
+            return new Text(years.ToString("D2") +"Y "+ restMonths.ToString("D2") + "M");
 
         }
 

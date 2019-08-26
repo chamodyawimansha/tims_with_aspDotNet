@@ -24,6 +24,12 @@ namespace CECBTIMS.Models
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         [Display(Name = "Start Date")]
         public DateTime StartDate { get; set; }
+        [DataType(DataType.Time)]
+        [Display(Name = "Start Time")]
+        public DateTime StartTime { get; set; }
+        [DataType(DataType.Time)]
+        [Display(Name = "End Time")]
+        public DateTime EndTime { get; set; }
         [Required]
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
