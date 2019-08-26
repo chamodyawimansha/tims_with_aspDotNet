@@ -213,19 +213,16 @@ namespace CECBTIMS.Controllers
                     var res = from p in mainPart.Document.Body.Descendants<Paragraph>()
                         where p.InnerText == item
                         select p;
-
-                    var method = _helperClass.GetMethod(item);
-
-                    if (method != null)
                     {
+                        var method = _helperClass.GetMethod(item);
+
+                        if (method == null) continue;
+
                         var rf = res.First();
 
                         rf.RemoveAllChildren<Run>();
                         rf.AppendChild(new Run((Table)method.Invoke(_classInstance, new object[] { columnNames })));
-
                     }
-     
-
                 }
 
 

@@ -27,12 +27,15 @@ namespace CECBTIMS.Models
             "GetToday",
             "GetProgramTitle",
             "GetOrganisedBy",
+            "GetTargetGroup",
+            "GetApplicationClosingDate",
             "GetStartDate",
             "GetStartEndTime", // start time with am pm To end time 
             "GetVenue",
             "GetMemberFee",
             "GetNonMemberFee",
             "GetStudentFee",
+            "GetProgramFee",
             "GetTrainingManagerName",
 
         };
