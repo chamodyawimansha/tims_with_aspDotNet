@@ -109,7 +109,33 @@ namespace CECBTIMS.Models
 
         public string GetNameWithTitle(Employee emp)
         {
-            return emp.;
+            return emp.Title != null ? emp.Title + ". " + ToProperName(emp.NameWithInitial) : ToProperName(emp.NameWithInitial);
+        }
+
+        private static string ToProperName(string name)
+        {
+            var nameParts = name.Split(null);
+            var newName = "";
+        
+            for (var i = 1; i < nameParts.Length; i++)
+            {
+                if (!nameParts[i].Equals("."))
+                {
+                    newName += nameParts[i] + $" ";
+                }
+            }
+        
+            return newName += ToUpperFirstLetter(nameParts[0].ToLower());
+        }
+
+        private static string ToUpperFirstLetter(string source)
+        {
+            if (string.IsNullOrEmpty(source))
+                return string.Empty;
+            var letters = source.ToCharArray();
+            letters[0] = char.ToUpper(letters[0]);
+        
+            return new string(letters);
         }
 
         public Table GetTraineeInformationTable(TableColumnName[] columnNames)
@@ -200,12 +226,11 @@ namespace CECBTIMS.Models
             return table;
         }
 
-
         private string ToFunctionName(string name)
         {
-            name = name.ToLower();
-            var nameParts = name.Split(null);
-            return nameParts.Aggregate("Get", (current, item) => current + (item.First().ToString().ToUpper() + item.Substring(1)));
+            var nameParts = name.Split('_');
+
+            return nameParts.Aggregate("Get", (current, item) => current + (item + ""));
         }
 
         private string ToColumnName(string name)
