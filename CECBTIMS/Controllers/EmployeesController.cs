@@ -164,6 +164,7 @@ namespace CECBTIMS.Controllers
                         : RecruitmentType.Null,
                     EmpStatus = (EmployeeStatus) employee.EmpStatus,
                     DateOfAppointment = employee.DateOfAppointment,
+                    DateOfJoint = employee.EffectiveDate,
                     NatureOfAppointment = "null",
                     TypeOfContract = employee.TypeOfContract,
                     OfficeEmail = employee.OfficeEmail,

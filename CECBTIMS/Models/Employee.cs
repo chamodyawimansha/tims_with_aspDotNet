@@ -20,6 +20,7 @@ namespace CECBTIMS.Models
         public RecruitmentType? EmployeeRecruitmentType { get; set; }
         public EmployeeStatus? EmpStatus { get; set; }
         public DateTime? DateOfAppointment { get; set; }
+        public DateTime? DateOfJoint { get; set; }
         public string NatureOfAppointment { get; set; }
         public string TypeOfContract { get; set; }
         public string OfficeEmail { get; set; }

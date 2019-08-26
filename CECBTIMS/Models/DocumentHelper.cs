@@ -102,15 +102,170 @@ namespace CECBTIMS.Models
             return "Eng. LCK Karunarathna";
         }
 
-        public string GetDesignation(Employee emp)
+        public Text GetNo(Employee emp)
         {
-            return emp.DesignationName;
+            return new Text("");
         }
 
-        public string GetNameWithTitle(Employee emp)
+        public Text GetName(Employee emp)
         {
-            return emp.Title != null ? emp.Title + ". " + ToProperName(emp.NameWithInitial) : ToProperName(emp.NameWithInitial);
+            return new Text(ToProperName(emp.NameWithInitial));
         }
+
+        public Text GetTitle(Employee emp)
+        {
+            return new Text(emp.Title != null ? emp.Title.ToString(): "Null");
+        }
+
+        public Text GetFullName(Employee emp)
+        {
+            return new Text(emp.FullName);
+        }
+
+        public Text GetNameWithTitle(Employee emp)
+        {
+            return new Text(emp.Title != null ? emp.Title + ". " + ToProperName(emp.NameWithInitial) : ToProperName(emp.NameWithInitial));
+        }
+
+        public Text GetDesignation(Employee emp)
+        {
+            return new Text(emp.DesignationName);
+        }
+
+        public string GetNameDesignationAndGrade(Employee emp)
+        {
+            var t = new Text();
+            t.Append(GetNameWithTitle(emp));
+            t.Append(new Break());
+            t.Append(GetDesignation(emp));
+            return null;
+        }
+
+        public Text GetNic(Employee emp)
+        {
+            return new Text(emp.EPFNo);
+        }
+
+        public Text GetWorkspaceName(Employee emp)
+        {
+            return new Text(emp.WorkSpaceName);
+        }
+
+        public Text GetNatureOfAppointment(Employee emp)
+        {
+            return new Text(emp.NatureOfAppointment);
+        }
+
+        public Text GetRecommendation(Employee emp)
+        {
+            return new Text(emp.WorkSpaceType);
+        }
+
+        public Text GetDateOfJoined(Employee emp)
+        {
+            if (emp.DateOfJoint != null)
+            {
+                return new Text(emp.DateOfJoint.ToString());
+            }
+
+            return emp.DateOfAppointment != null ? new Text(emp.DateOfAppointment.ToString()) : new Text("null");
+        }
+
+        public Text GetExperienceInCecb(Employee emp)
+        {
+            var startDate = emp.DateOfJoint ?? emp.DateOfAppointment;
+            var today = DateTime.Today;
+
+            if (startDate == null) return new Text("null");
+
+            var diff = today.Subtract((DateTime) startDate);
+
+            return new Text(diff.ToString("g"));
+
+        }
+
+        public Text GetEmail(Employee emp)
+        {
+            return new Text(emp.PrivateEmail);
+        }
+
+        public Text GetContactNo(Employee emp)
+        {
+            return new Text(emp.MobileNumber);
+        }
+
+        public Text GetPassportNo(Employee emp)
+        {
+            return new Text();
+        }
+
+        public Text GetDateOfServiceConfirmation(Employee emp)
+        {
+            return new Text(emp.DateOfAppointment.ToString());
+        }
+
+//        public Text GetIncidentalAllowance(Employee emp)
+//        {
+//            var costs = _program.Costs;
+//
+//            if (_program.EndDate != null)
+//            {
+//                var dateCount = int._program.StartDate.Subtract((DateTime) _program.EndDate);
+//                
+//                foreach (var cost in costs)
+//                {
+//                    if (cost.Name.ToLower().Contains("incidental"))
+//                    {
+//                        return new Text(_program.Currency.ToString() + cost.Value));
+//                    }
+//                }
+//            }
+//
+//
+//
+//
+//
+//            return new Text("Set End Date");
+//        }
+
+//        public Text GetWarmClothAllowance(Employee emp)
+//        {
+//
+//        }
+
+        public Text GetMemberNonMember(Employee emp)
+        {
+            return new Text();
+        }
+
+        public Text GetRemarks(Employee emp)
+        {
+            return new Text();
+        }
+
+        public Text GetRemarksOnRelevancyToTheProgram()
+        {
+            return new Text();
+        }
+
+        public Text GetDetailsOfForeignTrainingParticipated()
+        {
+            return new Text();
+        }
+
+        public Text GetDetailsOfForeignVisitsParticipated()
+        {
+            return new Text();
+        }
+        
+ 
+
+
+
+
+
+
+
 
         private static string ToProperName(string name)
         {
@@ -201,9 +356,7 @@ namespace CECBTIMS.Models
 
                     if (theMethod != null)
                     {
-                        run.Append(new Text(
-                            (string)theMethod.Invoke(this, new object[] { emp })
-                        ));
+                        run.Append((Text)theMethod.Invoke(this, new object[] { emp }));
                     }
                     else
                     {
