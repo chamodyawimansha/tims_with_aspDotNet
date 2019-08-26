@@ -123,7 +123,7 @@ namespace CECBTIMS.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "Id,Title,ProgramType,StartDate,ApplicationClosingDate,ApplicationClosingTime,Venue,EndDate,NotifiedBy,NotifiedOn,ProgramHours,DurationInDays,DurationInMonths,Department,Currency,ProgramFee,RegistrationFee,PerPersonFee,NoShowFee,MemberFee,NonMemberFee,StudentFee")] Program program)
+        public async Task<ActionResult> Create([Bind(Include = "Id,Title,ProgramType,StartDate,StartTime,EndTime,ApplicationClosingDate,ApplicationClosingTime,Venue,EndDate,NotifiedBy,NotifiedOn,ProgramHours,DurationInDays,DurationInMonths,Department,Currency,ProgramFee,RegistrationFee,PerPersonFee,NoShowFee,MemberFee,NonMemberFee,StudentFee")] Program program)
         {
             if (ModelState.IsValid)
             {
@@ -161,7 +161,7 @@ namespace CECBTIMS.Controllers
 
             string[] fieldsToBind = new string[]
             {
-                "Title", "ProgramType", "StartDate", "ApplicationClosingDate", "ApplicationClosingTime",
+                "Title", "ProgramType", "StartDate","StartTime","EndTime", "ApplicationClosingDate", "ApplicationClosingTime",
                 "Venue", "EndDate", "NotifiedBy", "NotifiedOn", "ProgramHours", "DurationInDays", "DurationInMonths",
                 "Department", "Currency", "ProgramFee", "RegistrationFee", "PerPersonFee", "NoShowFee", "MemberFee",
                 "NonMemberFee", "StudentFee", "RowVersion"
