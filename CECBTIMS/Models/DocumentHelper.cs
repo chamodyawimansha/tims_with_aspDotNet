@@ -66,7 +66,7 @@ namespace CECBTIMS.Models
 
         public string GetToday()
         {
-            return DateTime.Now.ToString("yyyy/mm/dd");
+            return DateTime.Now.ToString("yyyy/MM/dd");
         }
 
         public string GetProgramTitle()
@@ -190,7 +190,7 @@ namespace CECBTIMS.Models
 
         public Text GetRecommendation(Employee emp)
         {
-            return new Text(emp.WorkSpaceType);
+            return new Text((emp.WorkSpaceType).Replace("Unit","")+"("+emp.WorkSpaceName+")");
         }
 
         public Text GetDateOfJoined(Employee emp)
