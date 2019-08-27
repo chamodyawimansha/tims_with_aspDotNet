@@ -1,0 +1,96 @@
+﻿@using CECBTIMS.Models
+@using CECBTIMS.Models.Enums
+@model CECBTIMS.Models.Employee
+
+@{
+    ViewBag.Title = "Select";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="col-10 mx-auto">
+    <div class="card mb-4">
+        <div class="card-header">Employee Select</div>
+        <div class="card-body">
+            <table class="table table-bordered">
+                <tr>
+                    <th class="w-25">EPF</th>
+                    <td class="w-25">@Html.DisplayFor(model => model.EPFNo)</td>
+                    <th class="w-25">NIC</th>
+                    <td class="w-25">@Html.DisplayFor(model => model.NIC)</td>
+                </tr>
+                <tr>
+                    <th>Full Name</th>
+                    <td colspan="3">@Html.DisplayFor(model => model.Title) @Html.DisplayFor(model => model.FullName)</td>
+                </tr>
+                <tr>
+                    <th>Designation</th>
+                    <td>@Html.DisplayFor(model => model.DesignationName)</td>
+                    <th>Work Space Type</th>
+                    <td>@Html.DisplayFor(model => model.WorkSpaceType)</td>
+                </tr>
+                <tr>
+                    <th>Work Space Name</th>
+                    <td colspan="3">@Html.DisplayFor(model => model.WorkSpaceName)</td>
+                </tr>
+                <tr>
+                    <th>Recruitment Type</th>
+                    <td>@Html.DisplayFor(model => model.EmployeeRecruitmentType)</td>
+                    <th>Employment Status</th>
+                    <td>@Html.DisplayFor(model => model.EmpStatus)</td>
+                </tr>
+                <tr>
+                    <th>Date Of Appointment</th>
+                    <td>@Html.DisplayFor(model => model.DateOfAppointment)</td>
+                    <th>Nature Of Appointment</th>
+                    <td>@Html.DisplayFor(model => model.NatureOfAppointment)</td>
+                </tr>
+                <tr>
+                    <th>Type Of Contract</th>
+                    <td colspan="3">@Html.DisplayFor(model => model.TypeOfContract)</td>
+                </tr>
+                <tr>
+                    <th>Office Email</th>
+                    <td>@Html.DisplayFor(model => model.OfficeEmail)</td>
+                    <th>Private Email</th>
+                    <td>@Html.DisplayFor(model => model.PrivateEmail)</td>
+                </tr>
+                <tr>
+                    <th>Mobile Number</th>
+                    <td colspan="3">@Html.DisplayFor(model => model.MobileNumber)</td>
+                </tr>
+            </table>
+
+            @using (Html.BeginForm($"Create", $"ProgramAssignments", null,
+                FormMethod.Post, null))
+            {
+
+
+                <p>The Above selected Employee has been selected to add to the Following Program.</p>
+            
+                <div>
+                    <p><strong>Program Name : </strong> @ViewBag.Program.Title</p>
+                </div>
+                <div>
+                    <p><strong>Program Organiser(s) : </strong> @(new DocumentHelper(ViewBag.Program).GetOrganisedBy())</p>
+                </div>
+
+
+//                other form details
+
+
+            
+                <table class="table table-bordered">
+                    <tr>
+                        <th>Member Type</th>
+                        <td>
+                            @Html.DropDownList("MemberType", EnumHelper.GetSelectList(typeof(MemberType)), "Select the Member Type", new { @class = "custom-select" })
+                        </td>
+                    </tr>
+                </table>
+
+
+            }
+
+        </div>
+    </div>
+</div>

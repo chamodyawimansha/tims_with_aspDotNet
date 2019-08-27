@@ -243,6 +243,10 @@
     <Compile Include="Migrations\201908271032303_EmployeeRemovedFromTheDb.Designer.cs">
       <DependentUpon>201908271032303_EmployeeRemovedFromTheDb.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201908271250462_MemberTypeAddedTothePrograAssignment.cs" />
+    <Compile Include="Migrations\201908271250462_MemberTypeAddedTothePrograAssignment.Designer.cs">
+      <DependentUpon>201908271250462_MemberTypeAddedTothePrograAssignment.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Agenda.cs" />
     <Compile Include="Models\BaseCols.cs" />
@@ -283,6 +287,7 @@
     <Compile Include="Models\Document\LocalCirculate.cs" />
     <Compile Include="Models\Document\LocalLongApprovalLetters.cs" />
     <Compile Include="Models\Enums\DocumentVariable.cs" />
+    <Compile Include="Models\Enums\MemberType.cs" />
     <Compile Include="Models\Helpers.cs" />
     <Compile Include="Models\Employee.cs" />
     <Compile Include="Models\EmploymentCategory.cs" />
@@ -518,7 +523,7 @@
     <Content Include="Views\Documents\Select.cshtml" />
     <Content Include="Views\Documents\Create.cshtml" />
     <Content Include="Views\Employees\Find.cshtml" />
-    <Content Include="Views\ProgramAssignment\Select.cshtml" />
+    <Content Include="Views\ProgramAssignments\Select.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -551,6 +556,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201908271032303_EmployeeRemovedFromTheDb.resx">
       <DependentUpon>201908271032303_EmployeeRemovedFromTheDb.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201908271250462_MemberTypeAddedTothePrograAssignment.resx">
+      <DependentUpon>201908271250462_MemberTypeAddedTothePrograAssignment.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

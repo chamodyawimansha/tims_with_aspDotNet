@@ -45,8 +45,11 @@ namespace CECBTIMS.Models
         {
             "GetTraineeInformationTable"
         };
+        public DocumentHelper(Program program)
+        {
+            _program = program;
+        }
 
- 
         public DocumentHelper(Program program, List<Employee> employees)
         {
             _program = program;

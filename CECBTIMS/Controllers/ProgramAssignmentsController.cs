@@ -25,13 +25,13 @@ namespace CECBTIMS.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            var employee = EmployeesController.FindEmployee((Guid) employeeId);
+            var employee = await EmployeesController.FindEmployee((Guid) employeeId);
 
             var program = await ProgramsController.GetProgram((int) programId);
 
             if(program == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 
-            ViewBag.ProgramId = programId;
+            ViewBag.Program = program;
 
             return View(employee);
         }
