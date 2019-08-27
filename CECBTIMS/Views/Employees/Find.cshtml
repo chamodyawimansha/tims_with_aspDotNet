@@ -1,0 +1,121 @@
+﻿@using CECBTIMS.Models.Enums
+@model IEnumerable<CECBTIMS.Models.Employee>
+@{
+    ViewBag.Title = "Find";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="col-10 mx-auto">
+    <div class="card mb-4">
+        <div class="card-header">Search Employees</div>
+        <div class="card-body">
+            <div class="col-10 mx-auto mb-5">
+                <div class="container">
+                    @using (Html.BeginForm($"Find", $"Employees", null,
+                        FormMethod.Post, null))
+                    {
+                        @Html.AntiForgeryToken()
+                        @Html.ValidationSummary(true, "", new {@class = "text-danger"})
+                        <div class="form-group">
+                            <label for="method">Search Method</label>
+                            <select class="custom-select" id="method" name="method">
+                                <option value="FullName">Full Name</option>
+                                <option value="NIC">NIC Number</option>
+                                <option value="EPFNo">EPF Number</option>
+                            </select>
+                        </div>
+                        <input type="hidden" name="programId" value="@(ViewBag.ProgramId)"/>
+                        <div class="form-group">
+                            <label for="qString">Search String</label>
+                            <input type="text" name="searchString" id="qString" class="form-control" required="required"/>
+                        </div>
+                        <div class="form-group">
+                            <div class="">
+                                <input type="submit" value="Find" class="btn btn-primary"/>
+                                @if (Model != null)
+                                {
+                                    @Html.ActionLink("Clear Results", $"Find", new {programId = ViewBag.ProgramId}, new {@class = "btn btn-outline-secondary"})
+                                }
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="col-12 mx-auto">
+    @if (Model != null)
+    {
+        <div class="card border-primary">
+            <div class="card-header">Search Results</div>
+            <div class="card-body">
+                <td class="container">
+
+                @if (Model.Any())
+                {
+                    <div class="alert alert-dismissible alert-success">
+                        <button type="button" class="close" data-dismiss="alert">&times;</button>
+                        <strong>@Model.Count() </strong>results Found.
+                    </div>
+
+                    <table class="table table-bordered">
+                        <tr>
+                            <th>#</th>
+                            <th>Full Name</th>
+                            <th>Designation</th>
+                            <th>Section</th>
+                            <th>Recruitment Type</th>
+                            <th>Date of Appointment</th>
+                            <th>Contract Type</th>
+                            <th></th>
+                        </tr>
+                        @{
+                            int i = 1;
+                            foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>@i</td>
+                                    <td>@item.Title @item.FullName</td>
+                                    <td>@item.DesignationName</td>
+                                    <td>@(item.WorkSpaceType)(@item.WorkSpaceName)</td>
+                                    <td>@item.EmployeeRecruitmentType</td>
+                                    <td>@item.DateOfAppointment</td>
+                                    <td>@item.NatureOfAppointment</td>
+
+                                    <td>
+                                        @if (ViewBag.ProgramId != null)
+                                        {
+                                            using (Html.BeginForm($"Create", $"ProgramAssignments", null, FormMethod.Post, new {@class = "d-inline"}))
+                                            {
+                                                @Html.AntiForgeryToken()
+                                                <input type="hidden" name="EmployeeId" value="@(item.EmployeeId)"/>
+                                                <input type="hidden" name="EmployeeVersionId" value="@(item.EmployeeId)"/>
+                                                <input type="hidden" name="EPFNo" value="@(item.EPFNo)"/>
+                                                <input type="hidden" name="ProgramId" value="@(ViewBag.ProgramId)"/>
+                                                <input type="submit" value="Select" class="btn btn-primary btn-sm"/>
+                                            }
+                                        }
+
+                                        @Html.ActionLink("Details", $"MoreDetails", new {id = item.EmployeeId, programId = ViewBag.ProgramId, rl = "/Employees/Details"}, new {@class = "btn btn-sm btn-outline-secondary"})
+                                    </td>
+                                </tr>
+                                i++;
+                            }
+                        }
+                    </table>
+                }
+                else
+                {
+                    <div class="alert alert-dismissible alert-warning">
+                        <button type="button" class="close" data-dismiss="alert">&times;</button>
+                        <h4 class="alert-heading">Oops!</h4>
+                        <p class="mb-0">No results Found.</p>
+                    </div>
+                }
+            </div>
+        </div>
+    }
+
+</div>

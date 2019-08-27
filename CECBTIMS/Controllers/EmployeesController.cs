@@ -24,6 +24,7 @@ namespace CECBTIMS.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+
             //get the program
             var program = await default_db.Programs.FindAsync(programId);
 
@@ -31,8 +32,10 @@ namespace CECBTIMS.Controllers
             {
                 return new HttpNotFoundResult();
             }
+
             // get program assignments
-            var programAssignments = await default_db.ProgramAssignments.Where(p => p.ProgramId == programId).ToListAsync();
+            var programAssignments =
+                await default_db.ProgramAssignments.Where(p => p.ProgramId == programId).ToListAsync();
 
             var trainees = new List<cmn_EmployeeVersion>();
 
@@ -57,7 +60,7 @@ namespace CECBTIMS.Controllers
         }
 
         // GET: Employee/Details
-            public async Task<ActionResult> Details(string method, string q, int? programId)
+        public async Task<ActionResult> Details(string method, string q, int? programId)
         {
             ViewBag.ProgramId = null;
 
@@ -74,7 +77,7 @@ namespace CECBTIMS.Controllers
             }
 
             var employees = from em in db.cmn_EmployeeVersion
-                            select em;
+                select em;
 
             switch (method)
             {
@@ -90,8 +93,94 @@ namespace CECBTIMS.Controllers
             }
 
             return View($"Details", await employees.ToListAsync());
-
         }
+
+
+
+
+
+
+
+
+
+
+
+
+
+        //Get
+        public ActionResult Find(int? programId)
+        {
+            if (programId == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            ViewBag.ProgramId = programId;
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> Find(string method, int programId, string searchString)
+        {
+            var employees = from em in db.cmn_EmployeeVersion
+                select em;
+
+            switch (method)
+            {
+                case "EPFNo":
+                    employees = employees.Where(em => em.EPFNo.Contains(searchString));
+                    break;
+                case "NIC":
+                    employees = employees.Where(em => em.NIC.Contains(searchString));
+                    break;
+                default:
+                    employees = employees.Where(em => em.FullName.Contains(searchString));
+                    break;
+            }
+
+            var empVersionList = await employees.ToListAsync();
+
+            var empList = empVersionList.Select(employee => new Employee
+                {
+                    EmployeeId = employee.EmployeeVersionId,
+                    EPFNo = employee.EPFNo,
+                    Title = int.TryParse(employee.Title, out var t) ? (Title) t : Title.Null,
+                    NameWithInitial = employee.NameWithInitial,
+                    FullName = employee.FullName,
+                    NIC = employee.NIC,
+                    WorkSpaceName = employee.cmn_WorkSpace != null ? employee.cmn_WorkSpace.WorkSpaceName : "Null",
+                    WorkSpaceType = employee.cmn_WorkSpace != null
+                        ? employee.cmn_WorkSpace.cmn_WorkSpaceType.WorkSpaceTypeName
+                        : "Null",
+                    DesignationName = employee.hrm_Designation != null ? employee.hrm_Designation.DesignationName : "Null",
+                    EmployeeRecruitmentType = int.TryParse(employee.EmployeeRecruitmentType, out var rt)
+                        ? (RecruitmentType) rt
+                        : RecruitmentType.Null,
+                    EmpStatus = (EmployeeStatus) employee.EmpStatus,
+                    DateOfAppointment = employee.DateOfAppointment,
+                    DateOfJoint = employee.EffectiveDate,
+                    NatureOfAppointment = "null",
+                    TypeOfContract = employee.TypeOfContract,
+                    OfficeEmail = employee.OfficeEmail,
+                    MobileNumber = employee.MobileNumber,
+                    PrivateEmail = employee.PrivateEmail
+                })
+                .ToList();
+
+            ViewBag.ProgramId = programId;
+
+            return View(empList);
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         /**
          * Get More Details from the db
@@ -121,14 +210,14 @@ namespace CECBTIMS.Controllers
                 return HttpNotFound();
             }
 
-            return View($"Single",employee);
-
+            return View($"Single", employee);
         }
 
         internal static async Task<List<Employee>> GetTrainees(int programId)
         {
             // get program assignments
-            var programAssignments = await  default_dbs.ProgramAssignments.Where(p => p.ProgramId == programId).ToListAsync();
+            var programAssignments =
+                await default_dbs.ProgramAssignments.Where(p => p.ProgramId == programId).ToListAsync();
 
             var trainees = new List<Employee>();
 
@@ -149,28 +238,30 @@ namespace CECBTIMS.Controllers
             var employee = dbs.cmn_EmployeeVersion.First(vid => vid.EmployeeVersionId == id);
             if (employee == null) return new Employee();
             return new Employee()
-                {
-                    EmployeeId = employee.EmployeeVersionId,
-                    EPFNo = employee.EPFNo,
-                    Title = int.TryParse(employee.Title, out var t) ? (Title) t : Title.Null,
-                    NameWithInitial = employee.NameWithInitial,
-                    FullName = employee.FullName,
-                    NIC = employee.NIC,
-                    WorkSpaceName = employee.cmn_WorkSpace != null ? employee.cmn_WorkSpace.WorkSpaceName : "Null",
-                    WorkSpaceType = employee.cmn_WorkSpace != null ? employee.cmn_WorkSpace.cmn_WorkSpaceType.WorkSpaceTypeName : "Null",
-                    DesignationName = employee.hrm_Designation != null ? employee.hrm_Designation.DesignationName : "Null",
-                    EmployeeRecruitmentType = int.TryParse(employee.EmployeeRecruitmentType, out var rt)
-                        ? (RecruitmentType) rt
-                        : RecruitmentType.Null,
-                    EmpStatus = (EmployeeStatus) employee.EmpStatus,
-                    DateOfAppointment = employee.DateOfAppointment,
-                    DateOfJoint = employee.EffectiveDate,
-                    NatureOfAppointment = "null",
-                    TypeOfContract = employee.TypeOfContract,
-                    OfficeEmail = employee.OfficeEmail,
-                    MobileNumber = employee.MobileNumber,
-                    PrivateEmail = employee.PrivateEmail
-                };
+            {
+                EmployeeId = employee.EmployeeVersionId,
+                EPFNo = employee.EPFNo,
+                Title = int.TryParse(employee.Title, out var t) ? (Title) t : Title.Null,
+                NameWithInitial = employee.NameWithInitial,
+                FullName = employee.FullName,
+                NIC = employee.NIC,
+                WorkSpaceName = employee.cmn_WorkSpace != null ? employee.cmn_WorkSpace.WorkSpaceName : "Null",
+                WorkSpaceType = employee.cmn_WorkSpace != null
+                    ? employee.cmn_WorkSpace.cmn_WorkSpaceType.WorkSpaceTypeName
+                    : "Null",
+                DesignationName = employee.hrm_Designation != null ? employee.hrm_Designation.DesignationName : "Null",
+                EmployeeRecruitmentType = int.TryParse(employee.EmployeeRecruitmentType, out var rt)
+                    ? (RecruitmentType) rt
+                    : RecruitmentType.Null,
+                EmpStatus = (EmployeeStatus) employee.EmpStatus,
+                DateOfAppointment = employee.DateOfAppointment,
+                DateOfJoint = employee.EffectiveDate,
+                NatureOfAppointment = "null",
+                TypeOfContract = employee.TypeOfContract,
+                OfficeEmail = employee.OfficeEmail,
+                MobileNumber = employee.MobileNumber,
+                PrivateEmail = employee.PrivateEmail
+            };
         }
 
 
