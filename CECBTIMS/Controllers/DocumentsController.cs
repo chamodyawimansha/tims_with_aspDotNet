@@ -1,13 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Data.Entity;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Net;
 using System.Text.RegularExpressions;
-using System.Web;
 using System.Web.Mvc;
 using CECBTIMS.DAL;
 using CECBTIMS.Models;
@@ -15,7 +13,6 @@ using CECBTIMS.Models.Enums;
 using CECBTIMS.ViewModels;
 using DocumentFormat.OpenXml.Packaging;
 using DocumentFormat.OpenXml.Wordprocessing;
-using Microsoft.Ajax.Utilities;
 using Document = CECBTIMS.Models.Document;
 
 namespace CECBTIMS.Controllers
@@ -27,7 +24,7 @@ namespace CECBTIMS.Controllers
         private object _classInstance;
 
         // GET: Documents
-        public async Task<ActionResult> Index(int? programId)
+        public async Task<ActionResult> Index(int? programId, int? EmployeeId)
         {
             if (programId == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 

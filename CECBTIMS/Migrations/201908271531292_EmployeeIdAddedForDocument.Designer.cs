@@ -7,13 +7,13 @@ namespace CECBTIMS.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.2.0-61023")]
-    public sealed partial class ProgramAssignmentRequired : IMigrationMetadata
+    public sealed partial class EmployeeIdAddedForDocument : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(ProgramAssignmentRequired));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(EmployeeIdAddedForDocument));
         
         string IMigrationMetadata.Id
         {
-            get { return "201908271347314_ProgramAssignmentRequired"; }
+            get { return "201908271531292_EmployeeIdAddedForDocument"; }
         }
         
         string IMigrationMetadata.Source

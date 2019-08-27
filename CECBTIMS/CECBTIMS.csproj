@@ -247,9 +247,9 @@
     <Compile Include="Migrations\201908271250462_MemberTypeAddedTothePrograAssignment.Designer.cs">
       <DependentUpon>201908271250462_MemberTypeAddedTothePrograAssignment.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201908271347314_ProgramAssignmentRequired.cs" />
-    <Compile Include="Migrations\201908271347314_ProgramAssignmentRequired.Designer.cs">
-      <DependentUpon>201908271347314_ProgramAssignmentRequired.cs</DependentUpon>
+    <Compile Include="Migrations\201908271531292_EmployeeIdAddedForDocument.cs" />
+    <Compile Include="Migrations\201908271531292_EmployeeIdAddedForDocument.Designer.cs">
+      <DependentUpon>201908271531292_EmployeeIdAddedForDocument.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Agenda.cs" />
@@ -564,8 +564,8 @@
     <EmbeddedResource Include="Migrations\201908271250462_MemberTypeAddedTothePrograAssignment.resx">
       <DependentUpon>201908271250462_MemberTypeAddedTothePrograAssignment.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201908271347314_ProgramAssignmentRequired.resx">
-      <DependentUpon>201908271347314_ProgramAssignmentRequired.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201908271531292_EmployeeIdAddedForDocument.resx">
+      <DependentUpon>201908271531292_EmployeeIdAddedForDocument.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

@@ -1,5 +1,4 @@
-﻿@using CECBTIMS.Models.Enums
-@model IEnumerable<CECBTIMS.Models.cmn_EmployeeVersion>
+﻿@model CECBTIMS.Models.Employee
 
 @{
     ViewBag.Title = "Details";
@@ -7,102 +6,68 @@
 }
 
 
+<div class="col-10 mx-auto">
+    <div class="card mb-4">
+        <div class="card-header">
+            Employee Details
+            
+            
+            
+            
+            
+            buttons here for back and Documents
+            
 
-
-
-<div class="col-12 mx-auto">
-    @if (Model != null)
-    {
-        <div class="card border-primary">
-            <div class="card-header">Search Results</div>
-            <div class="card-body">
-                <div class="container">
-
-                    @if (Model.Any())
-                    {
-                        <div class="alert alert-dismissible alert-success">
-                            <button type="button" class="close" data-dismiss="alert">&times;</button>
-                            <strong>@Model.Count() </strong>results Found.
-                        </div>
-
-                        <table class="table table-bordered">
-                            <tr>
-                                <th>#</th>
-                                <th>Full Name</th>
-                                <th>Designation</th>
-                                <th>Section</th>
-                                <th>Recruitment Type</th>
-                                <th>Date of Appointment</th>
-                                <th>Contract Type</th>
-                            </tr>
-                            @{
-                                int i = 1;
-                                foreach (var item in Model)
-                                {
-                                    <tr>
-                                        <td>@i</td>
-                                        <td>
-                                            @{
-                                                var titleName = "";
-
-                                                if (!string.IsNullOrEmpty(item.Title))
-                                                {
-                                                    titleName = int.TryParse(item.Title, out var title) ? ((Title)title).ToString() : item.Title;
-                                                }
-
-
-                                            }
-                                            @(titleName). @item.FullName
-                                        </td>
-                                        @if (item.hrm_Designation != null)
-                                        {
-                                            <td>@item.hrm_Designation.DesignationName</td>
-                                        }
-                                        else
-                                        {
-                                            <td></td>
-                                        }
-                                        @if (item.cmn_WorkSpace != null)
-                                        {
-                                            <td>@item.cmn_WorkSpace.WorkSpaceName</td>
-                                        }
-                                        else
-                                        {
-                                            <td></td>
-                                        }
-                                        <td>
-                                            @if (ViewBag.ProgramId != null)
-                                            {
-                                                using (Html.BeginForm($"Create", $"ProgramAssignments", null, FormMethod.Post, new { @class = "d-inline" }))
-                                                {
-                                                    @Html.AntiForgeryToken()
-                                                    <input type="hidden" name="EmployeeId" value="@(item.EmployeeId)" />
-                                                    <input type="hidden" name="EmployeeVersionId" value="@(item.EmployeeVersionId)" />
-                                                    <input type="hidden" name="EPFNo" value="@(item.EPFNo)" />
-                                                    <input type="hidden" name="ProgramId" value="@(ViewBag.ProgramId)" />
-                                                    <input type="submit" value="Select" class="btn btn-primary btn-sm" />
-                                                }
-                                            }
-
-                                            @Html.ActionLink("Details", $"MoreDetails", new { id = item.EmployeeVersionId, programId = ViewBag.ProgramId, rl = "/Employees/Details" }, new { @class = "btn btn-sm btn-outline-secondary" })
-                                        </td>
-                                    </tr>
-                                    i++;
-                                }
-                            }
-                        </table>
-                    }
-                    else
-                    {
-                        <div class="alert alert-dismissible alert-warning">
-                            <button type="button" class="close" data-dismiss="alert">&times;</button>
-                            <h4 class="alert-heading">Oops!</h4>
-                            <p class="mb-0">No results Found.</p>
-                        </div>
-                    }
-                </div>
-            </div>
         </div>
-    }
-
+        <div class="card-body">
+            <table class="table table-bordered">
+                <tr>
+                    <th class="w-25">EPF</th>
+                    <td class="w-25">@Html.DisplayFor(model => model.EPFNo)</td>
+                    <th class="w-25">NIC</th>
+                    <td class="w-25">@Html.DisplayFor(model => model.NIC)</td>
+                </tr>
+                <tr>
+                    <th>Full Name</th>
+                    <td colspan="3">@Html.DisplayFor(model => model.Title) @Html.DisplayFor(model => model.FullName)</td>
+                </tr>
+                <tr>
+                    <th>Designation</th>
+                    <td>@Html.DisplayFor(model => model.DesignationName)</td>
+                    <th>Work Space Type</th>
+                    <td>@Html.DisplayFor(model => model.WorkSpaceType)</td>
+                </tr>
+                <tr>
+                    <th>Work Space Name</th>
+                    <td colspan="3">@Html.DisplayFor(model => model.WorkSpaceName)</td>
+                </tr>
+                <tr>
+                    <th>Recruitment Type</th>
+                    <td>@Html.DisplayFor(model => model.EmployeeRecruitmentType)</td>
+                    <th>Employment Status</th>
+                    <td>@Html.DisplayFor(model => model.EmpStatus)</td>
+                </tr>
+                <tr>
+                    <th>Date Of Appointment</th>
+                    <td>@Html.DisplayFor(model => model.DateOfAppointment)</td>
+                    <th>Nature Of Appointment</th>
+                    <td>@Html.DisplayFor(model => model.NatureOfAppointment)</td>
+                </tr>
+                <tr>
+                    <th>Type Of Contract</th>
+                    <td colspan="3">@Html.DisplayFor(model => model.TypeOfContract)</td>
+                </tr>
+                <tr>
+                    <th>Office Email</th>
+                    <td>@Html.DisplayFor(model => model.OfficeEmail)</td>
+                    <th>Private Email</th>
+                    <td>@Html.DisplayFor(model => model.PrivateEmail)</td>
+                </tr>
+                <tr>
+                    <th>Mobile Number</th>
+                    <td colspan="3">@Html.DisplayFor(model => model.MobileNumber)</td>
+                </tr>
+            </table>
+        </div>
+    </div>
 </div>

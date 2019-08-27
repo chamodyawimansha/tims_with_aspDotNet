@@ -60,39 +60,16 @@ namespace CECBTIMS.Controllers
         }
 
         // GET: Employee/Details
-        public async Task<ActionResult> Details(string method, string q, int? programId)
+        public async Task<ActionResult> Details(Guid? id)
         {
-            ViewBag.ProgramId = null;
+            if (id == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 
-            if (programId != null)
-            {
-                //check the program available in the database and the assign the program id to viewbag
-                var program = await default_db.Programs.FindAsync(programId);
-                ViewBag.ProgramId = program != null ? programId : null;
-            }
+            var employee = await FindEmployee((Guid)id);
 
-            if (string.IsNullOrEmpty(method) || string.IsNullOrEmpty(q))
-            {
-                return View($"Details");
-            }
+            if (employee == null) return HttpNotFound();
 
-            var employees = from em in db.cmn_EmployeeVersion
-                select em;
+            return View(employee);
 
-            switch (method)
-            {
-                case "EPFNo":
-                    employees = employees.Where(em => em.EPFNo.Contains(q));
-                    break;
-                case "NIC":
-                    employees = employees.Where(em => em.NIC.Contains(q));
-                    break;
-                default:
-                    employees = employees.Where(em => em.FullName.Contains(q));
-                    break;
-            }
-
-            return View($"Details", await employees.ToListAsync());
         }
 
 
