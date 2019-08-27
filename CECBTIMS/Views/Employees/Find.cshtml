@@ -83,23 +83,29 @@
                                     <td>@item.EmployeeRecruitmentType</td>
                                     <td>@item.DateOfAppointment</td>
                                     <td>@item.NatureOfAppointment</td>
-
+                                    
+                                    
+                                    
                                     <td>
-                                        @if (ViewBag.ProgramId != null)
-                                        {
-                                            using (Html.BeginForm($"Create", $"ProgramAssignments", null, FormMethod.Post, new {@class = "d-inline"}))
-                                            {
-                                                @Html.AntiForgeryToken()
-                                                <input type="hidden" name="EmployeeId" value="@(item.EmployeeId)"/>
-                                                <input type="hidden" name="EmployeeVersionId" value="@(item.EmployeeId)"/>
-                                                <input type="hidden" name="EPFNo" value="@(item.EPFNo)"/>
-                                                <input type="hidden" name="ProgramId" value="@(ViewBag.ProgramId)"/>
-                                                <input type="submit" value="Select" class="btn btn-primary btn-sm"/>
-                                            }
-                                        }
-
-                                        @Html.ActionLink("Details", $"MoreDetails", new {id = item.EmployeeId, programId = ViewBag.ProgramId, rl = "/Employees/Details"}, new {@class = "btn btn-sm btn-outline-secondary"})
+                                        @Html.ActionLink("Select", $"Select", $"ProgramAssignments",new { id = item.EmployeeId, programId = ViewBag.ProgramId}, new { @class = "btn btn-sm btn-outline-secondary" })
                                     </td>
+@* *@
+@*                                     <td> *@
+@*                                         @if (ViewBag.ProgramId != null) *@
+@*                                         { *@
+@*                                             using (Html.BeginForm($"Create", $"ProgramAssignments", null, FormMethod.Post, new {@class = "d-inline"})) *@
+@*                                             { *@
+@*                                                 @Html.AntiForgeryToken() *@
+@*                                                 <input type="hidden" name="EmployeeId" value="@(item.EmployeeId)"/> *@
+@*                                                 <input type="hidden" name="EmployeeVersionId" value="@(item.EmployeeId)"/> *@
+@*                                                 <input type="hidden" name="EPFNo" value="@(item.EPFNo)"/> *@
+@*                                                 <input type="hidden" name="ProgramId" value="@(ViewBag.ProgramId)"/> *@
+@*                                                 <input type="submit" value="Select" class="btn btn-primary btn-sm"/> *@
+@*                                             } *@
+@*                                         } *@
+@* *@
+@*                                         @Html.ActionLink("Details", $"MoreDetails", new {id = item.EmployeeId, programId = ViewBag.ProgramId, rl = "/Employees/Details"}, new {@class = "btn btn-sm btn-outline-secondary"}) *@
+@*                                     </td> *@
                                 </tr>
                                 i++;
                             }
