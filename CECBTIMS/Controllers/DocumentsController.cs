@@ -26,7 +26,19 @@ namespace CECBTIMS.Controllers
         // GET: Documents
         public async Task<ActionResult> Index(int? programId, Guid? EmployeeId)
         {
-            if (programId == null && EmployeeId == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            if (programId == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+
+
+            if (EmployeeId != null)
+            {
+
+                var documents = db.Documents.Where(d => (d.EmployeeId == EmployeeId));
+
+                ViewBag.ProgramId = programId;
+                ViewBag.EmployeeId = EmployeeId;
+
+                return View(await documents.ToListAsync());
+            }
 
             if (programId != null)
             {
@@ -39,16 +51,6 @@ namespace CECBTIMS.Controllers
                 return View(program.Documents);
             }
 
-            if (EmployeeId != null)
-            {
-
-                var documents = db.Documents.Where(d => (d.EmployeeId == EmployeeId));
-                
-                ViewBag.Program = null;
-                ViewBag.EmployeeId = EmployeeId;
-
-                return View(await documents.ToListAsync());
-            }
 
             return new HttpNotFoundResult();
 

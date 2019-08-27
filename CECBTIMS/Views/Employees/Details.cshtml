@@ -10,12 +10,10 @@
     <div class="card mb-4">
         <div class="card-header">
             Employee Details
-            
             <div class="button-array float-right">
-                @Html.ActionLink("Documents", $"Index",$"Documents", new {employeeId = Model.EmployeeId}, new {@class = "btn btn-primary"})
+                @Html.ActionLink("Documents", $"Index",$"Documents", new {employeeId = Model.EmployeeId, programId = ViewBag.ProgramId}, new {@class = "btn btn-primary"})
                 @Html.ActionLink("Back", $"Index",$"Employees", new {programId = ViewBag.ProgramId}, new {@class = "btn btn-outline-secondary"})
             </div>
-            
         </div>
         <div class="card-body">
             <table class="table table-bordered">

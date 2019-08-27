@@ -18,7 +18,7 @@
                 }
                 else
                 {
-                    @Html.ActionLink("New Document", $"Select", new { employeeId = ViewBag.EmployeeId}, new {@class = "btn btn-primary"})
+                    @Html.ActionLink("New Document", $"Select", new { programId = ViewBag.ProgramId, employeeId = ViewBag.EmployeeId}, new {@class = "btn btn-primary"})
                 }
                 @Html.ActionLink("Go Back", "Create", null, new {@class = "btn btn-primary"})
             </div>
