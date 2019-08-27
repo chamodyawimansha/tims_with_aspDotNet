@@ -64,21 +64,23 @@
                 FormMethod.Post, null))
             {
 
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary(true, "", new {@class = "text-danger"})
 
                 <p>The Above selected Employee has been selected to add to the Following Program.</p>
-            
+
                 <div>
                     <p><strong>Program Name : </strong> @ViewBag.Program.Title</p>
                 </div>
                 <div>
                     <p><strong>Program Organiser(s) : </strong> @(new DocumentHelper(ViewBag.Program).GetOrganisedBy())</p>
                 </div>
-
-
-//                other form details
-
-
-            
+                
+                <input type="hidden" name="EmployeeId" value="@Model.EmployeeId"/>
+                <input type="hidden" name="EmployeeVersionId" value="@Model.EmployeeId"/>
+                <input type="hidden" name="EPFNo" value="@Model.EPFNo"/>
+                <input type="hidden" name="ProgramId" value="@ViewBag.Program.Id"/>
+    
                 <table class="table table-bordered">
                     <tr>
                         <th>Member Type</th>
@@ -88,6 +90,9 @@
                     </tr>
                 </table>
 
+                <div class="form-group float-right">
+                    <input type="submit" value="Select" class="btn btn-primary"/>
+                </div>
 
             }
 

@@ -40,17 +40,15 @@ namespace CECBTIMS.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "EmployeeId,EmployeeVersionId,EPFNo,ProgramId")] ProgramAssignment programAssignment)
+        public async Task<ActionResult> Create([Bind(Include = "EmployeeId,EmployeeVersionId,EPFNo,MemberType,ProgramId")] ProgramAssignment programAssignment)
         {
-            if (ModelState.IsValid)
-            {
-                db.ProgramAssignments.Add(programAssignment);
-                await db.SaveChangesAsync();
+            if (!ModelState.IsValid) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 
-                return RedirectToAction($"Index", $"Employees", new { programId = programAssignment.ProgramId });
-            }
+            db.ProgramAssignments.Add(programAssignment);
+            await db.SaveChangesAsync();
 
-            return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            return RedirectToAction($"Index", $"Employees", new { programId = programAssignment.ProgramId });
+
         }
 
         // POST: ProgramAssignments/Delete/5

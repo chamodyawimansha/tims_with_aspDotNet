@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
@@ -11,10 +12,13 @@ namespace CECBTIMS.Models
     {
         public int Id { get; set; }
         public System.Guid EmployeeId { get; set; }
+        [Required]
         public System.Guid EmployeeVersionId { get; set; }
         public string EPFNo { get; set; }
+        [Required]
         public MemberType MemberType { get; set; }
         [ForeignKey("Program")]
+        [Required]
         public int ProgramId { get; set; }
 
 

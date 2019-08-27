@@ -247,6 +247,10 @@
     <Compile Include="Migrations\201908271250462_MemberTypeAddedTothePrograAssignment.Designer.cs">
       <DependentUpon>201908271250462_MemberTypeAddedTothePrograAssignment.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201908271347314_ProgramAssignmentRequired.cs" />
+    <Compile Include="Migrations\201908271347314_ProgramAssignmentRequired.Designer.cs">
+      <DependentUpon>201908271347314_ProgramAssignmentRequired.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Agenda.cs" />
     <Compile Include="Models\BaseCols.cs" />
@@ -559,6 +563,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201908271250462_MemberTypeAddedTothePrograAssignment.resx">
       <DependentUpon>201908271250462_MemberTypeAddedTothePrograAssignment.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201908271347314_ProgramAssignmentRequired.resx">
+      <DependentUpon>201908271347314_ProgramAssignmentRequired.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
