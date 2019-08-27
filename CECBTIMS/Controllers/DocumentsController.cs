@@ -213,16 +213,17 @@ namespace CECBTIMS.Controllers
                     var res = from p in mainPart.Document.Body.Descendants<Paragraph>()
                         where p.InnerText == item
                         select p;
-                    {
-                        var method = _helperClass.GetMethod(item);
 
-                        if (method == null) continue;
+                    if (!res.Any()) continue;
 
-                        var rf = res.First();
+                    var method = _helperClass.GetMethod(item);
 
-                        rf.RemoveAllChildren<Run>();
-                        rf.AppendChild(new Run((Table)method.Invoke(_classInstance, new object[] { columnNames })));
-                    }
+                    if (method == null) continue;
+
+                    var rf = res.First();
+
+                    rf.RemoveAllChildren<Run>();
+                    rf.AppendChild(new Run((Table)method.Invoke(_classInstance, new object[] { columnNames })));
                 }
 
 
@@ -230,28 +231,6 @@ namespace CECBTIMS.Controllers
 
             }
         }
-
-
-        //        private int ProcessBookmarkVariables(string path)
-        //        {
-        //            using (var wordDoc = WordprocessingDocument.Open(path, true))
-        //            {
-        //
-        //                var bookmarks = GetBookMarks(wordDoc);
-        //
-        //
-        //                foreach (BookmarkStart bookmarkStart in bookmarks.Values)
-        //                {
-        //                    var bookmarkText = bookmarkStart.NextSibling<Run>();
-        //                    if (bookmarkText != null)
-        //                    {
-        //                        bookmarkText.GetFirstChild<Text>().Text = "blah";
-        //                    }
-        //                }
-        //
-        //                return bookmarks.Count;
-        //            }
-        //        }
 
 
         private IDictionary<string, BookmarkStart> GetBookMarks(WordprocessingDocument wordDoc)

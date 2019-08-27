@@ -29,6 +29,7 @@ namespace CECBTIMS.Models
             "GetOrganisedBy",
             "GetTargetGroup",
             "GetApplicationClosingDate",
+            "GetApplicationClosingTime",
             "GetStartDate",
             "GetStartEndTime", // start time with am pm To end time 
             "GetVenue",
@@ -78,9 +79,29 @@ namespace CECBTIMS.Models
             return _program.ProgramArrangements.Aggregate("", (current, item) => current == "" ? item.Organizer.Name : current + ", " + item.Organizer.Name);
         }
 
+        public string GetTargetGroup()
+        {
+            return _program.TargetGroups.Aggregate("", (current, item) => current == "" ? item.Name : current + ", " + item.Name);
+        }
+
+        public string GetApplicationClosingDate()
+        {
+            return _program.ApplicationClosingDate.ToString("D");
+        }
+
+        public string GetApplicationClosingTime()
+        {
+            return _program.ApplicationClosingTime.ToString("HH:mm tt");
+        }
+
         public string GetStartDate()
         {
             return _program.StartDate.ToString("D");
+        }
+
+        public string GetStartEndTime()
+        {
+            return _program.StartTime.ToString("h:mm tt") + " To " + _program.EndTime.ToString("h:mm tt");
         }
 
         public string GetVenue()
@@ -101,6 +122,11 @@ namespace CECBTIMS.Models
         public string GetStudentFee()
         {
             return "Rs." + _program.StudentFee + "/-";
+        }
+
+        public string GetProgramFee()
+        {
+            return "Rs." + _program.ProgramFee + "/-";
         }
 
         public string GetTrainingManagerName()
