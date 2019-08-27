@@ -12,7 +12,14 @@
                 <h5>Generated Documents</h5>
             </div>
             <div class="float-right">
-                @Html.ActionLink("New Document", "Select", new{ programId = ViewBag.Program.Id}, new {@class = "btn btn-primary"})
+                @if (ViewBag.Program != null)
+                {
+                    @Html.ActionLink("New Document", $"Select", new {programId = ViewBag.Program.Id}, new {@class = "btn btn-primary"})
+                }
+                else
+                {
+                    @Html.ActionLink("New Document", $"Select", new { employeeId = ViewBag.EmployeeId}, new {@class = "btn btn-primary"})
+                }
                 @Html.ActionLink("Go Back", "Create", null, new {@class = "btn btn-primary"})
             </div>
         </div>

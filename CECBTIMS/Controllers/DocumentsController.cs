@@ -24,17 +24,34 @@ namespace CECBTIMS.Controllers
         private object _classInstance;
 
         // GET: Documents
-        public async Task<ActionResult> Index(int? programId, int? EmployeeId)
+        public async Task<ActionResult> Index(int? programId, Guid? EmployeeId)
         {
-            if (programId == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            if (programId == null && EmployeeId == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 
-            var program = await db.Programs.FindAsync(programId);
+            if (programId != null)
+            {
+                var program = await db.Programs.FindAsync(programId);
 
-            if (program == null) return new HttpNotFoundResult();
+                if (program == null) return new HttpNotFoundResult();
 
-            ViewBag.Program = program;
+                ViewBag.Program = program;
 
-            return View(program.Documents);
+                return View(program.Documents);
+            }
+
+            if (EmployeeId != null)
+            {
+
+                var documents = db.Documents.Where(d => (d.EmployeeId == EmployeeId));
+                
+                ViewBag.Program = null;
+                ViewBag.EmployeeId = EmployeeId;
+
+                return View(await documents.ToListAsync());
+            }
+
+            return new HttpNotFoundResult();
+
         }
 
         //Select the template

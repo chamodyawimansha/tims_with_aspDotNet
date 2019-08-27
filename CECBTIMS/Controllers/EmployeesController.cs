@@ -60,13 +60,15 @@ namespace CECBTIMS.Controllers
         }
 
         // GET: Employee/Details
-        public async Task<ActionResult> Details(Guid? id)
+        public async Task<ActionResult> Details(Guid? id, int? programId)
         {
-            if (id == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            if (id == null || programId == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 
             var employee = await FindEmployee((Guid)id);
 
             if (employee == null) return HttpNotFound();
+
+            ViewBag.ProgramId = programId;
 
             return View(employee);
 
@@ -144,50 +146,6 @@ namespace CECBTIMS.Controllers
             ViewBag.ProgramId = programId;
 
             return View(empList);
-        }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        /**
-         * Get More Details from the db
-         */
-        public async Task<ActionResult> MoreDetails(Guid? id, int? programId, string rl)
-        {
-            ViewBag.ProgramId = null;
-
-            ViewBag.rl = string.IsNullOrWhiteSpace(rl) ? null : rl;
-
-            if (programId != null)
-            {
-                //check the program available in the database and the assign the program id to viewbag
-                var program = await default_db.Programs.FindAsync(programId);
-                ViewBag.ProgramId = program != null ? programId : null;
-            }
-
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-
-            var employee = await db.cmn_EmployeeVersion.FindAsync(id);
-
-            if (employee == null)
-            {
-                return HttpNotFound();
-            }
-
-            return View($"Single", employee);
         }
 
         internal static async Task<List<Employee>> GetTrainees(int programId)

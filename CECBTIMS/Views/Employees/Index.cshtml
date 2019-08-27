@@ -48,7 +48,7 @@
                                     <td>@Html.DisplayFor(model => item.hrm_Designation.DesignationName)</td>
                                     <td>@Html.DisplayFor(model => item.cmn_WorkSpace.WorkSpaceName)</td>
                                     <td>
-                                        @Html.ActionLink("Details", $"MoreDetails", $"Employees", new {id = item.EmployeeVersionId, rl = "/Employees?programId="+ViewBag.program.Id }, new {@class = "btn btn-secondary btn-sm d-inline-block"})
+                                        @Html.ActionLink("Details", $"Details", $"Employees", new {id = item.EmployeeVersionId, programId = ViewBag.program.Id}, new {@class = "btn btn-secondary btn-sm d-inline-block"})
 
                                         @using (Html.BeginForm($"Delete", $"ProgramAssignments", null,
                                             FormMethod.Post, new {@class = "d-inline-block"}))
