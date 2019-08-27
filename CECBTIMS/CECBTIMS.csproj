@@ -235,6 +235,14 @@
     <Compile Include="Migrations\201908261431381_ProgramStartAndEndTimeAdded.Designer.cs">
       <DependentUpon>201908261431381_ProgramStartAndEndTimeAdded.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201908271002540_IdontKnowWhatTheHackIsGoinOn.cs" />
+    <Compile Include="Migrations\201908271002540_IdontKnowWhatTheHackIsGoinOn.Designer.cs">
+      <DependentUpon>201908271002540_IdontKnowWhatTheHackIsGoinOn.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201908271032303_EmployeeRemovedFromTheDb.cs" />
+    <Compile Include="Migrations\201908271032303_EmployeeRemovedFromTheDb.Designer.cs">
+      <DependentUpon>201908271032303_EmployeeRemovedFromTheDb.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Agenda.cs" />
     <Compile Include="Models\BaseCols.cs" />
@@ -537,6 +545,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201908261431381_ProgramStartAndEndTimeAdded.resx">
       <DependentUpon>201908261431381_ProgramStartAndEndTimeAdded.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201908271002540_IdontKnowWhatTheHackIsGoinOn.resx">
+      <DependentUpon>201908271002540_IdontKnowWhatTheHackIsGoinOn.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201908271032303_EmployeeRemovedFromTheDb.resx">
+      <DependentUpon>201908271032303_EmployeeRemovedFromTheDb.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

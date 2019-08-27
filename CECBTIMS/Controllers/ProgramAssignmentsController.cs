@@ -18,9 +18,22 @@ namespace CECBTIMS.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
 
-        public ActionResult Select()
+        public async Task<ActionResult> Select(Guid? employeeId, int? programId)
         {
+            if (employeeId == null || programId == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
 
+            var employee = EmployeesController.FindEmployee((Guid) employeeId);
+
+            var program = await ProgramsController.GetProgram((int) programId);
+
+            if(program == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+
+            ViewBag.ProgramId = programId;
+
+            return View(employee);
         }
         // POST: ProgramAssignments/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 

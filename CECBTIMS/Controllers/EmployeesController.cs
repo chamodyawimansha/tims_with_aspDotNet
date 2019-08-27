@@ -224,7 +224,7 @@ namespace CECBTIMS.Controllers
             foreach (var item in programAssignments)
             {
                 // get trainee data from the cecb database
-                trainees.Add(FindEmployee(item.EmployeeVersionId));
+                trainees.Add(await FindEmployee(item.EmployeeVersionId));
             }
 
             return trainees;
@@ -233,9 +233,12 @@ namespace CECBTIMS.Controllers
         /**
          * Need employee version id and return converted Employee
          */
-        internal static Employee FindEmployee(Guid id)
+        internal static async Task<Employee> FindEmployee(Guid id)
         {
-            var employee = dbs.cmn_EmployeeVersion.First(vid => vid.EmployeeVersionId == id);
+//            var employee = dbs.cmn_EmployeeVersion.First(vid => vid.EmployeeVersionId == id);
+
+            var employee = await dbs.cmn_EmployeeVersion.FindAsync(id);
+            
             if (employee == null) return new Employee();
             return new Employee()
             {

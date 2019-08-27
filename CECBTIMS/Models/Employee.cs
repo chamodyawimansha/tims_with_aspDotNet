@@ -8,6 +8,7 @@ namespace CECBTIMS.Models
 {
     public class Employee
     {
+        public int Id { get; set; }
         public System.Guid EmployeeId { get; set; }
         public string EPFNo { get; set; }
         public Title? Title { get; set; }
