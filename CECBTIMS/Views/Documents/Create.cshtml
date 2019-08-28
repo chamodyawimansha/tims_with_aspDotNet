@@ -48,6 +48,11 @@
                     @Html.ValidationMessageFor(model => model.Document.ProgramId, "", new { @class = "text-danger" })
                 </div>
                 <div class="form-group">
+                    @Html.LabelFor(model => model.Document.EmployeeId, htmlAttributes: new { @class = "control-label" })
+                    @Html.EditorFor(model => model.Document.EmployeeId, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                    @Html.ValidationMessageFor(model => model.Document.EmployeeId, "", new { @class = "text-danger" })
+                </div>
+                <div class="form-group">
                     @Html.LabelFor(model => model.Document.DocumentNumber, htmlAttributes: new { @class = "control-label" })
                     @Html.EditorFor(model => model.Document.DocumentNumber, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
                     @Html.ValidationMessageFor(model => model.Document.DocumentNumber, "", new { @class = "text-danger" })

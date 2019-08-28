@@ -133,6 +133,7 @@ namespace CECBTIMS.Controllers
                         ? (RecruitmentType) rt
                         : RecruitmentType.Null,
                     EmpStatus = (EmployeeStatus) employee.EmpStatus,
+                    Grade = employee.hrm_Grade.GradeName,
                     DateOfAppointment = employee.DateOfAppointment,
                     DateOfJoint = employee.EffectiveDate,
                     NatureOfAppointment = "null",
@@ -175,7 +176,7 @@ namespace CECBTIMS.Controllers
             var employee = await dbs.cmn_EmployeeVersion.FindAsync(id);
             
             if (employee == null) return new Employee();
-            return new Employee()
+            return new Employee
             {
                 EmployeeId = employee.EmployeeVersionId,
                 EPFNo = employee.EPFNo,
@@ -193,6 +194,7 @@ namespace CECBTIMS.Controllers
                     : RecruitmentType.Null,
                 EmpStatus = (EmployeeStatus) employee.EmpStatus,
                 DateOfAppointment = employee.DateOfAppointment,
+                Grade = employee.hrm_Grade != null ? employee.hrm_Grade.GradeName : "Null",
                 DateOfJoint = employee.EffectiveDate,
                 NatureOfAppointment = "null",
                 TypeOfContract = employee.TypeOfContract,

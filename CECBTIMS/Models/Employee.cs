@@ -18,6 +18,7 @@ namespace CECBTIMS.Models
         public string WorkSpaceName { get; set; }
         public string WorkSpaceType { get; set; }
         public string DesignationName { get; set; }
+        public string Grade { get; set; }
         public RecruitmentType? EmployeeRecruitmentType { get; set; }
         public EmployeeStatus? EmpStatus { get; set; }
         public DateTime? DateOfAppointment { get; set; }
