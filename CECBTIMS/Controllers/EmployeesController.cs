@@ -133,7 +133,7 @@ namespace CECBTIMS.Controllers
                         ? (RecruitmentType) rt
                         : RecruitmentType.Null,
                     EmpStatus = (EmployeeStatus) employee.EmpStatus,
-                    Grade = employee.hrm_Grade.GradeName,
+                    Grade = employee.hrm_Grade != null ? employee.hrm_Grade.GradeName : "Null",
                     DateOfAppointment = employee.DateOfAppointment,
                     DateOfJoint = employee.EffectiveDate,
                     NatureOfAppointment = "null",
