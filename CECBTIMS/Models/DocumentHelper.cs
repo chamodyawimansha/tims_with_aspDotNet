@@ -199,22 +199,27 @@ namespace CECBTIMS.Models
 
         public Paragraph GetNameDesignationAndGrade(Employee emp)
         {
-            var name = emp.Title != null
+            var p = new Paragraph();
+            var r = new Run();
+            r.Append(DefaultStyle());
+
+            r.Append(new Text(emp.Title != null
                 ? emp.Title + ". " + ToProperName(emp.NameWithInitial)
-                : ToProperName(emp.NameWithInitial);
-            var designation = emp.DesignationName;
-            var grade = emp.Grade;
+                : ToProperName(emp.NameWithInitial)));
+            r.Append(new Break());
+            r.Append(new Text(emp.DesignationName));
+            r.Append(new Break());
+            r.Append(new Text(emp.Grade));
 
-            var t = new Text();
+            p.Append(r);
 
-
-            return new Text(name + " - " + designation + " (" + grade + ")");
+            return p;
         }
 
 
         public Paragraph GetGrade(Employee emp)
         {
-            return new Text(emp.Grade);
+            return WithTextCenter(new Text(emp.Grade));
         }
 
         public Paragraph GetNic(Employee emp)
@@ -338,22 +343,24 @@ namespace CECBTIMS.Models
 
         public Paragraph GetRemarks(Employee emp)
         {
-            return new Text();
+            return new Paragraph();
         }
 
         public Paragraph GetRemarksOnRelevancyToTheProgram()
         {
-            return new Text();
+            return new Paragraph();
         }
 
         public Paragraph GetDetailsOfForeignTrainingParticipated()
         {
-            return new Text();
+            return new Paragraph();
+
         }
 
         public Paragraph GetDetailsOfForeignVisitsParticipated()
         {
-            return new Text();
+            return new Paragraph();
+
         }
 
 
