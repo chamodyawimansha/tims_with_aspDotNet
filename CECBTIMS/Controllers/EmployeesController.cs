@@ -78,7 +78,7 @@ namespace CECBTIMS.Controllers
 
 
 
-
+        // get member from history
 
 
 
@@ -136,7 +136,6 @@ namespace CECBTIMS.Controllers
                     Grade = employee.hrm_Grade != null ? employee.hrm_Grade.GradeName : "Null",
                     DateOfAppointment = employee.DateOfAppointment,
                     DateOfJoint = employee.EffectiveDate,
-                    NatureOfAppointment = "null",
                     TypeOfContract = employee.TypeOfContract,
                     OfficeEmail = employee.OfficeEmail,
                     MobileNumber = employee.MobileNumber,
@@ -196,7 +195,6 @@ namespace CECBTIMS.Controllers
                 DateOfAppointment = employee.DateOfAppointment,
                 Grade = employee.hrm_Grade != null ? employee.hrm_Grade.GradeName : "Null",
                 DateOfJoint = employee.EffectiveDate,
-                NatureOfAppointment = "null",
                 TypeOfContract = employee.TypeOfContract,
                 OfficeEmail = employee.OfficeEmail,
                 MobileNumber = employee.MobileNumber,

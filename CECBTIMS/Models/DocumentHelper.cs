@@ -165,9 +165,9 @@ namespace CECBTIMS.Models
         }
 
 
-        public Text GetNo(Employee emp)
+        public Paragraph GetNo(Employee emp)
         {
-            return new Text("");
+            return new Paragraph();
         }
 
         public Paragraph GetName(Employee emp)
@@ -234,7 +234,7 @@ namespace CECBTIMS.Models
 
         public Paragraph GetNatureOfAppointment(Employee emp)
         {
-            return WithTextCenter(new Text(emp.NatureOfAppointment));
+            return WithTextCenter(new Text("This removed"));
         }
 
         public Paragraph GetRecommendation(Employee emp)
@@ -402,6 +402,10 @@ namespace CECBTIMS.Models
                 var tc = new TableCell();
                 var tcpParagraph = new Paragraph();
                 // Vertical align center
+
+                tcpParagraph.Append(new ParagraphProperties
+                    { Justification = new Justification() { Val = JustificationValues.Center } });
+
                 tc.Append(new TableCellProperties(new TableCellVerticalAlignment()
                     {Val = TableVerticalAlignmentValues.Center}));
 
@@ -464,8 +468,7 @@ namespace CECBTIMS.Models
         {
             return new RunProperties(
                 new FontSize() {Val = "24"},
-                new RunFonts() {Ascii = FontFamily},
-                new Bold() {Val = OnOffValue.FromBoolean(true)}
+                new RunFonts() {Ascii = FontFamily}
             );
         }
 

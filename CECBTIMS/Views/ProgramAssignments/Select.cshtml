@@ -41,10 +41,6 @@
                 <tr>
                     <th>Date Of Appointment</th>
                     <td>@Html.DisplayFor(model => model.DateOfAppointment)</td>
-                    <th>Nature Of Appointment</th>
-                    <td>@Html.DisplayFor(model => model.NatureOfAppointment)</td>
-                </tr>
-                <tr>
                     <th>Type Of Contract</th>
                     <td colspan="3">@Html.DisplayFor(model => model.TypeOfContract)</td>
                 </tr>
@@ -75,17 +71,18 @@
                 <div>
                     <p><strong>Program Organiser(s) : </strong> @(new DocumentHelper(ViewBag.Program).GetOrganisedBy())</p>
                 </div>
-                
+
                 <input type="hidden" name="EmployeeId" value="@Model.EmployeeId"/>
                 <input type="hidden" name="EmployeeVersionId" value="@Model.EmployeeId"/>
                 <input type="hidden" name="EPFNo" value="@Model.EPFNo"/>
                 <input type="hidden" name="ProgramId" value="@ViewBag.Program.Id"/>
-    
+
                 <table class="table table-bordered">
                     <tr>
                         <th>Member Type</th>
                         <td>
-                            @Html.DropDownList("MemberType", EnumHelper.GetSelectList(typeof(MemberType)), "Select the Member Type", new { @class = "custom-select" })
+                            
+                            @Html.DropDownList("MemberType", EnumHelper.GetSelectList(typeof(MemberType)), "Select the Member Type", new {@class = "custom-select"})
                         </td>
                     </tr>
                 </table>

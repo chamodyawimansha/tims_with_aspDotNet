@@ -328,7 +328,6 @@
     <Compile Include="Models\Cost.cs" />
     <Compile Include="Models\Enums\Currency.cs" />
     <Compile Include="Models\Enums\EmployeeCategory.cs" />
-    <Compile Include="Models\Enums\EmploymentNatures.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Organizer.cs" />
