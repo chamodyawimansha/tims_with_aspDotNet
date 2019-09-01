@@ -33,7 +33,7 @@ namespace CECBTIMS.Controllers
             if(program == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 
             ViewBag.Program = program;
-            ViewBag.MemberType = await FindMemberType((Guid)employeeId);
+//            ViewBag.MemberType = await FindMemberType((Guid)employeeId);
             
             return View(employee);
         }
@@ -43,6 +43,13 @@ namespace CECBTIMS.Controllers
         {
             //get the organizers of the selected program
             var org = (from item in (await db.Programs.FindAsync(programId))?.ProgramArrangements select item.Organizer).ToList();
+
+
+
+
+
+
+
 
 
             var employee = from em in db.ProgramAssignments
