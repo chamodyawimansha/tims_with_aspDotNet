@@ -148,7 +148,8 @@ namespace CECBTIMS.Controllers
             {
                 return Activator.CreateInstance(
                     _helperClass,
-                    await ProgramsController.GetProgram(programId), emp
+                    await ProgramsController.GetProgram(programId), 
+                    new List<Employee> { emp}
                 );
             }
 
@@ -177,7 +178,7 @@ namespace CECBTIMS.Controllers
             // replace variables
 
             ProcessVariables(path);
-            return Content(ProcessTables(path, columns));
+            return Content(ProcessTables(path, columns, document.EmployeeId));
             // add tables
 
 
@@ -238,7 +239,7 @@ namespace CECBTIMS.Controllers
 
         }
 
-        private string ProcessTables(string path, TableColumnName[] columnNames)
+        private string ProcessTables(string path, TableColumnName[] columnNames, Guid? employeeId)
         {
             using (var wordDoc = WordprocessingDocument.Open(path, true))
             {
@@ -261,7 +262,7 @@ namespace CECBTIMS.Controllers
                     var rf = res.First();
 
                     rf.RemoveAllChildren<Run>();
-                    rf.AppendChild(new Run((Table)method.Invoke(_classInstance, new object[] { columnNames })));
+                    rf.AppendChild(new Run((Table)method.Invoke(_classInstance, new object[] { columnNames, employeeId })));
                 }
 
 

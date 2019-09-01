@@ -22,6 +22,15 @@
         Null
     }
 
+    public enum EmploymentNatures
+    {
+        Permanent = 1,
+        FixedContract = 2,
+        JobContract = 3,
+        PermanentAndConfirm = 4,
+
+    }
+
     public enum EmployeeStatus
     {
         Working = 1,

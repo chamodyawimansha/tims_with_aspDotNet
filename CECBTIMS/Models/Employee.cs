@@ -18,11 +18,11 @@ namespace CECBTIMS.Models
         public string WorkSpaceName { get; set; }
         public string WorkSpaceType { get; set; }
         public string DesignationName { get; set; }
-        public RecruitmentType? EmployeeRecruitmentType { get; set; }
+        public string Grade { get; set; }
+        public RecruitmentType? EmployeeRecruitmentType { get; set; } // Nature Of Appointment
         public EmployeeStatus? EmpStatus { get; set; }
         public DateTime? DateOfAppointment { get; set; }
         public DateTime? DateOfJoint { get; set; }
-        public string NatureOfAppointment { get; set; }
         public string TypeOfContract { get; set; }
         public string OfficeEmail { get; set; }
         public string MobileNumber { get; set; }

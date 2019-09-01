@@ -10,14 +10,13 @@ namespace CECBTIMS.Models
 {
     public class DocumentHelper
     {
-
         private readonly Program _program;
         private readonly List<Employee> _employees;
-        private readonly Employee _employee;
 
         private const string FontFamily = "Times New Roman";
 
-        public static readonly string[] DocumentVariableList = {
+        public static readonly string[] DocumentVariableList =
+        {
             "GetDocumentNo",
             "GetYear",
             "GetToday",
@@ -38,7 +37,6 @@ namespace CECBTIMS.Models
             "GetEmployeeDesignation",
             "GetDurationInMonths",
             "GetStartMonthAndYear"
-
         };
 
         public static string[] DocumentTableList =
@@ -50,13 +48,6 @@ namespace CECBTIMS.Models
         {
             _program = program;
         }
-
-        public DocumentHelper(Program program, Employee employee)
-        {
-            _program = program;
-            _employee = employee;
-        }
-
 
         public DocumentHelper(Program program, List<Employee> employees)
         {
@@ -87,12 +78,14 @@ namespace CECBTIMS.Models
 
         public string GetOrganisedBy()
         {
-            return _program.ProgramArrangements.Aggregate("", (current, item) => current == "" ? item.Organizer.Name : current + ", " + item.Organizer.Name);
+            return _program.ProgramArrangements.Aggregate("",
+                (current, item) => current == "" ? item.Organizer.Name : current + ", " + item.Organizer.Name);
         }
 
         public string GetTargetGroup()
         {
-            return _program.TargetGroups.Aggregate("", (current, item) => current == "" ? item.Name : current + ", " + item.Name);
+            return _program.TargetGroups.Aggregate("",
+                (current, item) => current == "" ? item.Name : current + ", " + item.Name);
         }
 
         public string GetApplicationClosingDate()
@@ -122,7 +115,7 @@ namespace CECBTIMS.Models
 
         public string GetMemberFee()
         {
-            return "Rs."+_program.MemberFee+"/-";
+            return "Rs." + _program.MemberFee + "/-";
         }
 
         public string GetNonMemberFee()
@@ -137,7 +130,7 @@ namespace CECBTIMS.Models
 
         public string GetProgramFee()
         {
-            return _program != null ? "Rs." + _program.ProgramFee + "/-" :  "Null";
+            return _program != null ? "Rs." + _program.ProgramFee + "/-" : "Null";
         }
 
         public string GetTrainingManagerName()
@@ -152,11 +145,17 @@ namespace CECBTIMS.Models
 
         public string GetEmployeeName()
         {
-            return _employee != null ? (_employee.Title != null ? _employee.Title + ". " + ToProperName(_employee.NameWithInitial) : ToProperName(_employee.NameWithInitial)) : "Null";
+            var _employee = _employees.FirstOrDefault();
+            return _employee != null
+                ? (_employee.Title != null
+                    ? _employee.Title + ". " + ToProperName(_employee.NameWithInitial)
+                    : ToProperName(_employee.NameWithInitial))
+                : "Null";
         }
 
         public string GetEmployeeDesignation()
         {
+            var _employee = _employees.FirstOrDefault();
             return _employee != null ? _employee.DesignationName : "Null";
         }
 
@@ -166,185 +165,210 @@ namespace CECBTIMS.Models
         }
 
 
-
-
-
-
-        public Text GetNo(Employee emp)
+        public Paragraph GetNo(Employee emp)
         {
-            return new Text("");
+            return new Paragraph();
         }
 
-        public Text GetName(Employee emp)
+        public Paragraph GetName(Employee emp)
         {
-            return new Text(ToProperName(emp.NameWithInitial));
+            return WithDefaults(new Text(ToProperName(emp.NameWithInitial)));
         }
 
-        public Text GetTitle(Employee emp)
+        public Paragraph GetTitle(Employee emp)
         {
-            return new Text(emp.Title != null ? emp.Title.ToString(): "Null");
+            return WithDefaults(new Text(emp.Title != null ? emp.Title.ToString() : "Null"));
         }
 
-        public Text GetFullName(Employee emp)
+        public Paragraph GetFullName(Employee emp)
         {
-            return new Text(emp.FullName);
+            return WithDefaults(new Text(emp.FullName));
         }
 
-        public Text GetNameWithTitle(Employee emp)
+        public Paragraph GetNameWithTitle(Employee emp)
         {
-            return new Text(emp.Title != null ? emp.Title + ". " + ToProperName(emp.NameWithInitial) : ToProperName(emp.NameWithInitial));
+            return WithDefaults(new Text(emp.Title != null
+                ? emp.Title + ". " + ToProperName(emp.NameWithInitial)
+                : ToProperName(emp.NameWithInitial)));
         }
 
-        public Text GetDesignation(Employee emp)
+        public Paragraph GetDesignation(Employee emp)
         {
-            return new Text(emp.DesignationName);
+            return WithTextCenter(new Text(emp.DesignationName));
         }
 
-        public string GetNameDesignationAndGrade(Employee emp)
+        public Paragraph GetNameDesignationAndGrade(Employee emp)
         {
-            var t = new Text();
-            t.Append(GetNameWithTitle(emp));
-            t.Append(new Break());
-            t.Append(GetDesignation(emp));
-            return null;
+            var p = new Paragraph();
+            var r = new Run();
+            r.Append(DefaultStyle());
+
+            r.Append(new Text(emp.Title != null
+                ? emp.Title + ". " + ToProperName(emp.NameWithInitial)
+                : ToProperName(emp.NameWithInitial)));
+            r.Append(new Break());
+            r.Append(new Text(emp.DesignationName));
+            r.Append(new Break());
+            r.Append(new Text(emp.Grade));
+
+            p.Append(r);
+
+            return p;
         }
 
-        public Text GetNic(Employee emp)
+
+        public Paragraph GetGrade(Employee emp)
         {
-            return new Text(emp.EPFNo);
+            return WithTextCenter(new Text(emp.Grade));
         }
 
-        public Text GetWorkspaceName(Employee emp)
+        public Paragraph GetNic(Employee emp)
         {
-            return new Text(emp.WorkSpaceName);
+            return WithTextCenter(new Text(emp.EPFNo));
         }
 
-        public Text GetNatureOfAppointment(Employee emp)
+        public Paragraph GetWorkspaceName(Employee emp)
         {
-            return new Text(emp.NatureOfAppointment);
+            return WithTextCenter(new Text(emp.WorkSpaceName));
         }
 
-        public Text GetRecommendation(Employee emp)
+        public Paragraph GetNatureOfAppointment(Employee emp)
         {
-            return new Text((emp.WorkSpaceType).Replace("Unit","")+"("+emp.WorkSpaceName+")");
+            return WithTextCenter(new Text("This removed"));
         }
 
-        public Text GetDateOfJoined(Employee emp)
+        public Paragraph GetRecommendation(Employee emp)
+        {
+            return WithTextCenter(new Text((emp.WorkSpaceType).Replace("Unit", "") + "(" + emp.WorkSpaceName + ")"));
+        }
+
+        public Paragraph GetDateOfJoined(Employee emp)
         {
             if (emp.DateOfJoint != null)
             {
-                return new Text(((DateTime)emp.DateOfJoint).ToString("yyyy/MM/dd"));
+                return WithTextCenter(new Text(((DateTime) emp.DateOfJoint).ToString("yyyy/MM/dd")));
             }
 
-            return emp.DateOfAppointment != null ? new Text(((DateTime)emp.DateOfAppointment).ToString("yyyy/MM/dd")) : new Text("null");
+            return WithTextCenter(emp.DateOfAppointment != null
+                ? new Text(((DateTime) emp.DateOfAppointment).ToString("yyyy/MM/dd"))
+                : new Text("null"));
         }
 
-        public Text GetExperienceInCecb(Employee emp)
+        public Paragraph GetExperienceInCecb(Employee emp)
         {
             var startDate = emp.DateOfJoint ?? emp.DateOfAppointment;
             var today = DateTime.Today;
 
-            if (startDate == null) return new Text("null");
+            if (startDate == null) return WithTextCenter(new Text("null"));
 
             var diffInDays = (today.Subtract((DateTime) startDate)).Days;
 
             var months = (diffInDays / 30);
-            var years = (int)months / 12;
+            var years = (int) months / 12;
 
             var restMonths = months % 12;
 
-            return new Text(years.ToString("D2") +"Y "+ restMonths.ToString("D2") + "M");
-
+            return WithTextCenter(new Text(years.ToString("D2") + "Y " + restMonths.ToString("D2") + "M"));
         }
 
-        public Text GetEmail(Employee emp)
+        public Paragraph GetEmail(Employee emp)
         {
-            return new Text(emp.PrivateEmail);
+            return WithTextCenter(new Text(emp.PrivateEmail));
         }
 
-        public Text GetContactNo(Employee emp)
+        public Paragraph GetContactNo(Employee emp)
         {
-            return new Text(emp.MobileNumber);
+            return WithTextCenter(new Text(emp.MobileNumber));
         }
 
-        public Text GetPassportNo(Employee emp)
+        public Paragraph GetPassportNo(Employee emp)
         {
-            return new Text();
+            return WithTextCenter(new Text());
         }
 
-        public Text GetDateOfServiceConfirmation(Employee emp)
+        public Paragraph GetDateOfServiceConfirmation(Employee emp)
         {
-            return new Text(emp.DateOfAppointment.ToString());
+            return WithTextCenter(new Text(emp.DateOfAppointment.ToString()));
         }
 
-//        public Text GetIncidentalAllowance(Employee emp)
-//        {
-//            var costs = _program.Costs;
-//
-//            if (_program.EndDate != null)
-//            {
-//                var dateCount = int._program.StartDate.Subtract((DateTime) _program.EndDate);
-//                
-//                foreach (var cost in costs)
-//                {
-//                    if (cost.Name.ToLower().Contains("incidental"))
-//                    {
-//                        return new Text(_program.Currency.ToString() + cost.Value));
-//                    }
-//                }
-//            }
-//
-//
-//
-//
-//
-//            return new Text("Set End Date");
-//        }
+        //        public Run GetIncidentalAllowance(Employee emp)
+        //        {
+        //            var costs = _program.Costs;
+        //
+        //            if (_program.EndDate != null)
+        //            {
+        //                var dateCount = int._program.StartDate.Subtract((DateTime) _program.EndDate);
+        //                
+        //                foreach (var cost in costs)
+        //                {
+        //                    if (cost.Name.ToLower().Contains("incidental"))
+        //                    {
+        //                        return new Text(_program.Currency.ToString() + cost.Value));
+        //                    }
+        //                }
+        //            }
+        //
+        //
+        //
+        //
+        //
+        //            return new Text("Set End Date");
+        //        }
 
-//        public Text GetWarmClothAllowance(Employee emp)
-//        {
-//
-//        }
+        //        public Text GetWarmClothAllowance(Employee emp)
+        //        {
+        //
+        //        }
 
-        public Text GetMemberNonMember(Employee emp)
+        public Paragraph GetMemberNonMember(Employee emp)
         {
-            return new Text();
+            var pas = _program.ProgramAssignments;
+
+            foreach (var item in pas)
+            {
+                if (item.EmployeeId != emp.EmployeeId) continue;
+                switch (item.MemberType.ToString())
+                {
+                    case ("Member"):
+                        return WithTextCenter(new Text("Member"));
+                    case ("NonMember"):
+                        return WithTextCenter(new Text("Non-Member"));
+                    default:
+                        return WithTextCenter(new Text("Student"));
+                }
+            }
+
+            return WithTextCenter(new Text());
         }
 
-        public Text GetRemarks(Employee emp)
+        public Paragraph GetRemarks(Employee emp)
         {
-            return new Text();
+            return new Paragraph();
         }
 
-        public Text GetRemarksOnRelevancyToTheProgram()
+        public Paragraph GetRemarksOnRelevancyToTheProgram()
         {
-            return new Text();
+            return new Paragraph();
         }
 
-        public Text GetDetailsOfForeignTrainingParticipated()
+        public Paragraph GetDetailsOfForeignTrainingParticipated()
         {
-            return new Text();
+            return new Paragraph();
+
         }
 
-        public Text GetDetailsOfForeignVisitsParticipated()
+        public Paragraph GetDetailsOfForeignVisitsParticipated()
         {
-            return new Text();
+            return new Paragraph();
+
         }
-        
- 
-
-
-
-
-
-
 
 
         private static string ToProperName(string name)
         {
             var nameParts = name.Split(null);
             var newName = "";
-        
+
             for (var i = 1; i < nameParts.Length; i++)
             {
                 if (!nameParts[i].Equals("."))
@@ -352,7 +376,7 @@ namespace CECBTIMS.Models
                     newName += nameParts[i] + $" ";
                 }
             }
-        
+
             return newName += ToUpperFirstLetter(nameParts[0].ToLower());
         }
 
@@ -362,11 +386,11 @@ namespace CECBTIMS.Models
                 return string.Empty;
             var letters = source.ToCharArray();
             letters[0] = char.ToUpper(letters[0]);
-        
+
             return new string(letters);
         }
 
-        public Table GetTraineeInformationTable(TableColumnName[] columnNames)
+        public Table GetTraineeInformationTable(TableColumnName[] columnNames, Guid? employeeId)
         {
             var table = new Table();
             var titleRow = new TableRow();
@@ -378,25 +402,28 @@ namespace CECBTIMS.Models
                 var tc = new TableCell();
                 var tcpParagraph = new Paragraph();
                 // Vertical align center
-                tc.Append(new TableCellProperties(new TableCellVerticalAlignment() { Val = TableVerticalAlignmentValues.Center }));
-                
-                //text center
-                tcpParagraph.Append(new ParagraphProperties { Justification = new Justification() { Val = JustificationValues.Center } });
+
+                tcpParagraph.Append(new ParagraphProperties
+                    { Justification = new Justification() { Val = JustificationValues.Center } });
+
+                tc.Append(new TableCellProperties(new TableCellVerticalAlignment()
+                    {Val = TableVerticalAlignmentValues.Center}));
+
                 var run = new Run();
-                
+
                 run.Append(
                     new RunProperties(
-                        new FontSize() { Val = "24" }, 
-                        new RunFonts() { Ascii = FontFamily }, 
-                        new Bold() { Val = OnOffValue.FromBoolean(true) }
-                        )
-                    );
-                
+                        new FontSize() {Val = "24"},
+                        new RunFonts() {Ascii = FontFamily},
+                        new Bold() {Val = OnOffValue.FromBoolean(true)}
+                    )
+                );
+
                 run.Append(new Text(ToColumnName(col.ToString())));
-                
+
                 tcpParagraph.Append(run);
                 tc.Append(tcpParagraph);
-                
+
                 titleRow.Append(tc);
             }
 
@@ -412,35 +439,20 @@ namespace CECBTIMS.Models
                 foreach (var col in columnNames)
                 {
                     var tc = new TableCell();
-                    var tcpParagraph = new Paragraph();
-                    // Vertical align center
+
                     tc.Append(new TableCellProperties(new TableCellVerticalAlignment()
                         {Val = TableVerticalAlignmentValues.Center}));
-                    var run = new Run();
-
-                    run.Append(
-                        new RunProperties(
-                            new FontSize() {Val = "22"},
-                            new RunFonts() {Ascii = FontFamily}
-                        )
-                    );
 
                     var theMethod = thisType.GetMethod(ToFunctionName(col.ToString()));
 
                     if (theMethod != null)
                     {
-                        run.Append((Text)theMethod.Invoke(this, new object[] { emp }));
+                        tc.Append((Paragraph) theMethod.Invoke(this, new object[] {emp}));
                     }
                     else
                     {
-                        run.Append(new Text(
-                           "Null"
-                        ));
+                        tc.Append(NullParagraph());
                     }
-
-
-                    tcpParagraph.Append(run);
-                    tc.Append(tcpParagraph);
 
                     dataRow.Append(tc);
                 }
@@ -451,6 +463,47 @@ namespace CECBTIMS.Models
 
             return table;
         }
+
+        private RunProperties DefaultStyle()
+        {
+            return new RunProperties(
+                new FontSize() {Val = "24"},
+                new RunFonts() {Ascii = FontFamily}
+            );
+        }
+
+        private ParagraphProperties CenterStyle()
+        {
+            return new ParagraphProperties
+                {Justification = new Justification() {Val = JustificationValues.Center}};
+        }
+
+        private Paragraph WithDefaults(Text text)
+        {
+            var p = new Paragraph();
+            var r = new Run();
+            r.Append(DefaultStyle());
+            r.AppendChild(text);
+            p.Append(r);
+            return p;
+        }
+
+        private Paragraph WithTextCenter(Text text)
+        {
+            var p = new Paragraph();
+            p.Append(CenterStyle());
+            var r = new Run();
+            r.Append(DefaultStyle());
+            r.AppendChild(text);
+            p.Append(r);
+            return p;
+        }
+
+        private Paragraph NullParagraph()
+        {
+            return WithTextCenter(new Text("Null"));
+        }
+
 
         private string ToFunctionName(string name)
         {
@@ -469,7 +522,7 @@ namespace CECBTIMS.Models
         private void SetTableStyle(OpenXmlElement table)
         {
             var properties = new TableProperties();
-        
+
             //table borders
             var borders = new TableBorders
             {
@@ -480,7 +533,7 @@ namespace CECBTIMS.Models
                 InsideHorizontalBorder = new InsideHorizontalBorder() {Val = BorderValues.Single},
                 InsideVerticalBorder = new InsideVerticalBorder() {Val = BorderValues.Single}
             };
-        
+
             properties.Append(borders);
             //set the table width to page width
             var tableWidth = new TableWidth() {Width = "5000", Type = TableWidthUnitValues.Pct};
@@ -488,103 +541,5 @@ namespace CECBTIMS.Models
             //add properties to table
             table.Append(properties);
         }
-
-
-
-
-
-
-
-
-
-
-
-
-
-        //        // get organisers of the program
-        //        public static string GetOrganisedBy(Program program)
-        //        {
-        //            return program.ProgramArrangements.Aggregate("", (current, item) => current == "" ? item.Organizer.Name : current + ", " + item.Organizer.Na me);
-        //        }
-        //
-        //        public static string GetTargetGroup(Program program)
-        //        {
-        //            return program.TargetGroups.Aggregate("", (current, item) => current == "" ? item.Name : current + ", " + item.Name);
-        //        }
-        //
-        //        public static string GetTargetGroupList(Program program)
-        //        {
-        //            return program.TargetGroups.Aggregate("", (current, item) => current == "" ? item.Name : current + ", " + item.Name);
-        //        }
-        //
-        //        public static string GetTraineeManagerName()
-        //        {
-        //            return "Eng.L C K Karunaratne";
-        //        }
-        //
-        //        public static string ToFunctionName(string name)
-        //        {
-        //            name = name.ToLower();
-        //            var nameParts = name.Split(null);
-        //            return nameParts.Aggregate("Get", (current, item) => current + (item.First().ToString().ToUpper() + item.Substring(1)));
-        //        }
-        //
-        //        private static string ToUpperFirstLetter(string source)
-        //        {
-        //            if (string.IsNullOrEmpty(source))
-        //                return string.Empty;
-        //            var letters = source.ToCharArray();
-        //            letters[0] = char.ToUpper(letters[0]);
-        //
-        //            return new string(letters);
-        //        }
-        //
-        //        private static string ToProperName(string name)
-        //        {
-        //            var nameParts = name.Split(null);
-        //            var newName = "";
-        //
-        //            for (var i = 1; i < nameParts.Length; i++)
-        //            {
-        //                if (!nameParts[i].Equals("."))
-        //                {
-        //                    newName += nameParts[i] + $" ";
-        //                }
-        //            }
-        //
-        //            return newName += ToUpperFirstLetter(nameParts[0].ToLower());
-        //        }
-        //
-        //        public static string GetName(Employee trainee)
-        //        {
-        //            return trainee.Title != null  ? trainee.Title+". "+ToProperName(trainee.NameWithInitial) : ToProperName(trainee.NameWithInitial);
-        //        }
-        //
-        //        public static string GetDesignation(Employee trainee)
-        //        {
-        //            return trainee.DesignationName;
-        //        }
-        //
-        //        public static string GetNatureOfAppointment(Employee trainee)
-        //        {
-        //            return trainee.EmployeeRecruitmentType.ToString();
-        //        }
-        //
-        //        public static string GetRecommendation(Employee trainee)
-        //        {
-        //            return trainee.WorkSpaceType;
-        //        }
-        //
-        //        public static string GetDurationOfTheCourse(Program program)
-        //        {
-        //            return program.DurationInMonths.ToString();
-        //        }
-        //
-        //        public static string GetCourseFee(Program program)
-        //        {
-        //            return program.ProgramFee.ToString();
-        //        }
-
-
     }
 }
