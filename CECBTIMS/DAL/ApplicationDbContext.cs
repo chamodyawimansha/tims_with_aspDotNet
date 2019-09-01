@@ -38,8 +38,6 @@ namespace CECBTIMS.DAL
 
         }
 
-        public System.Data.Entity.DbSet<CECBTIMS.Models.ProgramArrangement> ProgramArrangements { get; set; }
-
         public System.Data.Entity.DbSet<CECBTIMS.Models.Cost> Costs { get; set; }
 
         public System.Data.Entity.DbSet<CECBTIMS.Models.Requirement> Requirements { get; set; }

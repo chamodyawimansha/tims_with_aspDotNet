@@ -201,7 +201,7 @@
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\NaturesController.cs" />
     <Compile Include="Controllers\OrganizersController.cs" />
-    <Compile Include="Controllers\ProgramArrangementsController.cs" />
+    <Compile Include="Controllers\ProgramArrangementsController-deleted.cs" />
     <Compile Include="Controllers\ProgramAssignmentsController.cs" />
     <Compile Include="Controllers\ProgramsController.cs" />
     <Compile Include="Controllers\RequirementsController.cs" />
@@ -332,7 +332,6 @@
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Organizer.cs" />
     <Compile Include="Models\Program.cs" />
-    <Compile Include="Models\ProgramArrangement.cs" />
     <Compile Include="Models\Enums\ProgramType.cs" />
     <Compile Include="Models\ResourcePerson.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

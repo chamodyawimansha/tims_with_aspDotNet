@@ -12,7 +12,7 @@ using CECBTIMS.Models;
 
 namespace CECBTIMS.Controllers
 {
-    public class ProgramArrangementsController : Controller
+    public class ProgramArrangementsControllerDeleted : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 

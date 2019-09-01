@@ -74,11 +74,11 @@ namespace CECBTIMS.Models
         public float? NonMemberFee { get; set; }
         [Display(Name = "Student Fee")]
         public float? StudentFee { get; set; }
+        public int? OrganizerId { get; set; }
 
+        public virtual Organizer Organizer { get; set; }
 
         public virtual ICollection<Brochure> Brochure { get; set; }
-
-        public virtual ICollection<ProgramArrangement> ProgramArrangements { get; set; }
         public virtual ICollection<ProgramAssignment> ProgramAssignments { get; set; }
         public virtual ICollection<Agenda> Agendas { get; set; }
         public virtual ICollection<TargetGroup> TargetGroups { get; set; }
