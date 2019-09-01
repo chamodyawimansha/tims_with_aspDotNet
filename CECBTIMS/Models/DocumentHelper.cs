@@ -78,8 +78,7 @@ namespace CECBTIMS.Models
 
         public string GetOrganisedBy()
         {
-            return _program.ProgramArrangements.Aggregate("",
-                (current, item) => current == "" ? item.Organizer.Name : current + ", " + item.Organizer.Name);
+            return _program.Organizer.Name;
         }
 
         public string GetTargetGroup()

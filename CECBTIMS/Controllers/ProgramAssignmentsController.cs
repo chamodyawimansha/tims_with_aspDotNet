@@ -42,7 +42,7 @@ namespace CECBTIMS.Controllers
         public async Task<MemberType> FindMemberType(Guid employeeId, int programId)
         {
             //get the organizers of the selected program
-            var org = (from item in (await db.Programs.FindAsync(programId))?.ProgramArrangements select item.Organizer).ToList();
+//            var org = (from item in (await db.Programs.FindAsync(programId))?.ProgramArrangements select item.Organizer).ToList();
 
 
 
