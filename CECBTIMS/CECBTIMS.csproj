@@ -200,7 +200,6 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\NaturesController.cs" />
-    <Compile Include="Controllers\OrganizersController.cs" />
     <Compile Include="Controllers\ProgramAssignmentsController.cs" />
     <Compile Include="Controllers\ProgramsController.cs" />
     <Compile Include="Controllers\RequirementsController.cs" />
@@ -249,6 +248,10 @@
     <Compile Include="Migrations\201908271531292_EmployeeIdAddedForDocument.cs" />
     <Compile Include="Migrations\201908271531292_EmployeeIdAddedForDocument.Designer.cs">
       <DependentUpon>201908271531292_EmployeeIdAddedForDocument.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201909010648436_singleOrgforSingleProgram.cs" />
+    <Compile Include="Migrations\201909010648436_singleOrgforSingleProgram.Designer.cs">
+      <DependentUpon>201909010648436_singleOrgforSingleProgram.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Agenda.cs" />
@@ -550,6 +553,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201908271531292_EmployeeIdAddedForDocument.resx">
       <DependentUpon>201908271531292_EmployeeIdAddedForDocument.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201909010648436_singleOrgforSingleProgram.resx">
+      <DependentUpon>201909010648436_singleOrgforSingleProgram.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

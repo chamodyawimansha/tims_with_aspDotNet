@@ -6,6 +6,77 @@
 }
 
 
+<div class="container">
+    <div class="row">
+        <div class="col-md-3">
+
+            <div class="card">
+                <div class="card-body">
+                    <a href="@Url.Action($"Index", $"Programs")" class="btn btn-outline-secondary btn-block">
+                        <span class="fa fa-arrow-left mr-sm-1" aria-hidden="true"></span>
+                        Back to List
+                    </a>
+
+                    <a href="@Url.Action($"Create", $"Programs", new {id = Model.Id})" class="btn btn-primary btn-block">
+                        <span class="fa fa-plus mr-sm-1" aria-hidden="true"></span>
+                        New
+                    </a>
+
+                    <a href="@Url.Action($"Edit", $"Programs", new {id = Model.Id})" class="btn btn-primary btn-block">
+                        <span class="fa fa-pencil mr-sm-1" aria-hidden="true"></span>
+                        Edit
+                    </a>
+
+                    <a href="@Url.Action($"Delete", $"Employees", new {programId = Model.Id})" class="btn btn-danger btn-block">
+                        <span class="fa fa-trash mr-sm-1" aria-hidden="true"></span>
+                        Delete
+                    </a>
+
+                    <a href="@Url.Action($"Index", $"Employees", new {programId = Model.Id})" class="btn btn-primary btn-block">
+                        <span class="fa fa-user mr-sm-1" aria-hidden="true"></span>
+                        Employees
+                    </a>
+
+                    <a href="@Url.Action($"Index", $"Employees", new {programId = Model.Id})" class="btn btn-primary btn-block">
+                        <span class="fa fa-refresh mr-sm-1" aria-hidden="true"></span>
+                        Circulate
+                    </a>
+
+                    <a href="@Url.Action($"Index", $"Documents", new {programId = Model.Id})" class="btn btn-primary btn-block">
+                        <span class="fa fa-file mr-sm-1" aria-hidden="true"></span>
+                        Documents
+                    </a>
+                    <a href="@Url.Action($"Index", $"Employees", new {programId = Model.Id})" class="btn btn-primary btn-block">
+                        <span class="fa fa-file-pdf-o mr-sm-1" aria-hidden="true"></span>
+                        Reports
+                    </a>
+                </div>
+            </div>
+
+        </div>
+        
+        <div class="col-md-9">
+
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <div id="programContent">
 <div class="card">
 <div class="card-header">
@@ -154,35 +225,6 @@
 <tr>
     <th colspan="2">Organised By</th>
     <td colspan="8">
-
-        @if (Model.ProgramArrangements.Count > 0)
-        {
-            <table class="table table-bordered">
-                <tr>
-                    <th>Organisation Name</th>
-                    <th style="width: 10%"></th>
-                </tr>
-                @foreach (var item in Model.ProgramArrangements)
-                {
-                    <tr>
-                        <td>
-                            @Html.DisplayFor(model => item.Organizer.Name)
-                        </td>
-                        <td>
-                            @using (Html.BeginForm($"Delete", $"ProgramArrangements", "",
-                                FormMethod.Post, new {@class = "d-inline-block"}))
-                            {
-                                @Html.AntiForgeryToken()
-                                <input type="hidden" name="id" value="@item.Id"/>
-                                <input type="hidden" name="programId" value="@Model.Id"/>
-                                <input type="submit" value="Remove" class="btn btn-danger btn-sm d-inline-block"/>
-                            }
-                        </td>
-                    </tr>
-                }
-            </table>
-        }
-
         @Html.ActionLink("Add an Organiser", $"Create", $"Organizers", new {programId = Model.Id, programTitle = Model.Title}, new {@class = "btn btn-sm  btn-link" })
     </td>
 </tr>
