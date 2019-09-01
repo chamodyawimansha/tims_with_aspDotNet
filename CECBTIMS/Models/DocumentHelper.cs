@@ -1,13 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
-using System.Reflection;
-using System.Threading.Tasks;
-using CECBTIMS.Controllers;
 using CECBTIMS.Models.Enums;
 using DocumentFormat.OpenXml;
-using DocumentFormat.OpenXml.Packaging;
 using DocumentFormat.OpenXml.Wordprocessing;
 
 
@@ -18,6 +13,7 @@ namespace CECBTIMS.Models
 
         private readonly Program _program;
         private readonly List<Employee> _employees;
+        private readonly Employee _employee;
 
         private const string FontFamily = "Times New Roman";
 
@@ -38,6 +34,10 @@ namespace CECBTIMS.Models
             "GetStudentFee",
             "GetProgramFee",
             "GetTrainingManagerName",
+            "GetEmployeeName",
+            "GetEmployeeDesignation",
+            "GetDurationInMonths",
+            "GetStartMonthAndYear"
 
         };
 
@@ -45,10 +45,18 @@ namespace CECBTIMS.Models
         {
             "GetTraineeInformationTable"
         };
+
         public DocumentHelper(Program program)
         {
             _program = program;
         }
+
+        public DocumentHelper(Program program, Employee employee)
+        {
+            _program = program;
+            _employee = employee;
+        }
+
 
         public DocumentHelper(Program program, List<Employee> employees)
         {
@@ -129,13 +137,38 @@ namespace CECBTIMS.Models
 
         public string GetProgramFee()
         {
-            return "Rs." + _program.ProgramFee + "/-";
+            return _program != null ? "Rs." + _program.ProgramFee + "/-" :  "Null";
         }
 
         public string GetTrainingManagerName()
         {
             return "Eng. LCK Karunarathna";
         }
+
+        public string GetStartMonthAndYear()
+        {
+            return _program.StartDate.ToString("Y");
+        }
+
+        public string GetEmployeeName()
+        {
+            return _employee != null ? (_employee.Title != null ? _employee.Title + ". " + ToProperName(_employee.NameWithInitial) : ToProperName(_employee.NameWithInitial)) : "Null";
+        }
+
+        public string GetEmployeeDesignation()
+        {
+            return _employee != null ? _employee.DesignationName : "Null";
+        }
+
+        public string GetDurationInMonths()
+        {
+            return _program != null ? _program.DurationInMonths + " Months" : "Null";
+        }
+
+
+
+
+
 
         public Text GetNo(Employee emp)
         {

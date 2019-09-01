@@ -57,7 +57,7 @@ namespace CECBTIMS.Controllers
         }
 
         //Select the template
-        public async Task<ActionResult> Select(int? programId)
+        public async Task<ActionResult> Select(int? programId, Guid? employeeId)
         {
             if (programId == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             var program = await db.Programs.FindAsync(programId);
@@ -68,12 +68,13 @@ namespace CECBTIMS.Controllers
             // get the templates matches program type to selected program type
             templates = templates.Where(t => (t.ProgramType == program.ProgramType));
             ViewBag.ProgramId = programId;
+            ViewBag.EmployeeId = employeeId;
 
             return View(await templates.ToListAsync());
         }
 
         // select columns
-        public async Task<ActionResult> Create(int templateId, int programId)
+        public async Task<ActionResult> Create(int templateId, int programId, Guid? employeeId)
         {
             var template = await db.Templates.FindAsync(templateId);
             if (template == null) return HttpNotFound();
@@ -84,6 +85,11 @@ namespace CECBTIMS.Controllers
 
             var program = await db.Programs.FindAsync(programId);
             if (program == null) return HttpNotFound();
+            var details = "Generated Document For " + program.Title + " From " + template.Title + " template";
+            if (employeeId != null)
+            {
+                details = "Generated Document For employee-" + employeeId + " From " + template.Title + " template";
+            }
 
             var viewModel = new SelectConfirmViewModel
             {
@@ -91,12 +97,13 @@ namespace CECBTIMS.Controllers
                 Document = new Document()
                 {
                     Title = documentTitle,
-                    Details = "Generated Document For " + program.Title + " From " + template.Title + " template",
+                    Details = details,
                     FileName = Guid.NewGuid() + "." + FileType.DOCX,
                     ProgramType = program.ProgramType,
                     FileType = FileType.DOCX,
                     FileMethod = FileMethod.Generate,
                     ProgramId = programId,
+                    EmployeeId = employeeId,
                     DocumentNumber = 000000000 //get document number here
                 }
             };
@@ -124,9 +131,27 @@ namespace CECBTIMS.Controllers
             return View(document);
         }
 
-        private async Task<object> InstHelperClass(int programId)
+        private async Task<object> InstHelperClass(int programId, Guid? EmployeeId)
         {
             _helperClass = typeof(DocumentHelper);
+
+            if (EmployeeId == null)
+                return Activator.CreateInstance(
+                    _helperClass,
+                    await ProgramsController.GetProgram(programId),
+                    await EmployeesController.GetTrainees(programId)
+                );
+
+            var emp = await EmployeesController.FindEmployee((Guid) EmployeeId);
+
+            if (emp != null)
+            {
+                return Activator.CreateInstance(
+                    _helperClass,
+                    await ProgramsController.GetProgram(programId), emp
+                );
+            }
+
             return Activator.CreateInstance(
                 _helperClass, 
                 await ProgramsController.GetProgram(programId),
@@ -139,20 +164,17 @@ namespace CECBTIMS.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "Id,Title,Details,FileName,ProgramType,FileType,FileMethod,ProgramId,DocumentNumber")] Document document, TableColumnName[] columns, int templateId, int programId)
+        public async Task<ActionResult> Create([Bind(Include = "Id,Title,Details,FileName,ProgramType,FileType,FileMethod,ProgramId,EmployeeId,DocumentNumber")] Document document, TableColumnName[] columns, int templateId, int programId)
         {
 
             // document path of the newly created document from the template
             var path = await GetDocumentPath(templateId, document.FileName);
 
             //instantiate helper class
-            _classInstance = await InstHelperClass(programId);
+            _classInstance = await InstHelperClass(programId, document.EmployeeId);
 
             //get document class
             // replace variables
-
-            var method = _helperClass.GetMethod("test");
-
 
             ProcessVariables(path);
             return Content(ProcessTables(path, columns));
