@@ -1,72 +1,70 @@
 ﻿@model CECBTIMS.Models.Organizer
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "Organiser Details";
 }
 
-<h2>Details</h2>
-
-<div>
-    <h4>Organizer</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Name)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.CreatedAt)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.CreatedAt)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.UpdatedAt)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.UpdatedAt)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.CreatedBy)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.CreatedBy)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.UpdatedBy)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.UpdatedBy)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.RowVersion)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.RowVersion)
-        </dd>
-
-    </dl>
+<div class="col-9 mx-auto mb-1">
+    <div class="card mb-3">
+        <div class="card-header">
+            <h5 class="float-left">
+                Organiser Details
+            </h5>
+            <div class="float-right">
+                @Html.ActionLink("Create New", $"Create", null, new {@class = "btn btn-outline-primary"})
+                @Html.ActionLink("Back", $"Index", null, new {@class = "btn btn-outline-secondary"})
+            </div>
+        </div>
+        <div class="card-body">
+            <table class="table table-borderless">
+                <tr>
+                    <td class="w-25"></td>
+                    <td class="w-25"></td>
+                    <td class="w-25"></td>
+                    <td class="w-25"></td>
+                </tr>
+                <tr>
+                    <th colspan="1">Name</th>
+                    <td colspan="3">@Html.DisplayFor(model => model.Name)</td>
+                </tr>
+                <tr>
+                    <th colspan="1">Created by</th>
+                    <td colspan="1">@Html.DisplayFor(model => model.CreatedBy)</td>
+                    <th colspan="1">Created At</th>
+                    <td colspan="1">@Html.DisplayFor(model => model.CreatedAt)</td>
+                </tr>
+                <tr>
+                    <th colspan="1">Updated By</th>
+                    <td colspan="1">@Html.DisplayFor(model => model.UpdatedBy)</td>
+                    <th colspan="1">Updated By</th>
+                    <td colspan="1">@Html.DisplayFor(model => model.UpdatedBy)</td>
+                </tr>
+            </table>
+        </div>
+    </div>
 </div>
 
-@foreach (var item in Model.Programs)
-{
-    @item.Title
-}
-
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
+<div class="col-9 mx-auto mb-lg-5">
+    <div class="card mb-3">
+        <div class="card-header">
+            Organised Programs
+        </div>
+        <div class="card-body">
+            <table class="table table-bordered">
+                <tr>
+                    <th class="w-50">Title</th>
+                    <th class="w-25">Start Date</th>
+                    <th class="w-25">Venue</th>
+                </tr>
+                @foreach (var item in Model.Programs)
+                {
+                    <tr>
+                        <td><a href="@("/Programs/details/"+item.Id)">@item.Title</a></td>
+                        <td>@item.StartDate</td>
+                        <td>@item.Venue</td>
+                    </tr>
+                }
+            </table>
+        </div>
+    </div>
+</div>
