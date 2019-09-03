@@ -110,12 +110,12 @@ namespace CECBTIMS.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            Organizer organizer = await db.Organizers.FindAsync(id);
+            var organizer = await db.Organizers.FindAsync(id);
             if (organizer == null)
             {
                 return HttpNotFound();
             }
-
+            
             return View(organizer);
         }
 
@@ -124,7 +124,14 @@ namespace CECBTIMS.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteConfirmed(int id)
         {
-            Organizer organizer = await db.Organizers.FindAsync(id);
+            var organizer = await db.Organizers.FindAsync(id);
+
+            if(organizer.Programs.Any())
+            {
+                ModelState.AddModelError("", @"Selected Organiser has Training Programs");
+                View(organizer);
+            } 
+
             db.Organizers.Remove(organizer);
             await db.SaveChangesAsync();
             return RedirectToAction("Index");
