@@ -1,8 +1,11 @@
-﻿@model IEnumerable<CECBTIMS.Models.Organizer>
+﻿@using PagedList.Mvc
+@model PagedList.IPagedList<CECBTIMS.Models.Organizer>
 
 @{
     ViewBag.Title = "Organisers Index";
 }
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+
 <div class="col-9 mx-auto mb-lg-5">
     <div class="card mb-3">
         <div class="card-header">
@@ -10,11 +13,48 @@
                 Program Organisers
             </h5>
             <div class="float-right">
-                @Html.ActionLink("Create New", $"Create",new{programId = ViewBag.ProgramId},new{@class="btn btn-outline-primary"})
-                @Html.ActionLink("Back", $"Details",$"Programs",new {id= ViewBag.ProgramId},new{@class="btn btn-outline-secondary"})
+                @Html.ActionLink("Create New", $"Create", new { programId = ViewBag.ProgramId }, new { @class = "btn btn-outline-primary" })
+                @Html.ActionLink("Back", $"Details", $"Programs", new { id = ViewBag.ProgramId }, new { @class = "btn btn-outline-secondary" })
             </div>
         </div>
         <div class="card-body">
+
+
+            <div class="searchForm float-left">
+                @* HTML Form For search Program *@
+                @using (Html.BeginForm($"Index", $"Organizers", FormMethod.Get, new { @class = "form-inline mb-3" }))
+                {
+                    <input type="hidden" name="programId" value="@ViewBag.ProgramId"/>
+                    <div class="form-group mb-2">
+                        <input type="text" readonly class="form-control-plaintext" value="Find by Title :" style="width:90px">
+                    </div>
+                    <div class="form-group mx-sm-3 mb-2">
+                        <label for="inputPassword2" class="sr-only">Password</label>
+                        @Html.TextBox("searchString", ViewBag.currentFilter as string, new { @class = "form-control", placeholder = "Search" })
+                    </div>
+                    <input type="submit" class="btn btn-secondary mr-sm-2 mb-2" value="Search" />
+
+                    if (ViewBag.serachParam != null)
+                    {
+                        @Html.ActionLink("Clear", $"Index", ViewBag.currentFilter as string, new { @class = "btn btn-primary mb-2" })
+                    }
+
+                }
+            </div>
+            <div class="tableEntryCount float-right">
+                <input type="text" readonly class="form-control-plaintext" value="Show">
+                <select class="entryCountSelect">
+                    <option value="none" selected disabled hidden>
+                        @ViewBag.entryCount
+                    </option>
+                    <option value="/Organizers?countPerPage=5&programId="@ViewBag.ProgramId>5</option>
+                    <option value="/Organizers?countPerPage=10&programId="@ViewBag.ProgramId>10</option>
+                    <option value="/Organizers?countPerPage=50&programId="@ViewBag.ProgramId>50</option>
+                    <option value="/Organizers?countPerPage=100&programId="@ViewBag.ProgramId>100</option>
+                </select>
+                <input type="text" readonly class="form-control-plaintext" value="Entries">
+            </div>
+
             <table class="table table-bordered">
                 <tr>
                     <th class="w-50">Name</th>
@@ -34,22 +74,32 @@
                             @if (ViewBag.ProgramId != null)
                             {
                                 using (Html.BeginForm($"SelectOrg", $"Programs", null,
-                                    FormMethod.Post, new {@class = "d-inline-block"}))
+                                    FormMethod.Post, new { @class = "d-inline-block" }))
                                 {
                                     @Html.AntiForgeryToken()
-                                    <input type="hidden" name="orgId" value="@item.Id"/>
-                                    <input type="hidden" name="programId" value="@ViewBag.ProgramId"/>
-                                    <input type="submit" value="Select" class="btn btn-primary btn-sm d-inline-block"/>
+                                    <input type="hidden" name="orgId" value="@item.Id" />
+                                    <input type="hidden" name="programId" value="@ViewBag.ProgramId" />
+                                    <input type="submit" value="Select" class="btn btn-primary btn-sm d-inline-block" />
                                 }
                             }
 
-                            @Html.ActionLink("Details", $"Details", new {id = item.Id}, new {@class = "btn btn-sm btn-primary"})
-                            @Html.ActionLink("Edit", $"Edit", new {id = item.Id}, new {@class = "btn btn-sm btn-warning"})
+                            @Html.ActionLink("Details", $"Details", new { id = item.Id }, new { @class = "btn btn-sm btn-primary" })
+                            @Html.ActionLink("Edit", $"Edit", new { id = item.Id }, new { @class = "btn btn-sm btn-warning" })
                             @* @Html.ActionLink("Delete", $"Delete", new {id = item.Id}, new {@class = "btn btn-sm btn-danger"}) *@
                         </td>
                     </tr>
                 }
             </table>
+
+
+            Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+            @Html.PagedListPager(Model, page => Url.Action($"Index",
+                new { page, programId = ViewBag.ProgramId }))
         </div>
     </div>
 </div>
+
+@section Scripts {
+    @Scripts.Render("~/scripts/site.js")
+}

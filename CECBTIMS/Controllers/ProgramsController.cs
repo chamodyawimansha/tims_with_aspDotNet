@@ -45,7 +45,7 @@ namespace CECBTIMS.Controllers
             var programs = from s in db.Programs
                            select s;
 
-            if (!String.IsNullOrEmpty(searchString))
+            if (!string.IsNullOrEmpty(searchString))
             {
                 programs = programs.Where(p => p.Title.Contains(searchString));
             }

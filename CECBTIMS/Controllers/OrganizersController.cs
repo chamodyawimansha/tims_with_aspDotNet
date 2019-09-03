@@ -9,6 +9,7 @@ using System.Web;
 using System.Web.Mvc;
 using CECBTIMS.DAL;
 using CECBTIMS.Models;
+using PagedList.EntityFramework;
 
 namespace CECBTIMS.Controllers
 {
@@ -17,11 +18,24 @@ namespace CECBTIMS.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Organizers
-        public async Task<ActionResult> Index(int? programId)
+        public async Task<ActionResult> Index(int? programId, string searchString, int? countPerPage, int? page)
         {
+            var Orgs = from o in db.Organizers
+                select o;
+
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                Orgs = Orgs.Where(o => o.Name.Contains(searchString));
+            }
+
+            Orgs = Orgs.OrderBy(o => o.Name);
+
+            var pageSize = countPerPage ?? 5;
+            var pageNumber = page ?? 1;
+            ViewBag.PageNumber = pageNumber;
             ViewBag.ProgramId = programId;
 
-            return View(await db.Organizers.ToListAsync());
+            return View(await Orgs.ToPagedListAsync(pageNumber, pageSize));
         }
 
         // GET: Organizers/Details/5
