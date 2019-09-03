@@ -108,7 +108,18 @@
 <tr>
     <th colspan="1">Organised By</th>
     <td colspan="3">
-        @Html.ActionLink("Add an Organiser", $"Create", $"Organizers", new {programId = Model.Id, programTitle = Model.Title}, new {@class = "btn btn-sm  btn-link"})
+        <p>
+            @Html.DisplayFor(model=>model.Organizer.Name)
+        </p>
+        @if (Model.Organizer == null)
+        {
+            Html.ActionLink("Add an Organiser", $"Index", $"Organizers", new {programId = Model.Id, programTitle = Model.Title}, new {@class = "btn btn-sm  btn-link"});
+        }
+        else
+        {
+            Html.ActionLink("Remove Organiser", $"RemoveOrg", $"Organizers", new {programId = Model.Id}, new {@class = "btn btn-sm  btn-link"});
+        }
+
     </td>
 </tr>
 @if (Model.ProgramType.ToString() == "InHouse")

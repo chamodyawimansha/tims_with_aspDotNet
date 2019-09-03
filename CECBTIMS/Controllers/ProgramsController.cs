@@ -89,6 +89,8 @@ namespace CECBTIMS.Controllers
 
         }
 
+
+
         // GET: Programs/Details/5
         public async Task<ActionResult> Details(int? id)
         {
@@ -121,6 +123,23 @@ namespace CECBTIMS.Controllers
         // POST: Programs/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> SelectOrg(int? programId, int? orgId)
+        {
+            if(programId == null || orgId == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            //get the program
+            var program = await db.Programs.FindAsync(programId);
+            if (program == null) return HttpNotFound();
+
+            program.OrganizerId = orgId;
+            db.Programs.Add(program);
+            await db.SaveChangesAsync();
+
+
+            return RedirectToAction($"Details", $"Programs",new{id=program.Id});
+        }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create([Bind(Include = "Id,Title,ProgramType,StartDate,StartTime,EndTime,ApplicationClosingDate,ApplicationClosingTime,Venue,EndDate,NotifiedBy,NotifiedOn,ProgramHours,DurationInDays,DurationInMonths,Department,Currency,ProgramFee,RegistrationFee,PerPersonFee,NoShowFee,MemberFee,NonMemberFee,StudentFee")] Program program)

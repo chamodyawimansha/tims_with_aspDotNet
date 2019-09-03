@@ -17,8 +17,10 @@ namespace CECBTIMS.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Organizers
-        public async Task<ActionResult> Index()
+        public async Task<ActionResult> Index(int? programId)
         {
+            ViewBag.ProgramId = programId;
+
             return View(await db.Organizers.ToListAsync());
         }
 
@@ -29,11 +31,13 @@ namespace CECBTIMS.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+
             Organizer organizer = await db.Organizers.FindAsync(id);
             if (organizer == null)
             {
                 return HttpNotFound();
             }
+
             return View(organizer);
         }
 
@@ -48,7 +52,9 @@ namespace CECBTIMS.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "Id,Name,CreatedAt,UpdatedAt,CreatedBy,UpdatedBy,RowVersion")] Organizer organizer)
+        public async Task<ActionResult> Create(
+            [Bind(Include = "Id,Name,CreatedAt,UpdatedAt,CreatedBy,UpdatedBy,RowVersion")]
+            Organizer organizer)
         {
             if (ModelState.IsValid)
             {
@@ -67,11 +73,13 @@ namespace CECBTIMS.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+
             Organizer organizer = await db.Organizers.FindAsync(id);
             if (organizer == null)
             {
                 return HttpNotFound();
             }
+
             return View(organizer);
         }
 
@@ -80,7 +88,9 @@ namespace CECBTIMS.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "Id,Name,CreatedAt,UpdatedAt,CreatedBy,UpdatedBy,RowVersion")] Organizer organizer)
+        public async Task<ActionResult> Edit(
+            [Bind(Include = "Id,Name,CreatedAt,UpdatedAt,CreatedBy,UpdatedBy,RowVersion")]
+            Organizer organizer)
         {
             if (ModelState.IsValid)
             {
@@ -88,6 +98,7 @@ namespace CECBTIMS.Controllers
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
+
             return View(organizer);
         }
 
@@ -98,11 +109,13 @@ namespace CECBTIMS.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+
             Organizer organizer = await db.Organizers.FindAsync(id);
             if (organizer == null)
             {
                 return HttpNotFound();
             }
+
             return View(organizer);
         }
 
@@ -123,6 +136,7 @@ namespace CECBTIMS.Controllers
             {
                 db.Dispose();
             }
+
             base.Dispose(disposing);
         }
     }
