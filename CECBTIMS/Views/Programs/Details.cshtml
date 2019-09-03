@@ -109,17 +109,22 @@
     <th colspan="1">Organised By</th>
     <td colspan="3">
         <p>
-            @Html.DisplayFor(model=>model.Organizer.Name)
+            @Html.DisplayFor(model => model.Organizer.Name)
         </p>
-        @if (Model.Organizer == null)
+        @if (Model.Organizer != null)
         {
-            Html.ActionLink("Add an Organiser", $"Index", $"Organizers", new {programId = Model.Id, programTitle = Model.Title}, new {@class = "btn btn-sm  btn-link"});
+            using (Html.BeginForm($"RemoveOrg", $"Programs", null,
+                FormMethod.Post, new {@class = "d-inline-block"}))
+            {
+                @Html.AntiForgeryToken()
+                <input type="hidden" name="programId" value="@Model.Id"/>
+                <input type="submit" value="Remove Organiser" class="btn btn-danger btn-sm d-inline-block"/>
+            }
         }
         else
         {
-            Html.ActionLink("Remove Organiser", $"RemoveOrg", $"Organizers", new {programId = Model.Id}, new {@class = "btn btn-sm  btn-link"});
+            @Html.ActionLink("Add an Organiser", $"Index", $"Organizers", new {programId = Model.Id, programTitle = Model.Title}, new {@class = "btn btn-sm  btn-link"});
         }
-
     </td>
 </tr>
 @if (Model.ProgramType.ToString() == "InHouse")

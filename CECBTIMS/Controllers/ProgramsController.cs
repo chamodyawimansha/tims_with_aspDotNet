@@ -142,6 +142,22 @@ namespace CECBTIMS.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        public async Task<ActionResult> RemoveOrg(int? programId)
+        {
+            if (programId == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            //get the program
+            var program = await db.Programs.FindAsync(programId);
+            if (program == null) return HttpNotFound();
+
+            program.OrganizerId = null;
+            db.Programs.Add(program);
+            await db.SaveChangesAsync();
+
+            return RedirectToAction($"Details", $"Programs", new { id = program.Id });
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create([Bind(Include = "Id,Title,ProgramType,StartDate,StartTime,EndTime,ApplicationClosingDate,ApplicationClosingTime,Venue,EndDate,NotifiedBy,NotifiedOn,ProgramHours,DurationInDays,DurationInMonths,Department,Currency,ProgramFee,RegistrationFee,PerPersonFee,NoShowFee,MemberFee,NonMemberFee,StudentFee")] Program program)
         {
             if (ModelState.IsValid)
