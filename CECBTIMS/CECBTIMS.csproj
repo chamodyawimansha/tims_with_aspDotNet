@@ -200,6 +200,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\NaturesController.cs" />
+    <Compile Include="Controllers\OrganizersController.cs" />
     <Compile Include="Controllers\ProgramAssignmentsController.cs" />
     <Compile Include="Controllers\ProgramsController.cs" />
     <Compile Include="Controllers\RequirementsController.cs" />
@@ -515,6 +516,11 @@
     <Content Include="Views\Documents\Create.cshtml" />
     <Content Include="Views\Employees\Find.cshtml" />
     <Content Include="Views\ProgramAssignments\Select.cshtml" />
+    <Content Include="Views\Organizers\Create.cshtml" />
+    <Content Include="Views\Organizers\Delete.cshtml" />
+    <Content Include="Views\Organizers\Details.cshtml" />
+    <Content Include="Views\Organizers\Edit.cshtml" />
+    <Content Include="Views\Organizers\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
