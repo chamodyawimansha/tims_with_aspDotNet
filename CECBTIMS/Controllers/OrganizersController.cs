@@ -42,8 +42,9 @@ namespace CECBTIMS.Controllers
         }
 
         // GET: Organizers/Create
-        public ActionResult Create()
+        public ActionResult Create(int? programId)
         {
+            ViewBag.ProgramId = programId;
             return View();
         }
 
@@ -54,16 +55,13 @@ namespace CECBTIMS.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create(
             [Bind(Include = "Id,Name,CreatedAt,UpdatedAt,CreatedBy,UpdatedBy,RowVersion")]
-            Organizer organizer)
+            Organizer organizer, int? programId)
         {
-            if (ModelState.IsValid)
-            {
-                db.Organizers.Add(organizer);
-                await db.SaveChangesAsync();
-                return RedirectToAction("Index");
-            }
+            if (!ModelState.IsValid) return View(organizer);
 
-            return View(organizer);
+            db.Organizers.Add(organizer);
+            await db.SaveChangesAsync();
+            return programId == null ? RedirectToAction($"Index") : RedirectToAction("SelectOrg", "Programs", new {programId, orgId = organizer.Id });
         }
 
         // GET: Organizers/Edit/5
