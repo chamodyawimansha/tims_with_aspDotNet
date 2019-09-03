@@ -39,7 +39,7 @@ namespace CECBTIMS.Controllers
         }
 
         // GET: Organizers/Details/5
-        public async Task<ActionResult> Details(int? id)
+        public async Task<ActionResult> Details(int? id, int? ProgramId)
         {
             if (id == null)
             {
@@ -51,6 +51,8 @@ namespace CECBTIMS.Controllers
             {
                 return HttpNotFound();
             }
+
+            ViewBag.ProgramId = ProgramId;
 
             return View(organizer);
         }

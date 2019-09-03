@@ -12,7 +12,7 @@
             </h5>
             <div class="float-right">
                 @Html.ActionLink("Delete", $"Delete", new{id=Model.Id}, new {@class = "btn btn-danger"})
-                @Html.ActionLink("Back", $"Index", null, new {@class = "btn btn-outline-secondary"})
+                @Html.ActionLink("Back", $"Index", new{programId=ViewBag.ProgramId}, new {@class = "btn btn-outline-secondary"})
             </div>
         </div>
         <div class="card-body">
