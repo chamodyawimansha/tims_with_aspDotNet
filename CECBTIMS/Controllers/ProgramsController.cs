@@ -132,8 +132,8 @@ namespace CECBTIMS.Controllers
             var program = await db.Programs.FindAsync(programId);
             if (program == null) return HttpNotFound();
 
+            db.Entry(program).State = EntityState.Modified;
             program.OrganizerId = orgId;
-            db.Programs.Add(program);
             await db.SaveChangesAsync();
 
 
@@ -149,8 +149,8 @@ namespace CECBTIMS.Controllers
             var program = await db.Programs.FindAsync(programId);
             if (program == null) return HttpNotFound();
 
+            db.Entry(program).State = EntityState.Modified;
             program.OrganizerId = null;
-            db.Programs.Add(program);
             await db.SaveChangesAsync();
 
             return RedirectToAction($"Details", $"Programs", new { id = program.Id });

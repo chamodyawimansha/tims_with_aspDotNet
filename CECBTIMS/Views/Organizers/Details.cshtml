@@ -60,6 +60,12 @@
 
     </dl>
 </div>
+
+@foreach (var item in Model.Programs)
+{
+    @item.Title
+}
+
 <p>
     @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
     @Html.ActionLink("Back to List", "Index")
