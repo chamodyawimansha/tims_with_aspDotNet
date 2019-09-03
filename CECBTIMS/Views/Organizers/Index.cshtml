@@ -10,7 +10,7 @@
                 Program Organisers
             </h5>
             <div class="float-right">
-                @Html.ActionLink("Create New", $"Create",null,new{@class="btn btn-outline-primary"})
+                @Html.ActionLink("Create New", $"Create",new{programId = ViewBag.ProgramId},new{@class="btn btn-outline-primary"})
                 @Html.ActionLink("Back", $"Details",$"Programs",new {id= ViewBag.ProgramId},new{@class="btn btn-outline-secondary"})
             </div>
         </div>

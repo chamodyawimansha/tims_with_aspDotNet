@@ -61,7 +61,8 @@ namespace CECBTIMS.Controllers
 
             db.Organizers.Add(organizer);
             await db.SaveChangesAsync();
-            return programId == null ? RedirectToAction($"Index") : RedirectToAction("SelectOrg", "Programs", new {programId, orgId = organizer.Id });
+
+            return RedirectToAction($"Index");
         }
 
         // GET: Organizers/Edit/5
