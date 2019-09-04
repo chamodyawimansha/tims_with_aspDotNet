@@ -73,7 +73,14 @@ namespace CECBTIMS.Models
 
 
             "GetDepartment",
-            "GetStartAndEndYear",
+            "GetStartAndEndYear", //2019/2020
+
+
+            "GetNotifiedOn",
+            "GetStartYear",
+            "GetDurationInDays",
+            "GetEndDate",
+
 
         };
 
@@ -149,7 +156,10 @@ namespace CECBTIMS.Models
         {
             return _program.StartDate.ToString("D");
         }
-
+        public string GetEndDate()
+        {
+            return _program.EndDate != null ? ((DateTime)_program.EndDate).ToString("D") : "YYYY/DD/MM";
+        }
         public string GetStartEndTime()
         {
             var startTime = _program.StartTime?.ToString("h:mm tt");
@@ -212,6 +222,15 @@ namespace CECBTIMS.Models
         public string GetDurationInMonths()
         {
             return _program != null ? _program.DurationInMonths + " Months" : "Null";
+        }
+
+        public string GetStartYear()
+        {
+            return _program.StartDate.ToString("yyyy");
+        }
+        public string GetDurationInDays()
+        {
+            return _program != null ? _program.DurationInDays + " Days" : "Null";
         }
 
         public string GetStartTime()
@@ -305,6 +324,12 @@ namespace CECBTIMS.Models
         {
             return "YYYY/MM/DD";
         }
+
+        public string GetNotifiedOn()
+        {
+            return _program.NotifiedOn != null ? ((DateTime)_program.NotifiedOn).ToString("D") : "yyyy.mm.dd";
+        }
+
         public Paragraph GetName(Employee emp)
         {
             return WithDefaults(new Text(ToProperName(emp.NameWithInitial)));
