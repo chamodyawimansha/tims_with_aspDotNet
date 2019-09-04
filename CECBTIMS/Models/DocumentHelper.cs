@@ -190,7 +190,11 @@ namespace CECBTIMS.Models
             return _program != null ? _program.DurationInMonths + " Months" : "Null";
         }
 
-
+        public string GetStartTime()
+        {
+            return _program.StartTime.ToString("h:mm tt");
+        }
+        
         public Paragraph GetNo(Employee emp)
         {
             return new Paragraph();
@@ -486,6 +490,160 @@ namespace CECBTIMS.Models
 
 
             return table;
+        }
+
+        public Table GetAgendaDetailsTable(TableColumnName[] columnNames, Guid? employeeId)
+        {
+            var table = new Table();
+            var titleRow = new TableRow();
+            this.SetTableStyle(table);
+
+            var cols = new[]{"No", "Topic", "Duration"};
+
+            foreach (var col in cols)
+            {
+                var tc = new TableCell();
+                var tcpParagraph = new Paragraph();
+                // Vertical align center
+                tcpParagraph.Append(new ParagraphProperties
+                    { Justification = new Justification() { Val = JustificationValues.Center } });
+                tc.Append(new TableCellProperties(new TableCellVerticalAlignment()
+                    { Val = TableVerticalAlignmentValues.Center }));
+                var run = new Run();
+                run.Append(
+                    new RunProperties(
+                        new FontSize() { Val = "24" },
+                        new RunFonts() { Ascii = FontFamily },
+                        new Bold() { Val = OnOffValue.FromBoolean(true) }
+                    )
+                );
+                run.Append(new Text(ToColumnName(col.ToString())));
+                tcpParagraph.Append(run);
+                tc.Append(tcpParagraph);
+                titleRow.Append(tc);
+            }
+            table.Append(titleRow);
+
+            var thisType = this.GetType();
+            var i = 1;
+            foreach (var ag in _program.Agendas)
+            {
+                var dataRow = new TableRow();
+                foreach (var col in cols)
+                {
+                    var tc = new TableCell();
+                    tc.Append(new TableCellProperties(new TableCellVerticalAlignment()
+                        { Val = TableVerticalAlignmentValues.Center }));
+
+                    if (col.Equals("No"))
+                    {
+                        tc.Append(WithDefaults(new Text(i.ToString("D2"))));
+                        i++;
+                        dataRow.Append(tc);
+                        continue;
+                    }
+
+                    var theMethod = thisType.GetMethod(ToFunctionName(col));
+                    if (theMethod != null)
+                    {
+                        tc.Append((Paragraph)theMethod.Invoke(this, new object[] { ag }));
+                    }
+                    else
+                    {
+                        tc.Append(NullParagraph());
+                    }
+                    dataRow.Append(tc);
+                }
+                table.Append(dataRow);
+            }
+            return table;
+        }
+
+        public Table GetResourcePersonsTable(TableColumnName[] columnNames, Guid? employeeId)
+        {
+            var table = new Table();
+            var titleRow = new TableRow();
+            this.SetTableStyle(table);
+
+            var cols = new[] { "No", "Resource_Person_Name", "Description" };
+
+            foreach (var col in cols)
+            {
+                var tc = new TableCell();
+                var tcpParagraph = new Paragraph();
+                // Vertical align center
+                tcpParagraph.Append(new ParagraphProperties
+                    { Justification = new Justification() { Val = JustificationValues.Center } });
+                tc.Append(new TableCellProperties(new TableCellVerticalAlignment()
+                    { Val = TableVerticalAlignmentValues.Center }));
+                var run = new Run();
+                run.Append(
+                    new RunProperties(
+                        new FontSize() { Val = "24" },
+                        new RunFonts() { Ascii = FontFamily },
+                        new Bold() { Val = OnOffValue.FromBoolean(true) }
+                    )
+                );
+                run.Append(new Text(ToColumnName(col.ToString())));
+                tcpParagraph.Append(run);
+                tc.Append(tcpParagraph);
+                titleRow.Append(tc);
+            }
+            table.Append(titleRow);
+
+            var thisType = this.GetType();
+            var i = 1;
+            foreach (var rp in _program.ResourcePersons)
+            {
+                var dataRow = new TableRow();
+                foreach (var col in cols)
+                {
+                    var tc = new TableCell();
+                    tc.Append(new TableCellProperties(new TableCellVerticalAlignment()
+                        { Val = TableVerticalAlignmentValues.Center }));
+
+                    if (col.Equals("No"))
+                    {
+                        tc.Append(WithDefaults(new Text(i.ToString("D2"))));
+                        i++;
+                        dataRow.Append(tc);
+                        continue;
+                    }
+
+                    var theMethod = thisType.GetMethod(ToFunctionName(col));
+                    if (theMethod != null)
+                    {
+                        tc.Append((Paragraph)theMethod.Invoke(this, new object[] { rp }));
+                    }
+                    else
+                    {
+                        tc.Append(NullParagraph());
+                    }
+                    dataRow.Append(tc);
+                }
+                table.Append(dataRow);
+            }
+            return table;
+        }
+
+        public Paragraph GetTopic(Agenda agenda)
+        {
+            return WithDefaults(new Text(agenda.Name));
+        }
+
+        public Paragraph GetResourcePersonName(ResourcePerson rp)
+        {
+            return WithDefaults(new Text(rp.Name));
+        }
+
+        public Paragraph GetDescription(ResourcePerson rp)
+        {
+            return WithDefaults(new Text(rp.Designation));
+        }
+
+        public Paragraph GetDuration(Agenda agenda)
+        {
+            return WithDefaults(new Text(agenda.From.ToString("t") + " hrs - " + agenda.To.ToString("t") + " hrs"));
         }
 
         private RunProperties DefaultStyle()
