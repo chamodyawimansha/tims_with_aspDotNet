@@ -194,11 +194,6 @@ namespace CECBTIMS.Models
         {
             return _program.StartTime.ToString("h:mm tt");
         }
-        
-        public Paragraph GetNo(Employee emp)
-        {
-            return new Paragraph();
-        }
 
         public Paragraph GetName(Employee emp)
         {
@@ -458,7 +453,7 @@ namespace CECBTIMS.Models
             table.Append(titleRow);
 
             var thisType = this.GetType();
-
+            var i = 1;
             //Add data to the table
             foreach (var emp in _employees)
             {
@@ -471,6 +466,13 @@ namespace CECBTIMS.Models
                     tc.Append(new TableCellProperties(new TableCellVerticalAlignment()
                         {Val = TableVerticalAlignmentValues.Center}));
 
+                    if (col == TableColumnName.No)
+                    {
+                        tc.Append(WithDefaults(new Text(i.ToString("D2"))));
+                        i++;
+                        dataRow.Append(tc);
+                        continue;
+                    }
                     var theMethod = thisType.GetMethod(ToFunctionName(col.ToString()));
 
                     if (theMethod != null)
