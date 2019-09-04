@@ -57,13 +57,23 @@ namespace CECBTIMS.Models
             "GetDurationInMonths",
             "GetStartMonthAndYear",
             "GetStartTime",
-
-
             "GetPerHeadCost",
             "GetEmployeeCount",
             "GetEmployeeCost",
             "GetResourcePersonCost",
             "GetProgramTotalCost",
+
+
+
+            "GetRecipient", // the recipient for a single employee
+            "GetRegistrationFee",
+            "GetPostGradTotalCost",
+            "GetExaminationFees",
+            "GetBlankDate",
+
+
+            "GetDepartment",
+            "GetStartAndEndYear",
 
         };
 
@@ -116,7 +126,7 @@ namespace CECBTIMS.Models
 
         public string GetOrganisedBy()
         {
-            return _program.Organizer.Name;
+            return _program.Organizer != null ? _program.Organizer.Name : "Null";
         }
 
         public string GetTargetGroup()
@@ -238,6 +248,18 @@ namespace CECBTIMS.Models
 
             return (rCost + eCost).ToString("N");
 
+        }
+        public string GetDepartment()
+        {
+            return _program.Department;
+        }
+
+        public string GetStartAndEndYear()
+        {
+            var start = _program.StartDate.ToString("yyyy");
+            var end = _program.EndDate != null ? ((DateTime)_program.EndDate).ToString("yyyy") : DateTime.Now.ToString("yyyy");
+
+            return start + "/" + end;
         }
         public Paragraph GetName(Employee emp)
         {

@@ -123,7 +123,8 @@
         }
         else
         {
-            @Html.ActionLink("Add an Organiser", $"Index", $"Organizers", new {programId = Model.Id, programTitle = Model.Title}, new {@class = "btn btn-sm  btn-link"});
+            @Html.ActionLink("Add an Organiser", $"Index", $"Organizers", new {programId = Model.Id, programTitle = Model.Title}, new {@class = "btn btn-sm  btn-link"})
+            ;
         }
     </td>
 </tr>
@@ -170,40 +171,37 @@
     </tr>
 }
 
-@if (Model.ProgramType.ToString() != "PostGraduation")
-{
-    <tr>
-        <th colspan="1">Target Group(s)</th>
-        <td colspan="3">
-            @if (Model.TargetGroups.Count > 0)
-            {
-                <table class="table table-bordered">
-                    @foreach (var item in Model.TargetGroups)
-                    {
-                        <tr>
-                            <td class="w-75">
-                                @Html.DisplayFor(modelItem => item.Name)
-                            </td>
-                            <td class="w-25">
-                                @Html.ActionLink("Edit", "Edit", "TargetGroups", new {id = item.Id}, new {@class = "btn btn-warning btn-sm d-inline-block"})
-                                @using (Html.BeginForm($"Delete", $"TargetGroups", "",
-                                    FormMethod.Post, new {@class = "d-inline-block"}))
-                                {
-                                    @Html.AntiForgeryToken()
-                                    <input type="hidden" name="id" value="@item.Id"/>
-                                    <input type="hidden" name="ProgramId" value="@Model.Id"/>
-                                    <input type="submit" value="Remove" class="btn btn-danger btn-sm d-inline-block"/>
-                                }
-                            </td>
-                        </tr>
-                    }
-                </table>
-            }
+<tr>
+    <th colspan="1">Target Group(s)</th>
+    <td colspan="3">
+        @if (Model.TargetGroups.Count > 0)
+        {
+            <table class="table table-bordered">
+                @foreach (var item in Model.TargetGroups)
+                {
+                    <tr>
+                        <td class="w-75">
+                            @Html.DisplayFor(modelItem => item.Name)
+                        </td>
+                        <td class="w-25">
+                            @Html.ActionLink("Edit", "Edit", "TargetGroups", new {id = item.Id}, new {@class = "btn btn-warning btn-sm d-inline-block"})
+                            @using (Html.BeginForm($"Delete", $"TargetGroups", "",
+                                FormMethod.Post, new {@class = "d-inline-block"}))
+                            {
+                                @Html.AntiForgeryToken()
+                                <input type="hidden" name="id" value="@item.Id"/>
+                                <input type="hidden" name="ProgramId" value="@Model.Id"/>
+                                <input type="submit" value="Remove" class="btn btn-danger btn-sm d-inline-block"/>
+                            }
+                        </td>
+                    </tr>
+                }
+            </table>
+        }
 
-            @Html.ActionLink("Add a Target Group", "Create", "TargetGroups", new {programId = Model.Id, title = Model.Title}, new {@class = "btn btn-sm  btn-link"})
-        </td>
-    </tr>
-}
+        @Html.ActionLink("Add a Target Group", "Create", "TargetGroups", new {programId = Model.Id, title = Model.Title}, new {@class = "btn btn-sm  btn-link"})
+    </td>
+</tr>
 
 @if (Model.ProgramType.ToString() != "PostGraduation")
 {
