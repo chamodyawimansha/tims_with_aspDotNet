@@ -57,6 +57,14 @@ namespace CECBTIMS.Models
             "GetDurationInMonths",
             "GetStartMonthAndYear",
             "GetStartTime",
+
+
+            "GetPerHeadCost",
+            "GetEmployeeCount",
+            "GetEmployeeCost",
+            "GetResourcePersonCost",
+            "GetProgramTotalCost",
+
         };
 
         public static string[] DocumentTableList =
@@ -69,7 +77,9 @@ namespace CECBTIMS.Models
         public static string[] DocumentListsList =
         {
             "GetAgendaList",
-            "GetRecipientsList"
+            "GetRecipientsList",
+            "GetAgendaSubjectsList",
+            "GetResourcePersonsList"
         };
 
         public DocumentHelper(Program program)
@@ -196,6 +206,36 @@ namespace CECBTIMS.Models
             return _program.StartTime.ToString("h:mm tt");
         }
 
+        public string GetPerHeadCost()
+        {
+            return Convert.ToSingle((_program.PerPersonFee)).ToString("N");
+        }
+  
+        public string GetEmployeeCount()
+        {
+            return _program.ProgramAssignments.Count.ToString();
+        }
+
+        public string GetEmployeeCost()
+        {
+            return Convert.ToSingle(_program.PerPersonFee * _program.ProgramAssignments.Count).ToString("N");
+        }
+
+        public string GetResourcePersonCost()
+        {
+            var cost = _program.ResourcePersons.Sum(item => item.Cost);
+
+            return cost.ToString("N");
+        }
+        
+        public string GetProgramTotalCost()
+        {
+            var rCost = _program.ResourcePersons.Sum(item => item.Cost);
+            var eCost = (Convert.ToSingle(_program.PerPersonFee * _program.ProgramAssignments.Count));
+
+            return (rCost + eCost).ToString("N");
+
+        }
         public Paragraph GetName(Employee emp)
         {
             return WithDefaults(new Text(ToProperName(emp.NameWithInitial)));
@@ -752,6 +792,64 @@ namespace CECBTIMS.Models
                 r.AppendChild(new Text()
                 {
                     Text = item,
+                    Space = SpaceProcessingModeValues.Preserve
+                });
+
+                p.AppendChild(r);
+
+                p.Append(new Break());
+            }
+
+            return p;
+        }
+
+        public Paragraph GetAgendaSubjectsList()
+        {
+            var p = new Paragraph();
+            p.Append(new ParagraphProperties
+                { Justification = new Justification() { Val = JustificationValues.Left } });
+
+            foreach (var item in _program.Agendas)
+            {
+                var r = new Run();
+                r.Append(new RunProperties(
+                    new FontSize() { Val = "24" },
+                    new RunFonts() { Ascii = FontFamily },
+                    new Bold() { Val = OnOffValue.FromBoolean(true) }
+                ));
+
+                r.AppendChild(new Text()
+                {
+                    Text = item.Name,
+                    Space = SpaceProcessingModeValues.Preserve
+                });
+
+                p.AppendChild(r);
+
+                p.Append(new Break());
+            }
+
+            return p;
+        }
+
+        public Paragraph GetResourcePersonsList()
+        {
+            var p = new Paragraph();
+            p.Append(new ParagraphProperties
+                { Justification = new Justification() { Val = JustificationValues.Left } });
+
+            foreach (var item in _program.ResourcePersons)
+            {
+                var r = new Run();
+                r.Append(new RunProperties(
+                    new FontSize() { Val = "22" },
+                    new RunFonts() { Ascii = FontFamily },
+                    new Bold() { Val = OnOffValue.FromBoolean(true) }
+                ));
+
+                r.AppendChild(new Text()
+                {
+                    Text = "                         "+item.Name+" - "+item.Designation,
                     Space = SpaceProcessingModeValues.Preserve
                 });
 
