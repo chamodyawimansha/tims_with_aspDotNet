@@ -142,7 +142,10 @@ namespace CECBTIMS.Models
 
         public string GetStartEndTime()
         {
-            return _program.StartTime.ToString("h:mm tt") + " To " + _program.EndTime.ToString("h:mm tt");
+            var startTime = _program.StartTime?.ToString("h:mm tt");
+            var endTime = _program.EndTime?.ToString("h:mm tt");
+
+            return startTime + " To " + endTime;
         }
 
         public string GetVenue()
@@ -203,7 +206,7 @@ namespace CECBTIMS.Models
 
         public string GetStartTime()
         {
-            return _program.StartTime.ToString("h:mm tt");
+            return _program.StartTime?.ToString("h:mm tt");
         }
 
         public string GetPerHeadCost()

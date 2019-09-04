@@ -161,6 +161,7 @@ namespace CECBTIMS.Controllers
         public async Task<ActionResult> Create([Bind(Include = "Id,Title,ProgramType,StartDate,StartTime,EndTime,ApplicationClosingDate,ApplicationClosingTime,Venue,EndDate,NotifiedBy,NotifiedOn,ProgramHours,DurationInDays,DurationInMonths,Department,Currency,ProgramFee,RegistrationFee,PerPersonFee,NoShowFee,MemberFee,NonMemberFee,StudentFee")] Program program)
         {
             if (!ModelState.IsValid) return View(program);
+
             db.Programs.Add(program);
             await db.SaveChangesAsync();
             return RedirectToAction($"Index");

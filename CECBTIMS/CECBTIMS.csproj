@@ -254,6 +254,14 @@
     <Compile Include="Migrations\201909010648436_singleOrgforSingleProgram.Designer.cs">
       <DependentUpon>201909010648436_singleOrgforSingleProgram.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201909041109444_ClosingDateisRequired.cs" />
+    <Compile Include="Migrations\201909041109444_ClosingDateisRequired.Designer.cs">
+      <DependentUpon>201909041109444_ClosingDateisRequired.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201909041128051_ProgramStartsEndTimesNullable.cs" />
+    <Compile Include="Migrations\201909041128051_ProgramStartsEndTimesNullable.Designer.cs">
+      <DependentUpon>201909041128051_ProgramStartsEndTimesNullable.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Agenda.cs" />
     <Compile Include="Models\BaseCols.cs" />
@@ -562,6 +570,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201909010648436_singleOrgforSingleProgram.resx">
       <DependentUpon>201909010648436_singleOrgforSingleProgram.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201909041109444_ClosingDateisRequired.resx">
+      <DependentUpon>201909041109444_ClosingDateisRequired.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201909041128051_ProgramStartsEndTimesNullable.resx">
+      <DependentUpon>201909041128051_ProgramStartsEndTimesNullable.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
