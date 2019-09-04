@@ -123,7 +123,7 @@ namespace CECBTIMS.Models
 
         public string GetToday()
         {
-            return DateTime.Now.ToString("yyyy/MM/dd");
+            return DateTime.Now.ToString("dd.mm.yyyy");
         }
 
         public string GetProgramTitle()
@@ -512,17 +512,17 @@ namespace CECBTIMS.Models
             return new Paragraph();
         }
 
-        public Paragraph GetRemarksOnRelevancyToTheProgram()
+        public Paragraph GetRemarksOnRelevancyToTheProgram(Employee emp)
         {
             return new Paragraph();
         }
 
-        public Paragraph GetDetailsOfForeignTrainingParticipated()
+        public Paragraph GetDetailsOfForeignTrainingParticipated(Employee emp)
         {
             return new Paragraph();
         }
 
-        public Paragraph GetDetailsOfForeignVisitsParticipated()
+        public Paragraph GetDetailsOfForeignVisitsParticipated(Employee emp)
         {
             return new Paragraph();
         }
