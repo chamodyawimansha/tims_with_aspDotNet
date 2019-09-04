@@ -300,6 +300,11 @@ namespace CECBTIMS.Models
             var emp = _employees.First();
             return emp.WorkSpaceType.Replace("Unit", "")+"("+emp.WorkSpaceName+")";
         }
+
+        public string GetBlankDate()
+        {
+            return "YYYY/MM/DD";
+        }
         public Paragraph GetName(Employee emp)
         {
             return WithDefaults(new Text(ToProperName(emp.NameWithInitial)));
@@ -363,7 +368,7 @@ namespace CECBTIMS.Models
 
         public Paragraph GetNatureOfAppointment(Employee emp)
         {
-            return WithTextCenter(new Text("This removed"));
+            return WithTextCenter(new Text(emp.EmployeeRecruitmentType.ToString()));
         }
 
         public Paragraph GetRecommendation(Employee emp)
@@ -380,6 +385,13 @@ namespace CECBTIMS.Models
 
             return WithTextCenter(emp.DateOfAppointment != null
                 ? new Text(((DateTime) emp.DateOfAppointment).ToString("yyyy/MM/dd"))
+                : new Text("null"));
+        }
+
+        public Paragraph GetDateOfAppointment(Employee emp)
+        {
+            return WithTextCenter(emp.DateOfAppointment != null
+                ? new Text(((DateTime)emp.DateOfAppointment).ToString("yyyy/MM/dd"))
                 : new Text("null"));
         }
 
