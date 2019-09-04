@@ -3,7 +3,26 @@ using System.Collections.Generic;
 using System.Linq;
 using CECBTIMS.Models.Enums;
 using DocumentFormat.OpenXml;
+using DocumentFormat.OpenXml.Drawing;
+using DocumentFormat.OpenXml.Packaging;
 using DocumentFormat.OpenXml.Wordprocessing;
+using BottomBorder = DocumentFormat.OpenXml.Wordprocessing.BottomBorder;
+using Break = DocumentFormat.OpenXml.Wordprocessing.Break;
+using InsideHorizontalBorder = DocumentFormat.OpenXml.Wordprocessing.InsideHorizontalBorder;
+using InsideVerticalBorder = DocumentFormat.OpenXml.Wordprocessing.InsideVerticalBorder;
+using LeftBorder = DocumentFormat.OpenXml.Wordprocessing.LeftBorder;
+using Paragraph = DocumentFormat.OpenXml.Wordprocessing.Paragraph;
+using ParagraphProperties = DocumentFormat.OpenXml.Wordprocessing.ParagraphProperties;
+using RightBorder = DocumentFormat.OpenXml.Wordprocessing.RightBorder;
+using Run = DocumentFormat.OpenXml.Wordprocessing.Run;
+using RunProperties = DocumentFormat.OpenXml.Wordprocessing.RunProperties;
+using Table = DocumentFormat.OpenXml.Wordprocessing.Table;
+using TableCell = DocumentFormat.OpenXml.Wordprocessing.TableCell;
+using TableCellProperties = DocumentFormat.OpenXml.Wordprocessing.TableCellProperties;
+using TableProperties = DocumentFormat.OpenXml.Wordprocessing.TableProperties;
+using TableRow = DocumentFormat.OpenXml.Wordprocessing.TableRow;
+using Text = DocumentFormat.OpenXml.Wordprocessing.Text;
+using TopBorder = DocumentFormat.OpenXml.Wordprocessing.TopBorder;
 
 
 namespace CECBTIMS.Models
@@ -36,12 +55,20 @@ namespace CECBTIMS.Models
             "GetEmployeeName",
             "GetEmployeeDesignation",
             "GetDurationInMonths",
-            "GetStartMonthAndYear"
+            "GetStartMonthAndYear",
+            "GetStartTime",
         };
 
         public static string[] DocumentTableList =
         {
-            "GetTraineeInformationTable"
+            "GetTraineeInformationTable",
+            "GetAgendaDetailsTable",
+            "GetResourcePersonsTable"
+        };
+
+        public static string[] DocumentListsList =
+        {
+            "GetAgendaList",
         };
 
         public DocumentHelper(Program program)
@@ -353,13 +380,11 @@ namespace CECBTIMS.Models
         public Paragraph GetDetailsOfForeignTrainingParticipated()
         {
             return new Paragraph();
-
         }
 
         public Paragraph GetDetailsOfForeignVisitsParticipated()
         {
             return new Paragraph();
-
         }
 
 
@@ -403,7 +428,7 @@ namespace CECBTIMS.Models
                 // Vertical align center
 
                 tcpParagraph.Append(new ParagraphProperties
-                    { Justification = new Justification() { Val = JustificationValues.Center } });
+                    {Justification = new Justification() {Val = JustificationValues.Center}});
 
                 tc.Append(new TableCellProperties(new TableCellVerticalAlignment()
                     {Val = TableVerticalAlignmentValues.Center}));
@@ -516,6 +541,35 @@ namespace CECBTIMS.Models
             var nameParts = name.Split('_');
 
             return nameParts.Aggregate("", (current, item) => current + (item + " "));
+        }
+
+        public Paragraph GetAgendaList()
+        {
+            var p = new Paragraph();
+            p.Append(new ParagraphProperties
+                { Justification = new Justification() { Val = JustificationValues.Left }});
+
+            for (var i = 0; i < _program.Agendas.Count; i++)
+            {
+                var r = new Run();
+                r.Append(new RunProperties(
+                    new FontSize() { Val = "24" },
+                    new RunFonts() { Ascii = FontFamily },
+                    new Bold() { Val = OnOffValue.FromBoolean(true) }
+                ));
+
+                r.AppendChild(new Text()
+                {
+                    Text = "     " + (i + 1).ToString("D2") + ".  " + _program.Agendas.ToArray()[i].Name+".",
+                    Space = SpaceProcessingModeValues.Preserve
+                });
+
+                p.AppendChild(r);
+
+                p.Append(new Break());
+            }
+
+            return p;
         }
 
         private void SetTableStyle(OpenXmlElement table)

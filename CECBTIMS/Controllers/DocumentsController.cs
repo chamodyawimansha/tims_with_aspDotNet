@@ -11,9 +11,17 @@ using CECBTIMS.DAL;
 using CECBTIMS.Models;
 using CECBTIMS.Models.Enums;
 using CECBTIMS.ViewModels;
+using DocumentFormat.OpenXml.Drawing;
 using DocumentFormat.OpenXml.Packaging;
 using DocumentFormat.OpenXml.Wordprocessing;
 using Document = CECBTIMS.Models.Document;
+using Paragraph = DocumentFormat.OpenXml.Wordprocessing.Paragraph;
+using ParagraphProperties = DocumentFormat.OpenXml.Drawing.ParagraphProperties;
+using Path = System.IO.Path;
+using Run = DocumentFormat.OpenXml.Wordprocessing.Run;
+using RunProperties = DocumentFormat.OpenXml.Drawing.RunProperties;
+using Table = DocumentFormat.OpenXml.Wordprocessing.Table;
+using Text = DocumentFormat.OpenXml.Drawing.Text;
 
 namespace CECBTIMS.Controllers
 {
@@ -178,7 +186,8 @@ namespace CECBTIMS.Controllers
             // replace variables
 
             ProcessVariables(path);
-            return Content(ProcessTables(path, columns, document.EmployeeId));
+            ProcessLists(path);
+            ProcessTables(path, columns, document.EmployeeId);
             // add tables
 
 
@@ -197,15 +206,15 @@ namespace CECBTIMS.Controllers
 
 
 
-            if (ModelState.IsValid)
-            {
-                db.Documents.Add(document);
-                await db.SaveChangesAsync();
-                return RedirectToAction("Index");
-            }
-
-            ViewBag.ProgramId = new SelectList(db.Programs, "Id", "Title", document.ProgramId);
-            return View(document);
+//            if (ModelState.IsValid)
+//            {
+//                db.Documents.Add(document);
+//                await db.SaveChangesAsync();
+//                return RedirectToAction("Index");
+//            }
+//
+//            ViewBag.ProgramId = new SelectList(db.Programs, "Id", "Title", document.ProgramId);
+//            return View(document);
         }
 
         private void ProcessVariables(string path)
@@ -237,6 +246,49 @@ namespace CECBTIMS.Controllers
                 
             }
 
+        }
+
+        private void ProcessLists(string path)
+        {
+            using (var wordDoc = WordprocessingDocument.Open(path, true))
+            {
+                var mainPart = wordDoc.MainDocumentPart;
+//                NumberingDefinitionsPart numberingPart = mainPart.AddNewPart<NumberingDefinitionsPart>("AgendaList");
+
+//                Numbering element =
+//                    new Numbering(
+//                        new AbstractNum(
+//                                new Level(
+//                                        new NumberingFormat() { Val = NumberFormatValues.Bullet },
+//                                        new LevelText() { Val = "·" }
+//                                    )
+//                                    { LevelIndex = 0 }
+//                            )
+//                            { AbstractNumberId = 1 },
+//                        new NumberingInstance(
+//                                new AbstractNumId() { Val = 1 }
+//                            )
+//                            { NumberID = 1 });
+//
+//                element.Save(numberingPart);
+                
+                foreach (var item in DocumentHelper.DocumentListsList)
+                {
+                    var res = from p in mainPart.Document.Body.Descendants<Paragraph>()
+                        where p.InnerText == item
+                        select p;
+                
+                    if (!res.Any()) continue;
+                    var method = _helperClass.GetMethod(item);
+                    if (method == null) continue;
+                
+                    var rf = res.First();
+                    rf.RemoveAllChildren<Run>();
+
+                    rf.AppendChild(new Run((Paragraph)method.Invoke(_classInstance, null)));
+                    
+                }
+            }
         }
 
         private string ProcessTables(string path, TableColumnName[] columnNames, Guid? employeeId)
