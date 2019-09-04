@@ -160,14 +160,11 @@ namespace CECBTIMS.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create([Bind(Include = "Id,Title,ProgramType,StartDate,StartTime,EndTime,ApplicationClosingDate,ApplicationClosingTime,Venue,EndDate,NotifiedBy,NotifiedOn,ProgramHours,DurationInDays,DurationInMonths,Department,Currency,ProgramFee,RegistrationFee,PerPersonFee,NoShowFee,MemberFee,NonMemberFee,StudentFee")] Program program)
         {
-            if (ModelState.IsValid)
-            {
-                db.Programs.Add(program);
-                await db.SaveChangesAsync();
-                return RedirectToAction($"Index");
-            }
+            if (!ModelState.IsValid) return View(program);
+            db.Programs.Add(program);
+            await db.SaveChangesAsync();
+            return RedirectToAction($"Index");
 
-            return View(program);
         }
 
         // GET: Programs/Edit/5
