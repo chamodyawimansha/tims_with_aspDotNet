@@ -180,7 +180,7 @@ namespace CECBTIMS.Models
 
         public string GetProgramFee()
         {
-            return _program != null ? "Rs." + _program.ProgramFee + "/-" : "Null";
+            return _program != null ? "Rs." + _program.ProgramFee?.ToString("N") + "/-" : "Null";
         }
 
         public string GetTrainingManagerName()
@@ -261,11 +261,49 @@ namespace CECBTIMS.Models
 
             return start + "/" + end;
         }
+        public string GetRegistrationFee()
+        {
+            return (Convert.ToSingle(_program.RegistrationFee.ToString())).ToString("N");
+        }
+
+        public string GetPostGradTotalCost()
+        {
+            var cf = _program.ProgramFee ?? 0.0;
+            var regc = Convert.ToSingle(_program.RegistrationFee);
+            var exac = 0.0;
+
+            foreach (var item in _program.Costs)
+            {
+                if (item.Name.Contains("Examination Fees"))
+                {
+                    exac = item.Value;
+                }
+            }
+
+            return (cf + regc + exac).ToString("N");
+        }
+
+        public string GetExaminationFees()
+        {
+            foreach (var item in _program.Costs)
+            {
+                if (item.Name.Contains("Examination Fees"))
+                {
+                    return item.Value.ToString("N");
+                }
+            }
+
+            return "No Examination Fees";
+        }
+        public string GetRecipient()
+        {
+            var emp = _employees.First();
+            return emp.WorkSpaceType.Replace("Unit", "")+"("+emp.WorkSpaceName+")";
+        }
         public Paragraph GetName(Employee emp)
         {
             return WithDefaults(new Text(ToProperName(emp.NameWithInitial)));
         }
-
         public Paragraph GetTitle(Employee emp)
         {
             return WithDefaults(new Text(emp.Title != null ? emp.Title.ToString() : "Null"));
