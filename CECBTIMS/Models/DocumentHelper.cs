@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
+using CECBTIMS.Controllers;
 using CECBTIMS.Models.Enums;
 using DocumentFormat.OpenXml;
-using DocumentFormat.OpenXml.Drawing;
-using DocumentFormat.OpenXml.Packaging;
 using DocumentFormat.OpenXml.Wordprocessing;
 using BottomBorder = DocumentFormat.OpenXml.Wordprocessing.BottomBorder;
 using Break = DocumentFormat.OpenXml.Wordprocessing.Break;
@@ -69,6 +69,7 @@ namespace CECBTIMS.Models
         public static string[] DocumentListsList =
         {
             "GetAgendaList",
+            "GetRecipientsList"
         };
 
         public DocumentHelper(Program program)
@@ -730,6 +731,51 @@ namespace CECBTIMS.Models
             }
 
             return p;
+        }
+
+        public Paragraph GetRecipientsList()
+        {
+            var assignments = GetRecipients(_program);
+
+            var p = new Paragraph();
+            p.Append(new ParagraphProperties
+                { Justification = new Justification() { Val = JustificationValues.Left } });
+
+            foreach (var item in assignments)
+            {
+                var r = new Run();
+                r.Append(new RunProperties(
+                    new FontSize() { Val = "22" },
+                    new RunFonts() { Ascii = FontFamily }
+                ));
+
+                r.AppendChild(new Text()
+                {
+                    Text = item,
+                    Space = SpaceProcessingModeValues.Preserve
+                });
+
+                p.AppendChild(r);
+
+                p.Append(new Break());
+            }
+
+            return p;
+        }
+
+        private static IEnumerable<string> GetRecipients(Program program)
+        {
+            var recipients = new List<string>();
+            var assignments = program.ProgramAssignments;
+   
+            foreach (var item in assignments)
+            {
+                var emp = EmployeesController.FindEmployee(item.EmployeeVersionId);
+                recipients.Add(emp.WorkSpaceType.Replace("Unit", "")+"("+emp.WorkSpaceName+")");
+            }
+
+            return recipients;
+
         }
 
         private void SetTableStyle(OpenXmlElement table)

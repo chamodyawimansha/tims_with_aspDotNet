@@ -26,7 +26,7 @@ namespace CECBTIMS.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            var employee = await EmployeesController.FindEmployee((Guid) employeeId);
+            var employee = await EmployeesController.FindEmployeeAsync((Guid) employeeId);
 
             var program = await ProgramsController.GetProgram((int) programId);
 

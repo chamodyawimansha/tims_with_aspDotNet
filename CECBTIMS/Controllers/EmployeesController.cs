@@ -64,7 +64,7 @@ namespace CECBTIMS.Controllers
         {
             if (id == null || programId == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 
-            var employee = await FindEmployee((Guid)id);
+            var employee = await FindEmployeeAsync((Guid)id);
 
             if (employee == null) return HttpNotFound();
 
@@ -148,7 +148,7 @@ namespace CECBTIMS.Controllers
             return View(empList);
         }
 
-        internal static async Task<List<Employee>> GetTrainees(int programId)
+        internal static async Task<List<Employee>> GetTraineesAsync(int programId)
         {
             // get program assignments
             var programAssignments =
@@ -159,7 +159,7 @@ namespace CECBTIMS.Controllers
             foreach (var item in programAssignments)
             {
                 // get trainee data from the cecb database
-                trainees.Add(await FindEmployee(item.EmployeeVersionId));
+                trainees.Add(await FindEmployeeAsync(item.EmployeeVersionId));
             }
 
             return trainees;
@@ -168,10 +168,9 @@ namespace CECBTIMS.Controllers
         /**
          * Need employee version id and return converted Employee
          */
-        internal static async Task<Employee> FindEmployee(Guid id)
+        internal static async Task<Employee> FindEmployeeAsync(Guid id)
         {
 //            var employee = dbs.cmn_EmployeeVersion.First(vid => vid.EmployeeVersionId == id);
-
             var employee = await dbs.cmn_EmployeeVersion.FindAsync(id);
             
             if (employee == null) return new Employee();
@@ -192,6 +191,38 @@ namespace CECBTIMS.Controllers
                     ? (RecruitmentType) rt
                     : RecruitmentType.Null,
                 EmpStatus = (EmployeeStatus) employee.EmpStatus,
+                DateOfAppointment = employee.DateOfAppointment,
+                Grade = employee.hrm_Grade != null ? employee.hrm_Grade.GradeName : "Null",
+                DateOfJoint = employee.EffectiveDate,
+                TypeOfContract = employee.TypeOfContract,
+                OfficeEmail = employee.OfficeEmail,
+                MobileNumber = employee.MobileNumber,
+                PrivateEmail = employee.PrivateEmail
+            };
+        }
+
+        internal static Employee FindEmployee(Guid id)
+        {
+            var employee = dbs.cmn_EmployeeVersion.Find(id);
+
+            if (employee == null) return new Employee();
+            return new Employee
+            {
+                EmployeeId = employee.EmployeeVersionId,
+                EPFNo = employee.EPFNo,
+                Title = int.TryParse(employee.Title, out var t) ? (Title)t : Title.Null,
+                NameWithInitial = employee.NameWithInitial,
+                FullName = employee.FullName,
+                NIC = employee.NIC,
+                WorkSpaceName = employee.cmn_WorkSpace != null ? employee.cmn_WorkSpace.WorkSpaceName : "Null",
+                WorkSpaceType = employee.cmn_WorkSpace != null
+                    ? employee.cmn_WorkSpace.cmn_WorkSpaceType.WorkSpaceTypeName
+                    : "Null",
+                DesignationName = employee.hrm_Designation != null ? employee.hrm_Designation.DesignationName : "Null",
+                EmployeeRecruitmentType = int.TryParse(employee.EmployeeRecruitmentType, out var rt)
+                    ? (RecruitmentType)rt
+                    : RecruitmentType.Null,
+                EmpStatus = (EmployeeStatus)employee.EmpStatus,
                 DateOfAppointment = employee.DateOfAppointment,
                 Grade = employee.hrm_Grade != null ? employee.hrm_Grade.GradeName : "Null",
                 DateOfJoint = employee.EffectiveDate,

@@ -147,10 +147,10 @@ namespace CECBTIMS.Controllers
                 return Activator.CreateInstance(
                     _helperClass,
                     await ProgramsController.GetProgram(programId),
-                    await EmployeesController.GetTrainees(programId)
+                    await EmployeesController.GetTraineesAsync(programId)
                 );
 
-            var emp = await EmployeesController.FindEmployee((Guid) EmployeeId);
+            var emp = await EmployeesController.FindEmployeeAsync((Guid) EmployeeId);
 
             if (emp != null)
             {
@@ -164,7 +164,7 @@ namespace CECBTIMS.Controllers
             return Activator.CreateInstance(
                 _helperClass, 
                 await ProgramsController.GetProgram(programId),
-                await EmployeesController.GetTrainees(programId)
+                await EmployeesController.GetTraineesAsync(programId)
                 );
         }
         
