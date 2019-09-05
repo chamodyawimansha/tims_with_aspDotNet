@@ -183,7 +183,7 @@ namespace CECBTIMS.Controllers
             catch (Exception e)
             {
                 ModelState.AddModelError("", @"Creating a document from the selected template failed.("+e+")");
-                return RedirectToAction($"Select", $"Documents", new { programId = document.ProgramId, employeeId = document.EmployeeId });
+                return RedirectToAction($"Select", $"Documents", new {programId, employeeId = document.EmployeeId });
 
             }
             
@@ -202,20 +202,18 @@ namespace CECBTIMS.Controllers
             {
                 DeleteDocument(path);
                 ModelState.AddModelError("", @"Processing the Document failed.(" + e + ")");
-                return RedirectToAction($"Select", $"Documents", new { programId = document.ProgramId, employeeId = document.EmployeeId }); ;
+                return RedirectToAction($"Select", $"Documents", new {programId, employeeId = document.EmployeeId });
             }
 
             if (ModelState.IsValid)
             {
                 db.Documents.Add(document);
                 await db.SaveChangesAsync();
-                return RedirectToAction("Index");
+                return RedirectToAction($"Index", $"Documents", new { programId, employeeId = document.EmployeeId });
             }
-
-            ViewBag.ProgramId = document.ProgramId;
-            ViewBag.EmployeeId = document.EmployeeId;
-
-            return RedirectToAction($"Index", $"Documents", new {programId = document.ProgramId, employeeId = document.EmployeeId}); ;
+            
+            ModelState.AddModelError("", @"Document Generation Failed.. Please try again");
+            return RedirectToAction($"Select", $"Documents", new { programId, employeeId = document.EmployeeId });
         }
 
         private static void DeleteDocument(string path)
