@@ -46,10 +46,10 @@
                 <span class="fa fa-file mr-sm-1" aria-hidden="true"></span>
                 Documents
             </a>
-            <a href="@Url.Action($"Index", $"Employees", new {programId = Model.Id})" class="btn btn-primary btn-block">
-                <span class="fa fa-file-pdf-o mr-sm-1" aria-hidden="true"></span>
-                Reports
-            </a>
+            @* <a href="@Url.Action($"Index", $"Employees", new {programId = Model.Id})" class="btn btn-primary btn-block"> *@
+            @*     <span class="fa fa-file-pdf-o mr-sm-1" aria-hidden="true"></span> *@
+            @*     Reports *@
+            @* </a> *@
         </div>
     </div>
 
@@ -472,6 +472,26 @@
             </table>
         }
         @Html.ActionLink("Add a Cost or a Fee", $"Create", $"Costs", new {programId = Model.Id, programTitle = Model.Title}, new {@class = "btn btn-sm btn-link"})
+    </td>
+</tr>
+<tr>
+    <th colspan="1">Program Brochure</th>
+    <td colspan="3">
+        @if (Model.Brochure.Any())
+        {
+        <table class="table table-bordered">
+            @foreach (var item in Model.Brochure)
+            {
+                <td>
+                    @Html.DisplayFor(model => item.Title)
+                </td>
+                <td>
+                    @Html.ActionLink("View", $"Details", $"Brochures", new{id = item.Id},new {@class = "btn btn-sm btn-link"})
+                </td>
+            }
+        </table>
+        }
+        @Html.ActionLink("Add a Brochure", $"Create", $"Brochures", new{ programId = Model.Id},new {@class = "btn btn-sm btn-link"})
     </td>
 </tr>
 <tr>
