@@ -31,14 +31,14 @@
                         @Html.ActionLink("Program Organizers", $"Index", $"Organizers", null, new {@class = "nav-link"})
                     </li>
                     <li class="nav-item">
-                        @Html.ActionLink("Employees", $"Details", $"Employee", null, new {@class = "nav-link"})
+                        @Html.ActionLink("Employees", $"Index", $"Employees", null, new {@class = "nav-link"})
                     </li>
                     <li class="nav-item">
                         @Html.ActionLink("Templates", $"Index", $"Templates", null, new {@class = "nav-link"})
                     </li>
-                    <li class="nav-item">
-                        @Html.ActionLink("Documents", $"Index", $"Documents", null, new {@class = "nav-link"})
-                    </li>
+                    @* <li class="nav-item"> *@
+                    @*     @Html.ActionLink("Documents", $"Index", $"Documents", null, new {@class = "nav-link"}) *@
+                    @* </li> *@
 
                 </ul>
                 @Html.Partial("_LoginPartial")
