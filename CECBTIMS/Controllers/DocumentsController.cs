@@ -59,7 +59,6 @@ namespace CECBTIMS.Controllers
                 return View(program.Documents);
             }
 
-
             return new HttpNotFoundResult();
 
         }
@@ -175,46 +174,56 @@ namespace CECBTIMS.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create([Bind(Include = "Id,Title,Details,FileName,ProgramType,FileType,FileMethod,ProgramId,EmployeeId,DocumentNumber")] Document document, TableColumnName[] columns, int templateId, int programId)
         {
+            var path = "";
+            try
+            {
+                // document path of the newly created document from the template
+                path = await GetDocumentPath(templateId, document.FileName);
+            }
+            catch (Exception e)
+            {
+                ModelState.AddModelError("", @"Creating a document from the selected template failed.("+e+")");
+                return RedirectToAction($"Select", $"Documents", new { programId = document.ProgramId, employeeId = document.EmployeeId });
 
-            // document path of the newly created document from the template
-            var path = await GetDocumentPath(templateId, document.FileName);
-
+            }
+            
             //instantiate helper class
             _classInstance = await InstHelperClass(programId, document.EmployeeId);
+            /**
+             * Process the table
+             */
+            try
+            {
+                ProcessVariables(path);
+                ProcessLists(path);
+                ProcessTables(path, columns, document.EmployeeId);
+            }
+            catch (Exception e)
+            {
+                DeleteDocument(path);
+                ModelState.AddModelError("", @"Processing the Document failed.(" + e + ")");
+                return RedirectToAction($"Select", $"Documents", new { programId = document.ProgramId, employeeId = document.EmployeeId }); ;
+            }
 
-            //get document class
-            // replace variables
+            if (ModelState.IsValid)
+            {
+                db.Documents.Add(document);
+                await db.SaveChangesAsync();
+                return RedirectToAction("Index");
+            }
 
-            ProcessVariables(path);
-            ProcessLists(path);
-            ProcessTables(path, columns, document.EmployeeId);
-            // add tables
+            ViewBag.ProgramId = document.ProgramId;
+            ViewBag.EmployeeId = document.EmployeeId;
 
+            return RedirectToAction($"Index", $"Documents", new {programId = document.ProgramId, employeeId = document.EmployeeId}); ;
+        }
 
-            //            return Content(ProcessBookmarkVariables(path).ToString());
-
-
-
-            return Content(templateId.ToString());
-
-
-
-
-            //generate thw word document
-            //save the document in the storage
-            // save the data in the database
-
-
-
-//            if (ModelState.IsValid)
-//            {
-//                db.Documents.Add(document);
-//                await db.SaveChangesAsync();
-//                return RedirectToAction("Index");
-//            }
-//
-//            ViewBag.ProgramId = new SelectList(db.Programs, "Id", "Title", document.ProgramId);
-//            return View(document);
+        private static void DeleteDocument(string path)
+        {
+            if (System.IO.File.Exists(path))
+            {
+                System.IO.File.Delete(path);
+            }
         }
 
         private void ProcessVariables(string path)

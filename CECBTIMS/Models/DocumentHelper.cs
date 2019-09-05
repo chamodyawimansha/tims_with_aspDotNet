@@ -79,8 +79,6 @@ namespace CECBTIMS.Models
             "GetWarmClothAllowance",
             "GetEmployeeRecommendation",
             "GetTotalIncidentalAllowance",
-
-
         };
 
         public static string[] DocumentTableList =
@@ -157,10 +155,12 @@ namespace CECBTIMS.Models
         {
             return _program.StartDate.ToString("D");
         }
+
         public string GetEndDate()
         {
-            return _program.EndDate != null ? ((DateTime)_program.EndDate).ToString("D") : "YYYY/DD/MM";
+            return _program.EndDate != null ? ((DateTime) _program.EndDate).ToString("D") : "YYYY/DD/MM";
         }
+
         public string GetStartEndTime()
         {
             var startTime = _program.StartTime?.ToString("h:mm tt");
@@ -229,6 +229,7 @@ namespace CECBTIMS.Models
         {
             return _program.StartDate.ToString("yyyy");
         }
+
         public string GetDurationInDays()
         {
             return _program != null ? _program.DurationInDays + " Days" : "Null";
@@ -243,7 +244,7 @@ namespace CECBTIMS.Models
         {
             return Convert.ToSingle((_program.PerPersonFee)).ToString("N");
         }
-  
+
         public string GetEmployeeCount()
         {
             return _program.ProgramAssignments.Count.ToString();
@@ -260,15 +261,15 @@ namespace CECBTIMS.Models
 
             return cost.ToString("N");
         }
-        
+
         public string GetProgramTotalCost()
         {
             var rCost = _program.ResourcePersons.Sum(item => item.Cost);
             var eCost = (Convert.ToSingle(_program.PerPersonFee * _program.ProgramAssignments.Count));
 
             return (rCost + eCost).ToString("N");
-
         }
+
         public string GetDepartment()
         {
             return _program.Department;
@@ -277,10 +278,13 @@ namespace CECBTIMS.Models
         public string GetStartAndEndYear()
         {
             var start = _program.StartDate.ToString("yyyy");
-            var end = _program.EndDate != null ? ((DateTime)_program.EndDate).ToString("yyyy") : DateTime.Now.ToString("yyyy");
+            var end = _program.EndDate != null
+                ? ((DateTime) _program.EndDate).ToString("yyyy")
+                : DateTime.Now.ToString("yyyy");
 
             return start + "/" + end;
         }
+
         public string GetRegistrationFee()
         {
             return (Convert.ToSingle(_program.RegistrationFee.ToString())).ToString("N");
@@ -315,10 +319,11 @@ namespace CECBTIMS.Models
 
             return "No Examination Fees";
         }
+
         public string GetRecipient()
         {
             var emp = _employees.First();
-            return emp.WorkSpaceType.Replace("Unit", "")+"("+emp.WorkSpaceName+")";
+            return emp.WorkSpaceType.Replace("Unit", "") + "(" + emp.WorkSpaceName + ")";
         }
 
         public string GetBlankDate()
@@ -328,7 +333,7 @@ namespace CECBTIMS.Models
 
         public string GetNotifiedOn()
         {
-            return _program.NotifiedOn != null ? ((DateTime)_program.NotifiedOn).ToString("D") : "yyyy.mm.dd";
+            return _program.NotifiedOn != null ? ((DateTime) _program.NotifiedOn).ToString("D") : "yyyy.mm.dd";
         }
 
         public string GetEmployeeRecommendation()
@@ -349,11 +354,12 @@ namespace CECBTIMS.Models
 
                 if (_program.DurationInDays != null)
                 {
-                    ia *= (int)_program.DurationInDays;
+                    ia *= (int) _program.DurationInDays;
                 }
 
                 return GetCurrencyMark(_program.Currency) + ia.ToString("N");
             }
+
             return "Null";
         }
 
@@ -369,10 +375,9 @@ namespace CECBTIMS.Models
 
             return "Null";
         }
+
         public string GetIncidentalAllowance()
         {
-
-
             foreach (var item in _program.Costs)
             {
                 if (!item.Name.Contains("Incidental allowance")) continue;
@@ -402,13 +407,13 @@ namespace CECBTIMS.Models
                 default:
                     return "Rs";
             }
-
         }
 
         public Paragraph GetName(Employee emp)
         {
             return WithDefaults(new Text(ToProperName(emp.NameWithInitial)));
         }
+
         public Paragraph GetTitle(Employee emp)
         {
             return WithDefaults(new Text(emp.Title != null ? emp.Title.ToString() : "Null"));
@@ -491,7 +496,7 @@ namespace CECBTIMS.Models
         public Paragraph GetDateOfAppointment(Employee emp)
         {
             return WithTextCenter(emp.DateOfAppointment != null
-                ? new Text(((DateTime)emp.DateOfAppointment).ToString("yyyy/MM/dd"))
+                ? new Text(((DateTime) emp.DateOfAppointment).ToString("yyyy/MM/dd"))
                 : new Text("null"));
         }
 
@@ -529,8 +534,11 @@ namespace CECBTIMS.Models
 
         public Paragraph GetDateOfServiceConfirmation(Employee emp)
         {
-            return emp.DateOfAppointment != null ? WithTextCenter(new Text(((DateTime) emp.DateOfAppointment).ToString("yyyy.mm.dd"))) : WithTextCenter(new Text("YYYY.MM.DD"));
+            return emp.DateOfAppointment != null
+                ? WithTextCenter(new Text(((DateTime) emp.DateOfAppointment).ToString("yyyy.mm.dd")))
+                : WithTextCenter(new Text("YYYY.MM.DD"));
         }
+
         public Paragraph GetMemberNonMember(Employee emp)
         {
             var pas = _program.ProgramAssignments;
@@ -659,6 +667,7 @@ namespace CECBTIMS.Models
                         dataRow.Append(tc);
                         continue;
                     }
+
                     var theMethod = thisType.GetMethod(ToFunctionName(col.ToString()));
 
                     if (theMethod != null)
@@ -686,7 +695,7 @@ namespace CECBTIMS.Models
             var titleRow = new TableRow();
             this.SetTableStyle(table);
 
-            var cols = new[]{"No", "Topic", "Duration"};
+            var cols = new[] {"No", "Topic", "Duration"};
 
             foreach (var col in cols)
             {
@@ -694,15 +703,15 @@ namespace CECBTIMS.Models
                 var tcpParagraph = new Paragraph();
                 // Vertical align center
                 tcpParagraph.Append(new ParagraphProperties
-                    { Justification = new Justification() { Val = JustificationValues.Center } });
+                    {Justification = new Justification() {Val = JustificationValues.Center}});
                 tc.Append(new TableCellProperties(new TableCellVerticalAlignment()
-                    { Val = TableVerticalAlignmentValues.Center }));
+                    {Val = TableVerticalAlignmentValues.Center}));
                 var run = new Run();
                 run.Append(
                     new RunProperties(
-                        new FontSize() { Val = "24" },
-                        new RunFonts() { Ascii = FontFamily },
-                        new Bold() { Val = OnOffValue.FromBoolean(true) }
+                        new FontSize() {Val = "24"},
+                        new RunFonts() {Ascii = FontFamily},
+                        new Bold() {Val = OnOffValue.FromBoolean(true)}
                     )
                 );
                 run.Append(new Text(ToColumnName(col.ToString())));
@@ -710,6 +719,7 @@ namespace CECBTIMS.Models
                 tc.Append(tcpParagraph);
                 titleRow.Append(tc);
             }
+
             table.Append(titleRow);
 
             var thisType = this.GetType();
@@ -721,7 +731,7 @@ namespace CECBTIMS.Models
                 {
                     var tc = new TableCell();
                     tc.Append(new TableCellProperties(new TableCellVerticalAlignment()
-                        { Val = TableVerticalAlignmentValues.Center }));
+                        {Val = TableVerticalAlignmentValues.Center}));
 
                     if (col.Equals("No"))
                     {
@@ -734,16 +744,19 @@ namespace CECBTIMS.Models
                     var theMethod = thisType.GetMethod(ToFunctionName(col));
                     if (theMethod != null)
                     {
-                        tc.Append((Paragraph)theMethod.Invoke(this, new object[] { ag }));
+                        tc.Append((Paragraph) theMethod.Invoke(this, new object[] {ag}));
                     }
                     else
                     {
                         tc.Append(NullParagraph());
                     }
+
                     dataRow.Append(tc);
                 }
+
                 table.Append(dataRow);
             }
+
             return table;
         }
 
@@ -753,7 +766,7 @@ namespace CECBTIMS.Models
             var titleRow = new TableRow();
             this.SetTableStyle(table);
 
-            var cols = new[] { "No", "Resource_Person_Name", "Description" };
+            var cols = new[] {"No", "Resource_Person_Name", "Description"};
 
             foreach (var col in cols)
             {
@@ -761,15 +774,15 @@ namespace CECBTIMS.Models
                 var tcpParagraph = new Paragraph();
                 // Vertical align center
                 tcpParagraph.Append(new ParagraphProperties
-                    { Justification = new Justification() { Val = JustificationValues.Center } });
+                    {Justification = new Justification() {Val = JustificationValues.Center}});
                 tc.Append(new TableCellProperties(new TableCellVerticalAlignment()
-                    { Val = TableVerticalAlignmentValues.Center }));
+                    {Val = TableVerticalAlignmentValues.Center}));
                 var run = new Run();
                 run.Append(
                     new RunProperties(
-                        new FontSize() { Val = "24" },
-                        new RunFonts() { Ascii = FontFamily },
-                        new Bold() { Val = OnOffValue.FromBoolean(true) }
+                        new FontSize() {Val = "24"},
+                        new RunFonts() {Ascii = FontFamily},
+                        new Bold() {Val = OnOffValue.FromBoolean(true)}
                     )
                 );
                 run.Append(new Text(ToColumnName(col.ToString())));
@@ -777,6 +790,7 @@ namespace CECBTIMS.Models
                 tc.Append(tcpParagraph);
                 titleRow.Append(tc);
             }
+
             table.Append(titleRow);
 
             var thisType = this.GetType();
@@ -788,7 +802,7 @@ namespace CECBTIMS.Models
                 {
                     var tc = new TableCell();
                     tc.Append(new TableCellProperties(new TableCellVerticalAlignment()
-                        { Val = TableVerticalAlignmentValues.Center }));
+                        {Val = TableVerticalAlignmentValues.Center}));
 
                     if (col.Equals("No"))
                     {
@@ -801,16 +815,19 @@ namespace CECBTIMS.Models
                     var theMethod = thisType.GetMethod(ToFunctionName(col));
                     if (theMethod != null)
                     {
-                        tc.Append((Paragraph)theMethod.Invoke(this, new object[] { rp }));
+                        tc.Append((Paragraph) theMethod.Invoke(this, new object[] {rp}));
                     }
                     else
                     {
                         tc.Append(NullParagraph());
                     }
+
                     dataRow.Append(tc);
                 }
+
                 table.Append(dataRow);
             }
+
             return table;
         }
 
@@ -893,20 +910,20 @@ namespace CECBTIMS.Models
         {
             var p = new Paragraph();
             p.Append(new ParagraphProperties
-                { Justification = new Justification() { Val = JustificationValues.Left }});
+                {Justification = new Justification() {Val = JustificationValues.Left}});
 
             for (var i = 0; i < _program.Agendas.Count; i++)
             {
                 var r = new Run();
                 r.Append(new RunProperties(
-                    new FontSize() { Val = "24" },
-                    new RunFonts() { Ascii = FontFamily },
-                    new Bold() { Val = OnOffValue.FromBoolean(true) }
+                    new FontSize() {Val = "24"},
+                    new RunFonts() {Ascii = FontFamily},
+                    new Bold() {Val = OnOffValue.FromBoolean(true)}
                 ));
 
                 r.AppendChild(new Text()
                 {
-                    Text = "     " + (i + 1).ToString("D2") + ".  " + _program.Agendas.ToArray()[i].Name+".",
+                    Text = "     " + (i + 1).ToString("D2") + ".  " + _program.Agendas.ToArray()[i].Name + ".",
                     Space = SpaceProcessingModeValues.Preserve
                 });
 
@@ -922,18 +939,19 @@ namespace CECBTIMS.Models
         {
             var p = new Paragraph();
             p.Append(new ParagraphProperties
-                { Justification = new Justification() { Val = JustificationValues.Left } });
+                {Justification = new Justification() {Val = JustificationValues.Left}});
             var i = 1;
             foreach (var item in _employees)
             {
                 var r = new Run();
                 r.Append(new RunProperties(
-                    new FontSize() { Val = "24" },
-                    new RunFonts() { Ascii = FontFamily }
-                    ));
+                    new FontSize() {Val = "24"},
+                    new RunFonts() {Ascii = FontFamily}
+                ));
                 r.AppendChild(new Text()
                 {
-                    Text = "          " + (i).ToString("D2") + ".    " + item.Title +". "+ ToProperName(item.NameWithInitial) + " -     "+ item.DesignationName +".",
+                    Text = "          " + (i).ToString("D2") + ".    " + item.Title + ". " +
+                           ToProperName(item.NameWithInitial) + " -     " + item.DesignationName + ".",
                     Space = SpaceProcessingModeValues.Preserve
                 });
 
@@ -949,18 +967,20 @@ namespace CECBTIMS.Models
         {
             var p = new Paragraph();
             p.Append(new ParagraphProperties
-                { Justification = new Justification() { Val = JustificationValues.Left } });
+                {Justification = new Justification() {Val = JustificationValues.Left}});
             var i = 1;
             foreach (var item in _employees)
             {
                 var r = new Run();
                 r.Append(new RunProperties(
-                    new FontSize() { Val = "24" },
-                    new RunFonts() { Ascii = FontFamily }
+                    new FontSize() {Val = "24"},
+                    new RunFonts() {Ascii = FontFamily}
                 ));
                 r.AppendChild(new Text()
                 {
-                    Text = "          " + (i).ToString("D2") + ".    " + item.Title + ". " + ToProperName(item.NameWithInitial) + " -     " + item.DesignationName + "   -   " + (item.WorkSpaceType.Replace("Unit", "") + "(" + item.WorkSpaceName + ")"),
+                    Text = "          " + (i).ToString("D2") + ".    " + item.Title + ". " +
+                           ToProperName(item.NameWithInitial) + " -     " + item.DesignationName + "   -   " +
+                           (item.WorkSpaceType.Replace("Unit", "") + "(" + item.WorkSpaceName + ")"),
                     Space = SpaceProcessingModeValues.Preserve
                 });
 
@@ -978,14 +998,14 @@ namespace CECBTIMS.Models
 
             var p = new Paragraph();
             p.Append(new ParagraphProperties
-                { Justification = new Justification() { Val = JustificationValues.Left } });
+                {Justification = new Justification() {Val = JustificationValues.Left}});
 
             foreach (var item in assignments)
             {
                 var r = new Run();
                 r.Append(new RunProperties(
-                    new FontSize() { Val = "22" },
-                    new RunFonts() { Ascii = FontFamily }
+                    new FontSize() {Val = "22"},
+                    new RunFonts() {Ascii = FontFamily}
                 ));
 
                 r.AppendChild(new Text()
@@ -1006,15 +1026,15 @@ namespace CECBTIMS.Models
         {
             var p = new Paragraph();
             p.Append(new ParagraphProperties
-                { Justification = new Justification() { Val = JustificationValues.Left } });
+                {Justification = new Justification() {Val = JustificationValues.Left}});
 
             foreach (var item in _program.Agendas)
             {
                 var r = new Run();
                 r.Append(new RunProperties(
-                    new FontSize() { Val = "24" },
-                    new RunFonts() { Ascii = FontFamily },
-                    new Bold() { Val = OnOffValue.FromBoolean(true) }
+                    new FontSize() {Val = "24"},
+                    new RunFonts() {Ascii = FontFamily},
+                    new Bold() {Val = OnOffValue.FromBoolean(true)}
                 ));
 
                 r.AppendChild(new Text()
@@ -1035,20 +1055,20 @@ namespace CECBTIMS.Models
         {
             var p = new Paragraph();
             p.Append(new ParagraphProperties
-                { Justification = new Justification() { Val = JustificationValues.Left } });
+                {Justification = new Justification() {Val = JustificationValues.Left}});
 
             foreach (var item in _program.ResourcePersons)
             {
                 var r = new Run();
                 r.Append(new RunProperties(
-                    new FontSize() { Val = "22" },
-                    new RunFonts() { Ascii = FontFamily },
-                    new Bold() { Val = OnOffValue.FromBoolean(true) }
+                    new FontSize() {Val = "22"},
+                    new RunFonts() {Ascii = FontFamily},
+                    new Bold() {Val = OnOffValue.FromBoolean(true)}
                 ));
 
                 r.AppendChild(new Text()
                 {
-                    Text = "                         "+item.Name+" - "+item.Designation,
+                    Text = "                         " + item.Name + " - " + item.Designation,
                     Space = SpaceProcessingModeValues.Preserve
                 });
 
@@ -1062,7 +1082,8 @@ namespace CECBTIMS.Models
 
         private IEnumerable<string> GetRecipients()
         {
-            return _employees.Select(item => item.WorkSpaceType.Replace("Unit", "") + "(" + item.WorkSpaceName + ")").ToList();
+            return _employees.Select(item => item.WorkSpaceType.Replace("Unit", "") + "(" + item.WorkSpaceName + ")")
+                .ToList();
         }
 
         private void SetTableStyle(OpenXmlElement table)

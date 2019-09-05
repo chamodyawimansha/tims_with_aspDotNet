@@ -21,6 +21,8 @@
             @using (Html.BeginForm($"Create", $"Documents", null,
                 FormMethod.Get, new {@class = ""}))
             {
+                @Html.ValidationSummary(true, "", new {@class = "text-danger"})
+
                 <div class="form-group">
                     <label>Select the Document Template</label>
                     <select class="custom-select" name="templateId">
