@@ -6,6 +6,6 @@
         Euro = 2,
         GBP = 3,
         LKR = 4,
-        Euan = 5
+        Yuan = 5
     }
 }

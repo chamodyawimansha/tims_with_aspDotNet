@@ -62,24 +62,23 @@ namespace CECBTIMS.Models
             "GetEmployeeCost",
             "GetResourcePersonCost",
             "GetProgramTotalCost",
-
-
-
             "GetRecipient", // the recipient for a single employee
             "GetRegistrationFee",
             "GetPostGradTotalCost",
             "GetExaminationFees",
             "GetBlankDate",
-
-
             "GetDepartment",
             "GetStartAndEndYear", //2019/2020
-
-
             "GetNotifiedOn",
             "GetStartYear",
             "GetDurationInDays",
             "GetEndDate",
+
+
+            "GetIncidentalAllowance",
+            "GetWarmClothAllowance",
+            "GetEmployeeRecommendation",
+            "GetTotalIncidentalAllowance",
 
 
         };
@@ -332,6 +331,80 @@ namespace CECBTIMS.Models
             return _program.NotifiedOn != null ? ((DateTime)_program.NotifiedOn).ToString("D") : "yyyy.mm.dd";
         }
 
+        public string GetEmployeeRecommendation()
+        {
+            var emp = _employees.FirstOrDefault();
+            if (emp != null) return (emp.WorkSpaceType).Replace("Unit", "") + "(" + emp.WorkSpaceName + ")";
+
+            return "Null";
+        }
+
+        public string GetTotalIncidentalAllowance()
+        {
+            foreach (var item in _program.Costs)
+            {
+                if (!item.Name.Contains("Incidental allowance")) continue;
+                var ia = 0.0;
+                ia = item.Value;
+
+                if (_program.DurationInDays != null)
+                {
+                    ia *= (int)_program.DurationInDays;
+                }
+
+                return GetCurrencyMark(_program.Currency) + ia.ToString("N");
+            }
+            return "Null";
+        }
+
+        public string GetWarmClothAllowance()
+        {
+            foreach (var item in _program.Costs)
+            {
+                if (!item.Name.Contains("Warm cloth allowance")) continue;
+                var wca = 0.0;
+                wca = item.Value;
+                return GetCurrencyMark(_program.Currency) + wca.ToString("N");
+            }
+
+            return "Null";
+        }
+        public string GetIncidentalAllowance()
+        {
+
+
+            foreach (var item in _program.Costs)
+            {
+                if (!item.Name.Contains("Incidental allowance")) continue;
+
+                var ia = 0.0;
+
+                ia = item.Value;
+
+                return GetCurrencyMark(_program.Currency) + ia.ToString("N");
+            }
+
+            return "Null";
+        }
+
+        private static string GetCurrencyMark(Currency c)
+        {
+            switch (c.ToString())
+            {
+                case "USD":
+                    return "$";
+                case "Euro":
+                    return "€";
+                case "GBP":
+                    return "£";
+                case "Yuan":
+                    return "¥";
+                default:
+                    return "Rs";
+            }
+
+        }
+
         public Paragraph GetName(Employee emp)
         {
             return WithDefaults(new Text(ToProperName(emp.NameWithInitial)));
@@ -458,33 +531,6 @@ namespace CECBTIMS.Models
         {
             return emp.DateOfAppointment != null ? WithTextCenter(new Text(((DateTime) emp.DateOfAppointment).ToString("yyyy.mm.dd"))) : WithTextCenter(new Text("YYYY.MM.DD"));
         }
-        //            var costs = _program.Costs;
-        //
-        //            if (_program.EndDate != null)
-        //            {
-        //                var dateCount = int._program.StartDate.Subtract((DateTime) _program.EndDate);
-        //                
-        //                foreach (var cost in costs)
-        //                {
-        //                    if (cost.Name.ToLower().Contains("incidental"))
-        //                    {
-        //                        return new Text(_program.Currency.ToString() + cost.Value));
-        //                    }
-        //                }
-        //            }
-        //
-        //
-        //
-        //
-        //
-        //            return new Text("Set End Date");
-        //        }
-
-        //        public Text GetWarmClothAllowance(Employee emp)
-        //        {
-        //
-        //        }
-
         public Paragraph GetMemberNonMember(Employee emp)
         {
             var pas = _program.ProgramAssignments;
