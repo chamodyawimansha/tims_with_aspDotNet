@@ -8,6 +8,7 @@ using System.Web.Mvc;
 using CECBTIMS.DAL;
 using CECBTIMS.Models;
 using CECBTIMS.Models.Enums;
+using CECBTIMS.ViewModels;
 
 namespace CECBTIMS.Controllers
 {
@@ -70,21 +71,26 @@ namespace CECBTIMS.Controllers
 
             ViewBag.ProgramId = programId;
 
-            return View(employee);
+            return View(new EmployeeDetailsViewModel()
+            {
+                Programs = await GetTraineeHistory((Guid)id),
+                Employee = employee
+            });
 
         }
 
+        private async Task<List<Program>> GetTraineeHistory(Guid id)
+        {
+            var ps = from p in default_db.ProgramAssignments
+                select p;
+            ps = ps.Where(p => p.EmployeeVersionId == id);
 
+            var psr = await ps.ToListAsync();
 
+            var pp = psr.Select(item => item.Program).ToList();
 
-
-        // get member from history
-
-
-
-
-
-
+            return (pp);
+        }
 
         //Get
         public ActionResult Find(int? programId)

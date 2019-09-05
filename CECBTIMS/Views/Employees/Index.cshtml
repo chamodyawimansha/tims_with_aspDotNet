@@ -7,7 +7,6 @@
                 Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-
 <div class="col-12 mx-auto mb-5">
     <div id="programContent">
         <div class="card">
@@ -15,8 +14,8 @@
                 <h4 class="float-left">Selected Employees</h4>
 
                 <div class="float-right" id="btn-group">
-                    back to programs
-                    @Html.ActionLink("Add Employees", $"Find", $"Employees", new {programId = ViewBag.program.Id}, new {@class = "btn btn-secondary"})
+                    @Html.ActionLink("Back", $"Details", $"Programs", new {id = ViewBag.program.Id}, new {@class = "btn btn-outline-secondary"})
+                    @Html.ActionLink("Add Employees", $"Find", $"Employees", new {programId = ViewBag.program.Id}, new {@class = "btn btn-primary"})
                 </div>
 
             </div>

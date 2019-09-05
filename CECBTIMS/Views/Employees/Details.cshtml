@@ -1,67 +1,124 @@
-﻿@model CECBTIMS.Models.Employee
+﻿@model CECBTIMS.ViewModels.EmployeeDetailsViewModel
 
 @{
     ViewBag.Title = "Details";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-
-<div class="col-10 mx-auto">
-    <div class="card mb-4">
-        <div class="card-header">
-            Employee Details
-            <div class="button-array float-right">
-                @Html.ActionLink("Documents", $"Index",$"Documents", new {employeeId = Model.EmployeeId, programId = ViewBag.ProgramId}, new {@class = "btn btn-primary"})
-                @Html.ActionLink("Back", $"Index",$"Employees", new {programId = ViewBag.ProgramId}, new {@class = "btn btn-outline-secondary"})
+<div class="container">
+    <div class="row">
+        <div class="col-md-5">
+            <div class="card">
+                <div class="card-header">
+                    Employee Details
+                    <div class="button-array float-right">
+                    @Html.ActionLink("Documents", $"Index", $"Documents", new {employeeId = Model.Employee.EmployeeId, programId = ViewBag.ProgramId}, new {@class = "btn btn-primary"})
+                    @Html.ActionLink("Back", $"Index", $"Employees", new {programId = ViewBag.ProgramId}, new {@class = "btn btn-outline-secondary"})
+                    </div>
+                    </div>
+                <div class="card-body">
+                    <table class="table table-bordered">
+                        <tr>
+                            <th>EPF</th>
+                            <td>@Html.DisplayFor(model => model.Employee.EPFNo)</td>
+                        </tr>
+                        <tr>
+                            <th>NIC</th>
+                            <td>@Html.DisplayFor(model => model.Employee.NIC)</td>
+                        </tr>
+                        <tr>
+                            <th>Full Name</th>
+                            <td>@Html.DisplayFor(model => model.Employee.Title) @Html.DisplayFor(model => model.Employee.FullName)</td>
+                        </tr>
+                        <tr>
+                        <th>Designation</th>
+                        <td>@Html.DisplayFor(model => model.Employee.DesignationName)</td>
+                        <tr/>
+                        <tr>
+                            <th>Work Space Type</th>
+                            <td>@Html.DisplayFor(model => model.Employee.WorkSpaceType)</td>
+                        </tr>
+                        <tr>
+                            <th>Work Space Name</th>
+                            <td>@Html.DisplayFor(model => model.Employee.WorkSpaceName)</td>
+                        </tr>
+                        <tr>
+                            <th>Recruitment Type</th>
+                            <td>@Html.DisplayFor(model => model.Employee.EmployeeRecruitmentType)</td>
+                        </tr>
+                        <tr>
+                            <th>Employment Status</th>
+                            <td>@Html.DisplayFor(model => model.Employee.EmpStatus)</td>
+                        </tr>
+                        <tr>
+                            <th>Date Of Appointment</th>
+                            <td>@Html.DisplayFor(model => model.Employee.DateOfAppointment)</td>
+                        </tr>
+                        <tr>
+                            <th>Type Of Contract</th>
+                            <td>@Html.DisplayFor(model => model.Employee.TypeOfContract)</td>
+                        </tr>
+                        <tr>
+                            <th>Office Email</th>
+                            <td>@Html.DisplayFor(model => model.Employee.OfficeEmail)</td>
+                        </tr>
+                        <tr>
+                            <th>Private Email</th>
+                            <td>@Html.DisplayFor(model => model.Employee.PrivateEmail)</td>
+                        </tr>
+                        <tr>
+                            <th>Mobile Number</th>
+                            <td>@Html.DisplayFor(model => model.Employee.MobileNumber)</td>
+                        </tr>
+                    </table>
+                </div>
             </div>
+
         </div>
-        <div class="card-body">
-            <table class="table table-bordered">
-                <tr>
-                    <th class="w-25">EPF</th>
-                    <td class="w-25">@Html.DisplayFor(model => model.EPFNo)</td>
-                    <th class="w-25">NIC</th>
-                    <td class="w-25">@Html.DisplayFor(model => model.NIC)</td>
-                </tr>
-                <tr>
-                    <th>Full Name</th>
-                    <td colspan="3">@Html.DisplayFor(model => model.Title) @Html.DisplayFor(model => model.FullName)</td>
-                </tr>
-                <tr>
-                    <th>Designation</th>
-                    <td>@Html.DisplayFor(model => model.DesignationName)</td>
-                    <th>Work Space Type</th>
-                    <td>@Html.DisplayFor(model => model.WorkSpaceType)</td>
-                </tr>
-                <tr>
-                    <th>Work Space Name</th>
-                    <td colspan="3">@Html.DisplayFor(model => model.WorkSpaceName)</td>
-                </tr>
-                <tr>
-                    <th>Recruitment Type</th>
-                    <td>@Html.DisplayFor(model => model.EmployeeRecruitmentType)</td>
-                    <th>Employment Status</th>
-                    <td>@Html.DisplayFor(model => model.EmpStatus)</td>
-                </tr>
-                <tr>
-                    <th>Date Of Appointment</th>
-                    <td colspan="3">@Html.DisplayFor(model => model.DateOfAppointment)</td>
-                </tr>
-                <tr>
-                    <th>Type Of Contract</th>
-                    <td colspan="3">@Html.DisplayFor(model => model.TypeOfContract)</td>
-                </tr>
-                <tr>
-                    <th>Office Email</th>
-                    <td>@Html.DisplayFor(model => model.OfficeEmail)</td>
-                    <th>Private Email</th>
-                    <td>@Html.DisplayFor(model => model.PrivateEmail)</td>
-                </tr>
-                <tr>
-                    <th>Mobile Number</th>
-                    <td colspan="3">@Html.DisplayFor(model => model.MobileNumber)</td>
-                </tr>
-            </table>
+
+        <div class="col-md-7">
+            <div class="card">
+                <div class="card-body">
+                    <table class="table table-bordered">
+                        <tr>
+                            <th>#</th>
+                            <th>Program Title</th>
+                            <th>Start Date</th>
+                            <th>Application Closing Date</th>
+                            <th></th>
+                        </tr>
+                        @{
+                            var i = 1;
+
+                            foreach (var item in Model.Programs)
+                            {
+                                <tr>
+                                    <td>@(i++)</td>
+                                    <td>@item.Title</td>
+                                    <td>@item.StartDate.ToString("d")</td>
+                                    <td>@item.ApplicationClosingDate.ToString("d")</td>
+                                    <td> @Html.ActionLink("Details", $"Details", $"Programs", new {id = item.Id}, new {@class = "btn btn-sm w-100 btn-primary"})</td>
+                                </tr>
+                            }
+                        }
+                    </table>
+                </div>
+            </div>
         </div>
     </div>
 </div>
+@* *@
+@* <div class="col-10 mx-auto"> *@
+@*     <div class="card mb-4"> *@
+@*         <div class="card-header"> *@
+@*             Employee Details *@
+@*             <div class="button-array float-right"> *@
+@*                 @Html.ActionLink("Documents", $"Index", $"Documents", new {employeeId = Model.EmployeeId, programId = ViewBag.ProgramId}, new {@class = "btn btn-primary"}) *@
+@*                 @Html.ActionLink("Back", $"Index", $"Employees", new {programId = ViewBag.ProgramId}, new {@class = "btn btn-outline-secondary"}) *@
+@*             </div> *@
+@*         </div> *@
+@*         <div class="card-body"> *@
+@*             
+@*         </div> *@
+@*     </div> *@
+@* </div> *@
