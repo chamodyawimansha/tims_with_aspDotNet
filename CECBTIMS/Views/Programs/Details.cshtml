@@ -32,15 +32,15 @@
                 Delete
             </a>
 
-            <a href="@Url.Action($"Index", $"Employees", new {programId = Model.Id})" class="btn btn-primary btn-block">
+            <a href="@Url.Action($"Trainees", $"Employees", new {programId = Model.Id})" class="btn btn-primary btn-block">
                 <span class="fa fa-user mr-sm-1" aria-hidden="true"></span>
                 Employees
             </a>
 
-            <a href="@Url.Action($"Index", $"Employees", new {programId = Model.Id})" class="btn btn-primary btn-block">
-                <span class="fa fa-refresh mr-sm-1" aria-hidden="true"></span>
-                Circulate
-            </a>
+            @* <a href="@Url.Action($"Index", $"Employees", new {programId = Model.Id})" class="btn btn-primary btn-block"> *@
+            @*     <span class="fa fa-refresh mr-sm-1" aria-hidden="true"></span> *@
+            @*     Circulate *@
+            @* </a> *@
 
             <a href="@Url.Action($"Index", $"Documents", new {programId = Model.Id})" class="btn btn-primary btn-block">
                 <span class="fa fa-file mr-sm-1" aria-hidden="true"></span>

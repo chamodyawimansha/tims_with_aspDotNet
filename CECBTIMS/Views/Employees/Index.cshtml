@@ -1,69 +1,152 @@
-﻿@model IEnumerable<CECBTIMS.Models.cmn_EmployeeVersion>
+﻿@using PagedList.Mvc
+@model PagedList.IPagedList<CECBTIMS.Models.Employee>
 
 @{
-                /**/
-
-                ViewBag.Title = "Program Assignments";
-                Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Index";
 }
 
-<div class="col-12 mx-auto mb-5">
-    <div id="programContent">
-        <div class="card">
-            <div class="card-header">
-                <h4 class="float-left">Selected Employees</h4>
 
-                <div class="float-right" id="btn-group">
-                    @Html.ActionLink("Back", $"Details", $"Programs", new {id = ViewBag.program.Id}, new {@class = "btn btn-outline-secondary"})
-                    @Html.ActionLink("Add Employees", $"Find", $"Employees", new {programId = ViewBag.program.Id}, new {@class = "btn btn-primary"})
-                </div>
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+
+
+<div class="col-12 mx-auto mb-lg-5">
+    <div class="card border-primary mb-3">
+        <div class="card-header">
+            <div class="float-left">
+                <h5>Generated Documents</h5>
+            </div>
+            <div class="float-right">
 
             </div>
-            <div class="card-body">
-                <div>
-                    <table class="table table-bordered mb-3">
-                        <tr>
-                            <th class="w-25">Program Title</th>
-                            <th class="w-75">@ViewBag.program.Title</th>
-                        </tr>
-                    </table>
-                    
-                    <table class="table table-bordered">
-                        <tr>
-                            <th style="min-width: 5%; max-width: 10%">#</th>
-                            <th style="min-width: 35%; max-width: 40%">Name</th>
-                            <th style="width: 15%">Designation</th>
-                            <th style="width: 25%">Workspace</th>
-                            <th style="width: 15%"></th>
-                        </tr>
-                        @{
-                            var i = 1;
+        </div>
+        <div class="card-body">
+            <div class="searchForm float-left">
+                @* HTML Form For search Program *@
+                @using (Html.BeginForm($"Index", $"Employees", FormMethod.Get, new { @class = "form-inline mb-3" }))
+                {
+                    <div class="form-group mb-2">
+                        <input type="text" readonly class="form-control-plaintext" value="Find by Name :" style="width: 96px">
+                    </div>
+                    <div class="form-group mx-sm-3 mb-2">
+                        @Html.TextBox("searchString", ViewBag.currentFilter as string, new { @class = "form-control", placeholder = "Search" })
+                    </div>
+                    <input type="submit" class="btn btn-secondary mr-sm-2 mb-2" value="Search" />
 
-                            foreach (var item in Model)
-                            {
-                                <tr>
-                                    <td>@(i++)</td>
-                                    <td>@Html.DisplayFor(model => item.FullName)</td>
-                                    <td>@Html.DisplayFor(model => item.hrm_Designation.DesignationName)</td>
-                                    <td>@Html.DisplayFor(model => item.cmn_WorkSpace.WorkSpaceName)</td>
-                                    <td>
-                                        @Html.ActionLink("Details", $"Details", $"Employees", new {id = item.EmployeeVersionId, programId = ViewBag.program.Id}, new {@class = "btn btn-secondary btn-sm d-inline-block"})
+                    if (ViewBag.serachParam != null)
+                    {
+                        @Html.ActionLink("Clear", $"Index", ViewBag.currentFilter as string, new { @class = "btn btn-primary mb-2" })
+                    }
+                }
+            </div>
 
-                                        @using (Html.BeginForm($"Delete", $"ProgramAssignments", null,
-                                            FormMethod.Post, new {@class = "d-inline-block"}))
-                                        {
-                                            @Html.AntiForgeryToken()
-                                            <input type="hidden" name="EmployeeVersionId" value="@item.EmployeeVersionId"/>
-                                            <input type="hidden" name="programId" value="@ViewBag.program.Id"/>
-                                            <input type="submit" value="Remove" class="btn btn-danger btn-sm d-inline-block"/>
-                                        }
-                                    </td>
-                                </tr>
-                            }
-                        }
-                    </table>
-                </div>
+            <div class="tableEntryCount float-right">
+                <input type="text" readonly class="form-control-plaintext" value="Show">
+                <select class="entryCountSelect">
+                    <option value="none" selected disabled hidden>
+                        @ViewBag.entryCount
+                    </option>
+                    <option value="/Employees?countPerPage=5">5</option>
+                    <option value="/Employees?countPerPage=10">10</option>
+                    <option value="/Employees?countPerPage=50">50</option>
+                    <option value="/Employees?countPerPage=100">100</option>
+                </select>
+                <input type="text" readonly class="form-control-plaintext" value="Entries">
+            </div>
+
+
+            <div class="table-responsive">
+                <table class="table">
+                    <tr>
+                        <th>Name With Initial</th>
+                        <th>Epf No</th>
+                        <th>Title</th>
+                        <th>Full Name</th>
+                        <th>NIC</th>
+                        <th>WorkSpace</th>
+                        <th>WorkSpace Type</th>
+                        <th>Designation</th>
+                        <th>Grade</th>
+                        <th>Recruitment Type</th>
+                        <th>EmpStatus</th>
+                        <th>Date Of Appointment</th>
+                        <th>Date Of Joint</th>
+                        <th>Type Of Contract</th>
+                        <th>Office Email</th>
+                        <th>Mobile Number</th>
+                        <th>Private Email</th>
+                        <th></th>
+                    </tr>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.NameWithInitial)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.EPFNo)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Title)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.FullName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.NIC)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.WorkSpaceName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.WorkSpaceType)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.DesignationName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Grade)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.EmployeeRecruitmentType)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.EmpStatus)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.DateOfAppointment)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.DateOfJoint)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.TypeOfContract)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.OfficeEmail)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.MobileNumber)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.PrivateEmail)
+                            </td>
+                            <td>
+                                @Html.ActionLink("Details", "Details", new { id = item.EmployeeId })
+                            </td>
+                        </tr>
+                    }
+                </table>
+
+                Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+                @Html.PagedListPager(Model, page => Url.Action($"Index",
+                    new { page}))
             </div>
         </div>
     </div>
 </div>
+
+
+@section Scripts {
+    @Scripts.Render("~/scripts/site.js")
+}

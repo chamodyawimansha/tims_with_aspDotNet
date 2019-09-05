@@ -56,7 +56,7 @@ namespace CECBTIMS.Controllers
                 ViewBag.ProgramId = programId;
                 ViewBag.EmployeeId = employeeId;
                 ViewBag.PageNumber = pageNumber;
-                ViewBag.ProgramId = programId;
+                ViewBag.serachParam = searchString;
 
                 return View(await documents.ToPagedListAsync(pageNumber, pageSize));
             }

@@ -502,7 +502,7 @@
     <Content Include="Views\ResourcePersons\Edit.cshtml" />
     <Content Include="Views\Employees\Details.cshtml" />
     <Content Include="Views\Programs\Select.cshtml" />
-    <Content Include="Views\Employees\Index.cshtml" />
+    <Content Include="Views\Employees\Trainees.cshtml" />
     <Content Include="Views\Employees\Single.cshtml" />
     <Content Include="Views\Files\Upload.cshtml" />
     <Content Include="Views\Files\Edit.cshtml" />
@@ -536,6 +536,7 @@
     <Content Include="Views\Brochures\Details.cshtml" />
     <Content Include="Views\Brochures\Edit.cshtml" />
     <Content Include="Views\Brochures\Index.cshtml" />
+    <Content Include="Views\Employees\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

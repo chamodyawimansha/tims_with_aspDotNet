@@ -9,6 +9,8 @@ using CECBTIMS.DAL;
 using CECBTIMS.Models;
 using CECBTIMS.Models.Enums;
 using CECBTIMS.ViewModels;
+using PagedList;
+using PagedList.EntityFramework;
 
 namespace CECBTIMS.Controllers
 {
@@ -19,7 +21,60 @@ namespace CECBTIMS.Controllers
         private static CECB_ERPEntities dbs = new CECB_ERPEntities();
         private static ApplicationDbContext default_dbs = new ApplicationDbContext();
 
-        public async Task<ActionResult> Index(int? programId)
+        public async Task<ActionResult> Index(string searchString, int? countPerPage,
+            int? page)
+        {
+            
+            var pageSize = countPerPage ?? 5;
+            var pageNumber = page ?? 1;
+
+            var employees = from em in db.cmn_EmployeeVersion
+                select em;
+
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                employees = employees.Where(e => e.FullName.Contains(searchString));
+            }
+
+            employees = employees.OrderBy(o => o.EPFNo);
+
+            var empList = await employees.ToListAsync();
+            
+            var empPureList = empList.Select(employee => new Employee
+                {
+                    EmployeeId = employee.EmployeeVersionId,
+                    EPFNo = employee.EPFNo,
+                    Title = int.TryParse(employee.Title, out var t) ? (Title)t : Title.Null,
+                    NameWithInitial = employee.NameWithInitial,
+                    FullName = employee.FullName,
+                    NIC = employee.NIC,
+                    WorkSpaceName = employee.cmn_WorkSpace != null ? employee.cmn_WorkSpace.WorkSpaceName : "Null",
+                    WorkSpaceType = employee.cmn_WorkSpace != null
+                        ? employee.cmn_WorkSpace.cmn_WorkSpaceType.WorkSpaceTypeName
+                        : "Null",
+                    DesignationName = employee.hrm_Designation != null ? employee.hrm_Designation.DesignationName : "Null",
+                    EmployeeRecruitmentType = int.TryParse(employee.EmployeeRecruitmentType, out var rt)
+                        ? (RecruitmentType)rt
+                        : RecruitmentType.Null,
+                    EmpStatus = (EmployeeStatus)employee.EmpStatus,
+                    Grade = employee.hrm_Grade != null ? employee.hrm_Grade.GradeName : "Null",
+                    DateOfAppointment = employee.DateOfAppointment,
+                    DateOfJoint = employee.EffectiveDate,
+                    TypeOfContract = employee.TypeOfContract,
+                    OfficeEmail = employee.OfficeEmail,
+                    MobileNumber = employee.MobileNumber,
+                    PrivateEmail = employee.PrivateEmail
+                })
+                .ToList();
+
+            ViewBag.PageNumber = pageNumber;
+            ViewBag.serachParam = searchString;
+
+
+            return View(empPureList.ToPagedList(pageNumber, pageSize));
+
+        }
+        public async Task<ActionResult> Trainees(int? programId)
         {
             if (programId == null)
             {
@@ -63,7 +118,7 @@ namespace CECBTIMS.Controllers
         // GET: Employee/Details
         public async Task<ActionResult> Details(Guid? id, int? programId)
         {
-            if (id == null || programId == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            if (id == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 
             var employee = await FindEmployeeAsync((Guid)id);
 
