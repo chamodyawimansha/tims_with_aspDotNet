@@ -928,7 +928,7 @@ namespace CECBTIMS.Models
 
         public Paragraph GetRecipientsList()
         {
-            var assignments = GetRecipients(_program);
+            var assignments = GetRecipients();
 
             var p = new Paragraph();
             p.Append(new ParagraphProperties
@@ -1014,19 +1014,9 @@ namespace CECBTIMS.Models
             return p;
         }
 
-        private static IEnumerable<string> GetRecipients(Program program)
+        private IEnumerable<string> GetRecipients()
         {
-            var recipients = new List<string>();
-            var assignments = program.ProgramAssignments;
-   
-            foreach (var item in assignments)
-            {
-                var emp = EmployeesController.FindEmployee(item.EmployeeVersionId);
-                recipients.Add(emp.WorkSpaceType.Replace("Unit", "")+"("+emp.WorkSpaceName+")");
-            }
-
-            return recipients;
-
+            return _employees.Select(item => item.WorkSpaceType.Replace("Unit", "") + "(" + item.WorkSpaceName + ")").ToList();
         }
 
         private void SetTableStyle(OpenXmlElement table)
