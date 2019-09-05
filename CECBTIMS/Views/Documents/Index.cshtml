@@ -6,7 +6,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css"/>
 
 <div class="col-12 mx-auto mb-lg-5">
     <div class="card border-primary mb-3">
@@ -17,37 +17,36 @@
             <div class="float-right">
                 @if (ViewBag.Program != null)
                 {
-                    @Html.ActionLink("New Document", $"Select", new { programId = ViewBag.Program.Id }, new { @class = "btn btn-primary" })
+                    @Html.ActionLink("New Document", $"Select", new {programId = ViewBag.Program.Id}, new {@class = "btn btn-primary"})
                 }
                 else
                 {
-                    @Html.ActionLink("New Document", $"Select", new { programId = ViewBag.ProgramId, employeeId = ViewBag.EmployeeId }, new { @class = "btn btn-primary" })
+                    @Html.ActionLink("New Document", $"Select", new {programId = ViewBag.ProgramId, employeeId = ViewBag.EmployeeId}, new {@class = "btn btn-primary"})
                 }
-                @Html.ActionLink("Go Back", "Create", null, new { @class = "btn btn-primary" })
+                @Html.ActionLink("Go Back", "Create", null, new {@class = "btn btn-primary"})
             </div>
         </div>
         <div class="card-body">
 
             <div class="searchForm float-left">
                 @* HTML Form For search Program *@
-                @using (Html.BeginForm($"Index", $"Documents", FormMethod.Get, new { @class = "form-inline mb-3" }))
+                @using (Html.BeginForm($"Index", $"Documents", FormMethod.Get, new {@class = "form-inline mb-3"}))
                 {
-                    <input type="hidden" name="programId" value="@ViewBag.ProgramId" />
-                    <input type="hidden" name="programId" value="@ViewBag.EmployeeId" />
+                    <input type="hidden" name="programId" value="@ViewBag.ProgramId"/>
+                    <input type="hidden" name="programId" value="@ViewBag.EmployeeId"/>
                     <div class="form-group mb-2">
-                        <input type="text" readonly class="form-control-plaintext" value="Find by Title :" style="width:90px">
+                        <input type="text" readonly class="form-control-plaintext" value="Find by Title :" style="width: 90px">
                     </div>
                     <div class="form-group mx-sm-3 mb-2">
                         <label for="inputPassword2" class="sr-only">Password</label>
-                        @Html.TextBox("searchString", ViewBag.currentFilter as string, new { @class = "form-control", placeholder = "Search" })
+                        @Html.TextBox("searchString", ViewBag.currentFilter as string, new {@class = "form-control", placeholder = "Search"})
                     </div>
-                    <input type="submit" class="btn btn-secondary mr-sm-2 mb-2" value="Search" />
+                    <input type="submit" class="btn btn-secondary mr-sm-2 mb-2" value="Search"/>
 
                     if (ViewBag.serachParam != null)
                     {
-                        @Html.ActionLink("Clear", $"Index", ViewBag.currentFilter as string, new { @class = "btn btn-primary mb-2" })
+                        @Html.ActionLink("Clear", $"Index", ViewBag.currentFilter as string, new {@class = "btn btn-primary mb-2"})
                     }
-
                 }
             </div>
 
@@ -71,9 +70,7 @@
                     <th>Details</th>
                     <th>File Name</th>
                     <th>Program Type</th>
-                    <th>File Type</th>
                     <th>Created At</th>
-                    <th>Created By</th>
                 </tr>
                 @foreach (var item in Model)
                 {
@@ -91,32 +88,19 @@
                             @Html.DisplayFor(modelItem => item.ProgramType)
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.FileType)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.FileMethod)
-                        </td>
-                        <td>
                             @Html.DisplayFor(modelItem => item.CreatedAt)
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.CreatedBy)
-                        </td>
-                        <td>
-                            @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-                            @Html.ActionLink("Details", "Details", new { id = item.Id }) |
-                            @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                            @Html.ActionLink("Details", $"Details", new {id = item.Id}, new {@class = "btn btn w-100 btn-sm btn-primary"})
                         </td>
                     </tr>
                 }
             </table>
 
-
-
             Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
 
             @Html.PagedListPager(Model, page => Url.Action($"Index",
-                new { page, programId = ViewBag.ProgramId }))
+                new {page, programId = ViewBag.ProgramId, employeeId = ViewBag.EmployeeId}))
 
         </div>
     </div>
