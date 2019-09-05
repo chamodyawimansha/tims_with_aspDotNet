@@ -96,7 +96,8 @@ namespace CECBTIMS.Models
             "GetAgendaList",
             "GetRecipientsList",
             "GetAgendaSubjectsList",
-            "GetResourcePersonsList"
+            "GetResourcePersonsList",
+            "GetTraineeList",
         };
 
         public DocumentHelper(Program program)
@@ -454,11 +455,8 @@ namespace CECBTIMS.Models
 
         public Paragraph GetDateOfServiceConfirmation(Employee emp)
         {
-            return WithTextCenter(new Text(emp.DateOfAppointment.ToString()));
+            return emp.DateOfAppointment != null ? WithTextCenter(new Text(((DateTime) emp.DateOfAppointment).ToString("yyyy.mm.dd"))) : WithTextCenter(new Text("YYYY.MM.DD"));
         }
-
-        //        public Run GetIncidentalAllowance(Employee emp)
-        //        {
         //            var costs = _program.Costs;
         //
         //            if (_program.EndDate != null)
@@ -862,6 +860,33 @@ namespace CECBTIMS.Models
                 r.AppendChild(new Text()
                 {
                     Text = "     " + (i + 1).ToString("D2") + ".  " + _program.Agendas.ToArray()[i].Name+".",
+                    Space = SpaceProcessingModeValues.Preserve
+                });
+
+                p.AppendChild(r);
+
+                p.Append(new Break());
+            }
+
+            return p;
+        }
+
+        public Paragraph GetTraineeList()
+        {
+            var p = new Paragraph();
+            p.Append(new ParagraphProperties
+                { Justification = new Justification() { Val = JustificationValues.Left } });
+            var i = 1;
+            foreach (var item in _employees)
+            {
+                var r = new Run();
+                r.Append(new RunProperties(
+                    new FontSize() { Val = "24" },
+                    new RunFonts() { Ascii = FontFamily }
+                    ));
+                r.AppendChild(new Text()
+                {
+                    Text = "          " + (i).ToString("D2") + ".    " + item.Title +". "+ ToProperName(item.NameWithInitial) + " -     "+ item.DesignationName +".",
                     Space = SpaceProcessingModeValues.Preserve
                 });
 
