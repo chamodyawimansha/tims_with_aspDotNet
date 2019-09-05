@@ -14,6 +14,7 @@ using CECBTIMS.ViewModels;
 using DocumentFormat.OpenXml.Drawing;
 using DocumentFormat.OpenXml.Packaging;
 using DocumentFormat.OpenXml.Wordprocessing;
+using PagedList.EntityFramework;
 using Document = CECBTIMS.Models.Document;
 using Paragraph = DocumentFormat.OpenXml.Wordprocessing.Paragraph;
 using ParagraphProperties = DocumentFormat.OpenXml.Drawing.ParagraphProperties;
@@ -32,35 +33,47 @@ namespace CECBTIMS.Controllers
         private object _classInstance;
 
         // GET: Documents
-        public async Task<ActionResult> Index(int? programId, Guid? EmployeeId)
+        public async Task<ActionResult> Index(int? programId, Guid? employeeId, string searchString, int? countPerPage,
+            int? page)
         {
             if (programId == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 
+            var pageSize = countPerPage ?? 5;
+            var pageNumber = page ?? 1;
 
-            if (EmployeeId != null)
+            var documents = from d in db.Documents
+                select d;
+            if (employeeId != null)
             {
+                documents = documents.Where(d => (d.EmployeeId == employeeId));
+                if (!string.IsNullOrEmpty(searchString))
+                {
+                    documents = documents.Where(d => d.Title.Contains(searchString));
+                }
 
-                var documents = db.Documents.Where(d => (d.EmployeeId == EmployeeId));
+                documents = documents.OrderBy(o => o.CreatedAt);
 
                 ViewBag.ProgramId = programId;
-                ViewBag.EmployeeId = EmployeeId;
+                ViewBag.EmployeeId = employeeId;
+                ViewBag.PageNumber = pageNumber;
+                ViewBag.ProgramId = programId;
 
-                return View(await documents.ToListAsync());
+                return View(await documents.ToPagedListAsync(pageNumber, pageSize));
             }
 
-            if (programId != null)
+            documents = documents.Where(d => (d.ProgramId == programId));
+            if (!string.IsNullOrEmpty(searchString))
             {
-                var program = await db.Programs.FindAsync(programId);
-
-                if (program == null) return new HttpNotFoundResult();
-
-                ViewBag.Program = program;
-
-                return View(program.Documents);
+                documents = documents.Where(d => d.Title.Contains(searchString));
             }
 
-            return new HttpNotFoundResult();
+            documents = documents.OrderBy(o => o.CreatedAt);
 
+            ViewBag.ProgramId = programId;
+            ViewBag.PageNumber = pageNumber;
+            ViewBag.ProgramId = programId;
+
+            return View(await documents.ToPagedListAsync(pageNumber, pageSize));
         }
 
         //Select the template
@@ -155,24 +168,27 @@ namespace CECBTIMS.Controllers
             {
                 return Activator.CreateInstance(
                     _helperClass,
-                    await ProgramsController.GetProgram(programId), 
-                    new List<Employee> { emp}
+                    await ProgramsController.GetProgram(programId),
+                    new List<Employee> {emp}
                 );
             }
 
             return Activator.CreateInstance(
-                _helperClass, 
+                _helperClass,
                 await ProgramsController.GetProgram(programId),
                 await EmployeesController.GetTraineesAsync(programId)
-                );
+            );
         }
-        
+
         // POST: Documents1/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "Id,Title,Details,FileName,ProgramType,FileType,FileMethod,ProgramId,EmployeeId,DocumentNumber")] Document document, TableColumnName[] columns, int templateId, int programId)
+        public async Task<ActionResult> Create(
+            [Bind(Include =
+                "Id,Title,Details,FileName,ProgramType,FileType,FileMethod,ProgramId,EmployeeId,DocumentNumber")]
+            Document document, TableColumnName[] columns, int templateId, int programId)
         {
             var path = "";
             try
@@ -182,11 +198,10 @@ namespace CECBTIMS.Controllers
             }
             catch (Exception e)
             {
-                ModelState.AddModelError("", @"Creating a document from the selected template failed.("+e+")");
-                return RedirectToAction($"Select", $"Documents", new {programId, employeeId = document.EmployeeId });
-
+                ModelState.AddModelError("", @"Creating a document from the selected template failed.(" + e + ")");
+                return RedirectToAction($"Select", $"Documents", new {programId, employeeId = document.EmployeeId});
             }
-            
+
             //instantiate helper class
             _classInstance = await InstHelperClass(programId, document.EmployeeId);
             /**
@@ -202,18 +217,18 @@ namespace CECBTIMS.Controllers
             {
                 DeleteDocument(path);
                 ModelState.AddModelError("", @"Processing the Document failed.(" + e + ")");
-                return RedirectToAction($"Select", $"Documents", new {programId, employeeId = document.EmployeeId });
+                return RedirectToAction($"Select", $"Documents", new {programId, employeeId = document.EmployeeId});
             }
 
             if (ModelState.IsValid)
             {
                 db.Documents.Add(document);
                 await db.SaveChangesAsync();
-                return RedirectToAction($"Index", $"Documents", new { programId, employeeId = document.EmployeeId });
+                return RedirectToAction($"Index", $"Documents", new {programId, employeeId = document.EmployeeId});
             }
-            
+
             ModelState.AddModelError("", @"Document Generation Failed.. Please try again");
-            return RedirectToAction($"Select", $"Documents", new { programId, employeeId = document.EmployeeId });
+            return RedirectToAction($"Select", $"Documents", new {programId, employeeId = document.EmployeeId});
         }
 
         private static void DeleteDocument(string path)
@@ -238,9 +253,9 @@ namespace CECBTIMS.Controllers
                 foreach (var item in DocumentHelper.DocumentVariableList)
                 {
                     if (!docText.Contains(item)) continue;
-                    
+
                     var method = _helperClass.GetMethod(item);
-                
+
                     docText = method != null
                         ? new Regex(item).Replace(docText, (string) method.Invoke(_classInstance, null))
                         : new Regex(item).Replace(docText, "Null");
@@ -250,9 +265,7 @@ namespace CECBTIMS.Controllers
                 {
                     sw.Write(docText);
                 }
-                
             }
-
         }
 
         private void ProcessLists(string path)
@@ -260,50 +273,30 @@ namespace CECBTIMS.Controllers
             using (var wordDoc = WordprocessingDocument.Open(path, true))
             {
                 var mainPart = wordDoc.MainDocumentPart;
-//                NumberingDefinitionsPart numberingPart = mainPart.AddNewPart<NumberingDefinitionsPart>("AgendaList");
 
-//                Numbering element =
-//                    new Numbering(
-//                        new AbstractNum(
-//                                new Level(
-//                                        new NumberingFormat() { Val = NumberFormatValues.Bullet },
-//                                        new LevelText() { Val = "·" }
-//                                    )
-//                                    { LevelIndex = 0 }
-//                            )
-//                            { AbstractNumberId = 1 },
-//                        new NumberingInstance(
-//                                new AbstractNumId() { Val = 1 }
-//                            )
-//                            { NumberID = 1 });
-//
-//                element.Save(numberingPart);
-                
                 foreach (var item in DocumentHelper.DocumentListsList)
                 {
                     var res = from p in mainPart.Document.Body.Descendants<Paragraph>()
                         where p.InnerText == item
                         select p;
-                
+
                     if (!res.Any()) continue;
                     var method = _helperClass.GetMethod(item);
                     if (method == null) continue;
-                
+
                     var rf = res.First();
                     rf.RemoveAllChildren<Run>();
 
-                    rf.AppendChild(new Run((Paragraph)method.Invoke(_classInstance, null)));
-                    
+                    rf.AppendChild(new Run((Paragraph) method.Invoke(_classInstance, null)));
                 }
             }
         }
 
-        private string ProcessTables(string path, TableColumnName[] columnNames, Guid? employeeId)
+        private void ProcessTables(string path, TableColumnName[] columnNames, Guid? employeeId)
         {
             using (var wordDoc = WordprocessingDocument.Open(path, true))
             {
                 var mainPart = wordDoc.MainDocumentPart;
-
 
                 foreach (var item in DocumentHelper.DocumentTableList)
                 {
@@ -321,31 +314,11 @@ namespace CECBTIMS.Controllers
                     var rf = res.First();
 
                     rf.RemoveAllChildren<Run>();
-                    rf.AppendChild(new Run((Table)method.Invoke(_classInstance, new object[] { columnNames, employeeId })));
+                    rf.AppendChild(
+                        new Run((Table) method.Invoke(_classInstance, new object[] {columnNames, employeeId})));
                 }
-
-
-                return null;
-
             }
         }
-
-
-        private IDictionary<string, BookmarkStart> GetBookMarks(WordprocessingDocument wordDoc)
-        {
-
-            var bookmarkMap = new Dictionary<string, BookmarkStart>();
-            // get all the bookmarks
-            foreach (var bookmarkStart in wordDoc.MainDocumentPart.RootElement.Descendants<BookmarkStart>())
-            {
-                bookmarkMap[bookmarkStart.Name] = bookmarkStart;
-            }
-
-            return bookmarkMap;
-        }
-
-
-
 
         private async Task<string> GetDocumentPath(int templateId, string newFileName)
         {
@@ -353,7 +326,8 @@ namespace CECBTIMS.Controllers
 
             if (template == null) return null;
 
-            var path = Path.Combine(Server.MapPath("~/Storage/templates/"), Path.GetFileName(template.FileName + "." + template.FileType));
+            var path = Path.Combine(Server.MapPath("~/Storage/templates/"),
+                Path.GetFileName(template.FileName + "." + template.FileType));
 
             var templateDestination = Server.MapPath("~/Storage/gen/" + newFileName);
 
@@ -364,23 +338,9 @@ namespace CECBTIMS.Controllers
                     System.IO.File.Copy(path, templateDestination, false);
                 }
             }
-            
+
             return System.IO.File.Exists(templateDestination) ? templateDestination : null;
         }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
         // GET: Documents1/Edit/5
         public async Task<ActionResult> Edit(int? id)

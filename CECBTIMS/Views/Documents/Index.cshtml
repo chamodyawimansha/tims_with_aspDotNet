@@ -1,9 +1,12 @@
-﻿@model IEnumerable<CECBTIMS.Models.Document>
+﻿@using PagedList.Mvc
+@model PagedList.IPagedList<CECBTIMS.Models.Document>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Document Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
 
 <div class="col-12 mx-auto mb-lg-5">
     <div class="card border-primary mb-3">
@@ -14,16 +17,54 @@
             <div class="float-right">
                 @if (ViewBag.Program != null)
                 {
-                    @Html.ActionLink("New Document", $"Select", new {programId = ViewBag.Program.Id}, new {@class = "btn btn-primary"})
+                    @Html.ActionLink("New Document", $"Select", new { programId = ViewBag.Program.Id }, new { @class = "btn btn-primary" })
                 }
                 else
                 {
-                    @Html.ActionLink("New Document", $"Select", new { programId = ViewBag.ProgramId, employeeId = ViewBag.EmployeeId}, new {@class = "btn btn-primary"})
+                    @Html.ActionLink("New Document", $"Select", new { programId = ViewBag.ProgramId, employeeId = ViewBag.EmployeeId }, new { @class = "btn btn-primary" })
                 }
-                @Html.ActionLink("Go Back", "Create", null, new {@class = "btn btn-primary"})
+                @Html.ActionLink("Go Back", "Create", null, new { @class = "btn btn-primary" })
             </div>
         </div>
         <div class="card-body">
+
+            <div class="searchForm float-left">
+                @* HTML Form For search Program *@
+                @using (Html.BeginForm($"Index", $"Documents", FormMethod.Get, new { @class = "form-inline mb-3" }))
+                {
+                    <input type="hidden" name="programId" value="@ViewBag.ProgramId" />
+                    <input type="hidden" name="programId" value="@ViewBag.EmployeeId" />
+                    <div class="form-group mb-2">
+                        <input type="text" readonly class="form-control-plaintext" value="Find by Title :" style="width:90px">
+                    </div>
+                    <div class="form-group mx-sm-3 mb-2">
+                        <label for="inputPassword2" class="sr-only">Password</label>
+                        @Html.TextBox("searchString", ViewBag.currentFilter as string, new { @class = "form-control", placeholder = "Search" })
+                    </div>
+                    <input type="submit" class="btn btn-secondary mr-sm-2 mb-2" value="Search" />
+
+                    if (ViewBag.serachParam != null)
+                    {
+                        @Html.ActionLink("Clear", $"Index", ViewBag.currentFilter as string, new { @class = "btn btn-primary mb-2" })
+                    }
+
+                }
+            </div>
+
+            <div class="tableEntryCount float-right">
+                <input type="text" readonly class="form-control-plaintext" value="Show">
+                <select class="entryCountSelect">
+                    <option value="none" selected disabled hidden>
+                        @ViewBag.entryCount
+                    </option>
+                    <option value="/Documents?countPerPage=5&programId=@(ViewBag.ProgramId)&employeeId=@(ViewBag.EmployeeId)">5</option>
+                    <option value="/Documents?countPerPage=5&programId=@(ViewBag.ProgramId)&employeeId=@(ViewBag.EmployeeId)">10</option>
+                    <option value="/Documents?countPerPage=5&programId=@(ViewBag.ProgramId)&employeeId=@(ViewBag.EmployeeId)">50</option>
+                    <option value="/Documents?countPerPage=5&programId=@(ViewBag.ProgramId)&employeeId=@(ViewBag.EmployeeId)">100</option>
+                </select>
+                <input type="text" readonly class="form-control-plaintext" value="Entries">
+            </div>
+
             <table class="table table-bordered">
                 <tr>
                     <th>Title</th>
@@ -62,13 +103,25 @@
                             @Html.DisplayFor(modelItem => item.CreatedBy)
                         </td>
                         <td>
-                            @Html.ActionLink("Edit", "Edit", new {id = item.Id}) |
-                            @Html.ActionLink("Details", "Details", new {id = item.Id}) |
-                            @Html.ActionLink("Delete", "Delete", new {id = item.Id})
+                            @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                            @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                            @Html.ActionLink("Delete", "Delete", new { id = item.Id })
                         </td>
                     </tr>
                 }
             </table>
+
+
+
+            Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+            @Html.PagedListPager(Model, page => Url.Action($"Index",
+                new { page, programId = ViewBag.ProgramId }))
+
         </div>
     </div>
 </div>
+
+@section Scripts {
+    @Scripts.Render("~/scripts/site.js")
+}
