@@ -403,10 +403,35 @@ namespace CECBTIMS.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteConfirmed(int id)
         {
-            Document document = await db.Documents.FindAsync(id);
-            db.Documents.Remove(document);
-            await db.SaveChangesAsync();
-            return RedirectToAction("Index");
+            var document = await db.Documents.FindAsync(id);
+
+            if (document == null)
+            {
+                ModelState.AddModelError("", @"Document not found in the database.");
+                return RedirectToAction($"Delete", $"Documents", new { id });
+            }
+
+            var path = Server.MapPath("~/Storage/gen/" + document.FileName);
+
+            if (System.IO.File.Exists(path))
+            {
+                try
+                {
+                    System.IO.File.Delete(path);
+                }
+                catch (Exception e)
+                {
+                    ModelState.AddModelError("", @"Document File Failed to delete from the database please try again later.("+e+")");
+                    return RedirectToAction($"Delete", $"Documents", new { id });
+                }
+
+                db.Documents.Remove(document);
+                await db.SaveChangesAsync();
+                return RedirectToAction($"Index",$"Documents", new {programId = document.ProgramId, employeeId = document.EmployeeId});
+            }
+
+            ModelState.AddModelError("", @"Document Not Found in the System's Storage");
+            return RedirectToAction($"Delete", $"Documents", new { id });
         }
 
         protected override void Dispose(bool disposing)
