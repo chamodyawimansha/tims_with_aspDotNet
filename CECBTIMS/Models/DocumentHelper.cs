@@ -98,6 +98,7 @@ namespace CECBTIMS.Models
             "GetAgendaSubjectsList",
             "GetResourcePersonsList",
             "GetTraineeList",
+            "GetDetailedTraineeList",
         };
 
         public DocumentHelper(Program program)
@@ -887,6 +888,33 @@ namespace CECBTIMS.Models
                 r.AppendChild(new Text()
                 {
                     Text = "          " + (i).ToString("D2") + ".    " + item.Title +". "+ ToProperName(item.NameWithInitial) + " -     "+ item.DesignationName +".",
+                    Space = SpaceProcessingModeValues.Preserve
+                });
+
+                p.AppendChild(r);
+                i++;
+                p.Append(new Break());
+            }
+
+            return p;
+        }
+
+        public Paragraph GetDetailedTraineeList()
+        {
+            var p = new Paragraph();
+            p.Append(new ParagraphProperties
+                { Justification = new Justification() { Val = JustificationValues.Left } });
+            var i = 1;
+            foreach (var item in _employees)
+            {
+                var r = new Run();
+                r.Append(new RunProperties(
+                    new FontSize() { Val = "24" },
+                    new RunFonts() { Ascii = FontFamily }
+                ));
+                r.AppendChild(new Text()
+                {
+                    Text = "          " + (i).ToString("D2") + ".    " + item.Title + ". " + ToProperName(item.NameWithInitial) + " -     " + item.DesignationName + "   -   " + (item.WorkSpaceType.Replace("Unit", "") + "(" + item.WorkSpaceName + ")"),
                     Space = SpaceProcessingModeValues.Preserve
                 });
 
