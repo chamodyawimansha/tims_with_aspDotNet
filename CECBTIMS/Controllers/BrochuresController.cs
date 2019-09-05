@@ -26,11 +26,6 @@ namespace CECBTIMS.Controllers
             var brochure = await db.Brochures.FindAsync(id);
             if (brochure == null) return HttpNotFound();
 
-            if (brochure.FileType == FileType.JPEG || brochure.FileType == FileType.PNG || brochure.FileType == FileType.JPG)
-            {
-
-            }
-
             return await Download((int)id);
         }
 

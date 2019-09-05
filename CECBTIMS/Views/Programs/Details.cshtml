@@ -482,11 +482,14 @@
         <table class="table table-bordered">
             @foreach (var item in Model.Brochure)
             {
-                <td class="w-75">
+                <td class="" style="width: 50%">
                     @Html.DisplayFor(model => item.Title)
                 </td>
-                <td class="w-25">
-                    @Html.ActionLink("View", $"Details", $"Brochures", new{id = item.Id},new {@class = "btn btn-sm btn-link"})
+                <td style="width: 20%">
+                    @Html.DisplayFor(model => item.FileType)
+                </td>
+                <td style="width: 30%">
+                    @Html.ActionLink("View", $"Details", $"Brochures", new{id = item.Id},new {@class = "btn btn-sm btn-primary"})
                     @using (Html.BeginForm($"Delete", $"Brochures", null, FormMethod.Post, new {@class = "d-inline-block"}))
                     {
                         @Html.AntiForgeryToken()
