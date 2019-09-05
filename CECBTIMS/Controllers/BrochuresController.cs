@@ -21,16 +21,39 @@ namespace CECBTIMS.Controllers
         // GET: Brochures/Details/5
         public async Task<ActionResult> Details(int? id)
         {
-            if (id == null)
+            if (id == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+
+            var brochure = await db.Brochures.FindAsync(id);
+            if (brochure == null) return HttpNotFound();
+
+            if (brochure.FileType == FileType.JPEG || brochure.FileType == FileType.PNG || brochure.FileType == FileType.JPG)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+
             }
-            Brochure brochure = await db.Brochures.FindAsync(id);
-            if (brochure == null)
-            {
-                return HttpNotFound();
-            }
-            return View(brochure);
+
+            return await Download((int)id);
+        }
+
+        private async Task<ActionResult> Download(int id)
+        {
+            var brochure = await db.Brochures.FindAsync(id);
+            if (brochure == null) return HttpNotFound();
+
+            var path = Server.MapPath("~/Storage/Brochures/" + brochure.FileName+"."+brochure.FileType);
+
+            var fileBytes = GetDocument(path);
+
+            return File(fileBytes, System.Net.Mime.MediaTypeNames.Application.Octet, path);
+        }
+
+        private static byte[] GetDocument(string path)
+        {
+            var fs = System.IO.File.OpenRead(path);
+            var data = new byte[fs.Length];
+            var br = fs.Read(data, 0, data.Length);
+            if (br != fs.Length) throw new System.IO.IOException(path);
+
+            return data;
         }
 
         // GET: Brochures/Create
@@ -47,7 +70,7 @@ namespace CECBTIMS.Controllers
 
             return View();
         }
-
+        
         // POST: Brochures/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
@@ -117,63 +140,32 @@ namespace CECBTIMS.Controllers
             return RedirectToAction($"Details", $"Programs", new{id = brochure.ProgramId});
         }
 
-        // GET: Brochures/Edit/5
-        public async Task<ActionResult> Edit(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Brochure brochure = await db.Brochures.FindAsync(id);
-            if (brochure == null)
-            {
-                return HttpNotFound();
-            }
-            ViewBag.ProgramId = new SelectList(db.Programs, "Id", "Title", brochure.ProgramId);
-            return View(brochure);
-        }
-
-        // POST: Brochures/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "Id,Title,Details,FileName,OriginalFileName,FileType,FileMethod,ProgramId,CreatedAt,UpdatedAt,CreatedBy,UpdatedBy,RowVersion")] Brochure brochure)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Entry(brochure).State = EntityState.Modified;
-                await db.SaveChangesAsync();
-                return RedirectToAction("Index");
-            }
-            ViewBag.ProgramId = new SelectList(db.Programs, "Id", "Title", brochure.ProgramId);
-            return View(brochure);
-        }
-
-        // GET: Brochures/Delete/5
-        public async Task<ActionResult> Delete(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Brochure brochure = await db.Brochures.FindAsync(id);
-            if (brochure == null)
-            {
-                return HttpNotFound();
-            }
-            return View(brochure);
-        }
-
         // POST: Brochures/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteConfirmed(int id)
         {
-            Brochure brochure = await db.Brochures.FindAsync(id);
+            var brochure = await db.Brochures.FindAsync(id);
+
+            var fileToBeDeleted = Path.Combine(Server.MapPath("~/Storage/brochures/"), Path.GetFileName(brochure.FileName + "." + brochure.FileType));
+
+            try
+            {
+                if (System.IO.File.Exists(fileToBeDeleted))
+                {
+                    System.IO.File.Delete(fileToBeDeleted);
+                }
+            }
+            catch (Exception e)
+            {
+                ModelState.AddModelError("", @"Could not delete the brochure file from the storage. - " + e);
+                return View(brochure);
+            }
+
             db.Brochures.Remove(brochure);
             await db.SaveChangesAsync();
-            return RedirectToAction("Index");
+
+            return RedirectToAction($"Details", $"Programs", new { id = brochure.ProgramId });
         }
 
         protected override void Dispose(bool disposing)
