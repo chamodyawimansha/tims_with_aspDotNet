@@ -1,115 +1,101 @@
 ﻿@model CECBTIMS.Models.Document
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "Document Details";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Details</h2>
 
-<div>
-    <h4>Document</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Program.Title)
-        </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Program.Title)
-        </dd>
+download and other buttons here
+go to the program button
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Title)
-        </dt>
+<div class="col-10 mx-auto">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3">
 
-        <dd>
-            @Html.DisplayFor(model => model.Title)
-        </dd>
+                <div class="card">
+                    <div class="card-body">
+                        <a href="@Url.Action($"Index", $"Documents", new {programId = Model.ProgramId, employeeId = Model.EmployeeId})" class="btn btn-outline-secondary btn-block">
+                            <span class="fa fa-arrow-left mr-sm-1" aria-hidden="true"></span>
+                            Back
+                        </a>
+                        <a href="@Url.Action($"Details", $"Programs", new {id = Model.ProgramId})" class="btn btn-primary btn-block">
+                            <span class="fa fa-file-archive-o mr-sm-1" aria-hidden="true"></span>
+                            Program
+                        </a>
+                        <a href="@Url.Action($"Index", $"Documents", new {id = Model.Id})" class="btn btn-primary btn-block">
+                            <span class="fa fa-download mr-sm-1" aria-hidden="true"></span>
+                            Download
+                        </a>
+                        <a href="@Url.Action($"Edit", $"Documents", new {id = Model.Id})" class="btn btn-warning btn-block">
+                            <span class="fa fa-pencil mr-sm-1" aria-hidden="true"></span>
+                            Edit
+                        </a>
+                        <a href="@Url.Action($"Delete", $"Documents", new {id = Model.Id})" class="btn btn-danger btn-block">
+                            <span class="fa fa-remove mr-sm-1" aria-hidden="true"></span>
+                            Delete
+                        </a>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Details)
-        </dt>
+                    </div>
+                </div>
 
-        <dd>
-            @Html.DisplayFor(model => model.Details)
-        </dd>
+            </div>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.FileName)
-        </dt>
+            <div class="col-md-9">
+                <div class="card">
+                    <div class="card-header">
+                        Document Details
+                    </div>
+                    <div class="card-body">
+                        <table class="table table-bordered">
+                            <tr>
+                                <th class="w-25">Program Title</th>
+                                <td class="w-75">@Model.Program.Title</td>
+                            </tr>
+                            <tr>
+                                <th class="w-25">Document Title</th>
+                                <td class="w-75">@Model.Title</td>
+                            </tr>
+                            <tr>
+                                <th class="w-25">Document Details</th>
+                                <td class="w-75">@Model.Details</td>
+                            </tr>
+                            <tr>
+                                <th class="w-25">File Name</th>
+                                <td class="w-75">@Model.FileName</td>
+                            </tr>
+                            <tr>
+                                <th class="w-25">File Type</th>
+                                <td class="w-75">@Model.FileType</td>
+                            </tr>
+                            <tr>
+                                <th class="w-25">Program Type</th>
+                                <td class="w-75">@Model.ProgramType</td>
+                            </tr>
 
-        <dd>
-            @Html.DisplayFor(model => model.FileName)
-        </dd>
+                            <tr>
+                                <th class="w-25">Created By</th>
+                                <td class="w-75">@Model.CreatedBy</td>
+                            </tr>
+                            <tr>
+                                <th class="w-25">Created At</th>
+                                <td class="w-75">@Model.CreatedAt</td>
+                            </tr>
+                            <tr>
+                                <th class="w-25">Updated By</th>
+                                <td class="w-75">@Model.UpdatedBy</td>
+                            </tr>
+                            <tr>
+                                <th class="w-25">Updated At</th>
+                                <td class="w-75">@Model.UpdatedAt</td>
+                            </tr>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.ProgramType)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.ProgramType)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.FileType)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.FileType)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.FileMethod)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.FileMethod)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.CreatedAt)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.CreatedAt)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.UpdatedAt)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.UpdatedAt)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.CreatedBy)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.CreatedBy)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.UpdatedBy)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.UpdatedBy)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.RowVersion)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.RowVersion)
-        </dd>
-
-    </dl>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
