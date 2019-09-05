@@ -13,6 +13,7 @@ using PagedList.EntityFramework;
 
 namespace CECBTIMS.Controllers
 {
+    [Authorize]
     public class OrganizersController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();

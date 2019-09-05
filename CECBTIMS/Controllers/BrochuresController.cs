@@ -14,6 +14,7 @@ using CECBTIMS.Models.Enums;
 
 namespace CECBTIMS.Controllers
 {
+    [Authorize]
     public class BrochuresController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();

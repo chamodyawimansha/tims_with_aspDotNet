@@ -12,6 +12,7 @@ using CECBTIMS.Models;
 
 namespace CECBTIMS.Controllers
 {
+    [Authorize]
     public class AgendaController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();

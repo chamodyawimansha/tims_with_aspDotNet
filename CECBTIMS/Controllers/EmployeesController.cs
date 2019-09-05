@@ -14,6 +14,7 @@ using PagedList.EntityFramework;
 
 namespace CECBTIMS.Controllers
 {
+    [Authorize]
     public class EmployeesController : Controller
     {
         private CECB_ERPEntities db = new CECB_ERPEntities();

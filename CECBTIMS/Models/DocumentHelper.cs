@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Web.Mvc;
 using CECBTIMS.Controllers;
 using CECBTIMS.Models.Enums;
 using DocumentFormat.OpenXml;
@@ -27,6 +28,7 @@ using TopBorder = DocumentFormat.OpenXml.Wordprocessing.TopBorder;
 
 namespace CECBTIMS.Models
 {
+    [Authorize]
     public class DocumentHelper
     {
         private readonly Program _program;

@@ -26,6 +26,7 @@ using Text = DocumentFormat.OpenXml.Drawing.Text;
 
 namespace CECBTIMS.Controllers
 {
+    [Authorize]
     public class DocumentsController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();

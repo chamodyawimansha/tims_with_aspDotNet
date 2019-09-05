@@ -6,6 +6,7 @@ using CECBTIMS.Models;
 
 namespace CECBTIMS.Controllers
 {
+    [Authorize]
     public class RequirementsController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();

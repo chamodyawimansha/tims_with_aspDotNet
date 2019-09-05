@@ -15,8 +15,10 @@ using Microsoft.Ajax.Utilities;
 
 namespace CECBTIMS.Controllers
 {
+    [Authorize]
     public class TemplatesController : Controller
     {
+
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Templates

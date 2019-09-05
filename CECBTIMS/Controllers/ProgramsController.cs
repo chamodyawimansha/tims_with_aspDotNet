@@ -15,6 +15,7 @@ using PagedList.EntityFramework;
 
 namespace CECBTIMS.Controllers
 {
+    [Authorize]
     public class ProgramsController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();

@@ -7,6 +7,7 @@ using CECBTIMS.Models;
 
 namespace CECBTIMS.Controllers
 {
+    [Authorize]
     public class CategoriesController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();

@@ -14,6 +14,7 @@ using Microsoft.Ajax.Utilities;
 
 namespace CECBTIMS.Controllers
 {
+    [Authorize]
     public class ProgramAssignmentsController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();

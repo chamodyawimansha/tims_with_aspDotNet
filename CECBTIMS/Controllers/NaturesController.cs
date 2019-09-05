@@ -12,6 +12,7 @@ using CECBTIMS.Models;
 
 namespace CECBTIMS.Controllers
 {
+    [Authorize]
     public class NaturesController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
