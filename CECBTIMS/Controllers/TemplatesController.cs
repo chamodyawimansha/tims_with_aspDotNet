@@ -111,11 +111,12 @@ namespace CECBTIMS.Controllers
             }
             catch (Exception e)
             {
-                /***
-                 *
-                 * Delete the file from storage here
-                 * and return with message
-                 */
+                if (System.IO.File.Exists(path))
+                {
+                    System.IO.File.Delete(path);
+                }
+                ModelState.AddModelError("", @"File Upload Failed. Try again. " + e);
+                return View(template);
             }
 
             return RedirectToAction($"Index");

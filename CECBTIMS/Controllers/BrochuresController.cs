@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Net;
@@ -9,19 +10,13 @@ using System.Web;
 using System.Web.Mvc;
 using CECBTIMS.DAL;
 using CECBTIMS.Models;
+using CECBTIMS.Models.Enums;
 
 namespace CECBTIMS.Controllers
 {
     public class BrochuresController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
-
-        // GET: Brochures
-        public async Task<ActionResult> Index()
-        {
-            var brochures = db.Brochures.Include(b => b.Program);
-            return View(await brochures.ToListAsync());
-        }
 
         // GET: Brochures/Details/5
         public async Task<ActionResult> Details(int? id)
@@ -39,9 +34,17 @@ namespace CECBTIMS.Controllers
         }
 
         // GET: Brochures/Create
-        public ActionResult Create()
+        public async Task<ActionResult> Create(int? programId)
         {
-            ViewBag.ProgramId = new SelectList(db.Programs, "Id", "Title");
+            if(programId == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            var program = await db.Programs.FindAsync(programId);
+            if (program == null)
+            {
+                return HttpNotFound();
+            }
+
+            ViewBag.ProgramId = programId;
+
             return View();
         }
 
@@ -50,17 +53,68 @@ namespace CECBTIMS.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "Id,Title,Details,FileName,OriginalFileName,FileType,FileMethod,ProgramId,CreatedAt,UpdatedAt,CreatedBy,UpdatedBy,RowVersion")] Brochure brochure)
+        public async Task<ActionResult> Create([Bind(Include = "Title,Details, ProgramId")] Brochure brochure, HttpPostedFileBase file)
         {
-            if (ModelState.IsValid)
+            // check if the template file is present
+            if (file == null || file.ContentLength <= 0)
+            {
+                ModelState.AddModelError("", @"Please select a brochure to upload");
+                return View(brochure);
+            }
+            //get the file extension
+            var fileExtension = Path.GetExtension(file.FileName.ToUpper())?.Replace(".", string.Empty);
+            //check if the file type is supported
+            if (!Enum.GetNames(typeof(FileType)).Contains(fileExtension))
+            {
+                ModelState.AddModelError("", @"Selected brochure file type is not supported.");
+                return View(brochure);
+            }
+
+            // Generate a new File name
+            var fileName = Guid.NewGuid().ToString();
+            //create the file path
+            var path = Path.Combine(Server.MapPath("~/Storage/brochures/"), Path.GetFileName(fileName + "." + fileExtension));
+            try
+            {
+                // save file in the storage
+                file.SaveAs(path);
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError("", @"File upload Failed:" + ex.Message);
+                return View(brochure);
+            }
+
+            if (!ModelState.IsValid) return View(brochure);
+
+            if (!System.IO.File.Exists(path))
+            {
+                ModelState.AddModelError("", @"File Upload Failed. Try again.");
+                return View(brochure);
+            }
+
+            brochure.Details = "ProgramBrochure";
+            brochure.FileMethod = FileMethod.Upload;
+            brochure.FileType = (FileType)Enum.Parse(typeof(FileType), fileExtension);
+            brochure.OriginalFileName = file.FileName;
+            brochure.FileName = fileName;
+            //save the template details in the database
+            try
             {
                 db.Brochures.Add(brochure);
                 await db.SaveChangesAsync();
-                return RedirectToAction("Index");
+            }
+            catch (Exception e)
+            {
+                if (System.IO.File.Exists(path))
+                {
+                    System.IO.File.Delete(path);
+                }
+                ModelState.AddModelError("", @"File Upload Failed. Try again. "+ e);
+                return View(brochure);
             }
 
-            ViewBag.ProgramId = new SelectList(db.Programs, "Id", "Title", brochure.ProgramId);
-            return View(brochure);
+            return RedirectToAction($"Details", $"Programs", new{id = brochure.ProgramId});
         }
 
         // GET: Brochures/Edit/5
