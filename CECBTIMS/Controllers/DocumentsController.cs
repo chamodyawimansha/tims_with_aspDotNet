@@ -151,6 +151,30 @@ namespace CECBTIMS.Controllers
             return View(document);
         }
 
+        public async Task<ActionResult> Download(int? id)
+        {
+            if (id == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            var doc = await db.Documents.FindAsync(id);
+            if(doc == null) return HttpNotFound();
+
+            var path = Server.MapPath("~/Storage/gen/" + doc.FileName);
+
+            var fileBytes = GetDocument(path);
+
+            return File(fileBytes, System.Net.Mime.MediaTypeNames.Application.Octet, path);
+        }
+
+        private byte[] GetDocument(string path)
+        {
+            var fs = System.IO.File.OpenRead(path);
+            var data = new byte[fs.Length];
+            var br = fs.Read(data, 0, data.Length);
+            if (br != fs.Length) throw new System.IO.IOException(path);
+
+            return data;
+        }
+
+
         private async Task<object> InstHelperClass(int programId, Guid? EmployeeId)
         {
             _helperClass = typeof(DocumentHelper);
