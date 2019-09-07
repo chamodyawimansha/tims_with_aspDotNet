@@ -94,7 +94,7 @@ namespace CECBTIMS.Controllers
             db.ProgramAssignments.Add(programAssignment);
             await db.SaveChangesAsync();
 
-            return RedirectToAction($"Index", $"Employees", new { programId = programAssignment.ProgramId });
+            return RedirectToAction($"Trainees", $"Employees", new { programId = programAssignment.ProgramId });
 
         }
 
