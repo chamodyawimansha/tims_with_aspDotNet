@@ -90,7 +90,15 @@ namespace CECBTIMS.Controllers
 
         }
 
-
+//        public async Task<ActionResult> Find()
+//        {
+//            return View();
+//        }
+//
+//        public async Task<ActionResult> FindPost()
+//        {
+//            return View();
+//        }
 
         // GET: Programs/Details/5
         public async Task<ActionResult> Details(int? id)

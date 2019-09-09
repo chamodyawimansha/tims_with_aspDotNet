@@ -7,7 +7,7 @@ namespace CECBTIMS.Controllers
     {
         public ActionResult Index()
         {
-            return RedirectToAction("Index", "Programs");
+            return View();
         }
 
         public ActionResult About()
