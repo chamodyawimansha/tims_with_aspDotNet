@@ -90,15 +90,16 @@ namespace CECBTIMS.Controllers
 
         }
 
-//        public async Task<ActionResult> Find()
-//        {
-//            return View();
-//        }
-//
-//        public async Task<ActionResult> FindPost()
-//        {
-//            return View();
-//        }
+        public async Task<ActionResult> Find()
+        {
+            return View();
+        }
+        [HttpPost, ActionName("Find")]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> FindPost()
+        {
+            return View();
+        }
 
         // GET: Programs/Details/5
         public async Task<ActionResult> Details(int? id)

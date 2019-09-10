@@ -91,3 +91,12 @@ body {
 }
 
 .dash-icon i { font-size: 4em; }
+
+.search-by-container {
+    position: relative;
+    width: 100px;
+}
+.search-by {
+    position: absolute;
+    margin-top: -25%;
+}
