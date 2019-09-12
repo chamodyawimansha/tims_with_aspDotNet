@@ -504,11 +504,7 @@
     <Content Include="Views\Programs\Select.cshtml" />
     <Content Include="Views\Employees\Trainees.cshtml" />
     <Content Include="Views\Employees\Single.cshtml" />
-    <Content Include="Views\Files\Upload.cshtml" />
-    <Content Include="Views\Files\Edit.cshtml" />
-    <Content Include="Views\Files\Delete.cshtml" />
     <Content Include="Views\Natures\Create.cshtml" />
-    <Content Include="Views\Files\Index.cshtml" />
     <None Include="Storage\gen\.gitignore" />
     <Content Include="Storage\up\.gitignore" />
     <Content Include="Views\Templates\Create.cshtml" />
