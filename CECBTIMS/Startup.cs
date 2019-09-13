@@ -20,34 +20,33 @@ namespace CECBTIMS
         private void createRolesAndUsers()
         {
             var context = new ApplicationDbContext();
-
             var roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(context));
             var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(context));
-
             // In Startup iam creating first Admin Role and creating a default Admin User     
-            if (!roleManager.RoleExists("Manager"))
+            if (!roleManager.RoleExists("Admin"))
             {
 
-                // first we create Manager Role    
-                var role = new Microsoft.AspNet.Identity.EntityFramework.IdentityRole {Name = "Manager" };
+                // Admin Role    
+                var role = new IdentityRole {Name = "Admin" };
                 roleManager.Create(role);
 
-                var user = new ApplicationUser {UserName = "Manager", Email = "Manager@cecbtims.com"};
-                const string defaultPassword = "A@Z200711";
+                var user = new ApplicationUser {UserName = "Admin", Email = "Admin@timsadmin.com"};
+                const string defaultPassword = "123456789";
 
                 var chkUser = userManager.Create(user, defaultPassword);
                 //Add default User to Role Admin    
                 if (chkUser.Succeeded)
                 {
-                    userManager.AddToRole(user.Id, "Manager");
+                    userManager.AddToRole(user.Id, "Admin");
                 }
             }
             // creating Creating Employee role     
-            if (roleManager.RoleExists("Employee")) return;
+            if (roleManager.RoleExists("user")) return;
             {
-                var role = new Microsoft.AspNet.Identity.EntityFramework.IdentityRole {Name = "Employee"};
+                var role = new IdentityRole {Name = "user"};
                 roleManager.Create(role);
             }
+
 
         }
     }
