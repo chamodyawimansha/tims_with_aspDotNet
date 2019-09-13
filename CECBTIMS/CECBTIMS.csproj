@@ -263,6 +263,10 @@
     <Compile Include="Migrations\201909041128051_ProgramStartsEndTimesNullable.Designer.cs">
       <DependentUpon>201909041128051_ProgramStartsEndTimesNullable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201909131055473_paymentsCreated.cs" />
+    <Compile Include="Migrations\201909131055473_paymentsCreated.Designer.cs">
+      <DependentUpon>201909131055473_paymentsCreated.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Agenda.cs" />
     <Compile Include="Models\BaseCols.cs" />
@@ -582,6 +586,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201909041128051_ProgramStartsEndTimesNullable.resx">
       <DependentUpon>201909041128051_ProgramStartsEndTimesNullable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201909131055473_paymentsCreated.resx">
+      <DependentUpon>201909131055473_paymentsCreated.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
