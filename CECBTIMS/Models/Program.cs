@@ -111,5 +111,6 @@ namespace CECBTIMS.Models
         public virtual ICollection<Document> Documents { get; set; }
         public virtual ICollection<EmploymentCategory> EmploymentCategories { get; set; }
         public virtual ICollection<EmploymentNature> EmploymentNatures { get; set; }
+        public virtual ICollection<Payment> Payments { get; set; }
     }
 }
