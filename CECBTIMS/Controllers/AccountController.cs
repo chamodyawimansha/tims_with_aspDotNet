@@ -132,9 +132,7 @@ namespace CECBTIMS.Controllers
 
             if (result.Succeeded)
             {
-                await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
-
-                await this.UserManager.AddToRoleAsync(user.Id, model.UserRoles);
+                await UserManager.AddToRoleAsync(user.Id, model.UserRoles);
                 //Ends Here     
                 return RedirectToAction("Index", "Account");
             }
