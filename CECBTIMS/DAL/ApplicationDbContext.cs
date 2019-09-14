@@ -61,5 +61,7 @@ namespace CECBTIMS.DAL
         public System.Data.Entity.DbSet<CECBTIMS.Models.DefaultColumn> DefaultColumns { get; set; }
 
         public System.Data.Entity.DbSet<CECBTIMS.Models.Brochure> Brochures { get; set; }
+
+        public System.Data.Entity.DbSet<CECBTIMS.Models.Payment> Payments { get; set; }
     }
 }

@@ -46,8 +46,10 @@ namespace CECBTIMS
                 var role = new IdentityRole {Name = "user"};
                 roleManager.Create(role);
             }
-
-
+//
+//            change the models and controllers according to the web site
+//                delete the record from the database
+//            https://www.c-sharpcorner.com/UploadFile/asmabegam/Asp-Net-mvc-5-security-and-creating-user-role/
         }
     }
 }

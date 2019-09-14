@@ -1,6 +1,10 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Data.Entity;
+using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using CECBTIMS.DAL;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
@@ -14,9 +18,11 @@ namespace CECBTIMS.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
+        private ApplicationDbContext context;
 
         public AccountController()
         {
+            context = new ApplicationDbContext();
         }
 
         public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager )
@@ -83,11 +89,19 @@ namespace CECBTIMS.Controllers
         }
         // GET: /Account/Register
         [AllowAnonymous]
-        public ActionResult Register()
+        public async Task<ActionResult> Register()
         {
-            
+            ViewBag.Name = await context.Roles.Select(n =>
+                new SelectListItem
+                {
+                    Value = n.Id,
+                    Text = n.Name
+                }).ToListAsync();
+
+
             return View();
         }
+
         // POST: /Account/Register
         [HttpPost]
         [AllowAnonymous]
