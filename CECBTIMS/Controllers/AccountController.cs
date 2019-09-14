@@ -67,8 +67,13 @@ namespace CECBTIMS.Controllers
                 return View(users);
             }
 
-            // show only the current user account
-            return Content("Hello");
+            var user = from u in context.Users
+                select u;
+            var currentUserName = User.Identity.GetUserName();
+
+            user = user.Where(p => p.UserName == currentUserName);
+
+            return View(await user.ToListAsync());
         }
         // GET: /Account/Login
         [AllowAnonymous]
