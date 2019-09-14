@@ -10,10 +10,12 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using CECBTIMS.Models;
 using CECBTIMS.ViewModels;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace CECBTIMS.Controllers
 {
     [Authorize]
+//    [Authorize(Roles = "Admin")]
     public class AccountController : Controller
     {
         private ApplicationSignInManager _signInManager;
@@ -57,6 +59,13 @@ namespace CECBTIMS.Controllers
         // List current Users of the System
         public ActionResult Index()
         {
+            // if Administrator show all the accounts
+            if (User.IsInRole("Administrator"))
+            {
+                return Content("Administrator");
+            }
+
+            // show only the current user account
             return Content("Hello");
         }
         // GET: /Account/Login
@@ -72,11 +81,17 @@ namespace CECBTIMS.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Login(LoginViewModel model, string returnUrl)
         {
+
             if (!ModelState.IsValid)
             {
+                ModelState.AddModelError("", "Model State Not Valid Error!");
                 return View(model);
             }
-            var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
+
+            // This doesn't count login failures towards account lockout    
+            // To enable password failures to trigger account lockout, change to shouldLockout: true    
+            var result = await SignInManager.PasswordSignInAsync(model.Username, model.Password, model.RememberMe, shouldLockout: false);
+
             if (result == SignInStatus.Success)
             {
                 return RedirectToLocal(returnUrl);
@@ -94,7 +109,7 @@ namespace CECBTIMS.Controllers
             ViewBag.Name = await context.Roles.Select(n =>
                 new SelectListItem
                 {
-                    Value = n.Id,
+                    Value = n.Name,
                     Text = n.Name
                 }).ToListAsync();
 
@@ -110,17 +125,28 @@ namespace CECBTIMS.Controllers
         {
             if (!ModelState.IsValid) return View(model);
 
-            var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+            var user = new ApplicationUser { UserName = model.Username, Email = model.Email };
             var result = await UserManager.CreateAsync(user, model.Password);
+
             if (result.Succeeded)
             {
-                await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
-                    
-                return RedirectToAction("Index", "Home");
+                await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+
+                await this.UserManager.AddToRoleAsync(user.Id, model.UserRoles);
+                //Ends Here     
+                return RedirectToAction("Index", "Account");
             }
+
+            ViewBag.Name = await context.Roles.Select(n =>
+                new SelectListItem
+                {
+                    Value = n.Id,
+                    Text = n.Name
+                }).ToListAsync();
+
             AddErrors(result);
 
-            // If we got this far, something failed, redisplay form
+            // If we got this far, something failed, redisplay form    
             return View(model);
         }
         // POST: /Account/LogOff
@@ -138,6 +164,35 @@ namespace CECBTIMS.Controllers
             return View();
         }
 
+        //create roles and admin account for the first time
+        protected internal static void createRolesAndUsers()
+        {
+            var context = new ApplicationDbContext();
+            var roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(context));
+            var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(context));
+            // In Startup iam creating first Admin Role and creating a default Admin User     
+            if (!roleManager.RoleExists("Administrator"))
+            {
+                // Admin Role    
+                var role = new IdentityRole { Name = "Administrator" };
+                roleManager.Create(role);
+
+                var user = new ApplicationUser { UserName = "Administrator", Email = "Admin@timsadmin.com" };
+                
+                var chkUser = userManager.Create(user, "password");
+                //Add default User to Role Admin    
+                if (chkUser.Succeeded)
+                {
+                    userManager.AddToRole(user.Id, "Administrator");
+                }
+            }
+            // creating Creating Employee role     
+            if (roleManager.RoleExists("User")) return;
+            {
+                var role = new IdentityRole { Name = "User" };
+                roleManager.Create(role);
+            }
+        }
         protected override void Dispose(bool disposing)
         {
             if (disposing)
