@@ -57,12 +57,14 @@ namespace CECBTIMS.Controllers
             }
         }
         // List current Users of the System
-        public ActionResult Index()
+        public async Task<ActionResult> Index()
         {
             // if Administrator show all the accounts
             if (User.IsInRole("Administrator"))
             {
-                return Content("Administrator");
+                var users = await context.Users.ToListAsync();
+
+                return View(users);
             }
 
             // show only the current user account
@@ -103,8 +105,8 @@ namespace CECBTIMS.Controllers
             }
         }
         // GET: /Account/Register
-        [AllowAnonymous]
-        public async Task<ActionResult> Register()
+        [Authorize(Roles = "Administrator")]
+        public async Task<ActionResult> Create()
         {
             ViewBag.Name = await context.Roles.Select(n =>
                 new SelectListItem
@@ -119,9 +121,9 @@ namespace CECBTIMS.Controllers
 
         // POST: /Account/Register
         [HttpPost]
-        [AllowAnonymous]
+        [Authorize(Roles = "Administrator")]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Register(RegisterViewModel model)
+        public async Task<ActionResult> Create(RegisterViewModel model)
         {
             if (!ModelState.IsValid) return View(model);
 
@@ -140,7 +142,7 @@ namespace CECBTIMS.Controllers
             ViewBag.Name = await context.Roles.Select(n =>
                 new SelectListItem
                 {
-                    Value = n.Id,
+                    Value = n.Name,
                     Text = n.Name
                 }).ToListAsync();
 
