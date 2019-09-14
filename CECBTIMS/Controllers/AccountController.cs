@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
@@ -154,6 +155,25 @@ namespace CECBTIMS.Controllers
             // If we got this far, something failed, redisplay form    
             return View(model);
         }
+
+        public async Task<ActionResult> Edit(string id)
+        {
+            var user = from u in context.Users
+                       select u;
+            var currentUserName = User.Identity.GetUserName();
+            user = user.Where(p => p.Id == id);
+            var us = (await user.ToListAsync()).FirstOrDefault();
+
+            if(us == null) return new HttpNotFoundResult();
+
+            ViewBag.UserId = id;
+
+            //check with old password
+            //confirm password
+
+            return View();
+        }
+
         // POST: /Account/LogOff
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -163,11 +183,6 @@ namespace CECBTIMS.Controllers
             return RedirectToAction("Index", "Home");
         }
         // GET: /Account/ExternalLoginFailure
-        [AllowAnonymous]
-        public ActionResult ExternalLoginFailure()
-        {
-            return View();
-        }
 
         protected override void Dispose(bool disposing)
         {

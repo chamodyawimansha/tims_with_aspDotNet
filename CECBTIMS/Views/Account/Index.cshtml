@@ -12,8 +12,8 @@
                 <h5>User Account Manager</h5>
             </div>
             <div class="float-right">
-                @if(User.IsInRole("Administrator"))
-                { 
+                @if (User.IsInRole("Administrator"))
+                {
                     @Html.ActionLink("New User", $"Create", null, new {@class = "btn btn-secondary"})
                 }
             </div>
@@ -32,10 +32,10 @@
                         <td>@item.UserName</td>
                         <td>@item.Email</td>
                         <td>
-                            reset password
+                            @Html.ActionLink("Edit Password", $"Edit", new {id=item.Id}, new {@class = "btn btn-secondary"})
+
                             edit
                             remove
-                            deactivate
                         </td>
                     </tr>
                 }
