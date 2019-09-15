@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.Entity.Core.Metadata.Edm;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
@@ -197,6 +198,16 @@ namespace CECBTIMS.Controllers
             return View(model);
 
         }
+
+
+
+
+        // reset password 
+        // use above functions and remove comparing the old one with in the database
+
+
+
+
         
 
         // POST: /Account/LogOff
