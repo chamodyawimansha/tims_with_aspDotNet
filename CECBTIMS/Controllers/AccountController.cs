@@ -158,46 +158,46 @@ namespace CECBTIMS.Controllers
 
         public async Task<ActionResult> Edit(string id)
         {
-            if((await GetUser(id)) == null) return new HttpNotFoundResult();
+            if((await UserManager.FindByIdAsync(id)) == null) return new HttpNotFoundResult();
 
             ViewBag.UserId = id;
 
-            //check with old password
-            //confirm password
-
             return View();
         }
-
-        private async Task<ApplicationUser> GetUser(string id)
-        {
-            var user = from u in context.Users
-                select u;
-            var currentUserName = User.Identity.GetUserName();
-            user = user.Where(p => p.Id == id);
-            var us = (await user.ToListAsync()).FirstOrDefault();
-            return us;
-        }
-
+        
         [HttpPost, ActionName("Edit")]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> EditPost(EditPasswordViewModel model)
         {
+            if (!ModelState.IsValid) return View(model);
 
-            //get users username
-            var user = await GetUser(model.Id);
-
+            //get the users
+            var user = await UserManager.FindByIdAsync(model.Id);
+            // compare the current passwords
             var res = UserManager.PasswordHasher.VerifyHashedPassword(user.PasswordHash, model.OldPassword);
 
             if (res == PasswordVerificationResult.Success)
             {
-                return Content("Hello");
-            }
-            
+                var token = await UserManager.GeneratePasswordResetTokenAsync(model.Id);
 
-            ModelState.AddModelError("", "Current password dose not match with the password in the atabase.");
+                var result = await UserManager.ResetPasswordAsync(model.Id, token, model.Password);
+
+                if (result.Succeeded)
+                {
+                    TempData["msg_success"] = "Password Updated";
+                    return RedirectToAction("Index");
+                }
+
+                ViewBag.UserId = model.Id;
+                ModelState.AddModelError("", "Password change failed please try again.");
+                return View(model);
+            }
+                ViewBag.UserId = model.Id;
+                ModelState.AddModelError("", "Current password dose not match with the password in the Database.");
             return View(model);
 
         }
+        
 
         // POST: /Account/LogOff
         [HttpPost]
