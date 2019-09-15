@@ -11,10 +11,7 @@
                 <h5>Create New User Account</h5>
             </div>
             <div class="float-right">
-                @if (User.IsInRole("Administrator"))
-                {
-                    @Html.ActionLink("Back", $"Index", null, new {@class = "btn btn-secondary"})
-                }
+                @Html.ActionLink("Back", $"Index", null, new {@class = "btn btn-secondary"})
             </div>
         </div>
         <div class="card-body">

@@ -5,3 +5,45 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+<div class="col-8 mx-auto mb-lg-5">
+    <div class="card border-primary mb-3">
+        <div class="card-header">
+            <div class="float-left">
+                <h5>Edit User Account Password</h5>
+            </div>
+            <div class="float-right">
+                @Html.ActionLink("Back", $"Index", null, new { @class = "btn btn-secondary" })
+            </div>
+        </div>
+        <div class="card-body">
+
+            @using (Html.BeginForm($"Edit", $"Account", FormMethod.Post))
+            {
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary("", new { @class = "text-danger" })
+
+                <input type="hidden" name="Id" value="@ViewBag.UserId"/>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.OldPassword, new { @class = "control-label" })
+                    @Html.PasswordFor(m => m.OldPassword, new { @class = "form-control" })
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Password, new { @class = "control-label" })
+                    @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.ConfirmPassword, new { @class = "control-label" })
+                    @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control" })
+                </div>
+
+                <div class="form-group float-right">
+                    <input type="submit" class="btn btn-primary" value="Update" />
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

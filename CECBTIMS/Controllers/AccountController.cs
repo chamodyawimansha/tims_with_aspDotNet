@@ -158,13 +158,7 @@ namespace CECBTIMS.Controllers
 
         public async Task<ActionResult> Edit(string id)
         {
-            var user = from u in context.Users
-                       select u;
-            var currentUserName = User.Identity.GetUserName();
-            user = user.Where(p => p.Id == id);
-            var us = (await user.ToListAsync()).FirstOrDefault();
-
-            if(us == null) return new HttpNotFoundResult();
+            if((await GetUser(id)) == null) return new HttpNotFoundResult();
 
             ViewBag.UserId = id;
 
@@ -172,6 +166,37 @@ namespace CECBTIMS.Controllers
             //confirm password
 
             return View();
+        }
+
+        private async Task<ApplicationUser> GetUser(string id)
+        {
+            var user = from u in context.Users
+                select u;
+            var currentUserName = User.Identity.GetUserName();
+            user = user.Where(p => p.Id == id);
+            var us = (await user.ToListAsync()).FirstOrDefault();
+            return us;
+        }
+
+        [HttpPost, ActionName("Edit")]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> EditPost(EditPasswordViewModel model)
+        {
+
+            //get users username
+            var user = await GetUser(model.Id);
+
+            var res = UserManager.PasswordHasher.VerifyHashedPassword(user.PasswordHash, model.OldPassword);
+
+            if (res == PasswordVerificationResult.Success)
+            {
+                return Content("Hello");
+            }
+            
+
+            ModelState.AddModelError("", "Current password dose not match with the password in the atabase.");
+            return View(model);
+
         }
 
         // POST: /Account/LogOff
