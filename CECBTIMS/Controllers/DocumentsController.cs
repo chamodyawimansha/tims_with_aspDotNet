@@ -14,6 +14,7 @@ using CECBTIMS.ViewModels;
 using DocumentFormat.OpenXml.Drawing;
 using DocumentFormat.OpenXml.Packaging;
 using DocumentFormat.OpenXml.Wordprocessing;
+using Microsoft.AspNet.Identity;
 using PagedList.EntityFramework;
 using Document = CECBTIMS.Models.Document;
 using Paragraph = DocumentFormat.OpenXml.Wordprocessing.Paragraph;
@@ -99,8 +100,7 @@ namespace CECBTIMS.Controllers
         {
             var template = await db.Templates.FindAsync(templateId);
             if (template == null) return HttpNotFound();
-
-
+            
             //create New Document Name
             var documentTitle = template.Title + "-" + programId + "-" + DateTime.Now.ToString("MMddyyyyhhmmss");
 
@@ -215,7 +215,8 @@ namespace CECBTIMS.Controllers
                 "Id,Title,Details,FileName,ProgramType,FileType,FileMethod,ProgramId,EmployeeId,DocumentNumber")]
             Document document, TableColumnName[] columns, int templateId, int programId)
         {
-            var path = "";
+            string path;
+
             try
             {
                 // document path of the newly created document from the template
@@ -247,6 +248,7 @@ namespace CECBTIMS.Controllers
 
             if (ModelState.IsValid)
             {
+                document.ApplicationUserId = User.Identity.GetUserId();
                 db.Documents.Add(document);
                 await db.SaveChangesAsync();
                 return RedirectToAction($"Index", $"Documents", new {programId, employeeId = document.EmployeeId});
@@ -397,9 +399,12 @@ namespace CECBTIMS.Controllers
         {
             if (ModelState.IsValid)
             {
+                document.UpdatedBy = User.Identity.GetUserName();
+                document.UpdatedAt = DateTime.Today;
                 db.Entry(document).State = EntityState.Modified;
+
                 await db.SaveChangesAsync();
-                return RedirectToAction("Index");
+                return RedirectToAction($"Index");
             }
 
             ViewBag.ProgramId = new SelectList(db.Programs, "Id", "Title", document.ProgramId);
