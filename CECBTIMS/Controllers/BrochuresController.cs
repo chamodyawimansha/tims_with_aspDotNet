@@ -11,6 +11,7 @@ using System.Web.Mvc;
 using CECBTIMS.DAL;
 using CECBTIMS.Models;
 using CECBTIMS.Models.Enums;
+using Microsoft.AspNet.Identity;
 
 namespace CECBTIMS.Controllers
 {
@@ -57,6 +58,7 @@ namespace CECBTIMS.Controllers
         {
             if(programId == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             var program = await db.Programs.FindAsync(programId);
+
             if (program == null)
             {
                 return HttpNotFound();
@@ -117,6 +119,7 @@ namespace CECBTIMS.Controllers
             brochure.FileType = (FileType)Enum.Parse(typeof(FileType), fileExtension);
             brochure.OriginalFileName = file.FileName;
             brochure.FileName = fileName;
+            brochure.ApplicationUserId = User.Identity.GetUserId();
             //save the template details in the database
             try
             {

@@ -9,6 +9,7 @@ using System.Web;
 using System.Web.Mvc;
 using CECBTIMS.DAL;
 using CECBTIMS.Models;
+using Microsoft.AspNet.Identity;
 
 namespace CECBTIMS.Controllers
 {
@@ -46,6 +47,7 @@ namespace CECBTIMS.Controllers
         {
             if (ModelState.IsValid)
             {
+                cost.ApplicationUserId = User.Identity.GetUserId();
                 db.Costs.Add(cost);
                 await db.SaveChangesAsync();
             }
@@ -78,6 +80,8 @@ namespace CECBTIMS.Controllers
         {
             if (ModelState.IsValid)
             {
+                cost.UpdatedBy = User.Identity.GetUserName();
+                cost.UpdatedAt = DateTime.Today;
                 db.Entry(cost).State = EntityState.Modified;
                 await db.SaveChangesAsync();
             }
