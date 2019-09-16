@@ -12,6 +12,7 @@ using CECBTIMS.DAL;
 using CECBTIMS.Models;
 using CECBTIMS.Models.Enums;
 using Microsoft.Ajax.Utilities;
+using Microsoft.AspNet.Identity;
 
 namespace CECBTIMS.Controllers
 {
@@ -108,6 +109,7 @@ namespace CECBTIMS.Controllers
 
             try
             {
+                template.ApplicationUserId = User.Identity.GetUserId();
                 db.Templates.Add(template);
                 await db.SaveChangesAsync();
             }
@@ -190,7 +192,8 @@ namespace CECBTIMS.Controllers
 
             if (!ModelState.IsValid) return View(template);
 
-
+            template.UpdatedBy = User.Identity.GetUserName();
+            template.UpdatedAt = DateTime.Today;
             db.Entry(template).State = EntityState.Modified;
             await db.SaveChangesAsync();
 
