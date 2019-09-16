@@ -279,6 +279,7 @@ namespace CECBTIMS.Controllers
                 try
                 {
                     programToUpdate.UpdatedBy = User.Identity.GetUserName();
+                    programToUpdate.UpdatedAt = DateTime.Today;
                     db.Entry(programToUpdate).OriginalValues["RowVersion"] = rowVersion;
                     await db.SaveChangesAsync();
 

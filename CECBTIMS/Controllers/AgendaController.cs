@@ -9,6 +9,7 @@ using System.Web;
 using System.Web.Mvc;
 using CECBTIMS.DAL;
 using CECBTIMS.Models;
+using Microsoft.AspNet.Identity;
 
 namespace CECBTIMS.Controllers
 {
@@ -36,6 +37,7 @@ namespace CECBTIMS.Controllers
         {
             if (ModelState.IsValid)
             {
+                agenda.ApplicationUserId = User.Identity.GetUserId();
                 db.Agenda.Add(agenda);
                 await db.SaveChangesAsync();
             }
@@ -66,6 +68,8 @@ namespace CECBTIMS.Controllers
         {
             if (ModelState.IsValid)
             {
+                agenda.UpdatedBy = User.Identity.GetUserName();
+                agenda.UpdatedAt = DateTime.Today;
                 db.Entry(agenda).State = EntityState.Modified;
                 await db.SaveChangesAsync();
             }
