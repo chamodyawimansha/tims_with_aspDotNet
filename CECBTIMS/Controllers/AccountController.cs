@@ -192,16 +192,6 @@ namespace CECBTIMS.Controllers
             return View(model);
         }
 
-
-        // only admin account can access
-        // reset password 
-        // use above functions and remove comparing the old one with in the database
-
-        //remove a account 
-
-        // if created records lock 
-
-        // lock a account
         [Authorize(Roles = "Administrator")]
         public async Task<ActionResult> ResetPassword(string id)
         {
@@ -242,28 +232,59 @@ namespace CECBTIMS.Controllers
             ModelState.AddModelError("", "Password Reset failed please try again.");
             return View(model);
         }
-        //
-        //        [HttpPost]
-        //        [ValidateAntiForgeryToken]
-        //        [Authorize(Roles = "Administrator")]
-        //        public async Task<ActionResult> Lock()
-        //        {
-        //
-        //        }
-        //        [HttpPost]
-        //        [ValidateAntiForgeryToken]
-        //        [Authorize(Roles = "Administrator")]
-        //        public async Task<ActionResult> Unlock()
-        //        {
-        //        }
-        //
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Administrator")]
+        public async Task<ActionResult> Lock(string id)
+        {
+            var user = await UserManager.FindByIdAsync(id);
+            if (user == null) return new HttpNotFoundResult();
+
+            if ((user.Id).Equals(User.Identity.GetUserId()))
+            {
+                TempData["msg_fail"] = "You can't Lock the account currently Logged in";
+                return RedirectToAction($"Index");
+            }
+
+            var result = await UserManager.SetLockoutEnabledAsync(user.Id, true);
+
+            if (result.Succeeded)
+            {
+                TempData["msg_success"] = user.UserName + "'s user account Locked";
+                return RedirectToAction($"Index");
+            }
+
+            TempData["msg_fail"] = "User account lock failed. Please try again";
+            return RedirectToAction($"Index");
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Administrator")]
+        public async Task<ActionResult> Unlock(string id)
+        {
+            var user = await UserManager.FindByIdAsync(id);
+            if (user == null) return new HttpNotFoundResult();
+
+            var result = await UserManager.SetLockoutEnabledAsync(user.Id, false);
+
+            if (result.Succeeded)
+            {
+                TempData["msg_success"] = user.UserName + "'s user account Unlocked";
+                return RedirectToAction($"Index");
+            }
+
+            TempData["msg_fail"] = "User account unlock failed. Please try again";
+            return RedirectToAction($"Index");
+        }
+        
 
 
         [Authorize(Roles = "Administrator")]
         public async Task<ActionResult> Delete(string id)
         {
             var user = await UserManager.FindByIdAsync(id);
-
             if (user == null) return new HttpNotFoundResult();
 
             return View(new DeleteViewModel()
@@ -288,8 +309,6 @@ namespace CECBTIMS.Controllers
                 ModelState.AddModelError("", "The user can't be found in the database.'");
                 return View(model);
             }
-
-            ;
 
             // this stops user from delete the only admin account.
             if ((user.Id).Equals(User.Identity.GetUserId()))

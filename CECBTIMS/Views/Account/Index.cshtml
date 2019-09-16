@@ -49,11 +49,25 @@
                                 @Html.ActionLink("Reset Password", $"ResetPassword", new {id = item.Id}, new {@class = "btn btn-sm btn-primary mr-sm-1"})
                                 if (item.LockoutEnabled)
                                 {
-                                    @Html.ActionLink("Unlock", $"Unlock", new {id = item.Id}, new {@class = "btn btn-sm btn-warning  mr-sm-1"})
+                                    using (Html.BeginForm($"Unlock", $"Account", null,
+                                        FormMethod.Post, new {@class = "d-inline-block"}))
+                                    {
+                                        @Html.AntiForgeryToken()
+                                        <input type="hidden" name="id" value="@item.Id"/>
+                                        <input type="submit" value="Unlock" class="btn btn-warning btn-sm mr-sm-1 d-inline-block"/>
+                                    }
                                 }
                                 else
                                 {
-                                    @Html.ActionLink("Lock", $"Lock", new {id = item.Id}, new {@class = "btn btn-sm btn-warning  mr-sm-1"})
+
+                                    using (Html.BeginForm($"Lock", $"Account", null,
+                                        FormMethod.Post, new {@class = "d-inline-block"}))
+                                    {
+                                        @Html.AntiForgeryToken()
+                                        <input type="hidden" name="id" value="@item.Id"/>
+                                        <input type="submit" value="Lock" class="btn btn-warning btn-sm mr-sm-1 d-inline-block"/>
+                                    }
+
                                 }
                                 @Html.ActionLink("Remove", $"Delete", new {id = item.Id}, new {@class = "btn btn-sm btn-danger"})
                             }
