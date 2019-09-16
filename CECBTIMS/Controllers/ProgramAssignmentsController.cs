@@ -11,6 +11,7 @@ using CECBTIMS.DAL;
 using CECBTIMS.Models;
 using CECBTIMS.Models.Enums;
 using Microsoft.Ajax.Utilities;
+using Microsoft.AspNet.Identity;
 
 namespace CECBTIMS.Controllers
 {
@@ -91,6 +92,7 @@ namespace CECBTIMS.Controllers
         {
             if (!ModelState.IsValid) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 
+            programAssignment.ApplicationUserId = User.Identity.GetUserId();
             db.ProgramAssignments.Add(programAssignment);
             await db.SaveChangesAsync();
 
