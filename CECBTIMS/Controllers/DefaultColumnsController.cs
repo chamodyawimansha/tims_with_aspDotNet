@@ -9,6 +9,7 @@ using System.Web;
 using System.Web.Mvc;
 using CECBTIMS.DAL;
 using CECBTIMS.Models;
+using Microsoft.AspNet.Identity;
 
 namespace CECBTIMS.Controllers
 {
@@ -54,6 +55,7 @@ namespace CECBTIMS.Controllers
 
             if (ModelState.IsValid)
             {
+                defaultColumn.ApplicationUserId = User.Identity.GetUserId();
                 db.DefaultColumns.Add(defaultColumn);
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index", new { templateId = defaultColumn.TemplateId});
