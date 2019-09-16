@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.Core.Metadata.Edm;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
@@ -250,6 +251,8 @@ namespace CECBTIMS.Controllers
         [Authorize(Roles = "Administrator")]
         public async Task<ActionResult> DeletePost(DeleteViewModel model)
         {
+            if (!ModelState.IsValid) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+
             var user = await UserManager.FindByIdAsync(model.Id);
 
             if (user == null)
@@ -257,11 +260,12 @@ namespace CECBTIMS.Controllers
                 ModelState.AddModelError("", "The user can't be found in the database.'");
                 return View(model);
             };
+
             // this stops user from delete the only admin account.
-            if (user.Id.Equals(User.Identity.GetUserId()))
+            if ((user.Id).Equals(User.Identity.GetUserId()))
             {
                 TempData["msg_fail"] = "You can't delete the account you are logged in.";
-                return RedirectToAction("Index");
+                return RedirectToAction($"Index");
             }
             // check created records
             if (
@@ -273,13 +277,33 @@ namespace CECBTIMS.Controllers
             )
             {
                 TempData["msg_fail"] = "Delete Failed. The selected user account identified as a active account. try Locking the account.";
-                return RedirectToAction("Index");
+                return RedirectToAction($"Index");
             }
 
+            var logins = user.Logins;
+            var rolesForUser = await UserManager.GetRolesAsync(user.Id);
 
+            using (var transaction = context.Database.BeginTransaction())
+            {
+                foreach (var login in logins.ToList())
+                {
+                    await UserManager.RemoveLoginAsync(login.UserId, new UserLoginInfo(login.LoginProvider, login.ProviderKey));
+                }
+
+                if (rolesForUser.Any())
+                {
+                    foreach (var item in rolesForUser.ToList())
+                    {
+                        var result = await UserManager.RemoveFromRoleAsync(user.Id, item);
+                    }
+                }
+
+                await UserManager.DeleteAsync(user);
+                transaction.Commit();
+            }
 
             TempData["msg_success"] = "User account deleted successfully.";
-            return RedirectToAction("Index");
+            return RedirectToAction($"Index");
 
         }
 
