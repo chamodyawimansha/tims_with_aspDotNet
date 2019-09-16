@@ -485,6 +485,7 @@
     <Content Include="Views\Account\Edit.cshtml" />
     <Content Include="Views\Shared\_Alerts.cshtml" />
     <Content Include="Views\Account\Delete.cshtml" />
+    <Content Include="Views\Account\ResetPassword.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

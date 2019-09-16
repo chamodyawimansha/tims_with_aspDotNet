@@ -30,7 +30,7 @@ namespace CECBTIMS.Controllers
             context = new ApplicationDbContext();
         }
 
-        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager )
+        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
         {
             UserManager = userManager;
             SignInManager = signInManager;
@@ -38,27 +38,16 @@ namespace CECBTIMS.Controllers
 
         public ApplicationSignInManager SignInManager
         {
-            get
-            {
-                return _signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
-            }
-            private set 
-            { 
-                _signInManager = value; 
-            }
+            get { return _signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>(); }
+            private set { _signInManager = value; }
         }
 
         public ApplicationUserManager UserManager
         {
-            get
-            {
-                return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
-            }
-            private set
-            {
-                _userManager = value;
-            }
+            get { return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>(); }
+            private set { _userManager = value; }
         }
+
         // List current Users of the System
         public async Task<ActionResult> Index()
         {
@@ -78,6 +67,7 @@ namespace CECBTIMS.Controllers
 
             return View(await user.ToListAsync());
         }
+
         // GET: /Account/Login
         [AllowAnonymous]
         public ActionResult Login(string returnUrl)
@@ -85,13 +75,13 @@ namespace CECBTIMS.Controllers
             ViewBag.ReturnUrl = returnUrl;
             return View();
         }
+
         // POST: /Account/Login
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Login(LoginViewModel model, string returnUrl)
         {
-
             if (!ModelState.IsValid)
             {
                 ModelState.AddModelError("", "Model State Not Valid Error!");
@@ -100,7 +90,8 @@ namespace CECBTIMS.Controllers
 
             // This doesn't count login failures towards account lockout    
             // To enable password failures to trigger account lockout, change to shouldLockout: true    
-            var result = await SignInManager.PasswordSignInAsync(model.Username, model.Password, model.RememberMe, shouldLockout: true);
+            var result = await SignInManager.PasswordSignInAsync(model.Username, model.Password, model.RememberMe,
+                shouldLockout: true);
 
             if (result == SignInStatus.Success)
             {
@@ -112,6 +103,7 @@ namespace CECBTIMS.Controllers
                 return View(model);
             }
         }
+
         // GET: /Account/Register
         [Authorize(Roles = "Administrator")]
         public async Task<ActionResult> Create()
@@ -135,7 +127,7 @@ namespace CECBTIMS.Controllers
         {
             if (!ModelState.IsValid) return View(model);
 
-            var user = new ApplicationUser { UserName = model.Username, Email = model.Email };
+            var user = new ApplicationUser {UserName = model.Username, Email = model.Email};
             var result = await UserManager.CreateAsync(user, model.Password);
 
             if (result.Succeeded)
@@ -160,16 +152,16 @@ namespace CECBTIMS.Controllers
 
         public async Task<ActionResult> Edit(string id)
         {
-            if((await UserManager.FindByIdAsync(id)) == null) return new HttpNotFoundResult();
-            
+            if ((await UserManager.FindByIdAsync(id)) == null) return new HttpNotFoundResult();
+
             ViewBag.UserId = id;
 
             return View();
         }
-        
+
         [HttpPost, ActionName("Edit")]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> EditPost(EditPasswordViewModel model)
+        public async Task<ActionResult> EditConfirmed(EditPasswordViewModel model)
         {
             if (!ModelState.IsValid) return View(model);
 
@@ -194,12 +186,11 @@ namespace CECBTIMS.Controllers
                 ModelState.AddModelError("", "Password change failed please try again.");
                 return View(model);
             }
-                ViewBag.UserId = model.Id;
-                ModelState.AddModelError("", "Current password dose not match with the password in the Database.");
+
+            ViewBag.UserId = model.Id;
+            ModelState.AddModelError("", "Current password dose not match with the password in the Database.");
             return View(model);
-
         }
-
 
 
         // only admin account can access
@@ -211,33 +202,70 @@ namespace CECBTIMS.Controllers
         // if created records lock 
 
         // lock a account
-//        [Authorize(Roles = "Administrator")]
-//        public async Task<ActionResult> RestPassword()
-//        {
-//        }
-//
-//        [HttpPost]
-//        [ValidateAntiForgeryToken]
-//        [Authorize(Roles = "Administrator")]
-//        public async Task<ActionResult> Unlock()
-//        {
-//        }
-//
-//        [HttpPost]
-//        [ValidateAntiForgeryToken]
-//        [Authorize(Roles = "Administrator")]
-//        public async Task<ActionResult> Lock()
-//        {
-//
-//        }
+        [Authorize(Roles = "Administrator")]
+        public async Task<ActionResult> ResetPassword(string id)
+        {
+            var user = await UserManager.FindByIdAsync(id);
+            if (user == null) return new HttpNotFoundResult();
+
+            if (!(user.Id).Equals(User.Identity.GetUserId()))
+                return View(new ResetPasswordViewModel()
+                {
+                    Id = user.Id
+                });
+
+
+            TempData["msg_fail"] = "You can't reset user account password you currently logged in. Please try Edit the password.";
+            return RedirectToAction($"Index");
+        }
+
+        [HttpPost, ActionName("ResetPassword")]
+        [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Administrator")]
+        public async Task<ActionResult> ResetPasswordConfirmed(ResetPasswordViewModel model)
+        {
+            if (!ModelState.IsValid) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+
+            var user = await UserManager.FindByIdAsync(model.Id);
+            if (user == null) return new HttpNotFoundResult();
+
+            var token = await UserManager.GeneratePasswordResetTokenAsync(model.Id);
+
+            var result = await UserManager.ResetPasswordAsync(model.Id, token, model.Password);
+
+            if (result.Succeeded)
+            {
+                TempData["msg_success"] = "Password Updated";
+                return RedirectToAction($"Index");
+            }
+
+            ModelState.AddModelError("", "Password Reset failed please try again.");
+            return View(model);
+        }
+        //
+        //        [HttpPost]
+        //        [ValidateAntiForgeryToken]
+        //        [Authorize(Roles = "Administrator")]
+        //        public async Task<ActionResult> Lock()
+        //        {
+        //
+        //        }
+        //        [HttpPost]
+        //        [ValidateAntiForgeryToken]
+        //        [Authorize(Roles = "Administrator")]
+        //        public async Task<ActionResult> Unlock()
+        //        {
+        //        }
+        //
+
 
         [Authorize(Roles = "Administrator")]
         public async Task<ActionResult> Delete(string id)
         {
             var user = await UserManager.FindByIdAsync(id);
 
-            if ( user == null) return new HttpNotFoundResult();
-            
+            if (user == null) return new HttpNotFoundResult();
+
             return View(new DeleteViewModel()
             {
                 Id = user.Id,
@@ -249,7 +277,7 @@ namespace CECBTIMS.Controllers
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Administrator")]
-        public async Task<ActionResult> DeletePost(DeleteViewModel model)
+        public async Task<ActionResult> DeleteConfirmd(DeleteViewModel model)
         {
             if (!ModelState.IsValid) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 
@@ -259,7 +287,9 @@ namespace CECBTIMS.Controllers
             {
                 ModelState.AddModelError("", "The user can't be found in the database.'");
                 return View(model);
-            };
+            }
+
+            ;
 
             // this stops user from delete the only admin account.
             if ((user.Id).Equals(User.Identity.GetUserId()))
@@ -267,6 +297,7 @@ namespace CECBTIMS.Controllers
                 TempData["msg_fail"] = "You can't delete the account you are logged in.";
                 return RedirectToAction($"Index");
             }
+
             // check created records
             if (
                 user.Programs.Any() || user.Agendas.Any() || user.Brochures.Any() || user.Costs.Any() ||
@@ -276,7 +307,8 @@ namespace CECBTIMS.Controllers
                 user.EmploymentCategories.Any() || user.EmploymentNatures.Any() || user.TargetGroups.Any()
             )
             {
-                TempData["msg_fail"] = "Delete Failed. The selected user account identified as a active account. try Locking the account.";
+                TempData["msg_fail"] =
+                    "Delete Failed. The selected user account identified as a active account. try Locking the account.";
                 return RedirectToAction($"Index");
             }
 
@@ -287,7 +319,8 @@ namespace CECBTIMS.Controllers
             {
                 foreach (var login in logins.ToList())
                 {
-                    await UserManager.RemoveLoginAsync(login.UserId, new UserLoginInfo(login.LoginProvider, login.ProviderKey));
+                    await UserManager.RemoveLoginAsync(login.UserId,
+                        new UserLoginInfo(login.LoginProvider, login.ProviderKey));
                 }
 
                 if (rolesForUser.Any())
@@ -304,7 +337,6 @@ namespace CECBTIMS.Controllers
 
             TempData["msg_success"] = "User account deleted successfully.";
             return RedirectToAction($"Index");
-
         }
 
 
@@ -339,15 +371,13 @@ namespace CECBTIMS.Controllers
         }
 
         #region Helpers
+
         // Used for XSRF protection when adding external logins
         private const string XsrfKey = "XsrfId";
 
         private IAuthenticationManager AuthenticationManager
         {
-            get
-            {
-                return HttpContext.GetOwinContext().Authentication;
-            }
+            get { return HttpContext.GetOwinContext().Authentication; }
         }
 
         private void AddErrors(IdentityResult result)
@@ -364,6 +394,7 @@ namespace CECBTIMS.Controllers
             {
                 return Redirect(returnUrl);
             }
+
             return RedirectToAction("Index", "Home");
         }
 
@@ -387,14 +418,16 @@ namespace CECBTIMS.Controllers
 
             public override void ExecuteResult(ControllerContext context)
             {
-                var properties = new AuthenticationProperties { RedirectUri = RedirectUri };
+                var properties = new AuthenticationProperties {RedirectUri = RedirectUri};
                 if (UserId != null)
                 {
                     properties.Dictionary[XsrfKey] = UserId;
                 }
+
                 context.HttpContext.GetOwinContext().Authentication.Challenge(properties, LoginProvider);
             }
         }
+
         #endregion
     }
 }
