@@ -13,19 +13,19 @@ namespace CECBTIMS.Models
 
             set => this._createdAt = value;
         }
-
         private DateTime? _createdAt = null;
+
         [Display(Name = "Updated On")]
         public DateTime? UpdatedAt { get; set; }
         [Display(Name = "Created By")]
-        public string CreatedByApplicationUserId { get; set; }
+        public string ApplicationUserId { get; set; }
 
         [Display(Name = "Updated By")]
         public string UpdatedBy { get; set; }
         [Timestamp]
         public byte[] RowVersion { get; set; } // For optimistic concurrency;
 
-        public virtual ApplicationUser CreatedByApplicationUser { get; set; }
+        public virtual ApplicationUser CreatedBy { get; set; }
 
 
 

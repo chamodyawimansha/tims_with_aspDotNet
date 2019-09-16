@@ -17,7 +17,6 @@ namespace CECBTIMS.Controllers
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
-
         // GET: Agenda/Create
         public ActionResult Create(int? programId, string programTitle)
         {

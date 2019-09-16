@@ -215,61 +215,9 @@
     <Compile Include="Migrations\201907101403094_initialMigration.Designer.cs">
       <DependentUpon>201907101403094_initialMigration.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201908180249533_initialTimesMigration.cs" />
-    <Compile Include="Migrations\201908180249533_initialTimesMigration.Designer.cs">
-      <DependentUpon>201908180249533_initialTimesMigration.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201908180541155_templateSomeReuired.cs" />
-    <Compile Include="Migrations\201908180541155_templateSomeReuired.Designer.cs">
-      <DependentUpon>201908180541155_templateSomeReuired.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201908201526170_EnumAddedToDefaultColumn.cs" />
-    <Compile Include="Migrations\201908201526170_EnumAddedToDefaultColumn.Designer.cs">
-      <DependentUpon>201908201526170_EnumAddedToDefaultColumn.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201908221525105_documentNumberAddedToDocumentModel.cs" />
-    <Compile Include="Migrations\201908221525105_documentNumberAddedToDocumentModel.Designer.cs">
-      <DependentUpon>201908221525105_documentNumberAddedToDocumentModel.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201908261431381_ProgramStartAndEndTimeAdded.cs" />
-    <Compile Include="Migrations\201908261431381_ProgramStartAndEndTimeAdded.Designer.cs">
-      <DependentUpon>201908261431381_ProgramStartAndEndTimeAdded.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201908271002540_IdontKnowWhatTheHackIsGoinOn.cs" />
-    <Compile Include="Migrations\201908271002540_IdontKnowWhatTheHackIsGoinOn.Designer.cs">
-      <DependentUpon>201908271002540_IdontKnowWhatTheHackIsGoinOn.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201908271032303_EmployeeRemovedFromTheDb.cs" />
-    <Compile Include="Migrations\201908271032303_EmployeeRemovedFromTheDb.Designer.cs">
-      <DependentUpon>201908271032303_EmployeeRemovedFromTheDb.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201908271250462_MemberTypeAddedTothePrograAssignment.cs" />
-    <Compile Include="Migrations\201908271250462_MemberTypeAddedTothePrograAssignment.Designer.cs">
-      <DependentUpon>201908271250462_MemberTypeAddedTothePrograAssignment.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201908271531292_EmployeeIdAddedForDocument.cs" />
-    <Compile Include="Migrations\201908271531292_EmployeeIdAddedForDocument.Designer.cs">
-      <DependentUpon>201908271531292_EmployeeIdAddedForDocument.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201909010648436_singleOrgforSingleProgram.cs" />
-    <Compile Include="Migrations\201909010648436_singleOrgforSingleProgram.Designer.cs">
-      <DependentUpon>201909010648436_singleOrgforSingleProgram.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201909041109444_ClosingDateisRequired.cs" />
-    <Compile Include="Migrations\201909041109444_ClosingDateisRequired.Designer.cs">
-      <DependentUpon>201909041109444_ClosingDateisRequired.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201909041128051_ProgramStartsEndTimesNullable.cs" />
-    <Compile Include="Migrations\201909041128051_ProgramStartsEndTimesNullable.Designer.cs">
-      <DependentUpon>201909041128051_ProgramStartsEndTimesNullable.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201909131055473_paymentsCreated.cs" />
-    <Compile Include="Migrations\201909131055473_paymentsCreated.Designer.cs">
-      <DependentUpon>201909131055473_paymentsCreated.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201909160240401_ApplicationUserAddedToBaseCols.cs" />
-    <Compile Include="Migrations\201909160240401_ApplicationUserAddedToBaseCols.Designer.cs">
-      <DependentUpon>201909160240401_ApplicationUserAddedToBaseCols.cs</DependentUpon>
+    <Compile Include="Migrations\201909160302340_InitialTimsMigration.cs" />
+    <Compile Include="Migrations\201909160302340_InitialTimsMigration.Designer.cs">
+      <DependentUpon>201909160302340_InitialTimsMigration.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Agenda.cs" />
@@ -539,7 +487,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Categories\" />
     <Folder Include="Views\Payments\" />
   </ItemGroup>
   <ItemGroup>
@@ -549,47 +496,8 @@
     <EmbeddedResource Include="Migrations\201907101403094_initialMigration.resx">
       <DependentUpon>201907101403094_initialMigration.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201908180249533_initialTimesMigration.resx">
-      <DependentUpon>201908180249533_initialTimesMigration.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201908180541155_templateSomeReuired.resx">
-      <DependentUpon>201908180541155_templateSomeReuired.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201908201526170_EnumAddedToDefaultColumn.resx">
-      <DependentUpon>201908201526170_EnumAddedToDefaultColumn.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201908221525105_documentNumberAddedToDocumentModel.resx">
-      <DependentUpon>201908221525105_documentNumberAddedToDocumentModel.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201908261431381_ProgramStartAndEndTimeAdded.resx">
-      <DependentUpon>201908261431381_ProgramStartAndEndTimeAdded.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201908271002540_IdontKnowWhatTheHackIsGoinOn.resx">
-      <DependentUpon>201908271002540_IdontKnowWhatTheHackIsGoinOn.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201908271032303_EmployeeRemovedFromTheDb.resx">
-      <DependentUpon>201908271032303_EmployeeRemovedFromTheDb.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201908271250462_MemberTypeAddedTothePrograAssignment.resx">
-      <DependentUpon>201908271250462_MemberTypeAddedTothePrograAssignment.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201908271531292_EmployeeIdAddedForDocument.resx">
-      <DependentUpon>201908271531292_EmployeeIdAddedForDocument.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201909010648436_singleOrgforSingleProgram.resx">
-      <DependentUpon>201909010648436_singleOrgforSingleProgram.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201909041109444_ClosingDateisRequired.resx">
-      <DependentUpon>201909041109444_ClosingDateisRequired.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201909041128051_ProgramStartsEndTimesNullable.resx">
-      <DependentUpon>201909041128051_ProgramStartsEndTimesNullable.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201909131055473_paymentsCreated.resx">
-      <DependentUpon>201909131055473_paymentsCreated.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201909160240401_ApplicationUserAddedToBaseCols.resx">
-      <DependentUpon>201909160240401_ApplicationUserAddedToBaseCols.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201909160302340_InitialTimsMigration.resx">
+      <DependentUpon>201909160302340_InitialTimsMigration.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
