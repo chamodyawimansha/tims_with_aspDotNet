@@ -9,6 +9,7 @@ using System.Web;
 using System.Web.Mvc;
 using CECBTIMS.DAL;
 using CECBTIMS.Models;
+using Microsoft.AspNet.Identity;
 using PagedList.EntityFramework;
 
 namespace CECBTIMS.Controllers
@@ -75,7 +76,7 @@ namespace CECBTIMS.Controllers
             Organizer organizer, int? programId)
         {
             if (!ModelState.IsValid) return View(organizer);
-
+            organizer.ApplicationUserId = User.Identity.GetUserId();
             db.Organizers.Add(organizer);
             await db.SaveChangesAsync();
 
@@ -110,9 +111,11 @@ namespace CECBTIMS.Controllers
         {
             if (ModelState.IsValid)
             {
+                organizer.UpdatedBy = User.Identity.GetUserName();
+                organizer.UpdatedAt = DateTime.Today;
                 db.Entry(organizer).State = EntityState.Modified;
                 await db.SaveChangesAsync();
-                return RedirectToAction("Index");
+                return RedirectToAction($"Index");
             }
 
             return View(organizer);
