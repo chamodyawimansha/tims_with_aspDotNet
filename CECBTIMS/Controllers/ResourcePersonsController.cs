@@ -9,6 +9,7 @@ using System.Web;
 using System.Web.Mvc;
 using CECBTIMS.DAL;
 using CECBTIMS.Models;
+using Microsoft.AspNet.Identity;
 
 namespace CECBTIMS.Controllers
 {
@@ -56,6 +57,7 @@ namespace CECBTIMS.Controllers
         {
             if (ModelState.IsValid)
             {
+                resourcePerson.ApplicationUserId = User.Identity.GetUserId();
                 db.ResourcePersons.Add(resourcePerson);
                 await db.SaveChangesAsync();
             }
@@ -68,10 +70,10 @@ namespace CECBTIMS.Controllers
         {
             if (id == null || programId == null)
             {
-                return new System.Web.Mvc.HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            ResourcePerson resourcePerson = await db.ResourcePersons.FindAsync(programId);
-            Program program = await db.Programs.FindAsync(id);
+            var resourcePerson = await db.ResourcePersons.FindAsync(programId);
+            var program = await db.Programs.FindAsync(id);
             if (resourcePerson == null || program == null)
             {
                 return HttpNotFound();
@@ -90,6 +92,8 @@ namespace CECBTIMS.Controllers
         {
             if (ModelState.IsValid)
             {
+                resourcePerson.UpdatedBy = User.Identity.GetUserName();
+                resourcePerson.UpdatedAt = DateTime.Today;
                 db.Entry(resourcePerson).State = EntityState.Modified;
                 await db.SaveChangesAsync();
 
