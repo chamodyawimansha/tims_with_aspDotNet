@@ -392,7 +392,7 @@ namespace CECBTIMS.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Edit(
             [Bind(Include =
-                "Id,Title,Details,FileName,ProgramType,FileType,FileMethod,ProgramId,CreatedAt,UpdatedAt,CreatedBy,UpdatedBy,RowVersion")]
+                "Id,Title,Details,FileName,ProgramType,FileType,FileMethod,ProgramId,CreatedAt,UpdatedAt,CreatedByApplicationUserId,UpdatedBy,RowVersion")]
             Document document)
         {
             if (ModelState.IsValid)

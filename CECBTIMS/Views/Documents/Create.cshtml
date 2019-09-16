@@ -17,7 +17,7 @@
             </div>
             <div class="card-body">
                 @Html.ValidationSummary(true, "", new {@class = "text-danger"})
-                @* Id,Title,Details,FileName,ProgramType,FileType,FileMethod,ProgramId,CreatedAt,UpdatedAt,CreatedBy,UpdatedBy,RowVersion *@
+                @* Id,Title,Details,FileName,ProgramType,FileType,FileMethod,ProgramId,CreatedAt,UpdatedAt,CreatedByApplicationUserId,UpdatedBy,RowVersion *@
                 @Html.AntiForgeryToken()
                 <input type="hidden" name="templateId" value="@Model.Template.Id" />
                 <input type="hidden" name="programId" value="@ViewBag.ProgramId" />

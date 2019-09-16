@@ -201,9 +201,15 @@ namespace CECBTIMS.Controllers
 
 
 
-
+        // only admin account can access
         // reset password 
         // use above functions and remove comparing the old one with in the database
+
+        //remove a account 
+
+        // if created records lock 
+
+        // lock a account
 
 
 

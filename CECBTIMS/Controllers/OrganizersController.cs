@@ -71,7 +71,7 @@ namespace CECBTIMS.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create(
-            [Bind(Include = "Id,Name,CreatedAt,UpdatedAt,CreatedBy,UpdatedBy,RowVersion")]
+            [Bind(Include = "Id,Name,CreatedAt,UpdatedAt,CreatedByApplicationUserId,UpdatedBy,RowVersion")]
             Organizer organizer, int? programId)
         {
             if (!ModelState.IsValid) return View(organizer);
@@ -105,7 +105,7 @@ namespace CECBTIMS.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Edit(
-            [Bind(Include = "Id,Name,CreatedAt,UpdatedAt,CreatedBy,UpdatedBy,RowVersion")]
+            [Bind(Include = "Id,Name,CreatedAt,UpdatedAt,CreatedByApplicationUserId,UpdatedBy,RowVersion")]
             Organizer organizer)
         {
             if (ModelState.IsValid)

@@ -35,7 +35,7 @@
                             @Html.DisplayFor(modelItem => item.CreatedAt)
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.CreatedBy)
+                            @Html.DisplayFor(modelItem => item.CreatedByApplicationUserId)
                         </td>
                         <td>
                             @using (Html.BeginForm($"Delete", $"DefaultColumns", null,
