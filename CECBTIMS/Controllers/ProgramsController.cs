@@ -12,6 +12,7 @@ using System.Web.Mvc;
 using CECBTIMS.DAL;
 using CECBTIMS.Models;
 using CECBTIMS.Models.Enums;
+using Microsoft.AspNet.Identity;
 using PagedList.EntityFramework;
 
 namespace CECBTIMS.Controllers
@@ -216,6 +217,9 @@ namespace CECBTIMS.Controllers
         {
             if (!ModelState.IsValid) return View(program);
 
+            //add created By
+            program.ApplicationUserId = User.Identity.GetUserId();
+
             db.Programs.Add(program);
             await db.SaveChangesAsync();
             return RedirectToAction($"Index");
@@ -274,6 +278,7 @@ namespace CECBTIMS.Controllers
             {
                 try
                 {
+                    programToUpdate.UpdatedBy = User.Identity.GetUserName();
                     db.Entry(programToUpdate).OriginalValues["RowVersion"] = rowVersion;
                     await db.SaveChangesAsync();
 
