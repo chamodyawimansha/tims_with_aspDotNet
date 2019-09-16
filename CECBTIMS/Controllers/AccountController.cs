@@ -99,7 +99,7 @@ namespace CECBTIMS.Controllers
 
             // This doesn't count login failures towards account lockout    
             // To enable password failures to trigger account lockout, change to shouldLockout: true    
-            var result = await SignInManager.PasswordSignInAsync(model.Username, model.Password, model.RememberMe, shouldLockout: false);
+            var result = await SignInManager.PasswordSignInAsync(model.Username, model.Password, model.RememberMe, shouldLockout: true);
 
             if (result == SignInStatus.Success)
             {
@@ -160,7 +160,7 @@ namespace CECBTIMS.Controllers
         public async Task<ActionResult> Edit(string id)
         {
             if((await UserManager.FindByIdAsync(id)) == null) return new HttpNotFoundResult();
-
+            
             ViewBag.UserId = id;
 
             return View();
@@ -210,11 +210,79 @@ namespace CECBTIMS.Controllers
         // if created records lock 
 
         // lock a account
+//        [Authorize(Roles = "Administrator")]
+//        public async Task<ActionResult> RestPassword()
+//        {
+//        }
+//
+//        [HttpPost]
+//        [ValidateAntiForgeryToken]
+//        [Authorize(Roles = "Administrator")]
+//        public async Task<ActionResult> Unlock()
+//        {
+//        }
+//
+//        [HttpPost]
+//        [ValidateAntiForgeryToken]
+//        [Authorize(Roles = "Administrator")]
+//        public async Task<ActionResult> Lock()
+//        {
+//
+//        }
+
+        [Authorize(Roles = "Administrator")]
+        public async Task<ActionResult> Delete(string id)
+        {
+            var user = await UserManager.FindByIdAsync(id);
+
+            if ( user == null) return new HttpNotFoundResult();
+            
+            return View(new DeleteViewModel()
+            {
+                Id = user.Id,
+                Email = user.Email,
+                Username = user.UserName
+            });
+        }
+
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Administrator")]
+        public async Task<ActionResult> DeletePost(DeleteViewModel model)
+        {
+            var user = await UserManager.FindByIdAsync(model.Id);
+
+            if (user == null)
+            {
+                ModelState.AddModelError("", "The user can't be found in the database.'");
+                return View(model);
+            };
+            // this stops user from delete the only admin account.
+            if (user.Id.Equals(User.Identity.GetUserId()))
+            {
+                TempData["msg_fail"] = "You can't delete the account you are logged in.";
+                return RedirectToAction("Index");
+            }
+            // check created records
+            if (
+                user.Programs.Any() || user.Agendas.Any() || user.Brochures.Any() || user.Costs.Any() ||
+                user.DefaultColumns.Any() || user.Documents.Any() || user.Organizers.Any() || user.Payments.Any() ||
+                user.Templates.Any() || user.ProgramAssignments.Any() || user.ResourcePersons.Any() ||
+                user.Requirements.Any() ||
+                user.EmploymentCategories.Any() || user.EmploymentNatures.Any() || user.TargetGroups.Any()
+            )
+            {
+                TempData["msg_fail"] = "Delete Failed. The selected user account identified as a active account. try Locking the account.";
+                return RedirectToAction("Index");
+            }
 
 
 
+            TempData["msg_success"] = "User account deleted successfully.";
+            return RedirectToAction("Index");
 
-        
+        }
+
 
         // POST: /Account/LogOff
         [HttpPost]

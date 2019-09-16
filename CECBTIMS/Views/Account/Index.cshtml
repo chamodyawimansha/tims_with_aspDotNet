@@ -27,20 +27,37 @@
                 <tr>
                     <th>Username</th>
                     <th>Email</th>
-                    <th></th>
                 </tr>
                 @foreach (var item in Model)
                 {
                     <tr>
-                        <td>@item.UserName</td>
-                        <td>@item.Email</td>
                         <td>
-                            @Html.ActionLink("Edit Password", $"Edit", new {id = item.Id}, new {@class = "btn btn-secondary"})
+                            @item.UserName
+                            @if (item.LockoutEnabled)
+                            {
+                                <span class="badge badge-danger ml-sm-1">Locked</span>
+                            }
+                        </td>
+                        <td>@item.Email</td>
+                        <td style="width: 35%">
+                            @if (User.IsInRole("User"))
+                            {
+                                @Html.ActionLink("Edit Password", $"Edit", new {id = item.Id}, new {@class = "btn btn-sm btn-secondary"})
+                            }
+                            @if (User.IsInRole("Administrator"))
+                            {
+                                @Html.ActionLink("Reset Password", $"ResetPassword", new {id = item.Id}, new {@class = "btn btn-sm btn-primary mr-sm-1"})
+                                if (item.LockoutEnabled)
+                                {
+                                    @Html.ActionLink("Unlock", $"Unlock", new {id = item.Id}, new {@class = "btn btn-sm btn-warning  mr-sm-1"})
+                                }
+                                else
+                                {
+                                    @Html.ActionLink("Lock", $"Lock", new {id = item.Id}, new {@class = "btn btn-sm btn-warning  mr-sm-1"})
+                                }
+                                @Html.ActionLink("Remove", $"Delete", new {id = item.Id}, new {@class = "btn btn-sm btn-danger"})
+                            }
 
-                            edit
-                            remove
-                            reset password
-                            lock
                         </td>
                     </tr>
                 }

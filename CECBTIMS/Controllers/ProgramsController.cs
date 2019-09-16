@@ -89,7 +89,7 @@ namespace CECBTIMS.Controllers
             return View(await programs.ToPagedListAsync(pageNumber, pageSize));
         }
 
-        public async Task<ActionResult> Find()
+        public ActionResult Find()
         {
             return View();
         }

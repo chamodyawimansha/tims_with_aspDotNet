@@ -67,4 +67,15 @@ namespace CECBTIMS.ViewModels
         public string ConfirmPassword { get; set; }
     }
 
+    public class DeleteViewModel
+    {
+        public string Id { get; set; }
+        [EmailAddress]
+        [Display(Name = "Email")]
+        public string Email { get; set; }
+
+        [Display(Name = "Username")]
+        public string Username { get; set; }
+    }
+
 }
