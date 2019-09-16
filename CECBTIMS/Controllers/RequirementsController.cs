@@ -3,6 +3,7 @@ using System.Net;
 using System.Web.Mvc;
 using CECBTIMS.DAL;
 using CECBTIMS.Models;
+using Microsoft.AspNet.Identity;
 
 namespace CECBTIMS.Controllers
 {
@@ -17,7 +18,7 @@ namespace CECBTIMS.Controllers
         {
             if (programId == null)
             {
-                return new System.Web.Mvc.HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
             ViewBag.programId = programId;
@@ -35,6 +36,7 @@ namespace CECBTIMS.Controllers
         {
             if (ModelState.IsValid)
             {
+                requirement.ApplicationUserId = User.Identity.GetUserId();
                 db.Requirements.Add(requirement);
                 await db.SaveChangesAsync();
             }
