@@ -267,6 +267,10 @@
     <Compile Include="Migrations\201909131055473_paymentsCreated.Designer.cs">
       <DependentUpon>201909131055473_paymentsCreated.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201909160240401_ApplicationUserAddedToBaseCols.cs" />
+    <Compile Include="Migrations\201909160240401_ApplicationUserAddedToBaseCols.Designer.cs">
+      <DependentUpon>201909160240401_ApplicationUserAddedToBaseCols.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Agenda.cs" />
     <Compile Include="Models\BaseCols.cs" />
@@ -583,6 +587,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201909131055473_paymentsCreated.resx">
       <DependentUpon>201909131055473_paymentsCreated.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201909160240401_ApplicationUserAddedToBaseCols.resx">
+      <DependentUpon>201909160240401_ApplicationUserAddedToBaseCols.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

@@ -6,7 +6,7 @@ using CECBTIMS.Models.Enums;
 
 namespace CECBTIMS.Models
 {
-    public class EmploymentNature
+    public class EmploymentNature : BaseCols
     {
         public int Id { get; set; }
         public EmploymentNatures EmpNature { get; set; }
