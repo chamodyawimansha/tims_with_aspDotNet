@@ -9,6 +9,7 @@ using System.Web;
 using System.Web.Mvc;
 using CECBTIMS.DAL;
 using CECBTIMS.Models;
+using Microsoft.AspNet.Identity;
 
 namespace CECBTIMS.Controllers
 {
@@ -39,6 +40,7 @@ namespace CECBTIMS.Controllers
 
             if (!ModelState.IsValid) return View(employmentNature);
 
+            employmentNature.ApplicationUserId = User.Identity.GetUserId();
             db.EmploymentNatures.Add(employmentNature);
             await db.SaveChangesAsync();
 
