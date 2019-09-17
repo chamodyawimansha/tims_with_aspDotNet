@@ -218,6 +218,10 @@
     <Compile Include="Migrations\201909160302340_InitialTimsMigration.Designer.cs">
       <DependentUpon>201909160302340_InitialTimsMigration.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201909171456466_MemberTypeNotREquired.cs" />
+    <Compile Include="Migrations\201909171456466_MemberTypeNotREquired.Designer.cs">
+      <DependentUpon>201909171456466_MemberTypeNotREquired.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Agenda.cs" />
     <Compile Include="Models\BaseCols.cs" />
@@ -499,6 +503,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201909160302340_InitialTimsMigration.resx">
       <DependentUpon>201909160302340_InitialTimsMigration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201909171456466_MemberTypeNotREquired.resx">
+      <DependentUpon>201909171456466_MemberTypeNotREquired.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

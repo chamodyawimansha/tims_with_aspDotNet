@@ -13,9 +13,8 @@ namespace CECBTIMS.Models
         public int Id { get; set; }
         public System.Guid EmployeeId { get; set; }
         [Required]
-        public System.Guid EmployeeVersionId { get; set; }
+        public Guid EmployeeVersionId { get; set; }
         public string EPFNo { get; set; }
-        [Required]
         public MemberType? MemberType { get; set; }
         [ForeignKey("Program")]
         [Required]
