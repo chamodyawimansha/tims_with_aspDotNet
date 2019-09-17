@@ -77,20 +77,18 @@
                 <input type="hidden" name="EPFNo" value="@Model.EPFNo"/>
                 <input type="hidden" name="ProgramId" value="@ViewBag.Program.Id"/>
 
+                if (((Program) ViewBag.Program).ProgramType == ProgramType.Local)
+                {
+                    <table class="table table-bordered">
+                        <tr>
+                            <th>Member Type</th>
+                            <td>
 
-                show only in LocalDataStoreSlot program
-
-
-                <table class="table table-bordered">
-                    <tr>
-                        <th>Member Type</th>
-                        <td>
-                            
-                            @Html.DropDownList("MemberType", EnumHelper.GetSelectList(typeof(MemberType)), "Select the Member Type", new {@class = "custom-select"})
-                        </td>
-                    </tr>
-                </table>
-
+                                @Html.DropDownList("MemberType", EnumHelper.GetSelectList(typeof(MemberType)), "Select the Member Type", new {@class = "custom-select"})
+                            </td>
+                        </tr>
+                    </table>
+                }
                 <div class="form-group float-right">
                     <input type="submit" value="Select" class="btn btn-primary"/>
                 </div>

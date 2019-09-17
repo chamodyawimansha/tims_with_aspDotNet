@@ -76,11 +76,9 @@ namespace CECBTIMS.Controllers
             // find it the institutes matches
 
 
+            if (recentRecord.MemberType != null) return (MemberType)recentRecord.MemberType;
 
-
-
-            return recentRecord.MemberType;
-
+            return MemberType.Member;
         }
 
         // POST: ProgramAssignments/Create
