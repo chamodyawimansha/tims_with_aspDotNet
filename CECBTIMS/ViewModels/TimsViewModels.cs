@@ -11,4 +11,22 @@ namespace CECBTIMS.ViewModels
         public Employee Employee { get; set; }
         public List<Program> Programs { get; set; }
     }
+
+    public class SelectConfirmViewModel
+    {
+        public Template Template { get; set; }
+        public Document Document { get; set; }
+    }
+
+    public class PaymentsViewModel
+    {
+
+
+
+
+
+
+
+    }
+
 }
