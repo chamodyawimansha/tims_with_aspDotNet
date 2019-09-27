@@ -15,18 +15,6 @@ namespace CECBTIMS.Models
         public int? ChequeNo { get; set; }
         public string ChequeFile { get; set; }
         public virtual Program Program { get; set; }
-
-//        they need to know payment details
-//        section payments how many employees per section
-//            what need to pay by sections
-//            who payed and balance what need to pay
-//
-//
-//            payment Controllers 
-//            select Program type > next > selectProgram > show pyaments with program trainee sections 
-// find and select is good
-
-        // if program id not present execute above procedure
-
+        
     }
 }

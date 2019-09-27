@@ -17,8 +17,10 @@ namespace CECBTIMS.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Payments
-        public async Task<ActionResult> Index()
+        public async Task<ActionResult> Index(int? programId)
         {
+            if(programId == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+
             var payments = db.Payments.Include(p => p.Program);
             return View(await payments.ToListAsync());
         }

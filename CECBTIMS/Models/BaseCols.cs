@@ -25,7 +25,7 @@ namespace CECBTIMS.Models
         [Timestamp]
         public byte[] RowVersion { get; set; } // For optimistic concurrency;
 
-//        public virtual ApplicationUser CreatedBy { get; set; }
+        public virtual ApplicationUser CreatedBy { get; set; }
 
 
 
