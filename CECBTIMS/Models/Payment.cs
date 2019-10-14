@@ -18,3 +18,6 @@ namespace CECBTIMS.Models
         
     }
 }
+//
+//fix payments 
+//    need to konw what sections need to pay
